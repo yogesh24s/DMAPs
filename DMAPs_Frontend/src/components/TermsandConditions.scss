@@ -1,0 +1,23 @@
+.closeModal{
+    display: inline;
+    position: absolute;
+    z-index: 10;
+    top: -50%;
+    font-size: 24px;
+    right: 0;
+    cursor: pointer;
+}
+
+.greenBtn{
+    background-color: #359B97;
+    color:#FFFFFF;
+    border:none;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 15px;
+}
+
+.greenBtn:hover{
+    transform: scale(1.1);
+    color:#FFFFFF;
+}
