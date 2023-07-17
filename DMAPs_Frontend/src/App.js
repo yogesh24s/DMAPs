@@ -32,7 +32,7 @@ class App extends Component {
   }
   render() {
     let headerComponent = !this.state.isFullPageLayout ? <Header /> : "";
-    let footerComponent = !this.state.isFullPageLayout ? <Footer /> : "";
+    // let footerComponent = !this.state.isFullPageLayout ? <Footer /> : "";
     return (
       <div className="app">
         {headerComponent}

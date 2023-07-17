@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../services/interceptor'
 import App from '../App';
-import helper from '../services/tokenStore'
 const CreditProvider = () => {
 	useEffect(()=>{
 

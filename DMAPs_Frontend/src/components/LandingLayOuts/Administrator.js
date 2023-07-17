@@ -3,7 +3,7 @@
  * author :
  */
 
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import './Administrator.scss';
 import UnitSetUp from './AdministratorLayOuts/UnitSetUp';
 import UserSetUp from './AdministratorLayOuts/UserSetUp';
@@ -15,49 +15,50 @@ import {
     MDBTabsLink,
     MDBTabsContent,
     MDBTabsPane
-  } from 'mdb-react-ui-kit';
+} from 'mdb-react-ui-kit';
 
-export default function Administrator(){
+export default function Administrator() {
 
     const [basicActive, setBasicActive] = useState('tab1');
     const handleBasicClick = (value) => {
         if (value === basicActive) {
-        return;
+            return;
         }
         setBasicActive(value);
     };
 
-    useEffect(()=>{
-		
-	},[])
+    useEffect(() => {
+
+    }, [])
 
     return <>
-        <MDBTabs className='mb-3'>
+        <MDBTabs className="admin-tab">
             <MDBTabsItem>
-                <MDBTabsLink onClick={() => handleBasicClick('tab1')} active={basicActive === 'tab1'}>
-                    Unit Set UP
+                <MDBTabsLink  onClick={() => handleBasicClick('tab1')} active={basicActive === 'tab1'}>
+                    <i class="fa-solid fa-screwdriver-wrench"></i> Company Units
                 </MDBTabsLink>
-                </MDBTabsItem>
-                <MDBTabsItem>
+            </MDBTabsItem>
+            <MDBTabsItem>
                 <MDBTabsLink onClick={() => handleBasicClick('tab2')} active={basicActive === 'tab2'}>
-                    User Set Up
+                    <i class="fa-solid fa-screwdriver-wrench"></i> Users
                 </MDBTabsLink>
-                </MDBTabsItem>
-                <MDBTabsItem>
+            </MDBTabsItem>
+            <MDBTabsItem>
                 <MDBTabsLink onClick={() => handleBasicClick('tab3')} active={basicActive === 'tab3'}>
-                    Data Set Up
+                    <i class="fa-solid fa-screwdriver-wrench"></i>  DMAPs Data
                 </MDBTabsLink>
+
             </MDBTabsItem>
         </MDBTabs>
 
-        <MDBTabsContent>
-            <MDBTabsPane show={basicActive === 'tab1'}>
+        <MDBTabsContent className='inner-tab-content'>
+            <MDBTabsPane className="company-unit-tab" show={basicActive === 'tab1'}>
                 <UnitSetUp />
             </MDBTabsPane>
-            <MDBTabsPane show={basicActive === 'tab2'}>
+            <MDBTabsPane className="user-tab" show={basicActive === 'tab2'}>
                 <UserSetUp />
             </MDBTabsPane>
-            <MDBTabsPane show={basicActive === 'tab3'}>
+            <MDBTabsPane  className="data-tab" show={basicActive === 'tab3'}>
                 <DataSetUp />
             </MDBTabsPane>
         </MDBTabsContent>

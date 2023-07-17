@@ -83,22 +83,6 @@ class helperService {
   getAvailableLicense = () => {
     return sessionStorage.getItem("aul");
   };
-
-  checkLicense = () => {
-      // check if the license is still valid for the product
-      return fetch(process.env.REACT_APP_API_URL+"/licenseService/checklicense")
-        .then((response) => response.json())
-        .then((data) => {
-          if (data["message"] !== "passed"){
-              //console.log('returning data')
-              return data["message"]
-          }
-          else{
-            //console.log('returning passed')
-            return "passed"
-          }
-    });
-  }
 }
 
 export default new helperService();

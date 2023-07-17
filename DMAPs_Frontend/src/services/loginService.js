@@ -1,30 +1,10 @@
 /**
- * owner : retrAIver
- * author : Manish and Divyangi from Affine
+ * owner : 
+ * author : 
  */
 import api from "./interceptor";
 
 class loginService {
-  keyCloakLogin(payload) {
-    //return axios.post(`${baseURL}/login/`, payload, { headers: headers });
-    return api.post(`/authenticateService/login`, payload);
-  }
-
-  keyCloakForgotPassword(payload) {
-    //return axios.post(`${baseURL}/login/`, payload, { headers: headers });
-    return api.post(`/forgotpassword`, payload);
-  }
-
-  keyCloakChangePassword(payload) {
-    //return axios.post(`${baseURL}/login/`, payload, { headers: headers });
-    return api.post(`/changepassword`, payload);
-  }
-
-  keyCloakResetPassword(payload) {
-    //return axios.post(`${baseURL}/login/`, payload, { headers: headers });
-    return api.post(`/resetpassword`, payload);
-  }
-
   logout() {
     sessionStorage.removeItem("accessToken");
     sessionStorage.removeItem("userRole");

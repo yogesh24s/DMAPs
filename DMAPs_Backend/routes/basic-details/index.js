@@ -3,7 +3,7 @@
 const basicDetails = require('express').Router();
 
 var access = require('../../var.js');
-access.myFunc1();
+access.DMAPFunc();
 
 basicDetails.use(bodyParser.json());
 basicDetails.use(function(req, res, next) {
@@ -21,12 +21,17 @@ basicDetails.use(function(req, res, next) {
 });
 
 basicDetails.get('/basicDetails', function(req, res) {
-    var sql =``;
+    var sql =`
+    SELECT * FROM dmaps.department;
+    SELECT * FROM dmaps.designation;
+    `;
     pool.query(sql, function(err, rows, fields) {
         if (!err) {
             var response = [],
                 dataObj = {};
             if (rows.length != 0) {
+                dataObj['department'] = rows[0];
+                dataObj['designation'] = rows[1];
                 response.push({ 'result': 'success', 'data': dataObj });
             } else {
                 response.push({ 'result': 'error', 'msg': 'No Results Found' });

@@ -12,7 +12,6 @@ import { useHistory } from 'react-router-dom';
 import loginService from '../services/loginService';
 import helper from '../services/tokenStore';
 
-import { trackPromise } from 'react-promise-tracker';
 import infoData from '../assets/data/info.json';
 import './Login.scss';
 import { Tooltip } from '../../node_modules/bootstrap/dist/js/bootstrap.esm.min.js';
@@ -65,53 +64,26 @@ function Login() {
 		helper.setUserName("Yogesh");
 		helper.setUserId("93fff965-d487-4fea-bdc7-6a08a1009298");
 		helper.setAvailableLicense("9")
-		//console.log(response.data)
-		//check login response
 
 		// Changed to false from true
 		history.push("/landingpage");
-		// // trackPromise(loginService.keyCloakLogin(payload).then((response) => {
-		// // 		helper.setToken(response.data.accessToken);
-		// // 		helper.setRefreshToken("eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1N2YzYTgzNi0zMWY4LTQ3Y2UtYmZkZi01YzUxYTMxMzdlNDAifQ.");
-		// // 		helper.setRole("Admin");
-		// // 		helper.setFullName("demo user");
-		// // 		helper.setTemporaryPasswordFlag("false");
-		// // 		helper.setUserName("Yogesh");
-		// // 		helper.setUserId("93fff965-d487-4fea-bdc7-6a08a1009298");
-		// // 		helper.setAvailableLicense("9")
-		// // 		helper.setCreditBalance("989.6")
-		// // 		//console.log(response.data)
-		// // 		//check login response
-
-		// // 		// Changed to false from true
-		// // 		if(response.data.temporary == false){
-		// // 			history.push("/changepassword");
-		// // 		}
-		// // 		else{
-		// // 			history.push("/landingpage");
-		// // 		}
-		// // 	}).catch((error) => {
-		// // 		//console.log(error.response.data.error)
-		// // 		alert(error.response.data.error);
-		// // 	})
-		// );
 	}
 
 
-	const formValidation = (e) => {
-		const userNameError = {};
-		let isvalid = true;
-		var regexp = /^[a-zA-Z0-9\- _ \s]+$/;
-		if (regexp.test(e) === false) {
-			setErrorHighlight(true);
-			userNameError.text = "only alphanumeric, space( ), underscore (_), and hyphen (-) characters are allowed.";
-			isvalid = false;
-		} else {
-			setErrorHighlight(false);
-		}
-		setUserNameError(userNameError);
-		return isvalid;
-	}
+	// const formValidation = (e) => {
+	// 	const userNameError = {};
+	// 	let isvalid = true;
+	// 	var regexp = /^[a-zA-Z0-9\- _ \s]+$/;
+	// 	if (regexp.test(e) === false) {
+	// 		setErrorHighlight(true);
+	// 		userNameError.text = "only alphanumeric, space( ), underscore (_), and hyphen (-) characters are allowed.";
+	// 		isvalid = false;
+	// 	} else {
+	// 		setErrorHighlight(false);
+	// 	}
+	// 	setUserNameError(userNameError);
+	// 	return isvalid;
+	// }
 
 	return (
 		<div>

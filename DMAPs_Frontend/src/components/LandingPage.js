@@ -20,45 +20,33 @@ return <>
     <div className="container-fluid">
         <div className='row'>
             <div className='col-12'>
-            <Tabs defaultActiveKey="second">
-                <Tab eventKey="first" title="Home">
+            <Tabs defaultActiveKey="third">
+                <Tab eventKey="first" title={<span> <i className="fa fa-home" /> Home </span>}>
                     Home Content
                 </Tab>
-                <Tab eventKey="second" title="Dashboard">
+                <Tab eventKey="second" title={<span> <i class="fa fa-table-columns"></i> Dashboard </span>}>
                     Dashboard Content
                 </Tab>
-                <Tab eventKey="third" title="Administrator">
+                <Tab eventKey="third" title={<span> <i class="fa fa-toolbox"></i> Administrator </span>}>
                     <Administrator />
                 </Tab>
-                <Tab eventKey="Four" title="Style Store">
-                <span className='tad-content'>
+                <Tab eventKey="Four" title={<span> <i class="fa fa-store"></i> Style Store </span>}>
                     Style Store Content
-                    </span>
                 </Tab>
-                <Tab eventKey="Five" title="Fabric Store">
-                <span className='tad-content'>
+                <Tab eventKey="Five" title={<span> <i class="fa fa-shop"></i> Fabric Store </span>}>
                     Fabric Store Content
-                    </span>
                 </Tab>
-                <Tab eventKey="Six" title="Fabric Store">
-                <span className='tad-content'>
-                    Fabric Store Content
-                    </span>
+                <Tab eventKey="Six" title={<span> <i class="fa fa-store"></i> Cut Stores </span>}>
+                    Cut Store Content
                 </Tab>
-                <Tab eventKey="Seven" title="Trim Stores">
-                <span className='tad-content'>
-                        Home Content
-                    </span>
-                </Tab>
-                <Tab eventKey="Eight" title="Sewing Area">
-                <span className='tad-content'>
+                <Tab eventKey="Seven" title={<span> <i class="fa fa-store"></i> Trim Stores </span>}>
                     Trim Stores Content
-                    </span>
                 </Tab>
-                <Tab eventKey="Nine" title="Finishing Area">
-                <span className='tad-content'>
-                    Finishing Area Content
-                    </span>
+                <Tab eventKey="Eight" title={<span> <i class="fa fa-layer-group"></i> Sewing Area</span>}>
+                    Sewing Area Content
+                </Tab>
+                <Tab eventKey="Nine" title={<span> <i class="fa fa-ballot-check"></i> Finishing Area</span>}>
+                    Fininshing Area Content
                 </Tab>
             </Tabs>
             </div>

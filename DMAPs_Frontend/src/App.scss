@@ -21,9 +21,12 @@
 
 body {
   background-color: #FFFF !important;
-  height: 100vh;
+  // height: 100vh;
 }
-
+.container-fluid {
+  margin: 5px 0;
+  background-color: rgb(0 0 0 / 5%);
+}
 .navbar-custom {
   top: 0px;
   left: 0px;
@@ -32,6 +35,7 @@ body {
   padding: 28px 40px 28px 40px !important;
   background: #002222 0% 0% no-repeat padding-box !important;
   opacity: 1;
+  box-shadow: rgb(5 145 139 / 38%) 0px 25px 20px -20px !important
 }
 
 footer {
@@ -269,14 +273,19 @@ table {
   thead {
     th {
       border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+      text-align: center;
     }
   }
 
   tbody {
     tr {
+      th {
+        text-align: center;
+      }
       td {
         font-size: 13px !important;
-        padding: 0.75rem 0.5rem 0.75rem 1.4rem !important
+        padding: 0.75rem 0rem 0.75rem 0rem !important;
+        text-align: center;
       }
 
       td.actions-column {
@@ -434,4 +443,26 @@ table {
     margin: 0;
     margin-left: 10px;
   }
+}
+.modal-header {
+    background: #001111e8;
+    color: #fff;
+    padding: 0px 15px !important;
+    /* font-size: 11px; */
+}
+.btn-primary{
+  background-color: #001111 !important;
+}
+.admin-tab .nav-item.show .nav-link, .admin-tab .nav-link.active {
+  color: var(--mdb-nav-tabs-link-active-color);
+  border-color: #3b71ca99 !important 
+}
+.vertical-tab  .nav-item.show .nav-link, .vertical-tab  .nav-link.active {
+  color: var(--mdb-nav-tabs-link-active-color);
+  border-color: #e2edfd99 !important 
+}
+.tab-content {
+  padding: 15px 20px;
+  background: #D0D5D5;
+  min-height: 66vh;
 }

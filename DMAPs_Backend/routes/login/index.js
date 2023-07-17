@@ -1,11 +1,8 @@
 'use strict';
 
 const routes = require('express').Router();
-
 var access = require('../../var.js');
-const jwt = require('jsonwebtoken');
-
-access.myFunc1();
+access.DMAPFunc();
 
 routes.use(bodyParser.json());
 routes.use(function (req, res, next) {
@@ -32,8 +29,8 @@ routes.post('/authenticate', function (req, res) {
   var password = req.body.password;
   var date = new Date();
 
-  knex1.select('role')
-  .from('aa_hris_users')
+  knex1.select('user_role')
+  .from('users')
   .where('username', username)
   .timeout(100000, {cancel: true})
   .map(function (row) { return row; })
@@ -47,14 +44,12 @@ routes.post('/authenticate', function (req, res) {
     }
 
     jwt.sign(token, 'secretkey', {}, (err, token) => {
-
       jwt.verify(token, 'secretkey', (err, authData) => {
-
         var path = req.route.path;
         if(err) {
           res.sendStatus(403);
         } else {
-          pool.query('SELECT * FROM dev_hris.aa_hris_users WHERE username = ?',[username], function (error, results, fields) {
+          pool.query('SELECT * FROM dmaps.user_credentials WHERE username = ?',[username], function (error, results, fields) {
             if ( error ) {
               access.sendResponse(req, res, {
                 status: 202,
@@ -63,12 +58,11 @@ routes.post('/authenticate', function (req, res) {
                   message:'there is some error with query'
                 }
               });
-
             } else {
               if ( results.length > 0 ) {
                 bcrypt.compare(password, results[0].password, function(err, ress) {
                   if ( ress ) {
-                    pool.query('SELECT Employee_Name, Current_Status, Login_Access FROM dev_hris.employee WHERE Employee_Id = ?', [results[0].username], function (error1, results1, fields1) {
+                    pool.query('SELECT * FROM dmaps.user WHERE employee_id = ?', [results[0].username], function (error1, results1, fields1) {
                       var resultObj = {};
                       if ( error1 ) {
                         resultObj = {
@@ -77,30 +71,26 @@ routes.post('/authenticate', function (req, res) {
                         }
                       } else {
                         if ( results1.length > 0 ) {
-                        
-                          if ( ( results1[0].Current_Status === 'Active' || results1[0].Current_Status === 'Notice' ) && results1[0].Login_Access === 'Enabled' ) {
+                          if ( ( results1[0].status === 'Active' || results1[0].status === 'Notice' ) && results1[0].login_access === 'Enabled' ) {
                             resultObj = {
                               status: true,
                               message: 'User authentication is successful!',
-                              role: results[0].role,
-                              empid: results[0].username,
-                              empname: results1[0].Employee_Name,
-                              lpc_at: results[0].last_password_changed_at,
-                              Status: results1[0].Current_Status,
-                              Access: results1[0].Login_Access,
+                              role: results[0].user_role,
+                              empid: results[0].user_name,
+                              Status: results1[0].status,
+                              Access: results1[0].login_access,
                               token : token
                             }
                           } else {
                             resultObj = {
                               status: false,
                               message: 'Login access denied.',
-                              role: results[0].role,
-                              empid: results[0].username,
-                              empname: results1[0].Employee_Name,
-                              lpc_at: results[0].last_password_changed_at
+                              role: results[0].user_role,
+                              empid: results[0].user_name,
+                              Status: results1[0].status,
+                              Access: results1[0].login_access
                             }
                           }
-
                         } else {
                           resultObj = {
                             status: false,
@@ -141,7 +131,6 @@ routes.post('/authenticate', function (req, res) {
     })
 
   });
-
 
 });
 
