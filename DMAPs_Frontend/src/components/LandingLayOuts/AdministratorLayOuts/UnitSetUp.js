@@ -25,6 +25,7 @@ import {
 
 import unitService from "../../../services/unitService";
 import { trackPromise } from 'react-promise-tracker';
+import CompanyUnitTable from './CompanyUnitTable';
 
 
 export default function UnitSetUp() {
@@ -33,34 +34,187 @@ export default function UnitSetUp() {
     const handleClose = () => setShow(false);
 
     const [verticalActive, setVerticalActive] = useState('tabV1');
+    const [unitNameLogo, setUnitNameLogo] = useState("")
     const [unitName, setunitName] = useState('')
+    const [unitNameError, setUnitNameError] = useState("")
     const [shortName, setShortName] = useState('')
+    const [shortNameError, setShortNameError] = useState('');
     const [group, setGroup] = useState('')
+    const [groupError, setGroupError] = useState('');
     const [division, setdivision] = useState('')
+    const [divisionError, setDivisionError] = useState('');
     const [tinNo, setTinNo] = useState('')
+    const [tinNoError, setTinNoError] = useState('');
     const [regNo, setRegNo] = useState('')
+    const [regNoError, setRegNoError] = useState('');
     const [addressLine1, setAddressLine1] = useState('')
+    const [addressLine1Error, setAddressLine1Error] = useState('');
     const [addressLine2, setAddressLine2] = useState('')
+    const [addressLine1Error2, setAddressLine1Error2] = useState('');
     const [street, setStreet] = useState('')
+    const [streetError, setStreetError] = useState('');
     const [city, setCity] = useState('')
+    const [cityError, setCityError] = useState('');
     const [pinNo, setPinNO] = useState('')
-    const [contactNo, setContactNo] = useState('')
+    const [pinNoError, setPinNoError] = useState('');
+    const [contactNo, setContactNo] = useState('');
+    const [contactNoError, setContactNoError] = useState('');
     const [contactNoRec, setContactNoRec] = useState('')
+    const [contactNoRecError, setContactNoRecError] = useState('');
     const [faxNo, setFaxNo] = useState('')
+    const [faxNoError, setfaxNoError] = useState('');
     const [mailId, setMailId] = useState('')
+    const [mailIdError, setMailIdError] = useState('');
     const [website, setWebsite] = useState('')
+    const [websiteError, setWebsiteError] = useState('');
     const [state, setState] = useState('')
-
+    const [stateError, setStateError] = useState('');
+    
     const handleVerticalClick = (value) => {
         if (value === verticalActive) {
             return;
         }
         setVerticalActive(value);
     };
+    const handleTinValidation = (value) => {
+        // Define a regular expression pattern for a 9-digit TIN
+        const tinPattern = /^\d{9}$/;
+    
+        // Return whether the value matches the pattern
+        return tinPattern.test(value);
+      };
+    
 
     const handleSubmit = (e) => {
 
         e.preventDefault();
+        let isValid = true;
+
+        if (!unitName) {
+            setUnitNameError('Unit Name is required');
+            isValid = false;
+          } else {
+            setUnitNameError('');
+          }
+      
+          if (!shortName) {
+            setShortNameError('Short Name is required');
+            isValid = false;
+          } else {
+            setShortNameError('');
+          }
+      
+          if (!group) {
+            setGroupError('Group is required');
+            isValid = false;
+          } else {
+            setGroupError('');
+          }
+      
+          if (!division) {
+            setDivisionError('Division is required');
+            isValid = false;
+          } else {
+            setDivisionError('');
+          }
+      
+          if (!tinNo) {
+            setTinNoError('TIN No is required');
+            isValid = false;
+          } else if (!handleTinValidation(tinNo)) {
+            setTinNoError('Invalid TIN format');
+            isValid = false;
+          } else {
+            setTinNoError('');
+          }
+      
+
+          if (!regNo) {
+            setRegNoError('Registration No is required');
+            isValid = false;
+          } else {
+            setRegNoError('');
+          }
+          if (!addressLine1) {
+            setAddressLine1Error('Address Line 1 is required');
+            isValid = false;
+          } else {
+            setAddressLine1Error('');
+          }
+          if (!addressLine2) {
+            setAddressLine1Error2('Address Line 2 is required');
+            isValid = false;
+          } else {
+            setAddressLine1Error2('');
+          }
+
+          if (!street) {
+            setStreetError('Street is required');
+            isValid = false;
+          } else {
+            setStreetError('');
+          }
+
+          if (!city) {
+            setCityError('City is required');
+            isValid = false;
+          } else {
+            setCityError('');
+          }
+          
+          if (!pinNo) {
+            setPinNoError('Pin Number is required');
+            isValid = false;
+          } else {
+            setPinNoError('');
+          }
+          if (!contactNo) {
+            setContactNoError('Contact Number is required');
+            isValid = false;
+          } else {
+            setContactNoError('');
+          }
+
+          if (!contactNoRec) {
+            setContactNoRecError('Contact Number Rec is required');
+            isValid = false;
+          } else {
+            setContactNoRecError('');
+          }
+
+          if (!faxNo) {
+            setfaxNoError('Fax Number Rec is required');
+            isValid = false;
+          } else {
+            setfaxNoError('');
+          }
+
+          if (!mailId) {
+            setMailIdError('Mail id is required');
+            isValid = false;
+          } else {
+            setMailIdError('');
+          }
+
+          if (!website) {
+            setWebsiteError('Website  is required');
+            isValid = false;
+          } else {
+            setWebsiteError('');
+          }
+
+          if (!state) {
+            setStateError('State  is required');
+            isValid = false;
+          } else {
+            setStateError('');
+          }
+
+          if (!isValid) {
+            return; 
+          }
+        
+
         let payload = {
             "Unit_Full_Name": unitName,
             "Unit_Short_Name": shortName,
@@ -85,11 +239,11 @@ export default function UnitSetUp() {
         alert('suceess')
         trackPromise(unitService.saveCompanyUnits(payload).then((response) => {
             //check login response
-            if (response.data.status == 'Success') {
+            if (response.data.status === 'Success') {
                 alert(response.data.message);
 
             }
-            else if (response.data.status == 'Failed') {
+            else if (response.data.status ==='Failed') {
                 alert(response.data.message);
             }
 
@@ -103,8 +257,171 @@ export default function UnitSetUp() {
     }
     const handleUnitSetup = (e) => {
         e.preventDefault();
+        let isValid = true;
 
-        console.log('hello');
+        if (!unitName) {
+            setUnitNameError('Unit Name is required');
+            isValid = false;
+          } else {
+            setUnitNameError('');
+          }
+      
+          if (!shortName) {
+            setShortNameError('Short Name is required');
+            isValid = false;
+          } else {
+            setShortNameError('');
+          }
+      
+          if (!group) {
+            setGroupError('Group is required');
+            isValid = false;
+          } else {
+            setGroupError('');
+          }
+      
+          if (!division) {
+            setDivisionError('Division is required');
+            isValid = false;
+          } else {
+            setDivisionError('');
+          }
+      
+          if (!tinNo) {
+            setTinNoError('TIN No is required');
+            isValid = false;
+          } else if (!handleTinValidation(tinNo)) {
+            setTinNoError('Invalid TIN format');
+            isValid = false;
+          } else {
+            setTinNoError('');
+          }
+      
+
+          if (!regNo) {
+            setRegNoError('Registration No is required');
+            isValid = false;
+          } else {
+            setRegNoError('');
+          }
+          if (!addressLine1) {
+            setAddressLine1Error('Address Line 1 is required');
+            isValid = false;
+          } else {
+            setAddressLine1Error('');
+          }
+          if (!addressLine2) {
+            setAddressLine1Error2('Address Line 2 is required');
+            isValid = false;
+          } else {
+            setAddressLine1Error2('');
+          }
+
+          if (!street) {
+            setStreetError('Street is required');
+            isValid = false;
+          } else {
+            setStreetError('');
+          }
+
+          if (!city) {
+            setCityError('City is required');
+            isValid = false;
+          } else {
+            setCityError('');
+          }
+          
+          if (!pinNo) {
+            setPinNoError('Pin Number is required');
+            isValid = false;
+          } else {
+            setPinNoError('');
+          }
+          if (!contactNo) {
+            setContactNoError('Contact Number is required');
+            isValid = false;
+          } else {
+            setContactNoError('');
+          }
+
+          if (!contactNoRec) {
+            setContactNoRecError('Contact Number Rec is required');
+            isValid = false;
+          } else {
+            setContactNoRecError('');
+          }
+
+          if (!faxNo) {
+            setfaxNoError('Fax Number Rec is required');
+            isValid = false;
+          } else {
+            setfaxNoError('');
+          }
+
+          if (!mailId) {
+            setMailIdError('Mail id is required');
+            isValid = false;
+          } else {
+            setMailIdError('');
+          }
+
+          if (!website) {
+            setWebsiteError('Website  is required');
+            isValid = false;
+          } else {
+            setWebsiteError('');
+          }
+
+          if (!state) {
+            setStateError('State  is required');
+            isValid = false;
+          } else {
+            setStateError('');
+          }
+
+          if (!isValid) {
+            return; 
+          }
+        
+
+        let payload = {
+            "Unit_Full_Name": unitName,
+            "Unit_Short_Name": shortName,
+            "Group_Id": group,
+            "Division_Id": division,
+            "Tin_Num": tinNo,
+            "Reg_Num": regNo,
+            "Address_Line_1": addressLine1,
+            "Address_Line_2": addressLine2,
+            "Street": street,
+            "City": city,
+            "State": state,
+            "Pin_Code": pinNo,
+            "Contact_No": contactNo,
+            "Contact_No_Rec" : contactNoRec,
+            "Email_Id": mailId,
+            "Website_Link": website,
+            "Fax_No": faxNo
+
+
+        }
+        alert('suceess')
+        trackPromise(unitService.saveCompanyUnits(payload).then((response) => {
+            //check login response
+            if (response.data.status === 'Success') {
+                alert(response.data.message);
+
+            }
+            else if (response.data.status ==='Failed') {
+                alert(response.data.message);
+            }
+
+        }).catch((error) => {
+            //console.log(error.response.data.error)
+            alert(error.response.data.error);
+        })
+        );
+      
     }
 
     useEffect(() => {
@@ -227,51 +544,70 @@ export default function UnitSetUp() {
                                         <div className='row'>
                                             <div className='col-3'>
                                                 <label> Unit Logo </label>
-                                                <MDBInput wrapperClass='mb-4' type="file" onChange={(e) => { setunitName(e.target.value)}} value={unitName} name='logo' />
+                                                <MDBInput wrapperClass='mb-4' type="file" onChange={(e) => { setUnitNameLogo(e.target.value)}} value={unitNameLogo} name='logo' />
 
                                                 <MDBInput wrapperClass='mb-2' label='Name Of Unite' onChange={(e) => { setunitName(e.target.value)}} value={unitName} name='unitName' />
 
+                                                {unitNameError && <p style={{ color: 'red' }}>{unitNameError}</p>}
+
+
                                                 <MDBInput wrapperClass='mb-2' label='Short Name' onChange={(e) => { setShortName(e.target.value) }} value={shortName} name='shortName' />
+
+                                                {shortNameError && <p style={{ color: 'red' }}>{shortNameError}</p>}
+
 
                                             </div>
                                             <div className='col-3'>
                                                 
                                                 <MDBInput wrapperClass='mb-2' label='Group' onChange={(e) => { setGroup(e.target.value) }} value={group} name='group' />
+                                                {groupError && <p style={{ color: 'red' }}>{groupError}</p>}
 
                                                 <MDBInput wrapperClass='mb-2' type='email' label='Division' onChange={(e) => { setdivision(e.target.value);}} value={division} name='division' />
+                                                {divisionError && <p style={{ color: 'red' }}>{divisionError}</p>}
 
                                                 <MDBInput wrapperClass='mb-2' type='tel' label='Tin No' onChange={(e) => { setTinNo(e.target.value) }} value={tinNo} name='tinNo' />
+                                                {tinNoError && <p style={{ color: 'red' }}>{tinNoError}</p>}
 
                                                 <MDBInput wrapperClass='mb-2' type='tel' label='Reg No' onChange={(e) => { setRegNo(e.target.value) }} value={regNo} name='regNo' />
+                                                {regNoError && <p style={{ color: 'red' }}>{regNoError}</p>}
 
                                             </div>
 
                                             <div className='col-3'>
                                                 <MDBInput label='Address Line 1' wrapperClass='mb-2' onChange={(e) => { setAddressLine1(e.target.value) }} value={addressLine1} name='addressLine1' />
+                                                {addressLine1Error && <p style={{ color: 'red' }}>{addressLine1Error}</p>}
 
                                                 <MDBInput wrapperClass='mb-2' label='Address Line 2' onChange={(e) => { setAddressLine2(e.target.value) }} value={addressLine2} name='addressLine2'  />
+                                                {addressLine1Error2 && <p style={{ color: 'red' }}>{addressLine1Error2}</p>}
                                                 
                                                 <MDBInput wrapperClass='mb-2'  label='WebSite' onChange={(e) => { setWebsite(e.target.value) }} value={website} name='setWebsite' />
+                                                {websiteError && <p style={{ color: 'red' }}>{websiteError}</p>}
 
                                                 <MDBInput wrapperClass='mb-2'  label='Pin No' onChange={(e) => { setPinNO(e.target.value)}} value={pinNo} name='pinNo' />
+                                                {pinNoError && <p style={{ color: 'red' }}>{pinNoError}</p>}
+
 
                                                 <MDBInput wrapperClass='mb-2' type='tel' label='Fax No' onChange={(e) => { setFaxNo(e.target.value); }} value={faxNo} name='faxNo' />
+                                                {faxNoError && <p style={{ color: 'red' }}>{faxNoError}</p>}
                                                
                                             </div>
 
                                             <div className='col-3'>
                                             <MDBInput wrapperClass='mb-2' label='Street / Area' onChange={(e) => { setStreet(e.target.value) }} value={street} name='street' />
-
+                                            {streetError && <p style={{ color: 'red' }}>{streetError}</p>}
                                             <MDBInput wrapperClass='mb-2' label='City' onChange={(e) => { setCity(e.target.value)}} value={city} name='city' />
-
+                                            {cityError && <p style={{ color: 'red' }}>{cityError}</p>}
                                             <MDBInput wrapperClass='mb-2' label='State' onChange={(e) => { setState(e.target.value) }} value={state} name='state' />
+                                            {stateError && <p style={{ color: 'red' }}>{stateError}</p>}
 
                                             <MDBInput wrapperClass='mb-2' label='Mail Id' onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
+                                            {mailIdError && <p style={{ color: 'red' }}>{mailIdError}</p>}
 
                                             <MDBInput wrapperClass='mb-2' type='tel' label='Contact No Office' onChange={(e) => { setContactNo(e.target.value) }} value={contactNo} name='contactNo' />
+                                            {contactNoError && <p style={{ color: 'red' }}>{contactNoError}</p>}
 
                                             <MDBInput wrapperClass='mb-2' type='tel' label='Contact No Rec' onChange={(e) => { setContactNoRec(e.target.value) }} value={contactNoRec} name='contactNoRec' />
-
+                                            {contactNoRecError && <p style={{ color: 'red' }}>{contactNoRecError}</p>}
                                             </div>
                                         </div>
                                     </form>
@@ -289,12 +625,7 @@ export default function UnitSetUp() {
                             </div>
                             <div className='col-12'>
                                 <br/>
-                                <BootstrapTable
-                                    keyField='id'
-                                    pagination={pagination}
-                                    data={products}
-                                    columns={columns}
-                                />
+                                <CompanyUnitTable />
                             </div>
                         </div>
                     </MDBTabsPane>

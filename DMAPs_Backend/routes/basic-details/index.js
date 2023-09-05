@@ -24,6 +24,7 @@ basicDetails.get('/basicDetails', function(req, res) {
     var sql =`
     SELECT * FROM dmaps.department;
     SELECT * FROM dmaps.designation;
+    SELECT Unit_Id, Unit_Full_Name from dmaps.company_units;
     `;
     pool.query(sql, function(err, rows, fields) {
         if (!err) {
@@ -32,6 +33,7 @@ basicDetails.get('/basicDetails', function(req, res) {
             if (rows.length != 0) {
                 dataObj['department'] = rows[0];
                 dataObj['designation'] = rows[1];
+                dataObj['units'] = rows[2]
                 response.push({ 'result': 'success', 'data': dataObj });
             } else {
                 response.push({ 'result': 'error', 'msg': 'No Results Found' });

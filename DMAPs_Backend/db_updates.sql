@@ -168,3 +168,6 @@ ADD PRIMARY KEY (`User_Id`);
 ALTER TABLE `dmaps`.`user_role_permission` 
 CHANGE COLUMN `Id` `Id` INT NOT NULL AUTO_INCREMENT ,
 CHANGE COLUMN `Employee_Id` `User_Id` VARCHAR(45) NULL DEFAULT NULL ;
+
+ALTER TABLE `dmaps`.`company_units` 
+CHANGE COLUMN `Contact_No` `Contact_No` VARCHAR(10) NULL DEFAULT NULL ;

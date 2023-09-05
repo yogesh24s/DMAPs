@@ -7,36 +7,24 @@ const path = require('path');
 var access = require('../var.js');
 access.DMAPFunc();
 
-// CompanyUnit.getCompanyUnits = result => {
-//     sql =`SELECT * FROM dmaps.company_units;`;
-//     pool.query(sql, function(err, res) {
-//         if (err) {
-//             result(null, err);
-//             return;
-//         }
-//         dataObj = {};
-//         dataObj['Company_Units'] = res;
-//         result(null, dataObj);
-//     });
-// };
+CompanyUsers.getCompanyUsers = result => {
+    sql =`SELECT * FROM dmaps.user;`;
+    pool.query(sql, function(err, res) {
+        if (err) {
+            result(null, err);
+            return;
+        }
+        dataObj = {};
+        dataObj['Company_Users'] = res;
+        result(null, dataObj);
+    });
+};
 
 CompanyUsers.saveCompanyUsers = result => {
     knex.transaction(function(t) {
         return knex('dmaps.user')
         .transacting(t)
-        .insert({
-            Unit_Short_Name: "NBK",
-            User_Id: "YOG 4",
-            User_Name: "Yogesh S",
-            Department_Id: "Asd",
-            Designation_Id: "qwe",
-            Mobile_Num: "89712222",
-            Mail_Id : "a@a.com",
-            Status : "Active",
-            Created_Date: new Date(),
-            Password : "asas",
-            Login_Access : "Enabled"
-        })
+        .insert(data)
         .then(function(response) {
             var UserId = response;
             return knex('dmaps.user_role_permission')

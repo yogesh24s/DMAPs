@@ -16,6 +16,8 @@ import {
     MDBTabsContent,
     MDBTabsPane
 } from 'mdb-react-ui-kit';
+import CompanyUnitTable from './AdministratorLayOuts/CompanyUnitTable';
+import CompanyUserTable from './AdministratorLayOuts/CompanyUserTable';
 
 export default function Administrator() {
 
@@ -37,6 +39,7 @@ export default function Administrator() {
                 <MDBTabsLink  onClick={() => handleBasicClick('tab1')} active={basicActive === 'tab1'}>
                     <i class="fa-solid fa-screwdriver-wrench"></i> Company Units
                 </MDBTabsLink>
+                
             </MDBTabsItem>
             <MDBTabsItem>
                 <MDBTabsLink onClick={() => handleBasicClick('tab2')} active={basicActive === 'tab2'}>
@@ -49,18 +52,21 @@ export default function Administrator() {
                 </MDBTabsLink>
 
             </MDBTabsItem>
+            
         </MDBTabs>
 
         <MDBTabsContent className='inner-tab-content'>
             <MDBTabsPane className="company-unit-tab" show={basicActive === 'tab1'}>
                 <UnitSetUp />
             </MDBTabsPane>
+            
             <MDBTabsPane className="user-tab" show={basicActive === 'tab2'}>
                 <UserSetUp />
             </MDBTabsPane>
             <MDBTabsPane  className="data-tab" show={basicActive === 'tab3'}>
                 <DataSetUp />
             </MDBTabsPane>
+            
         </MDBTabsContent>
     </>
 }

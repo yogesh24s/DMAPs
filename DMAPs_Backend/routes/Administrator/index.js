@@ -37,5 +37,6 @@ Administrator.post('/saveCompanyUnits', companyUnit.saveCompanyUnits);
 
 //User Set Up
 Administrator.post('/saveCompanyUsers', companyUsers.saveCompanyUsers);
+Administrator.get('/getCompanyUsers', companyUsers.getCompanyUsers);
 
 module.exports = Administrator;

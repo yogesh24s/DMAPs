@@ -24,9 +24,10 @@ import {
 } from 'mdb-react-ui-kit';
 
 
-// import userService from "../../../services/userService";
+ import userService from "../../../services/userService";
 import { trackPromise } from 'react-promise-tracker';
-
+import CompanyUserTable from './CompanyUserTable';
+import adminService from "../../../services/adminService"
 
 export default function UserSetUp() {
 
@@ -34,23 +35,22 @@ export default function UserSetUp() {
     const handleClose = () => setShow(false);
 
     const [verticalActive, setVerticalActive] = useState('tabV1');
-    const [unitName, setunitName] = useState('')
-    const [shortName, setShortName] = useState('')
-    const [group, setGroup] = useState('')
-    const [division, setdivision] = useState('')
-    const [tinNo, setTinNo] = useState('')
-    const [regNo, setRegNo] = useState('')
-    const [addressLine1, setAddressLine1] = useState('')
-    const [addressLine2, setAddressLine2] = useState('')
-    const [street, setStreet] = useState('')
-    const [city, setCity] = useState('')
-    const [pinNo, setPinNO] = useState('')
-    const [contactNo, setContactNo] = useState('')
-    const [contactNoRec, setContactNoRec] = useState('')
-    const [faxNo, setFaxNo] = useState('')
-    const [mailId, setMailId] = useState('')
-    const [website, setWebsite] = useState('')
-    const [state, setState] = useState('')
+    const [unitName, setunitName] = useState("")
+    const [userName, setUserName] = useState("")
+    const [empId, setEmpId] = useState("")
+    const [department, setDepartment] = useState("")
+    const [designation, setDesignation] = useState("")
+    const [officialMobilbeNumber, setOfficialMobileNumber] = useState("")
+    const [mobileNumber, setMobileNumber] = useState("")
+    const [personalMaildId, setPersonalMaildId] = useState("")
+    const [officialMaildId, setOfficialMaildId] = useState("")
+    const [userLevel, setUserLevel] = useState("")
+    const [status, setStatus] = useState("")
+    const [userId, setUserId] = useState("")
+    const [basicData, setBasicData] = useState([])
+    const [basicDesgination, setbasicDesgination] = useState([])
+    const [basicDepartment, setBasicDepartment] = useState([])
+    const [selectedUnit, setSelectedUnit] = useState('');
 
     const handleVerticalClick = (value) => {
         if (value === verticalActive) {
@@ -59,52 +59,59 @@ export default function UserSetUp() {
         setVerticalActive(value);
     };
 
+    const getBasicDetails = () => {
+        trackPromise(
+            adminService.getBasicDetails().then((response) => {
+                console.log("basc", response.data[0].data[0].data.units)
+                setBasicData(response.data[0].data[0].data.units)
+                setbasicDesgination(response.data[0].data[0].data.designation)
+                setBasicDepartment(response.data[0].data[0].data.department)
+            })
+        );
+    }
+
+    useEffect(() => {
+        getBasicDetails()
+    }, [])
+
     const handleSubmit = (e) => {
-        e.preventDefault();
-        let payload = {
-            "Unit_Full_Name": unitName,
-            "Unit_Short_Name": shortName,
-            "Group_Id": group,
-            "Division_Id": division,
-            "Tin_Num": tinNo,
-            "Reg_Num": regNo,
-            "Address_Line_1": addressLine1,
-            "Address_Line_2": addressLine2,
-            "Street": street,
-            "City": city,
-            "State": state,
-            "Pin_Code": pinNo,
-            "Contact_No": contactNo,
-            "Contact_No_Rec" : contactNoRec,
-            "Email_Id": mailId,
-            "Website_Link": website,
-            "Fax_No": faxNo
-
-
-        }
-        alert('suceess')
-        // trackPromise(unitService.saveCompanyUnits(payload).then((response) => {
-        //     //check login response
-        //     if (response.data.status == 'Success') {
-        //         alert(response.data.message);
-
-        //     }
-        //     else if (response.data.status == 'Failed') {
-        //         alert(response.data.message);
-        //     }
-
-        // }).catch((error) => {
-        //     //console.log(error.response.data.error)
-        //     alert(error.response.data.error);
-        // })
-        // );
+       
 
 
     }
     const handleUnitSetup = (e) => {
-        e.preventDefault();
 
-        console.log('hello');
+        e.preventDefault();
+        debugger
+        let payload = {
+            "Unit_Short_Name": selectedUnit,
+            "User_Name": userName,
+            "Employee_Id": empId,
+            "Department_Id": department,
+            "Designation_Id": designation,
+            "Mobile_Num": mobileNumber,
+            "Official_Mobile_Num" : officialMobilbeNumber,
+            "Mail_Id": personalMaildId,
+            "_Official_Mail_Id": officialMaildId,
+            "status": status,
+            "User_Role" : userLevel,
+            "User_Id" : userId
+        }
+        trackPromise(userService.saveCompanyUsers(payload).then((response) => {
+            //check login response
+            if (response.data.status == 'Success') {
+                alert(response.data.message);
+
+            }
+            else if (response.data.status == 'Failed') {
+                alert(response.data.message);
+            }
+
+        }).catch((error) => {
+            //console.log(error.response.data.error)
+            alert(error.response.data.error);
+        })
+        );
     }
 
     useEffect(() => {
@@ -143,8 +150,8 @@ export default function UserSetUp() {
             Role: "Super Admin",
             Department_Id: "",
             Designation_Id: "",
-            User_Status : "Active",
-            Action : ""
+            User_Status: "Active",
+            Action: ""
         },
         {
             id: 2,
@@ -156,8 +163,8 @@ export default function UserSetUp() {
             Role: "Admin",
             Department_Id: "",
             Designation_Id: "",
-            User_Status : "Active",
-            Action : ""
+            User_Status: "Active",
+            Action: ""
         }
     ];
     const columns = [{
@@ -216,6 +223,19 @@ export default function UserSetUp() {
     }
     ];
 
+    const handleChange = (e) => {
+        setSelectedUnit(e.target.value);
+      };
+    
+      const handleUserLevel = (e) => {
+        setUserLevel(e.target.value);
+      };
+    
+      const handleStatus = (e) => {
+        setStatus(e.target.value);
+      };
+    
+
     return <>
         <MDBRow>
             <MDBCol size='2' className='no-pad-right'>
@@ -235,77 +255,93 @@ export default function UserSetUp() {
                                 <Button className='primary-btn' onClick={() => setShow(true)}>
                                     Create New Users
                                 </Button>
-                                <Modal 
-                                show={show}
-                                onHide={() => setShow(false)}
-                                dialogClassName="modal-90w"
-                                backdrop="static"
-                                keyboard={false}>
+                                <Modal
+                                    show={show}
+                                    onHide={() => setShow(false)}
+                                    dialogClassName="modal-90w"
+                                    backdrop="static"
+                                    keyboard={false}>
 
-                                <Modal.Header closeButton>
+                                    <Modal.Header closeButton>
                                         <Modal.Title> Create New Users </Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
-                                    <form onSubmit={handleSubmit}>
-                                        <div className='row'>
-                                            <div className='col-3'>
-                                                <label> Choose Photo </label>
-                                                
-                                                <MDBInput wrapperClass='mb-2' type="file" onChange={(e) => { setunitName(e.target.value)}} value={unitName} name='logo' />
+                                        <form onSubmit={handleSubmit}>
+                                            <div className='row'>
+                                                <div className='col-3'>
+                                                    <label> Choose Photo </label>
 
-                                                <Form.Select className='mb-2'>
-                                                    <option> Select Unit</option>
-                                                </Form.Select>
+                                                    <MDBInput wrapperClass='mb-2' type="file" onChange={(e) => { setunitName(e.target.value) }} value={unitName} name='logo' />
+                                                    
+                                                    <Form.Select className='mb-2' onChange={handleChange} value={selectedUnit}>
+                                                        <option value=''>Select Unit</option>
+
+                                                        {basicData.map((item) => (
+                                                            <option key={item.Unit_Id} value={item.Unit_Id}>
+                                                                {item.Unit_Full_Name}
+                                                            </option>
+                                                        ))}
+
+                                                    </Form.Select>
+                                                </div>
+                                                <div className='col-3'>
+
+                                                    <MDBInput wrapperClass='mb-2' label='User Name' onChange={(e) => { setUserName(e.target.value) }} value={userName} name=' username' />
+
+                                                    <MDBInput wrapperClass='mb-2' label='Emp Id No' onChange={(e) => { setEmpId(e.target.value) }} value={empId} name=' EmpId' />
+
+                                                    <Form.Select className='mb-2' onChange={(e) => { setDepartment(e.target.value) }} value={department} name=' department' >
+                                                        <option> Select Department </option>
+                                                        {basicDepartment.map((item) => (
+                                                            <option key={item.Department_Id} value={item.Department_Name}>
+                                                                {item.Department_Name}
+                                                            </option>
+                                                        ))}
+                                                    </Form.Select>
+
+                                                    <Form.Select className='mb-2' onChange={(e) => { setDesignation(e.target.value) }} value={designation} name=' designation' >
+                                                        <option> Select Designation </option>
+                                                        {basicDesgination.map((item) => (
+                                                            <option key={item.Devision_Id} value={item.Devision_Name}>
+                                                                {item.Devision_Name}
+                                                            </option>
+                                                        ))}
+                                                    </Form.Select>
+
+                                                    <MDBInput wrapperClass='mb-2' label='Personal Mobile No' onChange={(e) => { setMobileNumber(e.target.value) }} value={mobileNumber} name=' mobileNumber' />
+
+                                                    <MDBInput wrapperClass='mb-2' label='Official Mob No' onChange={(e) => { setOfficialMobileNumber(e.target.value) }} value={officialMobilbeNumber} name=' officialMobilbeNumber' />
+
+                                                    <MDBInput wrapperClass='mb-2' label='Personal Mail Id' onChange={(e) => { setPersonalMaildId(e.target.value) }} value={personalMaildId} name='PersonalMaildId' />
+
+                                                    <MDBInput wrapperClass='mb-2' label='Official Mail Id' onChange={(e) => { setOfficialMaildId(e.target.value) }} value={officialMaildId} name='officialMaildId' />
+
+                                                </div>
+
+                                                <div className='col-3'>
+                                                    <Form.Select className='mb-2' onChange={handleUserLevel} value={userLevel}>
+                                                        <option> User Level </option>
+                                                        <option value="normal">Normal</option>
+                                                        <option value="admin">Admin</option>
+                                                        <option value="superAdmin">Super Admin</option>
+                                                    </Form.Select>
+
+                                                    <Form.Select className='mb-2' onChange={handleStatus} value={status}>
+                                                        <option> Status </option>
+                                                        <option value="active">Active</option>
+                                                        <option value="inactive">InActive</option>
+                                                    </Form.Select>
+
+                                                    <MDBInput wrapperClass='mb-2' label='User_Id' onChange={(e) => { setUserId(e.target.value) }} value={userId} name='UserId' />
+
+                                                </div>
+
+                                                <div className='col-3'>
 
 
+                                                </div>
                                             </div>
-                                            <div className='col-3'>
-                                                
-                                                <MDBInput wrapperClass='mb-2' label='User Name' />
-
-                                                <MDBInput wrapperClass='mb-2' label='Emp Id No'  />
-
-                                                <Form.Select className='mb-2'>
-                                                    <option> Select Department </option>
-                                                </Form.Select>
-
-                                                <Form.Select className='mb-2'>
-                                                    <option> Select Designation </option>
-                                                </Form.Select>
-
-                                                <MDBInput wrapperClass='mb-2' label='Personal Mobile No'  />
-
-                                                <MDBInput wrapperClass='mb-2' label='Official Mob No'  />
-
-                                                <MDBInput wrapperClass='mb-2' label='Personal Mail Id'  />
-
-                                                <MDBInput wrapperClass='mb-2' label='Official Mail Id'  />
-
-                                            </div>
-
-                                            <div className='col-3'>
-                                            <Form.Select className='mb-2'>
-                                                    <option> User Level </option>
-                                                </Form.Select>
-
-                                                <Form.Select className='mb-2'>
-                                                    <option> Status </option>
-                                                </Form.Select>
-                                                
-                                                <MDBInput wrapperClass='mb-2' label='User_Id'  />
-
-                                                <MDBInput wrapperClass='mb-2' label='Password'  />
-
-                                                <MDBInput wrapperClass='mb-2' label='Confirm Password'  />
-                                               
-                                            </div>
-
-                                            <div className='col-3'>
-                                            
-
-                                            </div>
-                                        </div>
-                                    </form>
+                                        </form>
 
                                     </Modal.Body>
                                     <Modal.Footer>
@@ -313,19 +349,14 @@ export default function UserSetUp() {
                                             Close
                                         </Button>
                                         <Button variant="primary" type='submit' block onClick={handleUnitSetup}>
-                                            Save 
+                                            Save
                                         </Button>
                                     </Modal.Footer>
                                 </Modal>
                             </div>
                             <div className='col-12'>
-                                <br/>
-                                <BootstrapTable
-                                    keyField='id'
-                                    pagination={pagination}
-                                    data={products}
-                                    columns={columns}
-                                />
+                                <br />
+                                <CompanyUserTable />
                             </div>
                         </div>
                     </MDBTabsPane>
