@@ -39,7 +39,7 @@ function Login() {
 		password: ""
 	});
 
-	const [userNameError, setUserNameError] = useState({});
+	const [userNameError] = useState({});
 	// const [passwordError, setPasswordError] = useState({});
 	const [errorHighlight, setErrorHighlight] = useState(false);
 

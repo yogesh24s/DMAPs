@@ -10,8 +10,7 @@ export default function CompanyUnitTable() {
     const getCompanyUnitData = () => {
       trackPromise(
         unitService.getCompanyUnits().then((response) => {
-          console.log(response.data[0].data[0].data.Company_Units)
-          setData(response.data[0].data[0].data.Company_Units)
+          setData(response.data.Company_Units)
         })
       );
     }
@@ -124,6 +123,5 @@ export default function CompanyUnitTable() {
         </tbody>
       </table>
     </div>
-
   )
 }

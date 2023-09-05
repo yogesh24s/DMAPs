@@ -21,24 +21,26 @@ CompanyUsers.getCompanyUsers = result => {
 };
 
 CompanyUsers.saveCompanyUsers = result => {
+
     knex.transaction(function(t) {
         return knex('dmaps.user')
         .transacting(t)
         .insert(data)
         .then(function(response) {
-            var UserId = response;
-            return knex('dmaps.user_role_permission')
-            .transacting(t)
-            .insert({
-                User_Id : UserId,
-                Model_Id : "asf",
-                Unit_Id : "jhvj",
-                Access_Permission : "vbk",
-                Role_Id : "vjhbk"
-            })
-            .then(function(response) {
-                result(null, { "result": "success" });
-            })
+            // var UserId = response;
+            // return knex('dmaps.user_role_permission')
+            // .transacting(t)
+            // .insert({
+            //     User_Id : UserId,
+            //     Model_Id : "asf",
+            //     Unit_Id : "jhvj",
+            //     Access_Permission : "vbk",
+            //     Role_Id : "vjhbk"
+            // })
+            // .then(function(response) {
+            //     result(null, { "result": "success" });
+            // })
+            result(null, { "result": response });
         })
         .then(t.commit)
         .catch(t.rollback)

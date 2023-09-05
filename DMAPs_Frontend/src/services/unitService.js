@@ -1,16 +1,18 @@
 /**
- * owner : Affine
- * author : Manish & Divyangi
+ * owner : 
+ * author : 
  */
 import api from "./interceptor";
 
 class unitService {
+
     saveCompanyUnits(payload) {
-      return api.post(`/saveCompanyUnits`, payload);
+      return api.post(`http://127.0.0.1:4000/saveCompanyUnits/`, payload)
     }
+    
     getCompanyUnits(){
         return api
-      .get("/getCompanyUnits")
+      .get("http://127.0.0.1:4000/getCompanyUnits/")
       .then((response) => {
         return response;
       })

@@ -25,14 +25,13 @@ CompanyUnit.saveCompanyUnits = result => {
         return knex('company_units')
             .insert(data)
             .then(function(response) {
-                result(null, { "result": "success" });
+                result(null, { "result": response });
             })
             .then(t.commit)
             .catch(t.rollback)
 
     })
     .catch(function(error) {
-        console.log('--C--');
         console.log(error);
     });
 }

@@ -16,8 +16,6 @@ import {
     MDBTabsContent,
     MDBTabsPane
 } from 'mdb-react-ui-kit';
-import CompanyUnitTable from './AdministratorLayOuts/CompanyUnitTable';
-import CompanyUserTable from './AdministratorLayOuts/CompanyUserTable';
 
 export default function Administrator() {
 

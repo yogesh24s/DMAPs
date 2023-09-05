@@ -1,17 +1,17 @@
-import React from 'react'
+import React from 'react';
+
+import { useState, useEffect } from 'react';
 import userService from "../../../services/userService";
 import { trackPromise } from 'react-promise-tracker';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import { useTable } from 'react-table';
 
 export default function CompanyUserTable() {
 	const [data, setData] = useState([])
+
     const getCompanyUserData = () => {
       trackPromise(
         userService.getCompanyUsers().then((response) => {
-          console.log(response.data)
-          setData(response.data)
+          setData(response.data.Company_Users)
         })
       );
     }
@@ -30,57 +30,25 @@ export default function CompanyUserTable() {
 			accessor: 'User_Name',
 		  },
 		  {
-			Header: 'Short Name',
-			accessor: 'Short_Name',
+			Header: 'Department',
+			accessor: 'Department_Id',
 		  },
 		  {
-			Header: 'TIN Number',
-			accessor: 'Tin_Num',
+			Header: 'Designation',
+			accessor: 'Designation_Id',
 		  },
 		  {
-			Header: 'Registration Number',
-			accessor: 'Reg_Num',
+			Header: 'Mobile Number',
+			accessor: 'Mobile_Num',
 		  },
 		  {
-			Header: 'Address Line 1',
-			accessor: 'Address_Line_1',
+			Header: 'EMail',
+			accessor: 'Mail_Id',
 		  },
 		  {
-			Header: 'Address Line 2',
-			accessor: 'Address_Line_2',
-		  },
-		  {
-			Header: 'Street',
-			accessor: 'Street',
-		  },
-		  {
-			Header: 'City',
-			accessor: 'City',
-		  },
-		  {
-			Header: 'State',
-			accessor: 'State',
-		  },
-		  {
-			Header: 'Pin Code',
-			accessor: 'Pin_Code',
-		  },
-		  {
-			Header: 'Contact Number',
-			accessor: 'Contact_No',
-		  },
-		  {
-			Header: 'Email',
-			accessor: 'Email_Id',
-		  },
-		  {
-			Header: 'Website',
-			accessor: 'Website_Link',
-		  },
-		  {
-			Header: 'Fax Number',
-			accessor: 'Fax_No',
-		  },
+			Header: 'User Role',
+			accessor: 'User_Role',
+		  }
 		],
 		[]
 	  );

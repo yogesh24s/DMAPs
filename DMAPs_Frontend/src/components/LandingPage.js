@@ -3,8 +3,7 @@
  * author :
  */
 
-import {useEffect, useState} from 'react';
-import { useHistory } from 'react-router-dom';
+import {useEffect} from 'react';
 import './LandingPage.scss';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';

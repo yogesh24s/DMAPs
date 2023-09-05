@@ -4,8 +4,6 @@
  */
 
 import { useEffect, useState } from 'react';
-import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory from "react-bootstrap-table2-paginator";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
@@ -59,8 +57,6 @@ export default function UnitSetUp() {
     const [pinNoError, setPinNoError] = useState('');
     const [contactNo, setContactNo] = useState('');
     const [contactNoError, setContactNoError] = useState('');
-    const [contactNoRec, setContactNoRec] = useState('')
-    const [contactNoRecError, setContactNoRecError] = useState('');
     const [faxNo, setFaxNo] = useState('')
     const [faxNoError, setfaxNoError] = useState('');
     const [mailId, setMailId] = useState('')
@@ -85,176 +81,7 @@ export default function UnitSetUp() {
       };
     
 
-    const handleSubmit = (e) => {
 
-        e.preventDefault();
-        let isValid = true;
-
-        if (!unitName) {
-            setUnitNameError('Unit Name is required');
-            isValid = false;
-          } else {
-            setUnitNameError('');
-          }
-      
-          if (!shortName) {
-            setShortNameError('Short Name is required');
-            isValid = false;
-          } else {
-            setShortNameError('');
-          }
-      
-          if (!group) {
-            setGroupError('Group is required');
-            isValid = false;
-          } else {
-            setGroupError('');
-          }
-      
-          if (!division) {
-            setDivisionError('Division is required');
-            isValid = false;
-          } else {
-            setDivisionError('');
-          }
-      
-          if (!tinNo) {
-            setTinNoError('TIN No is required');
-            isValid = false;
-          } else if (!handleTinValidation(tinNo)) {
-            setTinNoError('Invalid TIN format');
-            isValid = false;
-          } else {
-            setTinNoError('');
-          }
-      
-
-          if (!regNo) {
-            setRegNoError('Registration No is required');
-            isValid = false;
-          } else {
-            setRegNoError('');
-          }
-          if (!addressLine1) {
-            setAddressLine1Error('Address Line 1 is required');
-            isValid = false;
-          } else {
-            setAddressLine1Error('');
-          }
-          if (!addressLine2) {
-            setAddressLine1Error2('Address Line 2 is required');
-            isValid = false;
-          } else {
-            setAddressLine1Error2('');
-          }
-
-          if (!street) {
-            setStreetError('Street is required');
-            isValid = false;
-          } else {
-            setStreetError('');
-          }
-
-          if (!city) {
-            setCityError('City is required');
-            isValid = false;
-          } else {
-            setCityError('');
-          }
-          
-          if (!pinNo) {
-            setPinNoError('Pin Number is required');
-            isValid = false;
-          } else {
-            setPinNoError('');
-          }
-          if (!contactNo) {
-            setContactNoError('Contact Number is required');
-            isValid = false;
-          } else {
-            setContactNoError('');
-          }
-
-          if (!contactNoRec) {
-            setContactNoRecError('Contact Number Rec is required');
-            isValid = false;
-          } else {
-            setContactNoRecError('');
-          }
-
-          if (!faxNo) {
-            setfaxNoError('Fax Number Rec is required');
-            isValid = false;
-          } else {
-            setfaxNoError('');
-          }
-
-          if (!mailId) {
-            setMailIdError('Mail id is required');
-            isValid = false;
-          } else {
-            setMailIdError('');
-          }
-
-          if (!website) {
-            setWebsiteError('Website  is required');
-            isValid = false;
-          } else {
-            setWebsiteError('');
-          }
-
-          if (!state) {
-            setStateError('State  is required');
-            isValid = false;
-          } else {
-            setStateError('');
-          }
-
-          if (!isValid) {
-            return; 
-          }
-        
-
-        let payload = {
-            "Unit_Full_Name": unitName,
-            "Unit_Short_Name": shortName,
-            "Group_Id": group,
-            "Division_Id": division,
-            "Tin_Num": tinNo,
-            "Reg_Num": regNo,
-            "Address_Line_1": addressLine1,
-            "Address_Line_2": addressLine2,
-            "Street": street,
-            "City": city,
-            "State": state,
-            "Pin_Code": pinNo,
-            "Contact_No": contactNo,
-            "Contact_No_Rec" : contactNoRec,
-            "Email_Id": mailId,
-            "Website_Link": website,
-            "Fax_No": faxNo
-
-
-        }
-        alert('suceess')
-        trackPromise(unitService.saveCompanyUnits(payload).then((response) => {
-            //check login response
-            if (response.data.status === 'Success') {
-                alert(response.data.message);
-
-            }
-            else if (response.data.status ==='Failed') {
-                alert(response.data.message);
-            }
-
-        }).catch((error) => {
-            //console.log(error.response.data.error)
-            alert(error.response.data.error);
-        })
-        );
-
-
-    }
     const handleUnitSetup = (e) => {
         e.preventDefault();
         let isValid = true;
@@ -344,13 +171,6 @@ export default function UnitSetUp() {
             setContactNoError('');
           }
 
-          if (!contactNoRec) {
-            setContactNoRecError('Contact Number Rec is required');
-            isValid = false;
-          } else {
-            setContactNoRecError('');
-          }
-
           if (!faxNo) {
             setfaxNoError('Fax Number Rec is required');
             isValid = false;
@@ -398,49 +218,30 @@ export default function UnitSetUp() {
             "State": state,
             "Pin_Code": pinNo,
             "Contact_No": contactNo,
-            "Contact_No_Rec" : contactNoRec,
             "Email_Id": mailId,
             "Website_Link": website,
             "Fax_No": faxNo
-
-
         }
-        alert('suceess')
-        trackPromise(unitService.saveCompanyUnits(payload).then((response) => {
+        trackPromise(unitService.saveCompanyUnits({"data":[payload]}).then((response) => {
             //check login response
-            if (response.data.status === 'Success') {
-                alert(response.data.message);
-
+            if (response.status === 200) {
+                alert(response.data.result);
+                window.location.reload();
             }
-            else if (response.data.status ==='Failed') {
+            else {
                 alert(response.data.message);
             }
-
         }).catch((error) => {
             //console.log(error.response.data.error)
             alert(error.response.data.error);
         })
         );
-      
     }
 
     useEffect(() => {
 
     }, [])
 
-    const pagination = paginationFactory({
-        page: 1,
-        sizePerPage: 10,
-        lastPageText: ">>",
-        firstPageText: "<<",
-        nextPageText: ">",
-        prePageText: "<",
-        showTotal: true,
-        alwaysShowAllBtns: true,
-        hideSizePerPage: true,
-        onPageChange: function (page, sizePerPage) { },
-        onSizePerPageChange: function (page, sizePerPage) { },
-    });
     const iconActionHandler = (cell, row, rowIndex) => {
         return (
             <>
@@ -448,67 +249,6 @@ export default function UnitSetUp() {
             </>
         );
     };
-
-    const products = [
-        {
-            id: 1,
-            logo: "",
-            unit: "NGA II",
-            full_name_unit: "New Generation Apparels II",
-            address: "Shed #№.4/6 & 20/3, Gharve Bhavi Palya, Kudlu Gate, Hangasandra Viillage, Housor Road,  Bangalore - 560068, Karnataka.",
-            status: "Active",
-            action: "",
-        },
-        {
-            id: 2,
-            logo: "",
-            unit: "SLA I",
-            full_name_unit: "Style Line Apparels I",
-            address: "Shed # №.1/100, Main, Layout, Area, City -560000, Karnataka",
-            status: "Banned",
-            action: "",
-        },
-    ];
-    const columns = [{
-        dataField: 'id',
-        text: 'No',
-        sort: true
-    }, {
-        dataField: 'logo',
-        text: 'Logo'
-    }, {
-        dataField: 'unit',
-        text: 'Unit',
-        sort: true
-    },
-    {
-        dataField: 'full_name_unit',
-        text: 'Full Name of Unit',
-        sort: true
-    },
-    {
-        dataField: 'registration',
-        text: 'Reg No',
-        sort: true
-    },
-    {
-        dataField: 'address',
-        text: 'Address',
-        sort: true
-    },
-    {
-        dataField: 'status',
-        text: 'Status',
-        sort: true
-    },
-    {
-        dataField: "action",
-        text: "Action",
-        formatter: iconActionHandler,
-        sort: false,
-        classes: "actions-column"
-    }
-    ];
 
     return <>
         <MDBRow>
@@ -540,7 +280,7 @@ export default function UnitSetUp() {
                                         <Modal.Title> Create New Units </Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
-                                    <form onSubmit={handleSubmit}>
+                                    <form>
                                         <div className='row'>
                                             <div className='col-3'>
                                                 <label> Unit Logo </label>
@@ -593,21 +333,18 @@ export default function UnitSetUp() {
                                             </div>
 
                                             <div className='col-3'>
-                                            <MDBInput wrapperClass='mb-2' label='Street / Area' onChange={(e) => { setStreet(e.target.value) }} value={street} name='street' />
-                                            {streetError && <p style={{ color: 'red' }}>{streetError}</p>}
-                                            <MDBInput wrapperClass='mb-2' label='City' onChange={(e) => { setCity(e.target.value)}} value={city} name='city' />
-                                            {cityError && <p style={{ color: 'red' }}>{cityError}</p>}
-                                            <MDBInput wrapperClass='mb-2' label='State' onChange={(e) => { setState(e.target.value) }} value={state} name='state' />
-                                            {stateError && <p style={{ color: 'red' }}>{stateError}</p>}
+                                                <MDBInput wrapperClass='mb-2' label='Street / Area' onChange={(e) => { setStreet(e.target.value) }} value={street} name='street' />
+                                                {streetError && <p style={{ color: 'red' }}>{streetError}</p>}
+                                                <MDBInput wrapperClass='mb-2' label='City' onChange={(e) => { setCity(e.target.value)}} value={city} name='city' />
+                                                {cityError && <p style={{ color: 'red' }}>{cityError}</p>}
+                                                <MDBInput wrapperClass='mb-2' label='State' onChange={(e) => { setState(e.target.value) }} value={state} name='state' />
+                                                {stateError && <p style={{ color: 'red' }}>{stateError}</p>}
 
-                                            <MDBInput wrapperClass='mb-2' label='Mail Id' onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
-                                            {mailIdError && <p style={{ color: 'red' }}>{mailIdError}</p>}
+                                                <MDBInput wrapperClass='mb-2' label='Mail Id' onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
+                                                {mailIdError && <p style={{ color: 'red' }}>{mailIdError}</p>}
 
-                                            <MDBInput wrapperClass='mb-2' type='tel' label='Contact No Office' onChange={(e) => { setContactNo(e.target.value) }} value={contactNo} name='contactNo' />
-                                            {contactNoError && <p style={{ color: 'red' }}>{contactNoError}</p>}
-
-                                            <MDBInput wrapperClass='mb-2' type='tel' label='Contact No Rec' onChange={(e) => { setContactNoRec(e.target.value) }} value={contactNoRec} name='contactNoRec' />
-                                            {contactNoRecError && <p style={{ color: 'red' }}>{contactNoRecError}</p>}
+                                                <MDBInput wrapperClass='mb-2' type='tel' label='Contact No Office' onChange={(e) => { setContactNo(e.target.value) }} value={contactNo} name='contactNo' />
+                                                {contactNoError && <p style={{ color: 'red' }}>{contactNoError}</p>}
                                             </div>
                                         </div>
                                     </form>
@@ -617,7 +354,7 @@ export default function UnitSetUp() {
                                         <Button variant="secondary" onClick={handleClose}>
                                             Close
                                         </Button>
-                                        <Button variant="primary" type='submit' block onClick={handleUnitSetup}>
+                                        <Button variant="primary" type='button' onClick={handleUnitSetup}>
                                             Save 
                                         </Button>
                                     </Modal.Footer>

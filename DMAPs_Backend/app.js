@@ -94,8 +94,8 @@ app.use('/', administrator);
 fs.readFile('/opt/iamhrisproductionserver', 'utf8', function(err, contents) {
     var nowDateTime = new Date();
     if (err) {
-        http.createServer(app).listen(3000, function() {
-            console.log(`App listening with http on port 3000. Started at ${nowDateTime}`);
+        http.createServer(app).listen(4000, function() {
+            console.log(`App listening with http on port 4000. Started at ${nowDateTime}`);
         });
     } else {
         var options = {

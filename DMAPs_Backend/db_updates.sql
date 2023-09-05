@@ -171,3 +171,9 @@ CHANGE COLUMN `Employee_Id` `User_Id` VARCHAR(45) NULL DEFAULT NULL ;
 
 ALTER TABLE `dmaps`.`company_units` 
 CHANGE COLUMN `Contact_No` `Contact_No` VARCHAR(10) NULL DEFAULT NULL ;
+
+ALTER TABLE `dmaps`.`user` 
+CHANGE COLUMN `Password` `User_Role` VARCHAR(16) NULL DEFAULT NULL ;
+
+ALTER TABLE `dmaps`.`user` 
+CHANGE COLUMN `Mobile_Num` `Mobile_Num` VARCHAR(10) NOT NULL ;

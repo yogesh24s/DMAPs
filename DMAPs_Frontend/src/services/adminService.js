@@ -1,13 +1,13 @@
 /**
- * owner : Affine
- * author : Manish & Divyangi
+ * owner :
+ * author : 
  */
 import api from "./interceptor";
 
 class adminService {
 	getBasicDetails(){
         return api
-      .get("/basicDetails")
+      .get("http://127.0.0.1:4000/basicDetails")
       .then((response) => {
         return response;
       })
