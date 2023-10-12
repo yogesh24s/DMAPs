@@ -267,7 +267,7 @@ export default function UnitSetUp() {
                         <div className='row'>
                             <div className='col-12 text-right '>
                                 <Button className='primary-btn' onClick={() => setShow(true)}>
-                                    Add New Units
+                                    Add New Unit
                                 </Button>
                                 <Modal 
                                 show={show}
@@ -277,7 +277,7 @@ export default function UnitSetUp() {
                                 keyboard={false}>
 
                                 <Modal.Header closeButton>
-                                        <Modal.Title> Create New Units </Modal.Title>
+                                        <Modal.Title> Add New Unit </Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
                                     <form>
@@ -286,12 +286,12 @@ export default function UnitSetUp() {
                                                 <label> Unit Logo </label>
                                                 <MDBInput wrapperClass='mb-4' type="file" onChange={(e) => { setUnitNameLogo(e.target.value)}} value={unitNameLogo} name='logo' />
 
-                                                <MDBInput wrapperClass='mb-2' label='Name Of Unite' onChange={(e) => { setunitName(e.target.value)}} value={unitName} name='unitName' />
+                                                <MDBInput wrapperClass='mb-2' label='Name of Unit' onChange={(e) => { setunitName(e.target.value)}} value={unitName} name='unitName' />
 
                                                 {unitNameError && <p style={{ color: 'red' }}>{unitNameError}</p>}
 
 
-                                                <MDBInput wrapperClass='mb-2' label='Short Name' onChange={(e) => { setShortName(e.target.value) }} value={shortName} name='shortName' />
+                                                <MDBInput wrapperClass='mb-2' label='Unit Short Name' onChange={(e) => { setShortName(e.target.value) }} value={shortName} name='shortName' />
 
                                                 {shortNameError && <p style={{ color: 'red' }}>{shortNameError}</p>}
 
@@ -302,48 +302,48 @@ export default function UnitSetUp() {
                                                 <MDBInput wrapperClass='mb-2' label='Group' onChange={(e) => { setGroup(e.target.value) }} value={group} name='group' />
                                                 {groupError && <p style={{ color: 'red' }}>{groupError}</p>}
 
-                                                <MDBInput wrapperClass='mb-2' type='email' label='Division' onChange={(e) => { setdivision(e.target.value);}} value={division} name='division' />
+                                                <MDBInput wrapperClass='mb-2' type='text' label='Division' onChange={(e) => { setdivision(e.target.value);}} value={division} name='division' />
                                                 {divisionError && <p style={{ color: 'red' }}>{divisionError}</p>}
 
-                                                <MDBInput wrapperClass='mb-2' type='tel' label='Tin No' onChange={(e) => { setTinNo(e.target.value) }} value={tinNo} name='tinNo' />
+                                                <MDBInput wrapperClass='mb-2' type='tel' label='TIN No.' onChange={(e) => { setTinNo(e.target.value) }} value={tinNo} name='tinNo' />
                                                 {tinNoError && <p style={{ color: 'red' }}>{tinNoError}</p>}
 
-                                                <MDBInput wrapperClass='mb-2' type='tel' label='Reg No' onChange={(e) => { setRegNo(e.target.value) }} value={regNo} name='regNo' />
+                                                <MDBInput wrapperClass='mb-2' type='tel' label='Registered No.' onChange={(e) => { setRegNo(e.target.value) }} value={regNo} name='regNo' />
                                                 {regNoError && <p style={{ color: 'red' }}>{regNoError}</p>}
 
                                             </div>
 
                                             <div className='col-3'>
-                                                <MDBInput label='Address Line 1' wrapperClass='mb-2' onChange={(e) => { setAddressLine1(e.target.value) }} value={addressLine1} name='addressLine1' />
+                                                <MDBInput label='Address' type ="textarea" wrapperClass='mb-2' onChange={(e) => { setAddressLine1(e.target.value) }} value={addressLine1} name='addressLine1' />
                                                 {addressLine1Error && <p style={{ color: 'red' }}>{addressLine1Error}</p>}
 
-                                                <MDBInput wrapperClass='mb-2' label='Address Line 2' onChange={(e) => { setAddressLine2(e.target.value) }} value={addressLine2} name='addressLine2'  />
-                                                {addressLine1Error2 && <p style={{ color: 'red' }}>{addressLine1Error2}</p>}
+                                                {/* <MDBInput wrapperClass='mb-2' label='Address Line 2' onChange={(e) => { setAddressLine2(e.target.value) }} value={addressLine2} name='addressLine2'  />
+                                                {addressLine1Error2 && <p style={{ color: 'red' }}>{addressLine1Error2}</p>} */}
                                                 
-                                                <MDBInput wrapperClass='mb-2'  label='WebSite' onChange={(e) => { setWebsite(e.target.value) }} value={website} name='setWebsite' />
-                                                {websiteError && <p style={{ color: 'red' }}>{websiteError}</p>}
+                                                {/* <MDBInput wrapperClass='mb-2'  label='WebSite' onChange={(e) => { setWebsite(e.target.value) }} value={website} name='setWebsite' />
+                                                {websiteError && <p style={{ color: 'red' }}>{websiteError}</p>} */}
 
-                                                <MDBInput wrapperClass='mb-2'  label='Pin No' onChange={(e) => { setPinNO(e.target.value)}} value={pinNo} name='pinNo' />
+                                                <MDBInput wrapperClass='mb-2'  label='Pin Code' onChange={(e) => { setPinNO(e.target.value)}} value={pinNo} name='pinNo' />
                                                 {pinNoError && <p style={{ color: 'red' }}>{pinNoError}</p>}
 
 
-                                                <MDBInput wrapperClass='mb-2' type='tel' label='Fax No' onChange={(e) => { setFaxNo(e.target.value); }} value={faxNo} name='faxNo' />
-                                                {faxNoError && <p style={{ color: 'red' }}>{faxNoError}</p>}
+                                                {/* <MDBInput wrapperClass='mb-2' type='tel' label='Fax No' onChange={(e) => { setFaxNo(e.target.value); }} value={faxNo} name='faxNo' />
+                                                {faxNoError && <p style={{ color: 'red' }}>{faxNoError}</p>} */}
                                                
                                             </div>
 
                                             <div className='col-3'>
-                                                <MDBInput wrapperClass='mb-2' label='Street / Area' onChange={(e) => { setStreet(e.target.value) }} value={street} name='street' />
-                                                {streetError && <p style={{ color: 'red' }}>{streetError}</p>}
+                                                {/* <MDBInput wrapperClass='mb-2' label='Street / Area' onChange={(e) => { setStreet(e.target.value) }} value={street} name='street' /> */}
+                                                {/* {streetError && <p style={{ color: 'red' }}>{streetError}</p>} */}
                                                 <MDBInput wrapperClass='mb-2' label='City' onChange={(e) => { setCity(e.target.value)}} value={city} name='city' />
                                                 {cityError && <p style={{ color: 'red' }}>{cityError}</p>}
                                                 <MDBInput wrapperClass='mb-2' label='State' onChange={(e) => { setState(e.target.value) }} value={state} name='state' />
                                                 {stateError && <p style={{ color: 'red' }}>{stateError}</p>}
 
-                                                <MDBInput wrapperClass='mb-2' label='Mail Id' onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
+                                                <MDBInput wrapperClass='mb-2' label='Admin E-Mail ID' onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
                                                 {mailIdError && <p style={{ color: 'red' }}>{mailIdError}</p>}
 
-                                                <MDBInput wrapperClass='mb-2' type='tel' label='Contact No Office' onChange={(e) => { setContactNo(e.target.value) }} value={contactNo} name='contactNo' />
+                                                <MDBInput wrapperClass='mb-2' type='tel' label='Contact No.' onChange={(e) => { setContactNo(e.target.value) }} value={contactNo} name='contactNo' />
                                                 {contactNoError && <p style={{ color: 'red' }}>{contactNoError}</p>}
                                             </div>
                                         </div>
@@ -352,7 +352,7 @@ export default function UnitSetUp() {
                                     </Modal.Body>
                                     <Modal.Footer>
                                         <Button variant="secondary" onClick={handleClose}>
-                                            Close
+                                            Cancel
                                         </Button>
                                         <Button variant="primary" type='button' onClick={handleUnitSetup}>
                                             Save 
