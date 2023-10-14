@@ -21,8 +21,9 @@ CompanyUnit.getCompanyUnits = result => {
 };
 
 CompanyUnit.saveCompanyUnits = result => {
+    console.log({data : data});
     knex.transaction(function(t) {
-        return knex('company_units')
+        return knex('dmaps.company_units')
             .insert(data)
             .then(function(response) {
                 result(null, { "result": response });
