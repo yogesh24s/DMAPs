@@ -4,6 +4,7 @@
  */
 
 import { useEffect, useState } from 'react';
+import paginationFactory from "react-bootstrap-table2-paginator";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
@@ -60,6 +61,7 @@ export default function UserSetUp() {
     const getBasicDetails = () => {
         trackPromise(
             adminService.getBasicDetails().then((response) => {
+                console.log("basc", response.data[0].data[0].data.units)
                 setBasicData(response.data[0].data[0].data.units)
                 setbasicDesgination(response.data[0].data[0].data.designation)
                 setBasicDepartment(response.data[0].data[0].data.department)
@@ -71,12 +73,17 @@ export default function UserSetUp() {
         getBasicDetails()
     }, [])
 
+    const handleSubmit = (e) => {
+       
+
+
+    }
     const handleUnitSetup = (e) => {
         e.preventDefault();
         let payload = {
             "Unit_Short_Name": selectedUnit,
             "User_Name": userName,
-            "User_Id": empId,
+            "Employee_Id": empId,
             "Department_Id": department,
             "Designation_Id": designation,
             "Mobile_Num": mobileNumber,
@@ -85,14 +92,14 @@ export default function UserSetUp() {
             "Official_Mail_Id": officialMaildId,
             "status": status,
             "User_Role" : userLevel,
+            "User_Id" : userId
         }
-        trackPromise(userService.saveCompanyUsers({"data":[payload]}).then((response) => {
+        trackPromise(userService.saveCompanyUsers(payload).then((response) => {
             //check login response
-            if (response.status === 200) {
-                alert(response.data.result);
-                window.location.reload();
+            if (response.data.status == 'Success') {
+                alert(response.data.message);
             }
-            else {
+            else if (response.data.status == 'Failed') {
                 alert(response.data.message);
             }
 
@@ -107,6 +114,111 @@ export default function UserSetUp() {
 
     }, [])
 
+    const pagination = paginationFactory({
+        page: 1,
+        sizePerPage: 10,
+        lastPageText: ">>",
+        firstPageText: "<<",
+        nextPageText: ">",
+        prePageText: "<",
+        showTotal: true,
+        alwaysShowAllBtns: true,
+        hideSizePerPage: true,
+        onPageChange: function (page, sizePerPage) { },
+        onSizePerPageChange: function (page, sizePerPage) { },
+    });
+    const iconActionHandler = (cell, row, rowIndex) => {
+        return (
+            <>
+                <i className="fas fa-edit action-icon" title="Edit" > </i>
+            </>
+        );
+    };
+
+    const products = [
+        {
+            id: 1,
+            image: "",
+            unit: "SLA 1",
+            User_Name: "Bharath",
+            Full_Name: "Bharath M L",
+            Created_Date: "",
+            Role: "Super Admin",
+            Department_Id: "",
+            Designation_Id: "",
+            User_Status: "Active",
+            Action: ""
+        },
+        {
+            id: 2,
+            image: "",
+            unit: "NGA 1",
+            User_Name: "Mohan",
+            Full_Name: "Mohan Kumar",
+            Created_Date: "",
+            Role: "Admin",
+            Department_Id: "",
+            Designation_Id: "",
+            User_Status: "Active",
+            Action: ""
+        }
+    ];
+    const columns = [{
+        dataField: 'id',
+        text: 'No',
+        sort: true
+    }, {
+        dataField: 'image',
+        text: 'User Image'
+    }, {
+        dataField: 'unit',
+        text: 'Unit',
+        sort: true
+    },
+    {
+        dataField: 'User_Name',
+        text: 'User Name',
+        sort: true
+    },
+    {
+        dataField: 'Full_Name',
+        text: 'Full Name',
+        sort: true
+    },
+    {
+        dataField: 'Created_Date',
+        text: 'Created Date',
+        sort: true
+    },
+    {
+        dataField: 'Role',
+        text: 'User Role',
+        sort: true
+    },
+    {
+        dataField: 'Department_Id',
+        text: 'Department',
+        sort: true
+    },
+    {
+        dataField: 'Designation_Id',
+        text: 'Designation',
+        sort: true
+    },
+    {
+        dataField: 'User_Status',
+        text: 'Stauts',
+        sort: true
+    },
+    {
+        dataField: "Action",
+        text: "Action",
+        formatter: iconActionHandler,
+        sort: false,
+        classes: "actions-column"
+    }
+    ];
+
     const handleChange = (e) => {
         setSelectedUnit(e.target.value);
       };
@@ -118,7 +230,7 @@ export default function UserSetUp() {
       const handleStatus = (e) => {
         setStatus(e.target.value);
       };
-
+    
 
     return <>
         <MDBRow>
@@ -150,13 +262,16 @@ export default function UserSetUp() {
                                         <Modal.Title> Add New User </Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
-                                        <form>
+                                        <form onSubmit={handleSubmit}>
                                             <div className='row'>
                                                 <div className='col-6'>
                                                     <label> Choose Photo </label>
+
                                                     <MDBInput wrapperClass='mb-2' type="file" onChange={(e) => { setunitName(e.target.value) }} value={unitName} name='logo' />
+                                                    
                                                     <Form.Select className='mb-2' onChange={handleChange} value={selectedUnit}>
                                                         <option value=''>Select Unit</option>
+
                                                         {basicData.map((item) => (
                                                             <option key={item.Unit_Id} value={item.Unit_Id}>
                                                                 {item.Unit_Full_Name}
@@ -224,7 +339,7 @@ export default function UserSetUp() {
                                         <Button variant="secondary" onClick={handleClose}>
                                             Cancel
                                         </Button>
-                                        <Button variant="primary" type='button' onClick={handleUnitSetup}>
+                                        <Button variant="primary" type='submit' block onClick={handleUnitSetup}>
                                             Save
                                         </Button>
                                     </Modal.Footer>
