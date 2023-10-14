@@ -1,5 +1,5 @@
 /**
- * owner : 
+ * owner : Shree Nidhi
  * author :
  */
 import React, { useEffect, useState } from 'react'
@@ -139,13 +139,6 @@ function Login() {
 											<img className="icon-cls" src={PasswordLogo} alt="image not found" />
 										</div>
 									</div>
-
-								 <div>
-										<label className='forgot-cls opacity-50' onClick={openForgotPasswordPage}>
-											Forgot Password?</label>
-										{/* <label className='forgot-cls opacity-50 float-end mt-1'>
-											Signup</label> */}
-									</div>
 									<div className="row">
 										<div className="form-group col-md-12">
 											<button
@@ -156,6 +149,13 @@ function Login() {
 												<span>Login</span>
 											</button>
 										</div>
+									</div>
+									<div className='row'>
+										
+										<label className='forgot-cls opacity-50' onClick={openForgotPasswordPage}>
+											Forgot Password?</label>
+										{/* <label className='forgot-cls opacity-50 float-end mt-1'>
+											Signup</label> */}
 									</div>
 									<br />
 								</form>
