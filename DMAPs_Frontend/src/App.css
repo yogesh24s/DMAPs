@@ -38,3 +38,6 @@
   }
 }
 
+.btn {
+  text-transform: capitalize !important;
+}

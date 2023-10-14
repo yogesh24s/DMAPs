@@ -41,7 +41,7 @@ function CollapsibleExample() {
 
 							<i className="fa fa-bell-o mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
 
-							<i className="fa fa-calendar mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
+							<i className="fa fa-calculator mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
 						</div>
 					</Nav>
 					<Nav>

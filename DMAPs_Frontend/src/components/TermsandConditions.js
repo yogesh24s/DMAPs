@@ -2,6 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import "./TermsandConditions.scss";
 
+
 function TermsandConditions (componentprops) {
 	const clearState = () => {
 		componentprops.clearState(0);
