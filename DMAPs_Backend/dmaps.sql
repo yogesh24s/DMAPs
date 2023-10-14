@@ -31,23 +31,19 @@ CREATE TABLE `company_units` (
   `Tin_Num` varchar(32) DEFAULT NULL,
   `Reg_Num` varchar(32) DEFAULT NULL,
   `Address_Line_1` varchar(200) DEFAULT NULL,
-  `Address_Line_2` varchar(200) DEFAULT NULL,
-  `Street` varchar(32) DEFAULT NULL,
   `City` varchar(32) DEFAULT NULL,
   `State` varchar(32) DEFAULT NULL,
   `Pin_Code` int DEFAULT NULL,
   `Contact_No` varchar(10) DEFAULT NULL,
   `Email_Id` varchar(32) DEFAULT NULL,
-  `Website_Link` varchar(32) DEFAULT NULL,
   `Company_Logo` varchar(32) DEFAULT NULL,
-  `Fax_No` int DEFAULT NULL,
   `Created_At` datetime DEFAULT NULL,
   `Created_By` varchar(45) DEFAULT NULL,
   `Updated_At` datetime DEFAULT NULL,
   `Updated_By` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`Unit_Id`),
   UNIQUE KEY `Unit_Short_Name_UNIQUE` (`Unit_Short_Name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -56,7 +52,45 @@ CREATE TABLE `company_units` (
 
 LOCK TABLES `company_units` WRITE;
 /*!40000 ALTER TABLE `company_units` DISABLE KEYS */;
+INSERT INTO `company_units` VALUES (1,'Raymond','RYD','1A','cotton','123456789','1ASD','HSR Layout','Bangalore','KA',560004,'8971400707','a@gmail.com',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `company_units` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `company_users`
+--
+
+DROP TABLE IF EXISTS `company_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `company_users` (
+  `Unit_Short_Name` varchar(32) NOT NULL,
+  `User_Name` varchar(16) NOT NULL,
+  `User_Employee_Id` varchar(16) NOT NULL,
+  `Department_Id` varchar(16) NOT NULL,
+  `Designation_Id` varchar(16) NOT NULL,
+  `Mobile_Num` varchar(10) NOT NULL,
+  `Mail_Id` varchar(32) NOT NULL,
+  `User_Login_ID` varchar(45) DEFAULT NULL,
+  `Status` varchar(16) NOT NULL,
+  `User_Role` varchar(16) DEFAULT NULL,
+  `Login_Access` varchar(45) DEFAULT NULL,
+  `Created_At` date DEFAULT NULL,
+  `Created_By` varchar(45) DEFAULT NULL,
+  `Updated_At` date DEFAULT NULL,
+  `Updated_By` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`User_Employee_Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `company_users`
+--
+
+LOCK TABLES `company_users` WRITE;
+/*!40000 ALTER TABLE `company_users` DISABLE KEYS */;
+INSERT INTO `company_users` VALUES ('Raymond','yogesh','AAA1','Fabric','Manager','+918971400','yogesh24.ds@gmail.com','yogesh','active','general',NULL,NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `company_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -79,7 +113,7 @@ CREATE TABLE `department` (
 
 LOCK TABLES `department` WRITE;
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
-INSERT INTO `department` VALUES (1,'AEG'),(2,'Data Engineering');
+INSERT INTO `department` VALUES (1,'Fabric'),(2,'Nylon'),(3,'Cotton');
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,40 +139,6 @@ LOCK TABLES `designation` WRITE;
 /*!40000 ALTER TABLE `designation` DISABLE KEYS */;
 INSERT INTO `designation` VALUES (1,'Manager'),(2,'Senior Associate'),(3,'Consultant');
 /*!40000 ALTER TABLE `designation` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user`
---
-
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-  `Unit_Short_Name` varchar(32) NOT NULL,
-  `User_Id` varchar(16) NOT NULL,
-  `User_Name` varchar(16) NOT NULL,
-  `Department_Id` varchar(16) NOT NULL,
-  `Designation_Id` varchar(16) NOT NULL,
-  `Mobile_Num` varchar(10) NOT NULL,
-  `Mail_Id` varchar(32) NOT NULL,
-  `Status` varchar(16) NOT NULL,
-  `Created_Date` date DEFAULT NULL,
-  `User_Role` varchar(16) DEFAULT NULL,
-  `Login_Access` varchar(45) DEFAULT NULL,
-  `Official_Mail_Id` varchar(45) DEFAULT NULL,
-  `Official_Mobile_Num` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`User_Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -204,4 +204,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-09 11:18:46
+-- Dump completed on 2023-10-15  1:47:11
