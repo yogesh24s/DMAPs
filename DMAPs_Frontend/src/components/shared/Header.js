@@ -18,6 +18,10 @@ function CollapsibleExample() {
 		history.push('/landingPage');
 	}
 
+	const openCalculator = () => {
+		window.open('Calculator:///')
+	}
+
 	return (
 		<Navbar className="navbar-custom" collapseOnSelect>
 			<Navbar.Brand className="navbar-cls" href="/landingpage">
@@ -41,7 +45,7 @@ function CollapsibleExample() {
 
 							<i className="fa fa-bell-o mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
 
-							<i className="fa fa-calculator mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
+							<i className="fa fa-calculator mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }} onClick={openCalculator}></i>
 						</div>
 					</Nav>
 					<Nav>

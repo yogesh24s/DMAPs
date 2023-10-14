@@ -8,7 +8,7 @@ var access = require('../var.js');
 access.DMAPFunc();
 
 CompanyUsers.getCompanyUsers = result => {
-    sql =`SELECT * FROM dmaps.user;`;
+    sql =`SELECT * FROM dmaps.company_users;`;
     pool.query(sql, function(err, res) {
         if (err) {
             result(null, err);
@@ -21,25 +21,12 @@ CompanyUsers.getCompanyUsers = result => {
 };
 
 CompanyUsers.saveCompanyUsers = result => {
-
+    console.log({data : data});
     knex.transaction(function(t) {
-        return knex('dmaps.user')
+        return knex('dmaps.company_users')
         .transacting(t)
         .insert(data)
         .then(function(response) {
-            // var UserId = response;
-            // return knex('dmaps.user_role_permission')
-            // .transacting(t)
-            // .insert({
-            //     User_Id : UserId,
-            //     Model_Id : "asf",
-            //     Unit_Id : "jhvj",
-            //     Access_Permission : "vbk",
-            //     Role_Id : "vjhbk"
-            // })
-            // .then(function(response) {
-            //     result(null, { "result": "success" });
-            // })
             result(null, { "result": response });
         })
         .then(t.commit)

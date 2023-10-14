@@ -10,7 +10,7 @@ export default function CompanyUserTable() {
     const getCompanyUserData = () => {
       trackPromise(
         userService.getCompanyUsers().then((response) => {
-          setData(response.data)
+          setData(response.data.Company_Users)
         })
       );
     }
@@ -20,66 +20,39 @@ export default function CompanyUserTable() {
 	
 	const columns = React.useMemo(
 		() => [
-		  {
-			Header: 'Unit Name',
-			accessor: 'Unit_Short_Name',
-		  },
+		  
 		  {
 			Header: 'User Name',
 			accessor: 'User_Name',
 		  },
 		  {
-			Header: 'Short Name',
-			accessor: 'Short_Name',
+			Header: 'User Employee ID',
+			accessor: 'User_Employee_Id',
 		  },
 		  {
-			Header: 'TIN Number',
-			accessor: 'Tin_Num',
+			Header: 'Unit Name',
+			accessor: 'Unit_Short_Name',
 		  },
 		  {
-			Header: 'Registration Number',
-			accessor: 'Reg_Num',
+			Header: 'Department',
+			accessor: 'Department_Id',
 		  },
 		  {
-			Header: 'Address Line 1',
-			accessor: 'Address_Line_1',
+			Header: 'Designation',
+			accessor: 'Designation_Id',
 		  },
 		  {
-			Header: 'Address Line 2',
-			accessor: 'Address_Line_2',
+			Header: 'Contact NO.',
+			accessor: 'Mobile_Num',
 		  },
 		  {
-			Header: 'Street',
-			accessor: 'Street',
+			Header: 'E-Mail',
+			accessor: 'Mail_Id',
 		  },
 		  {
-			Header: 'City',
-			accessor: 'City',
-		  },
-		  {
-			Header: 'State',
-			accessor: 'State',
-		  },
-		  {
-			Header: 'Pin Code',
-			accessor: 'Pin_Code',
-		  },
-		  {
-			Header: 'Contact Number',
-			accessor: 'Contact_No',
-		  },
-		  {
-			Header: 'Email',
-			accessor: 'Email_Id',
-		  },
-		  {
-			Header: 'Website',
-			accessor: 'Website_Link',
-		  },
-		  {
-			Header: 'Fax Number',
-			accessor: 'Fax_No',
-		  },
+			Header: 'Role',
+			accessor: 'User_Role',
+		  }
 		],
 		[]
 	  );

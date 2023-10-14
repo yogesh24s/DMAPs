@@ -4,7 +4,6 @@
  */
 
 import { useEffect, useState } from 'react';
-import paginationFactory from "react-bootstrap-table2-paginator";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
@@ -20,7 +19,6 @@ import {
   MDBCol,
   MDBInput
 } from 'mdb-react-ui-kit';
-
 
 import unitService from "../../../services/unitService";
 import { trackPromise } from 'react-promise-tracker';
@@ -48,24 +46,14 @@ export default function UnitSetUp() {
   const [regNoError, setRegNoError] = useState('');
   const [addressLine1, setAddressLine1] = useState('')
   const [addressLine1Error, setAddressLine1Error] = useState('');
-  const [addressLine2, setAddressLine2] = useState('')
-  const [addressLine1Error2, setAddressLine1Error2] = useState('');
-  const [street, setStreet] = useState('')
-  const [streetError, setStreetError] = useState('');
   const [city, setCity] = useState('')
   const [cityError, setCityError] = useState('');
   const [pinNo, setPinNO] = useState('')
   const [pinNoError, setPinNoError] = useState('');
   const [contactNo, setContactNo] = useState('');
   const [contactNoError, setContactNoError] = useState('');
-  const [contactNoRec, setContactNoRec] = useState('')
-  const [contactNoRecError, setContactNoRecError] = useState('');
-  const [faxNo, setFaxNo] = useState('')
-  const [faxNoError, setfaxNoError] = useState('');
   const [mailId, setMailId] = useState('')
   const [mailIdError, setMailIdError] = useState('');
-  const [website, setWebsite] = useState('')
-  const [websiteError, setWebsiteError] = useState('');
   const [state, setState] = useState('')
   const [stateError, setStateError] = useState('');
 
@@ -75,15 +63,13 @@ export default function UnitSetUp() {
     }
     setVerticalActive(value);
   };
+
   const handleTinValidation = (value) => {
     // Define a regular expression pattern for a 9-digit TIN
     const tinPattern = /^\d{9}$/;
-
     // Return whether the value matches the pattern
     return tinPattern.test(value);
   };
-
-
 
   const handleUnitSetup = (e) => {
     e.preventDefault();
@@ -128,7 +114,6 @@ export default function UnitSetUp() {
       setTinNoError('');
     }
 
-
     if (!regNo) {
       setRegNoError('Registration No is required');
       isValid = false;
@@ -141,19 +126,6 @@ export default function UnitSetUp() {
     } else {
       setAddressLine1Error('');
     }
-    if (!addressLine2) {
-      setAddressLine1Error2('Address Line 2 is required');
-      isValid = false;
-    } else {
-      setAddressLine1Error2('');
-    }
-
-    if (!street) {
-      setStreetError('Street is required');
-      isValid = false;
-    } else {
-      setStreetError('');
-    }
 
     if (!city) {
       setCityError('City is required');
@@ -162,31 +134,25 @@ export default function UnitSetUp() {
       setCityError('');
     }
 
+    if (!state) {
+      setStateError('State  is required');
+      isValid = false;
+    } else {
+      setStateError('');
+    }
+
     if (!pinNo) {
       setPinNoError('Pin Number is required');
       isValid = false;
     } else {
       setPinNoError('');
     }
+
     if (!contactNo) {
       setContactNoError('Contact Number is required');
       isValid = false;
     } else {
       setContactNoError('');
-    }
-
-    // if (!contactNoRec) {
-    //   setContactNoRecError('Contact Number Rec is required');
-    //   isValid = false;
-    // } else {
-    //   setContactNoRecError('');
-    // }
-
-    if (!faxNo) {
-      setfaxNoError('Fax Number Rec is required');
-      isValid = false;
-    } else {
-      setfaxNoError('');
     }
 
     if (!mailId) {
@@ -195,26 +161,11 @@ export default function UnitSetUp() {
     } else {
       setMailIdError('');
     }
-
-    if (!website) {
-      setWebsiteError('Website  is required');
-      isValid = false;
-    } else {
-      setWebsiteError('');
-    }
-
-    if (!state) {
-      setStateError('State  is required');
-      isValid = false;
-    } else {
-      setStateError('');
-    }
-    debugger
+  
     if (!isValid) {
       return;
     }
 
-    debugger
     let payload = {
       "Unit_Full_Name": unitName,
       "Unit_Short_Name": shortName,
@@ -223,22 +174,16 @@ export default function UnitSetUp() {
       "Tin_Num": tinNo,
       "Reg_Num": regNo,
       "Address_Line_1": addressLine1,
-      "Address_Line_2": addressLine2,
-      "Street": street,
       "City": city,
       "State": state,
       "Pin_Code": pinNo,
       "Contact_No": contactNo,
-      "Email_Id": mailId,
-      "Website_Link": website,
-      "Fax_No": faxNo
+      "Email_Id": mailId
     }
-    console.log(payload);
 
-    trackPromise(unitService.saveCompanyUnits(payload).then((response) => {
+    trackPromise(unitService.saveCompanyUnits({"data":[payload]}).then((response) => {
       //check login response
       if (response.status === 200) {
-        alert(response.data.result);
         stateValues()
         handleClose()
       }
@@ -261,33 +206,17 @@ export default function UnitSetUp() {
     setTinNo('')
     setRegNo('')
     setAddressLine1('')
-    setAddressLine2('')
-    setStreet('')
     setCity('')
     setState('')
     setPinNO('')
     setContactNo('')
     setMailId('')
-    setWebsite('')
-    setFaxNo('')
   }
-  useEffect(() => {
+  useEffect((
+    
+  ) => {}, [])
 
-  }, [])
 
-  // const pagination = paginationFactory({
-  //     page: 1,
-  //     sizePerPage: 10,
-  //     lastPageText: ">>",
-  //     firstPageText: "<<",
-  //     nextPageText: ">",
-  //     prePageText: "<",
-  //     showTotal: true,
-  //     alwaysShowAllBtns: true,
-  //     hideSizePerPage: true,
-  //     onPageChange: function (page, sizePerPage) { },
-  //     onSizePerPageChange: function (page, sizePerPage) { },
-  // });
   const iconActionHandler = (cell, row, rowIndex) => {
     return (
       <>
@@ -318,7 +247,7 @@ export default function UnitSetUp() {
                 <Modal
                   show={show}
                   onHide={() => setShow(false)}
-                  dialogClassName="modal-90w"
+                  dialogClassName="modal-75w"
                   backdrop="static"
                   keyboard={false}>
 
@@ -326,21 +255,20 @@ export default function UnitSetUp() {
                     <Modal.Title> Add New Unit </Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <form>
+                    <form onSubmit={handleUnitSetup}>
                       <div className='row'>
-                        <div className='col-3'>
+                        <div className='col-4'>
                           <label> Unit Logo </label>
                           <MDBInput wrapperClass='mb-4' type="file" onChange={(e) => { setUnitNameLogo(e.target.value) }} value={unitNameLogo} name='logo' />
-
-                          <MDBInput wrapperClass='mb-2' label='Name Of Unit' onChange={(e) => { setunitName(e.target.value) }} value={unitName} name='unitName' />
-
-                          {unitNameError && <p style={{ color: 'red' }}>{unitNameError}</p>}
-
-                          <MDBInput wrapperClass='mb-2' label='Unit Short Name' onChange={(e) => { setShortName(e.target.value) }} value={shortName} name='shortName' />
-
-                          {shortNameError && <p style={{ color: 'red' }}>{shortNameError}</p>}
                         </div>
-                        <div className='col-3'>
+                        <div className='col-4'>
+                        <MDBInput wrapperClass='mb-2' label='Name Of Unit' onChange={(e) => { setunitName(e.target.value) }} value={unitName} name='unitName' />
+
+                        {unitNameError && <p style={{ color: 'red' }}>{unitNameError}</p>}
+
+                        <MDBInput wrapperClass='mb-2' label='Unit Short Name' onChange={(e) => { setShortName(e.target.value) }} value={shortName} name='shortName' />
+
+                        {shortNameError && <p style={{ color: 'red' }}>{shortNameError}</p>}
 
                           <MDBInput wrapperClass='mb-2' label='Group' onChange={(e) => { setGroup(e.target.value) }} value={group} name='group' />
                           {groupError && <p style={{ color: 'red' }}>{groupError}</p>}
@@ -356,17 +284,9 @@ export default function UnitSetUp() {
 
                         </div>
 
-                        <div className='col-3'>
+                        <div className='col-4'>
                           <MDBInput label='Address Line 1' wrapperClass='mb-2' onChange={(e) => { setAddressLine1(e.target.value) }} value={addressLine1} name='addressLine1' />
                           {addressLine1Error && <p style={{ color: 'red' }}>{addressLine1Error}</p>}
-
-                          <MDBInput wrapperClass='mb-2' label='WebSite' onChange={(e) => { setWebsite(e.target.value) }} value={website} name='setWebsite' />
-                          {websiteError && <p style={{ color: 'red' }}>{websiteError}</p>}
-
-                          <MDBInput wrapperClass='mb-2' label='Pin Code' onChange={(e) => { setPinNO(e.target.value) }} value={pinNo} name='pinNo' />
-                          {pinNoError && <p style={{ color: 'red' }}>{pinNoError}</p>}
-                        </div>
-                        <div className='col-3'>
 
                           <MDBInput wrapperClass='mb-2' label='City' onChange={(e) => { setCity(e.target.value) }} value={city} name='city' />
                           {cityError && <p style={{ color: 'red' }}>{cityError}</p>}
@@ -374,11 +294,15 @@ export default function UnitSetUp() {
                           <MDBInput wrapperClass='mb-2' label='State' onChange={(e) => { setState(e.target.value) }} value={state} name='state' />
                           {stateError && <p style={{ color: 'red' }}>{stateError}</p>}
 
+                          <MDBInput wrapperClass='mb-2' label='Pin Code' onChange={(e) => { setPinNO(e.target.value) }} value={pinNo} name='pinNo' />
+                          {pinNoError && <p style={{ color: 'red' }}>{pinNoError}</p>}
+
                           <MDBInput wrapperClass='mb-2' label='Admin Mail ID' onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
                           {mailIdError && <p style={{ color: 'red' }}>{mailIdError}</p>}
 
                           <MDBInput wrapperClass='mb-2' type='tel' label='Contact No.' onChange={(e) => { setContactNo(e.target.value) }} value={contactNo} name='contactNo' />
                           {contactNoError && <p style={{ color: 'red' }}>{contactNoError}</p>}
+
                         </div>
                       </div>
                     </form>
@@ -386,7 +310,7 @@ export default function UnitSetUp() {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                      Close
+                      Cancel
                     </Button>
                     <Button variant="primary" type='submit' onClick={handleUnitSetup}>
                       Save

@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useTable } from 'react-table';
 
 export default function CompanyUnitTable() {
-    const [data, setData] = useState([])
+    const [data, setData] = useState([]);
     const getCompanyUnitData = () => {
       trackPromise(
         unitService.getCompanyUnits().then((response) => {
@@ -21,7 +21,7 @@ export default function CompanyUnitTable() {
 	const columns = React.useMemo(
 		() => [
 		  {
-			Header: 'Unit ID',
+			Header: 'ID',
 			accessor: 'Unit_Id',
 		  },
 		  {
@@ -29,28 +29,16 @@ export default function CompanyUnitTable() {
 			accessor: 'Unit_Full_Name',
 		  },
 		  {
-			Header: 'Short Name',
+			Header: 'Unit Short Name',
 			accessor: 'Unit_Short_Name',
-		  },
-		  {
-			Header: 'TIN Number',
-			accessor: 'Tin_Num',
 		  },
 		  {
 			Header: 'Registration Number',
 			accessor: 'Reg_Num',
 		  },
 		  {
-			Header: 'Address Line 1',
+			Header: 'Address Line',
 			accessor: 'Address_Line_1',
-		  },
-		  {
-			Header: 'Address Line 2',
-			accessor: 'Address_Line_2',
-		  },
-		  {
-			Header: 'Street',
-			accessor: 'Street',
 		  },
 		  {
 			Header: 'City',
@@ -71,15 +59,7 @@ export default function CompanyUnitTable() {
 		  {
 			Header: 'Email',
 			accessor: 'Email_Id',
-		  },
-		  {
-			Header: 'Website',
-			accessor: 'Website_Link',
-		  },
-		  {
-			Header: 'Fax Number',
-			accessor: 'Fax_No',
-		  },
+		  }
 		],
 		[]
 	  );
