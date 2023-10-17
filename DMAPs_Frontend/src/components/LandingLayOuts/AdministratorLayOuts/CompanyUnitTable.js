@@ -51,7 +51,25 @@ export default function CompanyUnitTable(props) {
 		  {
 			Header: 'Email',
 			accessor: 'Email_Id',
-		  }
+		  },
+		  {
+			Header: 'Action',
+			accessor: 'action', // You can set a dummy accessor for the action column
+			Cell: ({ row }) => (
+			  <button
+				onClick={(data) => {
+				  // Implement your edit record logic here
+				  // You can use 'row.original' to access the user data
+				  console.log({"data":data});
+
+				  props.openEditForm(row.original)
+				  console.log('Edit User:', row.original);
+				}}
+			  >
+				Edit
+			  </button>
+			),
+		  },
 		],
 		[]
 	  );
