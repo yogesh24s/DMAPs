@@ -5,19 +5,11 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useTable } from 'react-table';
 
-export default function CompanyUnitTable() {
-    const [data, setData] = useState([]);
-    const getCompanyUnitData = () => {
-      trackPromise(
-        unitService.getCompanyUnits().then((response) => {
-          setData(response.data.Company_Units)
-        })
-      );
-    }
-	useEffect(() => {
-		getCompanyUnitData()
-	}, [])
+export default function CompanyUnitTable(props) {
+    //const [data, setData] = useState([]);
+    let data = props.data
 	
+	console.log({"data":data});
 	const columns = React.useMemo(
 		() => [
 		  {

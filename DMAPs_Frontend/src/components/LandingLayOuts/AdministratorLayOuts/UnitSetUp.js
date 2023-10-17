@@ -56,7 +56,7 @@ export default function UnitSetUp() {
   const [mailIdError, setMailIdError] = useState('');
   const [state, setState] = useState('')
   const [stateError, setStateError] = useState('');
-
+  const [data, setData] = useState([])
   const handleVerticalClick = (value) => {
     if (value === verticalActive) {
       return;
@@ -185,6 +185,7 @@ export default function UnitSetUp() {
       //check login response
       if (response.status === 200) {
         stateValues()
+        getCompanyUnitData()
         handleClose()
       }
       else {
@@ -198,6 +199,17 @@ export default function UnitSetUp() {
     );
 
   }
+  const getCompanyUnitData = () => {
+    trackPromise(
+      unitService.getCompanyUnits().then((response) => {
+        setData(response.data.Company_Units)
+      })
+    );
+  }
+  useEffect(() => {
+		getCompanyUnitData()
+	}, [])
+
   function stateValues() {
     setunitName('')
     setShortName('')
@@ -320,7 +332,7 @@ export default function UnitSetUp() {
               </div>
               <div className='col-12'>
                 <br />
-                <CompanyUnitTable />
+                <CompanyUnitTable data={data}/>
               </div>
             </div>
           </MDBTabsPane>
