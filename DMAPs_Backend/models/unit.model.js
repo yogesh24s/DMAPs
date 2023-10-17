@@ -37,4 +37,43 @@ CompanyUnit.saveCompanyUnits = result => {
     });
 }
 
+CompanyUnit.editCompanyUnits = result => {
+    console.log({data : data});
+    const unitData = data[0]; // Get the first item from the data array
+    const updateData = {
+        Unit_Full_Name: unitData.Unit_Full_Name,
+        Unit_Short_Name: unitData.Unit_Short_Name,
+        Group_Id:unitData.Group_Id,
+        Division_Id:unitData.Division_Id,
+        Reg_Num:unitData.Reg_Num,
+        Address_Line_1:unitData.Address_Line_1,
+        City:unitData.City,
+        State:unitData.State,
+        Pin_Code:unitData.Pin_Code,
+        Contact_No:unitData.Contact_No,
+        Email_Id:unitData.Email_Id,
+        Tin_Num: unitData.Tin_Num
+    };
+
+    if (!unitData) {
+        // Handle the case where data[0] doesn't exist
+        result("No data to update", null);
+        return;
+    }
+
+    knex.transaction(function(t) {
+        return knex('dmaps.company_units')
+        .where({ Unit_Id: unitData.Unit_Id, })
+        .update(updateData)
+        .then(function(response) {
+            result(null, { "result": response });
+        })
+        .then(t.commit)
+        .catch(t.rollback)
+    })
+    .catch(function(error) {
+        console.log(error);
+    })
+}
+
 module.exports = CompanyUnit;
