@@ -212,7 +212,7 @@ export default function UserSetUp() {
             debugger
             //check login response
             if (response.status == 200) {
-                alert(response.data.data.result);
+                alert("Records updated successfully");
                 getCompanyUserData()
                 closeEditForm()
             }

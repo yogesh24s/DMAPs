@@ -288,6 +288,7 @@ export default function UnitSetUp() {
 		trackPromise(unitService.editCompanyUnits({ "data": [payload] }).then((response) => {
 			//check login response
 			if (response.status === 200) {
+				alert("Records updated Successfull")
 				getCompanyUnitData()
 				closeEditForm()
 			}
