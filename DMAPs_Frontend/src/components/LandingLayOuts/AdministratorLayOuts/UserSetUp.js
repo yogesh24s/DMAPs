@@ -193,8 +193,40 @@ export default function UserSetUp() {
         settingValuesToEmpty()
         setShow(true)
     }
-    
 
+    const handleEditUserDetails = (e) => {
+        e.preventDefault();
+        let payload = {
+            "Unit_Short_Name": selectedUnit,
+            "User_Name": userName,
+            "User_Employee_Id": empId,
+            "User_Login_ID": loginId,
+            "Department_Id": department,
+            "Designation_Id": designation,
+            "Mobile_Num": mobileNumber,
+            "Mail_Id": personalMaildId,
+            "status": status,
+            "User_Role": userLevel
+        }
+        trackPromise(userService.editCompanyUsers({ "data": [payload] }).then((response) => {
+            debugger
+            //check login response
+            if (response.status == 200) {
+                alert(response.data.data.result);
+                getCompanyUserData()
+                closeEditForm()
+            }
+            else {
+                alert(response.data.message);
+            }
+
+        }).catch((error) => {
+            //console.log(error.response.data.error)
+            alert(error.response.data.error);
+        })
+        );
+    }
+    
     return <>
         <MDBRow>
             <MDBCol size='2' className='no-pad-right'>
@@ -308,7 +340,7 @@ export default function UserSetUp() {
                                         <Modal.Title>Edit User Form</Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
-                                        <form onSubmit={handleUnitSetup}>
+                                        <form onSubmit={handleEditUserDetails}>
                                             <div className='row'>
                                                 <div className='col-4'>
                                                     <label> Choose Photo </label>
@@ -376,7 +408,7 @@ export default function UserSetUp() {
                                         <Button variant="secondary" onClick={closeEditForm}>
                                             Close
                                         </Button>
-                                        <Button variant="primary" onClick={closeEditForm}>
+                                        <Button variant="primary" onClick={handleEditUserDetails}>
                                             Save Changes
                                         </Button>
                                     </Modal.Footer>

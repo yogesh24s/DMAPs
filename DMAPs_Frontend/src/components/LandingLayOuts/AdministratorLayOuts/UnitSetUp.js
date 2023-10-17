@@ -58,6 +58,7 @@ export default function UnitSetUp() {
 	const [stateError, setStateError] = useState('');
 	const [data, setData] = useState([])
 	const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+	const [unitId, setUnitId] = useState("")
 	const handleVerticalClick = (value) => {
 		if (value === verticalActive) {
 			return;
@@ -238,7 +239,7 @@ export default function UnitSetUp() {
 		);
 	};
 	const openEditForm = (data) => {
-        console.log({"dataaaa":data})
+        console.log({"dataaaaunit":data})
         editFormDetails(data)
         setIsEditFormOpen(true);
     };
@@ -255,6 +256,7 @@ export default function UnitSetUp() {
 		setPinNO(data.Pin_Code)
 		setContactNo(data.Contact_No)
 		setMailId(data.Email_Id)
+		setUnitId(data.Unit_Id)
 	}
     const closeEditForm = () => {
         setIsEditFormOpen(false);
@@ -263,6 +265,43 @@ export default function UnitSetUp() {
     //     settingValuesToEmpty()
     //     setShow(true)
     // }
+	const handleEditUnit = (e) => {
+		e.preventDefault();
+		
+
+		let payload = {
+			"Unit_Full_Name": unitName,
+			"Unit_Short_Name": shortName,
+			"Group_Id": group,
+			"Division_Id": division,
+			"Tin_Num": tinNo,
+			"Reg_Num": regNo,
+			"Address_Line_1": addressLine1,
+			"City": city,
+			"State": state,
+			"Pin_Code": pinNo,
+			"Contact_No": contactNo,
+			"Email_Id": mailId,
+			"Unit_Id": unitId
+		}
+
+		trackPromise(unitService.editCompanyUnits({ "data": [payload] }).then((response) => {
+			//check login response
+			if (response.status === 200) {
+				getCompanyUnitData()
+				closeEditForm()
+			}
+			else {
+				alert(response.data.message);
+			}
+
+		}).catch((error) => {
+			//console.log(error.response.data.error)
+			alert(error.response.data.error);
+		})
+		);
+
+	}
 
 	return <>
 		<MDBRow>
@@ -362,10 +401,10 @@ export default function UnitSetUp() {
 								<Modal show={isEditFormOpen} onHide={closeEditForm} dialogClassName="modal-75w"
 									backdrop="static">
 									<Modal.Header closeButton>
-										<Modal.Title>Edit User Form</Modal.Title>
+										<Modal.Title>Edit Unit Form</Modal.Title>
 									</Modal.Header>
 									<Modal.Body>
-										<form onSubmit={handleUnitSetup}>
+										<form onSubmit={handleEditUnit}>
 											<div className='row'>
 												<div className='col-4'>
 													<label> Unit Logo </label>
@@ -422,7 +461,7 @@ export default function UnitSetUp() {
                                         <Button variant="secondary" onClick={closeEditForm}>
                                             Close
                                         </Button>
-                                        <Button variant="primary" onClick={closeEditForm}>
+                                        <Button variant="primary" onClick={handleEditUnit}>
                                             Save Changes
                                         </Button>
                                     </Modal.Footer>
