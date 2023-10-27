@@ -21,6 +21,7 @@ basicDetails.use(function(req, res, next) {
 });
 
 basicDetails.get('/basicDetails', function(req, res) {
+    console.log({"Stage1" : "Test stage 1"});
     var sql =`
     SELECT * FROM dmaps.department;
     SELECT * FROM dmaps.designation;
