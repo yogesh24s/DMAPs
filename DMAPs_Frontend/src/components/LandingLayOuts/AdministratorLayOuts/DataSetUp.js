@@ -268,82 +268,56 @@ export default function DataSetUp() {
                         <div className='row'>
                             <div className='col-12 text-right '>
                                 <Button className='primary-btn' onClick={() => setShow(true)}>
-                                    Add Buyer Group
+                                    Add New
                                 </Button>
 
                                 <Modal 
                                 show={show}
                                 onHide={() => setShow(false)}
-                                dialogClassName="modal-90w"
+                                dialogClassName="modal-50w"
                                 backdrop="static"
                                 keyboard={false}>
 
                                 <Modal.Header closeButton>
-                                        <Modal.Title> Create Buyers </Modal.Title>
+                                        <Modal.Title> Add New Buyer Group </Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
-                                    <form onSubmit={handleSubmit}>
+                                    <form onSubmit={handleSubmit} style={{"margin-right":'-450px'}}>
                                         <div className='row'>
                                             <div className='col-3'>
-                                                <label> Choose Photo </label>
                                                 
-                                                <MDBInput wrapperClass='mb-2' type="file" onChange={(e) => { setunitName(e.target.value)}} value={unitName} name='logo' />
-
                                                 <Form.Select className='mb-2'>
                                                     <option> Select Buyer Group</option>
                                                 </Form.Select>
 
-                                                <Form.Select className='mb-2'>
-                                                    <option> Select Devision </option>
-                                                </Form.Select>
-
-
-                                            </div>
-                                            <div className='col-3'>
-                                                
-                                                <MDBInput wrapperClass='mb-2' label='Address Line 1' />
-
-                                                <MDBInput wrapperClass='mb-2' label='Address Line 2'  />
-
-                                                <MDBInput wrapperClass='mb-2' label='Street / Area'  />
-
-                                                <MDBInput wrapperClass='mb-2' label='City'  />
+                                                <MDBInput wrapperClass='mb-2' label='Address' />
 
                                                 <MDBInput wrapperClass='mb-2' label='State'  />
-
-                                                <MDBInput wrapperClass='mb-2' label='Pin No'  />
-
-                                                <MDBInput wrapperClass='mb-2' label='Country'  />
+                                                
+                                                <MDBInput wrapperClass='mb-2' label='Contact No.'  />
 
                                             </div>
-
                                             <div className='col-3'>
+                                            <Form.Select className='mb-2'>
+                                                    <option> Select Division </option>
+                                                </Form.Select>
+                                                <MDBInput wrapperClass='mb-2' label='City'  />
 
-                                                 <MDBInput wrapperClass='mb-2' label='Contact No. Office'  />
-
-                                                <MDBInput wrapperClass='mb-2' label='Contact No. Rec'  />
-
-                                                <MDBInput wrapperClass='mb-2' label='Fax No'  />
-
-                                                <MDBInput wrapperClass='mb-2' label='Mail Id'  />
-
-                                                <MDBInput wrapperClass='mb-2' label='Web Site'  />
+                                                <MDBInput wrapperClass='mb-2' label='Pincode'  />
+												
+												<MDBInput wrapperClass='mb-2' label='E-Mail ID'  />
+												
                                                
-                                            </div>
-
-                                            <div className='col-3'>
-                                            
-
                                             </div>
                                         </div>
                                     </form>
 
                                     </Modal.Body>
                                     <Modal.Footer>
-                                        <Button variant="secondary" onClick={handleClose}>
-                                            Close
+                                        <Button variant="secondary" onClick={handleClose}style={{width:'20%'}}>
+                                            Cancel
                                         </Button>
-                                        <Button variant="primary" type='submit' block onClick={handleUnitSetup}>
+                                        <Button variant="primary" type='submit' block onClick={handleUnitSetup} style={{width:'20%'}}>
                                             Save 
                                         </Button>
                                     </Modal.Footer>

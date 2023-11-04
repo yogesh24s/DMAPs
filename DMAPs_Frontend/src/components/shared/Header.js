@@ -29,11 +29,7 @@ function CollapsibleExample() {
 			</Navbar.Brand>
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 				<Navbar.Collapse id="responsive-navbar-nav" >
-					<Nav>
-						<div onClick={openLandingPage}>
-							<i className="fa fa-home mx-3 mt-1" aria-hidden="true" style={{ color: "#FFD95A" }} title="Home"></i>
-						</div>
-					</Nav>
+				
 					<Nav className="me-auto">
 
 					</Nav>

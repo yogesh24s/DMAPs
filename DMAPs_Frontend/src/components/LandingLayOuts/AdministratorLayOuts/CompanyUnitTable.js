@@ -13,7 +13,7 @@ export default function CompanyUnitTable(props) {
 	const columns = React.useMemo(
 		() => [
 		  {
-			Header: 'ID',
+			Header: 'No.',
 			accessor: 'Unit_Id',
 		  },
 		  {
@@ -21,15 +21,15 @@ export default function CompanyUnitTable(props) {
 			accessor: 'Unit_Full_Name',
 		  },
 		  {
-			Header: 'Unit Short Name',
+			Header: 'Short Name',
 			accessor: 'Unit_Short_Name',
 		  },
 		  {
-			Header: 'Registration Number',
+			Header: 'Registration No.',
 			accessor: 'Reg_Num',
 		  },
 		  {
-			Header: 'Address Line',
+			Header: 'Address',
 			accessor: 'Address_Line_1',
 		  },
 		  {
@@ -41,15 +41,15 @@ export default function CompanyUnitTable(props) {
 			accessor: 'State',
 		  },
 		  {
-			Header: 'Pin Code',
+			Header: 'Pincode',
 			accessor: 'Pin_Code',
 		  },
 		  {
-			Header: 'Contact Number',
+			Header: 'Contact No.',
 			accessor: 'Contact_No',
 		  },
 		  {
-			Header: 'Email',
+			Header: 'E-mail ID',
 			accessor: 'Email_Id',
 		  },
 		  {
