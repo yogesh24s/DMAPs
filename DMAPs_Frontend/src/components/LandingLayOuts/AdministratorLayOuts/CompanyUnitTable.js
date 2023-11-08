@@ -5,23 +5,15 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useTable } from 'react-table';
 
-export default function CompanyUnitTable() {
-    const [data, setData] = useState([]);
-    const getCompanyUnitData = () => {
-      trackPromise(
-        unitService.getCompanyUnits().then((response) => {
-          setData(response.data.Company_Units)
-        })
-      );
-    }
-	useEffect(() => {
-		getCompanyUnitData()
-	}, [])
+export default function CompanyUnitTable(props) {
+    //const [data, setData] = useState([]);
+    let data = props.data
 	
+	console.log({"data":data});
 	const columns = React.useMemo(
 		() => [
 		  {
-			Header: 'ID',
+			Header: 'No.',
 			accessor: 'Unit_Id',
 		  },
 		  {
@@ -29,15 +21,15 @@ export default function CompanyUnitTable() {
 			accessor: 'Unit_Full_Name',
 		  },
 		  {
-			Header: 'Unit Short Name',
+			Header: 'Short Name',
 			accessor: 'Unit_Short_Name',
 		  },
 		  {
-			Header: 'Registration Number',
+			Header: 'Registration No.',
 			accessor: 'Reg_Num',
 		  },
 		  {
-			Header: 'Address Line',
+			Header: 'Address',
 			accessor: 'Address_Line_1',
 		  },
 		  {
@@ -49,17 +41,35 @@ export default function CompanyUnitTable() {
 			accessor: 'State',
 		  },
 		  {
-			Header: 'Pin Code',
+			Header: 'Pincode',
 			accessor: 'Pin_Code',
 		  },
 		  {
-			Header: 'Contact Number',
+			Header: 'Contact No.',
 			accessor: 'Contact_No',
 		  },
 		  {
-			Header: 'Email',
+			Header: 'E-mail ID',
 			accessor: 'Email_Id',
-		  }
+		  },
+		  {
+			Header: 'Action',
+			accessor: 'action', // You can set a dummy accessor for the action column
+			Cell: ({ row }) => (
+			  <button
+				onClick={(data) => {
+				  // Implement your edit record logic here
+				  // You can use 'row.original' to access the user data
+				  console.log({"data":data});
+
+				  props.openEditForm(row.original)
+				  console.log('Edit User:', row.original);
+				}}
+			  >
+				Edit
+			  </button>
+			),
+		  },
 		],
 		[]
 	  );

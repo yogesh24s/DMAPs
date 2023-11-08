@@ -28,3 +28,18 @@ exports.saveCompanyUsers = (req, res) => {
         }
     });
 };
+exports.editCompanyUsers = (req, res) => {
+    data = req.body;
+    //console.log({"data": data});
+    CompanyUsers.editCompanyUsers((err, data) => {
+        if (err) {
+            res.send({
+                message:
+                    err.message || "Some error occured while retrieving assetTypes"
+            });
+        }
+        else {
+            res.send({ "result": "Company Users are saved successfully", "data": data });
+        }
+    });
+};

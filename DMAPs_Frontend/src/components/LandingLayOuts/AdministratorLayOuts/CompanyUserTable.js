@@ -5,18 +5,9 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useTable } from 'react-table';
 
-export default function CompanyUserTable() {
-	const [data, setData] = useState([])
-    const getCompanyUserData = () => {
-      trackPromise(
-        userService.getCompanyUsers().then((response) => {
-          setData(response.data.Company_Users)
-        })
-      );
-    }
-	useEffect(() => {
-		getCompanyUserData()
-	}, [])
+export default function CompanyUserTable(props) {
+	//const [data, setData] = useState([])
+    let data = props.data
 	
 	const columns = React.useMemo(
 		() => [
@@ -52,7 +43,24 @@ export default function CompanyUserTable() {
 		  {
 			Header: 'Role',
 			accessor: 'User_Role',
-		  }
+		  },
+		  {
+			Header: 'Action',
+			accessor: 'action', // You can set a dummy accessor for the action column
+			Cell: ({ row }) => (
+			  <button
+				onClick={(data) => {
+				  // Implement your edit record logic here
+				  // You can use 'row.original' to access the user data
+				  //console.log({"data":data});
+				  props.openEditForm(row.original)
+				  //console.log('Edit User:', row.original);
+				}}
+			  >
+				Edit
+			  </button>
+			),
+		  },
 		],
 		[]
 	  );

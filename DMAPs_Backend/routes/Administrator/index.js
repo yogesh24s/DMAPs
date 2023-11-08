@@ -34,9 +34,10 @@ Administrator.use(function(_req, res, next) {
 // Unit Set Up
 Administrator.get('/getCompanyUnits', companyUnit.getCompanyUnits);
 Administrator.post('/saveCompanyUnits', companyUnit.saveCompanyUnits);
-
+Administrator.post('/editCompanyUnits', companyUnit.editCompanyUnits);
 //User Set Up
 Administrator.post('/saveCompanyUsers', companyUsers.saveCompanyUsers);
 Administrator.get('/getCompanyUsers', companyUsers.getCompanyUsers);
+Administrator.post('/editCompanyUsers', companyUsers.editCompanyUsers);
 
 module.exports = Administrator;

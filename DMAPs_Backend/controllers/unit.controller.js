@@ -26,3 +26,16 @@ exports.saveCompanyUnits = (req, res) => {
             res.send({ "result": "Company Units are saved successfully", "data": data });
     });
 };
+
+exports.editCompanyUnits = (req, res) => {
+    data = req.body;
+    CompanyUnit.editCompanyUnits((err, data) => {
+        if (err)
+            res.send({
+                message:
+                    err.message || "Some error occured while retrieving assetTypes"
+            });
+        else
+            res.send({ "result": "Company Units are saved successfully", "data": data });
+    });
+};
