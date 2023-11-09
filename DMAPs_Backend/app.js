@@ -84,9 +84,9 @@ app.use(function(req, res, next) {
 });
 
 //  Connect all our routes to our application
-app.use('/', loginRoutes);
-app.use('/', basicDetails);
-app.use('/', administrator);
+app.use('/api/', loginRoutes);
+app.use('/api/', basicDetails);
+app.use('/api/', administrator);
 
 // app.use('/', basicInformation);
 

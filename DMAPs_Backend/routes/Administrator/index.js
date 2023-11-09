@@ -32,12 +32,12 @@ Administrator.use(function(_req, res, next) {
 });
 
 // Unit Set Up
-Administrator.get('/getCompanyUnits', companyUnit.getCompanyUnits);
-Administrator.post('/saveCompanyUnits', companyUnit.saveCompanyUnits);
-Administrator.post('/editCompanyUnits', companyUnit.editCompanyUnits);
+Administrator.get('/api/getCompanyUnits', companyUnit.getCompanyUnits);
+Administrator.post('/api/saveCompanyUnits', companyUnit.saveCompanyUnits);
+Administrator.post('/api/editCompanyUnits', companyUnit.editCompanyUnits);
 //User Set Up
-Administrator.post('/saveCompanyUsers', companyUsers.saveCompanyUsers);
-Administrator.get('/getCompanyUsers', companyUsers.getCompanyUsers);
-Administrator.post('/editCompanyUsers', companyUsers.editCompanyUsers);
+Administrator.post('/api/saveCompanyUsers', companyUsers.saveCompanyUsers);
+Administrator.get('/api/getCompanyUsers', companyUsers.getCompanyUsers);
+Administrator.post('/api/editCompanyUsers', companyUsers.editCompanyUsers);
 
 module.exports = Administrator;

@@ -20,7 +20,7 @@ basicDetails.use(function(req, res, next) {
     next();
 });
 
-basicDetails.get('/basicDetails', function(req, res) {
+basicDetails.get('/api/basicDetails', function(req, res) {
     console.log({"Stage1" : "Test stage 1"});
     var sql =`
     SELECT * FROM dmaps.department;
