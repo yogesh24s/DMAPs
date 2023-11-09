@@ -7,15 +7,15 @@ import api from "./interceptor";
 class userService {
 
     saveCompanyUsers(payload) {
-      return api.post(`http://0.0.0.0:4000/saveCompanyUsers`, payload);
+      return api.post(`http://127.0.0.1:4000/api/saveCompanyUsers`, payload);
     }
     editCompanyUsers(payload) {
-      return api.post(`http://0.0.0.0:4000/editCompanyUsers`, payload);
+      return api.post(`http://127.0.0.1:4000/api/editCompanyUsers`, payload);
     }
 
     getCompanyUsers(){
         return api
-      .get("http://0.0.0.0:4000/getCompanyUsers")
+      .get("http://127.0.0.1:4000/api/getCompanyUsers")
       .then((response) => {
         return response;
       })
