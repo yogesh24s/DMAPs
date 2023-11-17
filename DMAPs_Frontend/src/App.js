@@ -12,7 +12,7 @@ import Footer from "./components/shared/Footer";
 import { usePromiseTracker } from "react-promise-tracker";
 import Loader from "react-promise-loader";
 
-import { Tooltip } from "/node_modules/bootstrap/dist/js/bootstrap.esm.min.js";
+// import { Tooltip } from "/node_modules/bootstrap/dist/js/bootstrap.esm.min.js";
 
 import * as mdb from 'mdb-ui-kit'; // lib
 import { Input } from 'mdb-ui-kit'; // module

@@ -7,6 +7,45 @@ const path = require('path');
 var access = require('../var.js');
 access.DMAPFunc();
 
+// const nodemailer = require('nodemailer');
+// const { google } = require('googleapis');
+// const CLIENT_ID = '1084623199907-r8suonc5a3fba1mgmlecrrvsgb7enti4.apps.googleusercontent.com';
+// const CLIENT_SECRET = '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';
+// const REDIRECT_URI = 'http://localhost';
+// const oAuth2Client = new google.auth.OAuth2(
+//     CLIENT_ID,
+//     CLIENT_SECRET,
+//     REDIRECT_URI
+//   );
+  
+  
+  
+
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//       user: 'developer.dmaps@gmail.com',
+//       pass: 'te@mofdmap5',
+//     },
+//   });
+//   const sendWelcomeEmail = (email) => {
+//     const mailOptions = {
+//       from: 'developer.dmaps@gmail.com',
+//       to: email,
+//       subject: 'Welcome to Dmaps',
+//       text: 'Thank you for registering!',
+//       html: '<strong>Thank you for registering!</strong>',
+//     };
+  
+//     transporter.sendMail(mailOptions, (error, info) => {
+//       if (error) {
+//         console.error(error);
+//       } else {
+//         console.log('Email sent: ' + info.response);
+//       }
+//     });
+//   };
+  
 CompanyUsers.getCompanyUsers = result => {
     sql =`SELECT * FROM dmaps.company_users;`;
     pool.query(sql, function(err, res) {
@@ -56,6 +95,7 @@ CompanyUsers.editCompanyUsers = result => {
     })
 }
 
+
 CompanyUsers.saveCompanyUsers = result => {
     //console.log({data : data.Mail_Id});
     let userData = data[0]
@@ -72,6 +112,8 @@ CompanyUsers.saveCompanyUsers = result => {
         .transacting(t)
         .insert(updatedData)
         .then(function(response) {
+            console.log("email",userData.Mail_Id);
+            sendWelcomeEmail(userData.Mail_Id)
             result(null, { "result": response });
         })
         .then(t.commit)

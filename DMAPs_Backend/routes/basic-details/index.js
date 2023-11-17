@@ -3,10 +3,13 @@
 const basicDetails = require('express').Router();
 
 var access = require('../../var.js');
+var {verifyToken} = require('../Shared/jwt.js')
+
+
 access.DMAPFunc();
 
 basicDetails.use(bodyParser.json());
-basicDetails.use(function(req, res, next) {
+basicDetails.use(function (req, res, next) {
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', '*');
     // Request methods you wish to allow
@@ -20,25 +23,27 @@ basicDetails.use(function(req, res, next) {
     next();
 });
 
-basicDetails.get('/basicDetails', function(req, res) {
-    console.log({"Stage1" : "Test stage 1"});
-    var sql =`
+basicDetails.get('/basicDetails', verifyToken, function (req, res) {
+    console.log({ "Stage1": "Test stage 1" });
+    var sql = `
     SELECT * FROM dmaps.department;
     SELECT * FROM dmaps.designation;
-    SELECT Unit_Id, Unit_Full_Name from dmaps.company_units;
-    `;
-    pool.query(sql, function(err, rows, fields) {
+    SELECT Unit_Id, Unit_Full_Name FROM dmaps.company_units;
+`;
+
+    pool.query(sql, function (err, results, fields) {
         if (!err) {
             var response = [],
                 dataObj = {};
-            if (rows.length != 0) {
-                dataObj['department'] = rows[0];
-                dataObj['designation'] = rows[1];
-                dataObj['units'] = rows[2]
+            if (results.length > 0) {
+                dataObj['department'] = results[0];
+                dataObj['designation'] = results[1];
+                dataObj['units'] = results[2];
                 response.push({ 'result': 'success', 'data': dataObj });
             } else {
                 response.push({ 'result': 'error', 'msg': 'No Results Found' });
             }
+            
             res.setHeader('Content-Type', 'application/json');
             // res.status(200).send(response);
             access.sendResponse(req, res, {

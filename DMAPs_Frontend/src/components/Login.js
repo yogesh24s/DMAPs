@@ -11,10 +11,12 @@ import infoIcon from '../../src/assets/images/info_icon.svg';
 import { useHistory } from 'react-router-dom';
 import loginService from '../services/loginService';
 import helper from '../services/tokenStore';
-
+import { trackPromise } from 'react-promise-tracker';
 import infoData from '../assets/data/info.json';
 import './Login.scss';
 import { Tooltip } from '../../node_modules/bootstrap/dist/js/bootstrap.esm.min.js';
+import generateToken from "../shared/jwtToken"
+
 function Login() {
 
 	const openForgotPasswordPage = () =>{
@@ -49,6 +51,7 @@ function Login() {
 		setData({ ...data, [e.target.name]: [e.target.value] });
 		// formValidation(e.target.value)
 	}
+	
 
 	const submitHandler = e => {
 		e.preventDefault();
@@ -56,17 +59,38 @@ function Login() {
 			'userName': data.username[0],
 			'password': data.password[0]
 		}
-		helper.setToken("eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1N2YzYTgzNi0zMWY4LTQ3Y2UtYmZkZi01YzUxYTMxMzdlNDAifQ.");
-		helper.setRefreshToken("eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1N2YzYTgzNi0zMWY4LTQ3Y2UtYmZkZi01YzUxYTMxMzdlNDAifQ.");
-		helper.setRole("Admin");
-		helper.setFullName("demo user");
-		helper.setTemporaryPasswordFlag("false");
-		helper.setUserName("Yogesh");
-		helper.setUserId("93fff965-d487-4fea-bdc7-6a08a1009298");
-		helper.setAvailableLicense("9")
+		debugger
+		generateToken(payload)
+		trackPromise(loginService.login({ "data": [payload] }).then((response) => {
+            debugger
+            //check login response
+			//data[0].data[0].result
+            if (response.data[0].data[0].result == "success") {
+				history.push("/landingpage");
+                // alert("Login suceessfully");
+				console.log(response);
+               
+            }
+            else {
+                alert("Password and userName are wrong");
+            }
+
+        }).catch((error) => {
+            //console.log(error.response.data.error)
+            alert("error.response.data.error");
+        })
+        );
+		// helper.setToken("eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1N2YzYTgzNi0zMWY4LTQ3Y2UtYmZkZi01YzUxYTMxMzdlNDAifQ.");
+		// helper.setRefreshToken("eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1N2YzYTgzNi0zMWY4LTQ3Y2UtYmZkZi01YzUxYTMxMzdlNDAifQ.");
+		// helper.setRole("Admin");
+		// helper.setFullName("demo user");
+		// helper.setTemporaryPasswordFlag("false");
+		// helper.setUserName("Yogesh");
+		// helper.setUserId("93fff965-d487-4fea-bdc7-6a08a1009298");
+		// helper.setAvailableLicense("9")
 
 		// Changed to false from true
-		history.push("/landingpage");
+		//history.push("/landingpage");
 	}
 
 
