@@ -6,7 +6,7 @@ import api from "./interceptor";
 
 class companyService {
     saveCompanyUsers(payload) {
-      return api.post(`http://34.31.105.162:4000/api/saveCompanyUsers`, payload)
+      return api.post(`http://127.0.0.1:4000/api/saveCompanyUsers`, payload)
       .then((response) => {
         return response;
       })
