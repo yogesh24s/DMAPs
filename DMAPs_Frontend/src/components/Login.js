@@ -15,7 +15,6 @@ import { trackPromise } from 'react-promise-tracker';
 import infoData from '../assets/data/info.json';
 import './Login.scss';
 import { Tooltip } from '../../node_modules/bootstrap/dist/js/bootstrap.esm.min.js';
-import generateToken from "../shared/jwtToken"
 
 function Login() {
 
@@ -59,10 +58,7 @@ function Login() {
 			'userName': data.username[0],
 			'password': data.password[0]
 		}
-		debugger
-		generateToken(payload)
 		trackPromise(loginService.login({ "data": [payload] }).then((response) => {
-            debugger
             //check login response
 			//data[0].data[0].result
             if (response.data[0].data[0].result == "success") {
