@@ -18,6 +18,12 @@ var access = require('./var.js');
 var loginRoutes = require('./routes/login');
 var basicDetails = require('./routes/basic-details');
 var administrator = require('./routes/Administrator');
+// const authUrl = oAuth2Client.generateAuthUrl({
+//     access_type: 'offline',
+//     scope: 'https://www.googleapis.com/auth/gmail.send'
+//   });
+  
+//   console.log('Authorize this app by visiting this URL:', authUrl);
 
 access.DMAPFunc();
 require('console-stamp')(console, '[yyyy-mm-dd HH:MM:ss.l]');
@@ -82,6 +88,15 @@ app.use(function(req, res, next) {
         // }
     // }
 });
+
+//generating secret key for jwt
+const crypto = require('crypto');
+
+const generateRandomKey = () => {
+  return crypto.randomBytes(32).toString('hex'); // 32 bytes converted to a hexadecimal string
+};
+
+console.log(generateRandomKey());
 
 //  Connect all our routes to our application
 app.use('/', loginRoutes);

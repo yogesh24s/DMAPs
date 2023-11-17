@@ -2,9 +2,17 @@
 
 const routes = require('express').Router();
 var access = require('../../var.js');
+var {jwtTokenGenerate, verifyToken} = require('../Shared/jwt.js')
 access.DMAPFunc();
 
 routes.use(bodyParser.json());
+routes.use(
+  bodyParser.urlencoded({
+    extended: true,
+  }),
+);
+
+
 routes.use(function (req, res, next) {
   // Website you wish to allow to connect
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -134,9 +142,11 @@ routes.post('/api/authenticate', function (req, res) {
 
 });
 
+
 // Change user password.
 routes.post('/api/changePassword', function (req, res) {
-
+  console.log(req);
+  console.log(req.body);
   var un = req.body.username,
   cp = req.body.Current_Password,
   np = req.body.New_Password;
@@ -218,6 +228,60 @@ routes.post('/api/changePassword', function (req, res) {
   });
 
 });
+
+
+//login 
+
+routes.post('/login',  function(req, res){
+  //const { username, password } = req.body;
+  let username = req.body[0].userName;
+  let password =req.body[0].password;
+  // console.log({"req.body": req.body});
+  // console.log({"req.body": username});
+  // console.log({"req.body": password});
+  //  let username ="wertyq";
+  //  let password = "q";
+   var sql = `SELECT * FROM dmaps.company_users WHERE User_Name = '${username}' AND User_Password = '${password}'`;
+   
+
+//console.log(sql);
+  if( username !== undefined && password !== undefined) {
+    pool.query(sql,[username, password], function (err, results, fields) {
+      //console.log({"sql":sql});
+      //console.log({"err":err});
+       if (!err) {
+           var response = [],
+               dataObj = {};
+               //console.log("results",results);
+           if (results.length > 0) {
+            //console.log({"results":results});
+			jwtTokenGenerate(password, username)
+            dataObj['users'] = results[0];
+               response.push({ 'result': 'success', 'data': dataObj });
+              
+           } else {
+              console.log({"failedresults": results});
+               response.push({ 'result': 'error', 'msg': 'No Results Found' });
+           }
+           
+           res.setHeader('Content-Type', 'application/json');
+            // res.status(200).send(response);
+            access.sendResponse(req, res, {
+                status: 200,
+                data: response
+            });
+           
+       } else {
+           res.status(400).send(err);
+       }
+   });
+  }
+  else{
+    console.log("username and password ");
+  }
+});
+
+
 
 // Export it.
 module.exports = routes;

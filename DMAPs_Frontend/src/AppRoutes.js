@@ -22,7 +22,7 @@ export class AppRoutes extends Component {
 
           <Route exact path="/login" component={Login} />
 
-          <ProtectedRoutes exact path="/landingpage" component={LandingPage} />
+          <Route exact path="/landingpage" component={LandingPage} />
 
         </Switch>
       </Suspense>
