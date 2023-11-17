@@ -43,7 +43,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "start:local": "env-cmd -e local react-scripts start",
     "start:dev": "env-cmd -e dev react-scripts start",
     "start:qa": "env-cmd -e qa react-scripts start",
