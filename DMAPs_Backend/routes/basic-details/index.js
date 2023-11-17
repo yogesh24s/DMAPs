@@ -23,9 +23,9 @@ basicDetails.use(function (req, res, next) {
     next();
 });
 
-basicDetails.get('/basicDetails', verifyToken, function (req, res) {
-    console.log({ "Stage1": "Test stage 1" });
-    var sql = `
+basicDetails.get('/api/basicDetails', function(req, res) {
+    console.log({"Stage1" : "Test stage 1"});
+    var sql =`
     SELECT * FROM dmaps.department;
     SELECT * FROM dmaps.designation;
     SELECT Unit_Id, Unit_Full_Name FROM dmaps.company_units;

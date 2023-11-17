@@ -31,7 +31,7 @@ routes.use(function (req, res, next) {
 });
 
 // Authenticate the user.
-routes.post('/authenticate', function (req, res) {
+routes.post('/api/authenticate', function (req, res) {
 
   var username = req.body.username;
   var password = req.body.password;
