@@ -242,7 +242,10 @@ export default function UserSetUp() {
                 <MDBTabsContent className='unit-tab-content'>
                     <MDBTabsPane show={verticalActive === 'tabV1'}>
                         <div className='row'>
-                            <div className='col-12 text-right '>
+                        <div className='col-8'>
+								<h1 className='h1'> Company Users Data Management </h1>
+							</div>
+                            <div className='col-4 text-right '>
                                 <Button className='primary-btn' onClick={handleForm}>
                                     Add New 
                                 </Button>

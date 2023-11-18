@@ -78,7 +78,7 @@ export default function CompanyUserTable(props) {
 	
 	
   return (
-    <div className='mt-5'>
+    <div className='mt-4'>
       <table {...getTableProps()} className="table">
         <thead>
           {headerGroups.map((headerGroup) => (
