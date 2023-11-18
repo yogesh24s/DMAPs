@@ -113,7 +113,7 @@ CompanyUsers.saveCompanyUsers = result => {
         .insert(updatedData)
         .then(function(response) {
             console.log("email",userData.Mail_Id);
-            sendWelcomeEmail(userData.Mail_Id)
+            // sendWelcomeEmail(userData.Mail_Id)
             result(null, { "result": response });
         })
         .then(t.commit)

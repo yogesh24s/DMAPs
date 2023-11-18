@@ -41,12 +41,12 @@ export default function Administrator() {
             </MDBTabsItem>
             <MDBTabsItem>
                 <MDBTabsLink onClick={() => handleBasicClick('tab2')} active={basicActive === 'tab2'}>
-                    <i class="fa-solid fa-screwdriver-wrench"></i> Users
+                    <i class="fa-solid fa-users"></i> Users
                 </MDBTabsLink>
             </MDBTabsItem>
             <MDBTabsItem>
                 <MDBTabsLink onClick={() => handleBasicClick('tab3')} active={basicActive === 'tab3'}>
-                    <i class="fa-solid fa-screwdriver-wrench"></i>  DMAPs Data
+                    <i class="fa-solid fa-address-book"></i>  DMAPs Data
                 </MDBTabsLink>
 
             </MDBTabsItem>

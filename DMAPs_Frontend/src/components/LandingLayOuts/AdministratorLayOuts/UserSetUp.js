@@ -229,7 +229,7 @@ export default function UserSetUp() {
     
     return <>
         <MDBRow>
-            <MDBCol size='2' className='no-pad-right'>
+            <MDBCol size='1' className='no-pad-right'>
                 <MDBTabs className='flex-column text-center vertical-tab'>
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV1')} active={verticalActive === 'tabV1'}>
@@ -238,7 +238,7 @@ export default function UserSetUp() {
                     </MDBTabsItem>
                 </MDBTabs>
             </MDBCol>
-            <MDBCol size='10' className='no-pad-left'>
+            <MDBCol size='11' className='no-pad-left'>
                 <MDBTabsContent className='unit-tab-content'>
                     <MDBTabsPane show={verticalActive === 'tabV1'}>
                         <div className='row'>
@@ -249,7 +249,7 @@ export default function UserSetUp() {
                                 <Modal
                                     show={show}
                                     onHide={() => setShow(false)}
-                                    dialogClassName="modal-50w"
+                                    dialogClassName="modal-75w"
                                     backdrop="static"
                                     keyboard={false}>
 
@@ -257,11 +257,11 @@ export default function UserSetUp() {
                                         <Modal.Title> Add New User </Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
-                                        <form onSubmit={handleUnitSetup} style={{"margin-right":'-250px'}}>
+                                        <form onSubmit={handleUnitSetup}>
                                             <div className='row' >
-                                                <div className='col-4'>
+                                                <div className='col-6'>
                                                   
-                                                    <Form.Select className='mb-2' onChange={(e) => { setSelectedUnit(e.target.value) }} value={selectedUnit} name="selectedUnit" >
+                                                    <Form.Select className='mb-3' onChange={(e) => { setSelectedUnit(e.target.value) }} value={selectedUnit} name="selectedUnit" >
                                                         <option value=''>Select Unit</option>
                                                         {basicData.map((item) => (
                                                             <option key={item.Unit_Id} value={item.Unit_Short_Name}>
@@ -270,7 +270,7 @@ export default function UserSetUp() {
                                                         ))}
                                                     </Form.Select>
 
-                                                    <Form.Select className='mb-2' onChange={(e) => { setDesignation(e.target.value) }} value={designation} name=' designation' >
+                                                    <Form.Select className='mb-3' onChange={(e) => { setDesignation(e.target.value) }} value={designation} name=' designation' >
                                                         <option> Select Designation </option>
                                                         {basicDesgination.map((item) => (
                                                             <option key={item.Devision_Id} value={item.Devision_Name}>
@@ -279,20 +279,20 @@ export default function UserSetUp() {
                                                         ))}
                                                     </Form.Select>
 
-                                                    <MDBInput wrapperClass='mb-2' label='User Employee ID' onChange={(e) => { setEmpId(e.target.value) }} value={empId} name=' EmpId' />
+                                                    <MDBInput wrapperClass='mb-3' label='User Employee ID' onChange={(e) => { setEmpId(e.target.value) }} value={empId} name=' EmpId' />
                                                     
-                                                    <Form.Select className='mb-2' onChange={handleStatus} value={status}>
+                                                    <Form.Select className='mb-3' onChange={handleStatus} value={status}>
                                                         <option> Select Status </option>
                                                         <option value="active">Active</option>
                                                         <option value="inactive">InActive</option>
                                                     </Form.Select>
 
-                                                    <MDBInput wrapperClass='mb-2' label='Contact No.' onChange={(e) => { setMobileNumber(e.target.value) }} value={mobileNumber} name=' mobileNumber' />
+                                                    <MDBInput wrapperClass='mb-3' label='Contact No.' onChange={(e) => { setMobileNumber(e.target.value) }} value={mobileNumber} name=' mobileNumber' />
 
                                                 </div>
-                                                <div className='col-4'>
+                                                <div className='col-6'>
                                                     
-                                                <Form.Select className='mb-2' onChange={(e) => { setDepartment(e.target.value) }} value={department} name=' department' >
+                                                <Form.Select className='mb-3' onChange={(e) => { setDepartment(e.target.value) }} value={department} name=' department' >
                                                         <option> Select Department </option>
                                                         {basicDepartment.map((item) => (
                                                             <option key={item.Department_Id} value={item.Department_Name}>
@@ -302,18 +302,18 @@ export default function UserSetUp() {
                                                     </Form.Select>
 
                                                     
-                                                    <Form.Select className='mb-2' onChange={handleUserLevel} value={userLevel}>
+                                                    <Form.Select className='mb-3' onChange={handleUserLevel} value={userLevel}>
                                                         <option> Select Role </option>
                                                         <option value="general">General</option>
                                                         <option value="admin">Admin</option>
                                                         <option value="superAdmin">Super Admin</option>
                                                     </Form.Select>
                                                     
-                                                    <MDBInput wrapperClass='mb-2' label='Login ID' onChange={(e) => { setLoginId(e.target.value) }} value={loginId} name='LoginId' />
+                                                    <MDBInput wrapperClass='mb-3' label='Login ID' onChange={(e) => { setLoginId(e.target.value) }} value={loginId} name='LoginId' />
 
-                                                <MDBInput wrapperClass='mb-2' label='Name' onChange={(e) => { setUserName(e.target.value) }} value={userName} name=' username' />
+                                                <MDBInput wrapperClass='mb-3' label='Name' onChange={(e) => { setUserName(e.target.value) }} value={userName} name=' username' />
 
-                                                <MDBInput wrapperClass='mb-2' label='E-Mail ID' onChange={(e) => { setPersonalMaildId(e.target.value) }} value={personalMaildId} name='PersonalMaildId' />
+                                                <MDBInput wrapperClass='mb-3' label='E-Mail ID' onChange={(e) => { setPersonalMaildId(e.target.value) }} value={personalMaildId} name='PersonalMaildId' />
                             
                                                 </div> 
                                             </div>

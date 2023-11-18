@@ -35,9 +35,9 @@ function CollapsibleExample() {
 					</Nav>
 					<Nav style={{ marginRight:"15px", borderRight:"1px solid #fff" }}>
 						<div style={{ width: "max-content", height: "28px", borderRadius: "5px", cursor: "pointer", padding: "0 10px 0 0" }} >
-							<i className="fa fa-star mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
+							{/* <i className="fa fa-star mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
 
-							<i className="fa fa-envelope-o mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
+							<i className="fa fa-envelope-o mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i> */}
 
 							<i className="fa fa-bell-o mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
 

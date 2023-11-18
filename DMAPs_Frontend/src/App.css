@@ -41,3 +41,7 @@
 .btn {
   text-transform: capitalize !important;
 }
+
+.nav-tabs .nav-link {
+  text-transform: none !important;
+}

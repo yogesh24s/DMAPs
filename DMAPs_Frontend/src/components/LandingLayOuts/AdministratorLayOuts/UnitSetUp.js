@@ -56,9 +56,9 @@ export default function UnitSetUp() {
 	const [mailIdError, setMailIdError] = useState('');
 	const [state, setState] = useState('')
 	const [stateError, setStateError] = useState('');
-	const [data, setData] = useState([])
+	const [data, setData] = useState([]);
 	const [isEditFormOpen, setIsEditFormOpen] = useState(false);
-	const [unitId, setUnitId] = useState("")
+	const [unitId, setUnitId] = useState("");
 	const handleVerticalClick = (value) => {
 		if (value === verticalActive) {
 			return;
@@ -67,8 +67,8 @@ export default function UnitSetUp() {
 	};
 
 	const handleTinValidation = (value) => {
-		// Define a regular expression pattern for a 9-digit TIN
-		const tinPattern = /^\d{9}$/;
+		// Define a regular expression pattern for a 11-digit TIN
+		const tinPattern = /^\d{11}$/;
 		// Return whether the value matches the pattern
 		return tinPattern.test(value);
 	};
@@ -239,7 +239,6 @@ export default function UnitSetUp() {
 		);
 	};
 	const openEditForm = (data) => {
-        console.log({"dataaaaunit":data})
         editFormDetails(data)
         setIsEditFormOpen(true);
     };
@@ -306,7 +305,7 @@ export default function UnitSetUp() {
 
 	return <>
 		<MDBRow>
-			<MDBCol size='2' className='no-pad-right'>
+			<MDBCol size='1' className='no-pad-right'>
 				<MDBTabs className='flex-column text-center vertical-tab'>
 					<MDBTabsItem className="vertical-link">
 						<MDBTabsLink onClick={() => handleVerticalClick('tabV1')} active={verticalActive === 'tabV1'}>
@@ -315,18 +314,21 @@ export default function UnitSetUp() {
 					</MDBTabsItem>
 				</MDBTabs>
 			</MDBCol>
-			<MDBCol size='10' className='no-pad-left'>
+			<MDBCol size='11' className='no-pad-left'>
 				<MDBTabsContent className='unit-tab-content'>
 					<MDBTabsPane show={verticalActive === 'tabV1'}>
 						<div className='row'>
-							<div className='col-12 text-right '>
+							<div className='col-8'>
+								<h1 className='h1'> Company Units Data Management </h1>
+							</div>
+							<div className='col-4 text-right'>
 								<Button className='primary-btn' onClick={() => setShow(true)}>
 									Add New 
 								</Button>
 								<Modal
 									show={show}
 									onHide={() => setShow(false)}
-									dialogClassName="modal-50w"
+									dialogClassName="modal-75w"
 									backdrop="static"
 									keyboard={false}>
 
@@ -334,10 +336,9 @@ export default function UnitSetUp() {
 										<Modal.Title> Add New Unit </Modal.Title>
 									</Modal.Header>
 									<Modal.Body>
-										<form onSubmit={handleUnitSetup} style={{"margin-right":'-250px'}}>
+										<form onSubmit={handleUnitSetup}>
 											<div className='row'>
-												
-												<div className='col-4'>
+												<div className='col-6'>
 													<MDBInput wrapperClass='mb-2' label='Name of Unit' onChange={(e) => { setunitName(e.target.value) }} value={unitName} name='unitName' />
 
 													{unitNameError && <p style={{ color: 'red' }}>{unitNameError}</p>}
@@ -362,7 +363,7 @@ export default function UnitSetUp() {
 
 												</div>
 
-												<div className='col-4'>
+												<div className='col-6'>
 
 													<MDBInput wrapperClass='mb-2' label='Short Name' onChange={(e) => { setShortName(e.target.value) }} value={shortName} name='shortName' />
 
