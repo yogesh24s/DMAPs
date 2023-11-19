@@ -124,6 +124,24 @@ CompanyUsers.saveCompanyUsers = result => {
     })
 
 }
+
+CompanyUsers.deleteCompanyUsers = result => {
+    const unitData = data[0]; // Get the first item from the data array
+
+    knex.transaction(function(t) {
+        return knex('dmaps.company_users')
+        .where({ User_Employee_Id: unitData.User_Employee_Id})
+        .del()
+        .then(function(response) {
+            result(null, { "result": response });
+        })
+        .then(t.commit)
+        .catch(t.rollback)
+    })
+    .catch(function(error) {
+        console.log(error);
+    })
+}
     
 
 module.exports = CompanyUsers;

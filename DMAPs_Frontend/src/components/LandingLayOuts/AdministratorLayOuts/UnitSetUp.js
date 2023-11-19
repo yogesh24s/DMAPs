@@ -260,14 +260,39 @@ export default function UnitSetUp() {
     const closeEditForm = () => {
         setIsEditFormOpen(false);
     };
+
+// Delete Unit Records
+
+const deleteUnitRecord = (data) => {
+	console.log(data)
+	let payload = {
+		"Unit_Short_Name":data.Unit_Short_Name,
+		"Unit_Id": data.Unit_Id
+	}
+	trackPromise(unitService.deleteCompanyUnits({ "data": [payload] }).then((response) => {
+		//check login response
+		if (response.status === 200) {
+			alert("Deleted Unit Successfull")
+			getCompanyUnitData()
+		}
+		else {
+			alert(response.data.message);
+		}
+
+	}).catch((error) => {
+		//console.log(error.response.data.error)
+		alert(error.response.data.error);
+	})
+	);
+
+};
+
     // function handleForm() {
     //     settingValuesToEmpty()
     //     setShow(true)
     // }
 	const handleEditUnit = (e) => {
 		e.preventDefault();
-		
-
 		let payload = {
 			"Unit_Full_Name": unitName,
 			"Unit_Short_Name": shortName,
@@ -401,7 +426,7 @@ export default function UnitSetUp() {
 								</Modal>
 							</div>
 							<div className='col-12'>
-								<CompanyUnitTable data={data} openEditForm={openEditForm} />
+								<CompanyUnitTable data={data} openEditForm={openEditForm} deleteUnitRecord = {deleteUnitRecord} />
 								<Modal show={isEditFormOpen} onHide={closeEditForm} dialogClassName="modal-75w"
 									backdrop="static">
 									<Modal.Header closeButton>
