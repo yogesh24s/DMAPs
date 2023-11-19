@@ -236,9 +236,9 @@ routes.post('/login',  function(req, res){
   //const { username, password } = req.body;
   let username = req.body[0].userName;
   let password =req.body[0].password;
-  // console.log({"req.body": req.body});
-  // console.log({"req.body": username});
-  // console.log({"req.body": password});
+  //console.log({"req.body": req.body});
+ //console.log({"req.body": username});
+  //console.log({"req.body": password});
   //  let username ="wertyq";
   //  let password = "q";
    var sql = `SELECT * FROM dmaps.company_users WHERE User_Name = '${username}' AND User_Password = '${password}'`;
@@ -247,8 +247,8 @@ routes.post('/login',  function(req, res){
 //console.log(sql);
   if( username !== undefined && password !== undefined) {
     pool.query(sql,[username, password], function (err, results, fields) {
-      //console.log({"sql":sql});
-      //console.log({"err":err});
+      console.log({"sql":sql});
+      console.log({"err":err});
        if (!err) {
            var response = [],
                dataObj = {};
