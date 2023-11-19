@@ -226,6 +226,28 @@ export default function UserSetUp() {
         })
         );
     }
+
+    const deleteUserRecord = (data) => {
+        console.log(data)
+        let payload = {
+            "User_Employee_Id":data.User_Employee_Id
+        }
+        trackPromise(userService.deleteCompanyUsers({ "data": [payload] }).then((response) => {
+            //check login response
+            if (response.status === 200) {
+                alert("Deleted User Successfull")
+                getCompanyUserData()
+            }
+            else {
+                alert(response.data.message);
+            }
+    
+        }).catch((error) => {
+            //console.log(error.response.data.error)
+            alert(error.response.data.error);
+        })
+        );
+    };
     
     return <>
         <MDBRow>
@@ -337,7 +359,7 @@ export default function UserSetUp() {
                                 </Modal>
                             </div>
                             <div className='col-12'>
-                                <CompanyUserTable data={data} openEditForm={openEditForm} />
+                                <CompanyUserTable data={data} openEditForm={openEditForm} deleteUserRecord = {deleteUserRecord}/>
                                 <Modal show={isEditFormOpen} onHide={closeEditForm} dialogClassName="modal-75w"
                                     backdrop="static">
                                     <Modal.Header closeButton>

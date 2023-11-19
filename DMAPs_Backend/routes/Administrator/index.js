@@ -35,9 +35,10 @@ Administrator.use(function(_req, res, next) {
 Administrator.get('/api/getCompanyUnits', companyUnit.getCompanyUnits);
 Administrator.post('/api/saveCompanyUnits', companyUnit.saveCompanyUnits);
 Administrator.post('/api/editCompanyUnits', companyUnit.editCompanyUnits);
+Administrator.post('/api/deleteCompanyUnits', companyUnit.deleteCompanyUnits);
 //User Set Up
 Administrator.post('/api/saveCompanyUsers', companyUsers.saveCompanyUsers);
 Administrator.get('/api/getCompanyUsers', companyUsers.getCompanyUsers);
 Administrator.post('/api/editCompanyUsers', companyUsers.editCompanyUsers);
-
+Administrator.post('/api/deleteCompanyUsers', companyUsers.deleteCompanyUsers);
 module.exports = Administrator;

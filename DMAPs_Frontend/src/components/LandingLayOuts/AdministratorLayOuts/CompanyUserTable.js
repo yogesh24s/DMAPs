@@ -48,17 +48,14 @@ export default function CompanyUserTable(props) {
 			Header: 'Action',
 			accessor: 'action', // You can set a dummy accessor for the action column
 			Cell: ({ row }) => (
-			  <button
-				onClick={(data) => {
-				  // Implement your edit record logic here
-				  // You can use 'row.original' to access the user data
-				  //console.log({"data":data});
-				  props.openEditForm(row.original)
-				  //console.log('Edit User:', row.original);
-				}}
-			  >
-				Edit
-			  </button>
+				[
+					<i className='fa fa-edit pointer' onClick={(data) => {
+					  props.openEditForm(row.original)
+					}} title='Edit'> </i>,  
+					<i className='fa fa-trash ml-15 pointer' onClick={(data) => {
+						props.deleteUserRecord(row.original)
+					  }} title='Delete' > </i>
+				]
 			),
 		  },
 		],

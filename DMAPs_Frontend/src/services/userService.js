@@ -13,6 +13,10 @@ class userService {
       return api.post(`http://127.0.0.1:4000/api/editCompanyUsers`, payload);
     }
 
+    deleteCompanyUsers(payload) {
+      return api.post(`http://127.0.0.1:4000/api/deleteCompanyUsers`, payload);
+    }
+
     getCompanyUsers(){
         return api
       .get("http://127.0.0.1:4000/api/getCompanyUsers")

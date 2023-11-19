@@ -6,7 +6,7 @@ exports.getCompanyUsers = (req, res) => {
         if (err)
             res.send({
                 message:
-                    err.message || "Some error occured while retrieving assetTypes"
+                    err.message || "Some error occured"
             });
         else {
             res.send(data);
@@ -20,7 +20,7 @@ exports.saveCompanyUsers = (req, res) => {
         if (err) {
             res.send({
                 message:
-                    err.message || "Some error occured while retrieving assetTypes"
+                    err.message || "Some error occured"
             });
         }
         else {
@@ -35,11 +35,27 @@ exports.editCompanyUsers = (req, res) => {
         if (err) {
             res.send({
                 message:
-                    err.message || "Some error occured while retrieving assetTypes"
+                    err.message || "Some error occured"
             });
         }
         else {
             res.send({ "result": "Company Users are saved successfully", "data": data });
+        }
+    });
+};
+
+exports.deleteCompanyUsers = (req, res) => {
+    data = req.body;
+    //console.log({"data": data});
+    CompanyUsers.deleteCompanyUsers((err, data) => {
+        if (err) {
+            res.send({
+                message:
+                    err.message || "Some error occured"
+            });
+        }
+        else {
+            res.send({ "result": "Company Users are deleted successfully", "data": data });
         }
     });
 };

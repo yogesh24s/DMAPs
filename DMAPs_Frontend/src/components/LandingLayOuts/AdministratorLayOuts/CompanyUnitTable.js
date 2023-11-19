@@ -8,8 +8,6 @@ import { useTable } from 'react-table';
 export default function CompanyUnitTable(props) {
     //const [data, setData] = useState([]);
     let data = props.data
-	
-	console.log({"data":data});
 	const columns = React.useMemo(
 		() => [
 		  {
@@ -55,19 +53,12 @@ export default function CompanyUnitTable(props) {
 		  {
 			Header: 'Action',
 			accessor: 'action', // You can set a dummy accessor for the action column
-			Cell: ({ row }) => (
-			  <button
-				onClick={(data) => {
-				  // Implement your edit record logic here
-				  // You can use 'row.original' to access the user data
-				  console.log({"data":data});
-
+			Cell: ({ row }) => ([
+				<i className='fa fa-edit pointer' onClick={(data) => {
 				  props.openEditForm(row.original)
-				  console.log('Edit User:', row.original);
-				}}
-			  >
-				Edit
-			  </button>
+				}} title='Edit'> </i>,  <i className='fa fa-trash ml-15 pointer' onClick={(data) => {
+					props.deleteUnitRecord(row.original)
+				  }} title='Delete' > </i>]
 			),
 		  },
 		],

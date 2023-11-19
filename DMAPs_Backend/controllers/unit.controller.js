@@ -5,7 +5,7 @@ exports.getCompanyUnits = (req, res) => {
         if (err)
             res.send({
                 message:
-                    err.message || "Some error occured while retrieving assetTypes"
+                    err.message || "Some error occured"
             });
         else {
             res.send(data);
@@ -20,7 +20,7 @@ exports.saveCompanyUnits = (req, res) => {
         if (err)
             res.send({
                 message:
-                    err.message || "Some error occured while retrieving assetTypes"
+                    err.message || "Some error occured"
             });
         else
             res.send({ "result": "Company Units are saved successfully", "data": data });
@@ -33,9 +33,22 @@ exports.editCompanyUnits = (req, res) => {
         if (err)
             res.send({
                 message:
-                    err.message || "Some error occured while retrieving assetTypes"
+                    err.message || "Some error occured"
             });
         else
             res.send({ "result": "Company Units are saved successfully", "data": data });
+    });
+};
+
+exports.deleteCompanyUnits = (req, res) => {
+    data = req.body;
+    CompanyUnit.deleteCompanyUnits((err, data) => {
+        if (err)
+            res.send({
+                message:
+                    err.message || "Some error occured"
+            });
+        else
+            res.send({ "result": "Company Units are deelted successfully", "data": data });
     });
 };

@@ -12,6 +12,10 @@ class unitService {
     editCompanyUnits(payload) {
       return api.post(`http://127.0.0.1:4000/api/editCompanyUnits/`, payload)
     }
+
+    deleteCompanyUnits(payload) {
+      return api.post(`http://127.0.0.1:4000/api/deleteCompanyUnits/`, payload)
+    }
  
     getCompanyUnits(){
         return api

@@ -38,7 +38,6 @@ CompanyUnit.saveCompanyUnits = result => {
 }
 
 CompanyUnit.editCompanyUnits = result => {
-    console.log({data : data});
     const unitData = data[0]; // Get the first item from the data array
     const updateData = {
         Unit_Full_Name: unitData.Unit_Full_Name,
@@ -65,6 +64,24 @@ CompanyUnit.editCompanyUnits = result => {
         return knex('dmaps.company_units')
         .where({ Unit_Id: unitData.Unit_Id, })
         .update(updateData)
+        .then(function(response) {
+            result(null, { "result": response });
+        })
+        .then(t.commit)
+        .catch(t.rollback)
+    })
+    .catch(function(error) {
+        console.log(error);
+    })
+}
+
+CompanyUnit.deleteCompanyUnits = result => {
+    const unitData = data[0]; // Get the first item from the data array
+
+    knex.transaction(function(t) {
+        return knex('dmaps.company_units')
+        .where({ Unit_Id: unitData.Unit_Id})
+        .del()
         .then(function(response) {
             result(null, { "result": response });
         })
