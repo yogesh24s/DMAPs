@@ -7,7 +7,7 @@ import api from "./interceptor";
 class adminService {
 	getBasicDetails(){
         return api
-      .get("http://127.0.0.1:4000/basicDetails")
+      .get("http://51.20.104.100:4000/basicDetails")
       .then((response) => {
         return response;
       })

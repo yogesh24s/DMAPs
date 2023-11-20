@@ -7,12 +7,12 @@ import api from "./interceptor";
 class userService {
 
     saveCompanyUsers(payload) {
-      return api.post(`http://127.0.0.1:4000/saveCompanyUsers`, payload);
+      return api.post(`http://51.20.104.100:4000/saveCompanyUsers`, payload);
     }
 
     getCompanyUsers(){
         return api
-      .get("http://127.0.0.1:4000/getCompanyUsers")
+      .get("http://51.20.104.100:4000/getCompanyUsers")
       .then((response) => {
         return response;
       })

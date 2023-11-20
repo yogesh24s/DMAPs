@@ -5,7 +5,7 @@ var DMAPFunc = function() {
     bodyParser = require('body-parser');
 
     // local database viariable
-    mysqlHost = '127.0.0.1';
+    mysqlHost = '51.20.104.100';
     mysqlPwd = '@ff19E$P';
  
     // knex environemt
