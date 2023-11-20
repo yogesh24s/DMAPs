@@ -22,7 +22,7 @@ import {
 } from 'mdb-react-ui-kit';
 
 
- import userService from "../../../services/userService";
+import userService from "../../../services/userService";
 import { trackPromise } from 'react-promise-tracker';
 import CompanyUserTable from './CompanyUserTable';
 import adminService from "../../../services/adminService"
@@ -49,7 +49,29 @@ export default function UserSetUp() {
     const [basicDesgination, setbasicDesgination] = useState([])
     const [basicDepartment, setBasicDepartment] = useState([])
     const [selectedUnit, setSelectedUnit] = useState('');
+    const [file, setFile] = useState([]);
+    const [base64Code, setBase64Code] = useState()
 
+
+    const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            const base64data = reader.result.split(',')[1];  // Extracting the base64 content
+
+            // Now you can use 'base64data' in your payload
+            setFile(base64data);
+        };
+
+        reader.readAsDataURL(selectedFile);
+    }
+};
+
+
+    
     const handleVerticalClick = (value) => {
         if (value === verticalActive) {
             return;
@@ -72,7 +94,11 @@ export default function UserSetUp() {
     }, [])
 
     const handleUnitSetup = (e) => {
+
         e.preventDefault();
+        debugger
+
+        console.log({ "formData": file });
         let payload = {
             "Unit_Short_Name": selectedUnit,
             "User_Name": userName,
@@ -80,13 +106,15 @@ export default function UserSetUp() {
             "Department_Id": department,
             "Designation_Id": designation,
             "Mobile_Num": mobileNumber,
-            "Official_Mobile_Num" : officialMobilbeNumber,
+            "Official_Mobile_Num": officialMobilbeNumber,
             "Mail_Id": personalMaildId,
             "Official_Mail_Id": officialMaildId,
             "status": status,
-            "User_Role" : userLevel,
+            "User_Role": userLevel,
+            "User_Profile": file
         }
-        trackPromise(userService.saveCompanyUsers({"data":[payload]}).then((response) => {
+        console.log({ "payload": payload });
+        trackPromise(userService.saveCompanyUsers({ "data": [payload] }).then((response) => {
             //check login response
             if (response.status === 200) {
                 alert(response.data.result);
@@ -109,15 +137,15 @@ export default function UserSetUp() {
 
     const handleChange = (e) => {
         setSelectedUnit(e.target.value);
-      };
-    
-      const handleUserLevel = (e) => {
+    };
+
+    const handleUserLevel = (e) => {
         setUserLevel(e.target.value);
-      };
-    
-      const handleStatus = (e) => {
+    };
+
+    const handleStatus = (e) => {
         setStatus(e.target.value);
-      };
+    };
 
 
     return <>
@@ -154,7 +182,7 @@ export default function UserSetUp() {
                                             <div className='row'>
                                                 <div className='col-3'>
                                                     <label> Choose Photo </label>
-                                                    <MDBInput wrapperClass='mb-2' type="file" onChange={(e) => { setunitName(e.target.value) }} value={unitName} name='logo' />
+                                                    <MDBInput wrapperClass='mb-2' type="file" onChange={handleFileChange} name='logo' />
                                                     <Form.Select className='mb-2' onChange={handleChange} value={selectedUnit}>
                                                         <option value=''>Select Unit</option>
                                                         {basicData.map((item) => (

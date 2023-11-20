@@ -8,7 +8,7 @@ var access = require('../var.js');
 access.DMAPFunc();
 
 CompanyUsers.getCompanyUsers = result => {
-    sql =`SELECT * FROM dmaps.user;`;
+    sql =`SELECT * FROM dmaps.company_users;`;
     pool.query(sql, function(err, res) {
         if (err) {
             result(null, err);
@@ -23,7 +23,7 @@ CompanyUsers.getCompanyUsers = result => {
 CompanyUsers.saveCompanyUsers = result => {
 
     knex.transaction(function(t) {
-        return knex('dmaps.user')
+        return knex('dmaps.company_users')
         .transacting(t)
         .insert(data)
         .then(function(response) {
