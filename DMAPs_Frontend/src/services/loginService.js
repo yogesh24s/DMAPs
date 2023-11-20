@@ -6,7 +6,7 @@ import api from "./interceptor";
 
 class loginService {
   login(payload) {
-    return api.post(`http://127.0.0.1:4000/login/`, payload)
+    return api.post(`http://51.20.104.100:4000/login/`, payload)
   }
   logout() {
     sessionStorage.removeItem("accessToken");
