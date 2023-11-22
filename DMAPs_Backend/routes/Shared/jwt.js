@@ -11,8 +11,9 @@ function jwtTokenGenerate (password, username) {
 }
 
 function verifyToken(req, res, next) {
+	console.log("Entering function ",req );
 	const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-    console.log('Authorization Header:', req.headers.authorization);
+    // console.log('Authorization Header:', req.headers.authorization);
 
     console.log({"verifytoken":token});
 	if (!token) {
@@ -25,6 +26,7 @@ function verifyToken(req, res, next) {
 	  }
   
 	  req.user = decoded;
+	  console.log("req.user",req.user);
 	  next();
 	});
   }

@@ -5,6 +5,8 @@
 import React, { Component, Suspense, lazy } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import ProtectedRoutes from "./ProtectedRoutes";
+import ForgotPassword from './components/ForgotPassword';
+import ChangePassword from './components/ChangePasswords';
 
 const LandingPage = lazy(() => import('./components/LandingPage'));
 
@@ -21,8 +23,10 @@ export class AppRoutes extends Component {
           </Route>
 
           <Route exact path="/login" component={Login} />
+          <Route exact path="/forgotPassword" component={ForgotPassword} />
+          <Route exact path="/changePassword" component={ChangePassword} />
 
-          <Route exact path="/landingpage" component={LandingPage} />
+          <ProtectedRoutes exact path="/landingpage" component={LandingPage} />
 
         </Switch>
       </Suspense>
