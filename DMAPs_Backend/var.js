@@ -6,7 +6,7 @@ var DMAPFunc = function() {
 
     // local database viariable
     // mysqlHost = '34.68.62.13';
-    mysqlHost = '51.20.104.100';
+    mysqlHost = '127.0.0.1';
 
     mysqlPwd = '@ff19E$P';
  
