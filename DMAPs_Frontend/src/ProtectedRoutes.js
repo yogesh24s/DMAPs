@@ -13,13 +13,12 @@ export default function ProtectedRoutes({ component: Component, ...rest }) {
       {...rest}
       render={(props) => {
         const token = helper.fetchToken();
-        const userRole = helper.getRole();
-        const refToken = helper.fetchRefreshToken();
+        
 
         /*uncomment below code once login is integrated*/
 
         // return route if there is a valid token set
-        if ((token || refToken) && userRole) {
+        if (token) {
           return <Component {...props} />;
         } else {
           // return the user to the landing page if there is no valid token set

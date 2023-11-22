@@ -5,6 +5,7 @@ const path = require('path');
 
 // Load dependencies
 var access = require('../var.js');
+var nodemailer = require("nodemailer");
 access.DMAPFunc();
 
 // const nodemailer = require('nodemailer');
@@ -21,30 +22,29 @@ access.DMAPFunc();
   
   
 
-// const transporter = nodemailer.createTransport({
-//     service: 'gmail',
-//     auth: {
-//       user: 'developer.dmaps@gmail.com',
-//       pass: 'te@mofdmap5',
-//     },
-//   });
-//   const sendWelcomeEmail = (email) => {
-//     const mailOptions = {
-//       from: 'developer.dmaps@gmail.com',
-//       to: email,
-//       subject: 'Welcome to Dmaps',
-//       text: 'Thank you for registering!',
-//       html: '<strong>Thank you for registering!</strong>',
-//     };
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'developer.dmaps@gmail.com',
+      pass: 'cmxw tzvu ftvf cpqh',
+    },
+  });
+  const sendWelcomeEmail = (email,username, password) => {
+    var mailOptions = {
+        from: "developer.dmaps@gmail.com",
+        to: email,
+        subject: "Welcome to DMAPS",
+        text: `We have shared the login credentials to access DMAPs.\n Username: ${username} \n Password: ${password}`,
+      };
   
-//     transporter.sendMail(mailOptions, (error, info) => {
-//       if (error) {
-//         console.error(error);
-//       } else {
-//         console.log('Email sent: ' + info.response);
-//       }
-//     });
-//   };
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+  };
   
 CompanyUsers.getCompanyUsers = result => {
     sql =`SELECT * FROM dmaps.company_users;`;
@@ -99,6 +99,7 @@ CompanyUsers.editCompanyUsers = result => {
 CompanyUsers.saveCompanyUsers = result => {
     //console.log({data : data.Mail_Id});
     let userData = data[0]
+    let username = userData.User_Name
     const emailParts = userData.Mail_Id.split('@');
     console.log({"emailParts":emailParts});
     const userPassword = emailParts[0];
@@ -113,7 +114,7 @@ CompanyUsers.saveCompanyUsers = result => {
         .insert(updatedData)
         .then(function(response) {
             console.log("email",userData.Mail_Id);
-            // sendWelcomeEmail(userData.Mail_Id)
+             sendWelcomeEmail(userData.Mail_Id,username,userPassword)
             result(null, { "result": response });
         })
         .then(t.commit)
