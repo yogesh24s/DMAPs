@@ -5,6 +5,7 @@
 
 class helperService {
   setToken = (token) => {
+     //token ="1234"
     sessionStorage.setItem("accessToken", token); // make up your own token
   };
 
@@ -60,12 +61,12 @@ class helperService {
     return sessionStorage.getItem("temporary");
   };
 
-  setFullName = (obj) => {
-    return sessionStorage.setItem("fullName", obj);
+  setUserName = (userName) => {
+    return sessionStorage.setItem("userName", userName);
   };
 
-  getFullName = () => {
-    return sessionStorage.getItem("fullName");
+  getUserName = () => {
+    return sessionStorage.getItem("userName");
   };
 
   setCreditBalance = (amount) => {
@@ -83,6 +84,9 @@ class helperService {
   getAvailableLicense = () => {
     return sessionStorage.getItem("aul");
   };
+  removeToken = () =>{
+    return sessionStorage.clear()
+  }
 }
 
 export default new helperService();

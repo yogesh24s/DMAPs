@@ -15,12 +15,11 @@ import { trackPromise } from 'react-promise-tracker';
 import infoData from '../assets/data/info.json';
 import './Login.scss';
 import { Tooltip } from '../../node_modules/bootstrap/dist/js/bootstrap.esm.min.js';
+import tokenStore from '../services/tokenStore';
 
 function Login() {
 
-	const openForgotPasswordPage = () =>{
-		history.push('/forgot-password')
-	}
+	
 
 	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 	tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -50,7 +49,9 @@ function Login() {
 		setData({ ...data, [e.target.name]: [e.target.value] });
 		// formValidation(e.target.value)
 	}
-	
+	function openForgotPasswordPage(){
+		history.push('/forgotPassword')
+	}
 
 	const submitHandler = e => {
 		e.preventDefault();
@@ -60,11 +61,15 @@ function Login() {
 		}
 		trackPromise(loginService.login({ "data": [payload] }).then((response) => {
             //check login response
-			//data[0].data[0].result
+			let token = response.data[0].data[0].token
             if (response.data[0].data[0].result == "success") {
+				//localStorage.setItem("username",data.username[0])
+				tokenStore.setUserName(data.username[0]);
+            
+				helper.setToken(token)
+				//setAuthToken(token)
+				console.log(token);
 				history.push("/landingpage");
-                // alert("Login suceessfully");
-				console.log(response);
                
             }
             else {
@@ -170,7 +175,7 @@ function Login() {
 											</button>
 										</div>
 									</div>
-									<div className='row'>
+									<div className='row mt-3 align-center'>
 										
 										<label className='forgot-cls opacity-50' onClick={openForgotPasswordPage}>
 											Forgot Password?</label>

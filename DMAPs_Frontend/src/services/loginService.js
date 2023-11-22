@@ -8,6 +8,14 @@ class loginService {
   login(payload) {
     return api.post(`http://51.20.104.100:4000/login/`, payload)
   }
+  forgotPassword(payload) {
+    return api.post(`http://51.20.104.100:4000/api/forgotPassword`, payload)
+  }
+
+  changePassword(payload) {
+    return api.post(`http://51.20.104.100:4000/changePassword`, payload)
+  }
+
   logout() {
     sessionStorage.removeItem("accessToken");
     sessionStorage.removeItem("userRole");

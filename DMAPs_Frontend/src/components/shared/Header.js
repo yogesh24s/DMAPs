@@ -12,8 +12,8 @@ import helper from '../../services/tokenStore';
 
 function CollapsibleExample() {
 	const history = useHistory();
-	const [userFullName, setFullName] = useState(helper.getFullName());
-
+	const [userName] = useState(helper.getUserName());
+	console.log(userName);
 	const openLandingPage = () => {
 		history.push('/landingPage');
 	}
@@ -50,7 +50,7 @@ function CollapsibleExample() {
 								<div className="dropbtn" style={{ height: "40px", width: "40px", borderRadius: "50%",display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
 								<i className="fa fa-user-tie fa-1x" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
 								</div>
-								<span style={{ color: "#ffff", marginLeft: "5px" }}>{(userFullName && userFullName != undefined && userFullName != null) ? "Yogesh" : "Yogesh"}</span>
+								<span style={{ color: "#ffff", marginLeft: "5px" }}>{userName}</span>
 							</div>
 
 							{(!history.location.pathname.includes('/changepassword')) &&
