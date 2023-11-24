@@ -11,10 +11,6 @@ export default function CompanyUnitTable(props) {
 	const columns = React.useMemo(
 		() => [
 		  {
-			Header: 'No.',
-			accessor: 'Unit_Id',
-		  },
-		  {
 			Header: 'Full Name',
 			accessor: 'Unit_Full_Name',
 		  },
@@ -78,7 +74,7 @@ export default function CompanyUnitTable(props) {
 	
   return (
     <div className='mt-4'>
-      <table {...getTableProps()} className="table">
+      <table {...getTableProps()} className="table striped" striped>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>

@@ -29,7 +29,7 @@ return <>
                 <Tab eventKey="third" title={<span> <i class="fa fa-toolbox"></i> Administrator </span>}>
                     <Administrator />
                 </Tab>
-                <Tab eventKey="Four" title={<span> <i class="fa fa-store"></i> Style Store </span>}>
+                {/* <Tab eventKey="Four" title={<span> <i class="fa fa-store"></i> Style Store </span>}>
                     Style Store Content
                 </Tab>
                 <Tab eventKey="Five" title={<span> <i class="fa fa-shop"></i> Fabric Store </span>}>
@@ -46,7 +46,7 @@ return <>
                 </Tab>
                 <Tab eventKey="Nine" title={<span> <i class="fa fa-ballot-check"></i> Finishing Area</span>}>
                     Fininshing Area Content
-                </Tab>
+                </Tab> */}
             </Tabs>
             </div>
         </div>
