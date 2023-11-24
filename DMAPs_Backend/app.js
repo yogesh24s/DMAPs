@@ -96,8 +96,6 @@ const generateRandomKey = () => {
   return crypto.randomBytes(32).toString('hex'); // 32 bytes converted to a hexadecimal string
 };
 
-console.log(generateRandomKey());
-
 //  Connect all our routes to our application
 app.use('/', loginRoutes);
 app.use('/', basicDetails);

@@ -157,8 +157,7 @@ routes.post('/api/authenticate', function (req, res) {
 
 // Change user password.
 routes.post('/api/changePassword', function (req, res) {
-	console.log(req);
-	console.log(req.body);
+
 	var un = req.body.username,
 		cp = req.body.Current_Password,
 		np = req.body.New_Password;
@@ -248,19 +247,13 @@ routes.post('/login', function (req, res) {
 	//const { username, password } = req.body;
 	let username = req.body[0].userName;
 	let password = req.body[0].password;
-	// console.log({"req.body": req.body});
-	// console.log({"req.body": username});
-	// console.log({"req.body": password});
+
 	//  let username ="wertyq";
 	//  let password = "q";
 	var sql = `SELECT * FROM dmaps.company_users WHERE User_Name = '${username}' AND User_Password = '${password}'`;
 
-
-	//console.log(sql);
 	if (username !== undefined && password !== undefined) {
 		pool.query(sql, [username, password], function (err, results, fields) {
-			console.log({"sql":sql});
-			//console.log({"err":err});
 			if (!err) {
 				var response = [],
 					dataObj = {};
@@ -272,7 +265,6 @@ routes.post('/login', function (req, res) {
 					response.push({ 'result': 'success', 'data': dataObj, "token": token });
 
 				} else {
-					console.log({ "failedresults": results });
 					response.push({ 'result': 'error', 'msg': 'No Results Found' });
 				}
 
@@ -298,10 +290,9 @@ routes.post('/login', function (req, res) {
 
 
 routes.post('/api/forgotPassword', function (req, res) {
-	console.log(req.body[0].email);
+
 	//console.log(req.body);
 	 const [{email}] = req.body
-	 console.log("email",email);
 	// let email = "q@gmail.com"
 	let dbEmail = `Select * from dmaps.company_users where Mail_Id = '${email}'`;
 
@@ -317,7 +308,6 @@ routes.post('/api/forgotPassword', function (req, res) {
 
 				dataObj['users'] = results[0];
 				response.push({ 'result': 'success', 'data': dataObj});
-				console.log(dataObj);
 				let newPassword = generateRandomPassword(12)
 				let updatedata = {
 					User_Password : newPassword
@@ -368,7 +358,6 @@ routes.post('/api/forgotPassword', function (req, res) {
 
 
 			} else {
-				console.log({ "failedresults": results });
 				response.push({ 'result': 'error', 'msg': 'No Results Found' });
 			}
 
@@ -464,13 +453,11 @@ routes.post('/changePassword', function (req, res) {
 	// let userName = "wert";
 	// let currentPassword ="2345678qwertuiopzxcvbnm"
 	// let newPassword ="Hello"
-	console.log("endpoint change password",req.body);
 	//const [{currentPassword,newPassword,token,username}] = req.body[0]
 	let currentPassword = req.body[0].currentPassword
 	let newPassword = req.body[0].newPassword
 	let username = req.body[0].userName
 	let token =req.body[0].token
-	 console.log("token",token);
 	// jwt.verify(token, JWT_SECRET, (err, decoded) => {
 	// 	if (err) {
 	// 	  return res.status(401).json({ message: 'Invalid token' });
@@ -482,7 +469,6 @@ routes.post('/changePassword', function (req, res) {
 		if(username) {
 			var sql = `SELECT * FROM dmaps.company_users WHERE User_Name = '${username}'`;
 			pool.query(sql, [username], function (err, results, fields) {
-				console.log({"sql":sql});
 				//console.log({"err":err});
 				if (!err) {
 					
@@ -492,9 +478,7 @@ routes.post('/changePassword', function (req, res) {
 						//console.log({"results":results});
 						// let token = jwtTokenGenerate(password, username)
 						dataObj['users'] = results[0];
-						console.log(dataObj);
 						const { users: { User_Password } } = dataObj;
-						console.log(User_Password);
 						if (currentPassword === User_Password) {
 							let updatedata= {User_Password:newPassword}
 							knex.transaction(function(t) {
@@ -514,13 +498,11 @@ routes.post('/changePassword', function (req, res) {
 							response.push({ 'result': 'success', 'message':'Password Changed Successfully'})
 						}
 						else{
-							console.log("wrong password");
 							response.push({ 'status': 'error', 'msg': 'Current Password is Invalid',});
 						}
 						
 	
 					} else {
-						console.log({ "failedresults": results });
 						response.push({ 'result': 'error', 'msg': 'No Results Found' });
 					}
 	
@@ -533,7 +515,6 @@ routes.post('/changePassword', function (req, res) {
 	
 				} else {
 					res.status(400).send(err);
-					console.log("noooo");
 				}
 			});
 		}

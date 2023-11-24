@@ -60,7 +60,6 @@ CompanyUsers.getCompanyUsers = result => {
 };
 
 CompanyUsers.editCompanyUsers = result => {
-    console.log({"result":data[0].Unit_Short_Name});
     const userData = data[0]; // Get the first item from the data array
     const updateData = {
         User_Name: userData.User_Name,
@@ -97,23 +96,17 @@ CompanyUsers.editCompanyUsers = result => {
 
 
 CompanyUsers.saveCompanyUsers = result => {
-    //console.log({data : data.Mail_Id});
     let userData = data[0]
     let username = userData.User_Name
     const emailParts = userData.Mail_Id.split('@');
-    console.log({"emailParts":emailParts});
     const userPassword = emailParts[0];
-    console.log({"userPassword":userPassword});
     const updatedData = { ...userData, User_Password: userPassword };
-   // data.User_Password=userPassword
-    console.log({"updatedData":updatedData});
     
     knex.transaction(function(t) {
         return knex('dmaps.company_users')
         .transacting(t)
         .insert(updatedData)
         .then(function(response) {
-            console.log("email",userData.Mail_Id);
              sendWelcomeEmail(userData.Mail_Id,username,userPassword)
             result(null, { "result": response });
         })

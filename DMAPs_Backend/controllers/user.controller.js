@@ -30,7 +30,6 @@ exports.saveCompanyUsers = (req, res) => {
 };
 exports.editCompanyUsers = (req, res) => {
     data = req.body;
-    //console.log({"data": data});
     CompanyUsers.editCompanyUsers((err, data) => {
         if (err) {
             res.send({
@@ -46,7 +45,6 @@ exports.editCompanyUsers = (req, res) => {
 
 exports.deleteCompanyUsers = (req, res) => {
     data = req.body;
-    //console.log({"data": data});
     CompanyUsers.deleteCompanyUsers((err, data) => {
         if (err) {
             res.send({
