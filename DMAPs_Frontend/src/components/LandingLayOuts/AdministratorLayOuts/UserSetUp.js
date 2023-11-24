@@ -95,7 +95,7 @@ export default function UserSetUp() {
             debugger
             //check login response
             if (response.status == 200) {
-                alert(response.data.result);
+                // alert(response.data.result);
                 getCompanyUserData()
                 handleClose()
             }
@@ -212,7 +212,7 @@ export default function UserSetUp() {
             debugger
             //check login response
             if (response.status == 200) {
-                alert(response.data.result);
+                // alert(response.data.result);
                 getCompanyUserData()
                 closeEditForm()
             }
@@ -228,25 +228,27 @@ export default function UserSetUp() {
     }
 
     const deleteUserRecord = (data) => {
-        console.log(data)
-        let payload = {
-            "User_Employee_Id":data.User_Employee_Id
+      
+        if (window.confirm("Are you sure to delete the Company Users ?"))
+        { 
+            let payload = {
+                "User_Employee_Id":data.User_Employee_Id
+                }
+                trackPromise(userService.deleteCompanyUsers({ "data": [payload] }).then((response) => {
+                //check login response
+                if (response.status === 200) {
+                    getCompanyUserData()
+                }
+                else {
+                    alert(response.data.message);
+                }
+                
+                }).catch((error) => {
+                //console.log(error.response.data.error)
+                alert(error.response.data.error);
+                })
+                );   
         }
-        trackPromise(userService.deleteCompanyUsers({ "data": [payload] }).then((response) => {
-            //check login response
-            if (response.status === 200) {
-                alert(response.data.result);
-                getCompanyUserData()
-            }
-            else {
-                alert(response.data.message);
-            }
-    
-        }).catch((error) => {
-            //console.log(error.response.data.error)
-            alert(error.response.data.error);
-        })
-        );
     };
     
     return <>
@@ -289,7 +291,7 @@ export default function UserSetUp() {
 
                                                 <MDBInput wrapperClass='mb-3' label='Name' tabindex="1" onChange={(e) => { setUserName(e.target.value) }} value={userName} name=' username' />
 
-                                                <MDBInput wrapperClass='mb-3' label='Login ID' tabindex="3" onChange={(e) => { setLoginId(e.target.value) }} value={loginId} name='LoginId' />
+                                                <MDBInput wrapperClass='mb-3' label='E-Mail ID' tabindex="3" onChange={(e) => { setPersonalMaildId(e.target.value) }} value={personalMaildId} name='PersonalMaildId' />
 
                                                 <Form.Select className='mb-3' tabindex="5" onChange={(e) => { setSelectedUnit(e.target.value) }} value={selectedUnit} name="selectedUnit" >
                                                         <option value=''>Select Unit</option>
@@ -300,7 +302,7 @@ export default function UserSetUp() {
                                                         ))}
                                                     </Form.Select>
                                                     
-                                                <Form.Select className='mb-3' tabindex="6" onChange={(e) => { setDepartment(e.target.value) }} value={department} name=' department' >
+                                                <Form.Select className='mb-3' tabindex="7" onChange={(e) => { setDepartment(e.target.value) }} value={department} name=' department' >
                                                         <option> Select Department </option>
                                                         {basicDepartment.map((item) => (
                                                             <option key={item.Department_Id} value={item.Department_Name}>
@@ -309,13 +311,13 @@ export default function UserSetUp() {
                                                         ))}
                                                     </Form.Select>
 
-                                                    
-                                                    <Form.Select className='mb-3' tabindex="7" onChange={handleUserLevel} value={userLevel}>
-                                                        <option> Select Role </option>
-                                                        <option value="general">General</option>
-                                                        <option value="admin">Admin</option>
-                                                        <option value="superAdmin">Super Admin</option>
+                                                    <Form.Select className='mb-3' tabindex="9" onChange={handleStatus} value={status}>
+                                                        <option> Select Status </option>
+                                                        <option value="active">Active</option>
+                                                        <option value="inactive">InActive</option>
                                                     </Form.Select>
+
+                                                   
                                                     
                                                     
                             
@@ -323,13 +325,13 @@ export default function UserSetUp() {
 
                                                 <div className='col-6'>
 
-                                                <MDBInput wrapperClass='mb-3' label='E-Mail ID' tabindex="2" onChange={(e) => { setPersonalMaildId(e.target.value) }} value={personalMaildId} name='PersonalMaildId' />
+                                                <MDBInput wrapperClass='mb-3' label='Login ID' tabindex="2" onChange={(e) => { setLoginId(e.target.value) }} value={loginId} name='LoginId' />
                                                   
-                                                <MDBInput wrapperClass='mb-3' tabindex="4" label='User Employee ID' onChange={(e) => { setEmpId(e.target.value) }} value={empId} name=' EmpId' />
+                                                <MDBInput wrapperClass='mb-3' tabindex="4" label='Employee ID' onChange={(e) => { setEmpId(e.target.value) }} value={empId} name=' EmpId' />
 
                                                    
 
-                                                    <Form.Select className='mb-3' tabindex="8" onChange={(e) => { setDesignation(e.target.value) }} value={designation} name=' designation' >
+                                                    <Form.Select className='mb-3' tabindex="6" onChange={(e) => { setDesignation(e.target.value) }} value={designation} name=' designation' >
                                                         <option> Select Designation </option>
                                                         {basicDesgination.map((item) => (
                                                             <option key={item.Devision_Id} value={item.Devision_Name}>
@@ -338,14 +340,13 @@ export default function UserSetUp() {
                                                         ))}
                                                     </Form.Select>
 
-                                                    
-                                                    
-                                                    <Form.Select className='mb-3' tabindex="9" onChange={handleStatus} value={status}>
-                                                        <option> Select Status </option>
-                                                        <option value="active">Active</option>
-                                                        <option value="inactive">InActive</option>
+                                                    <Form.Select className='mb-3' tabindex="8" onChange={handleUserLevel} value={userLevel}>
+                                                        <option> Select Role </option>
+                                                        <option value="general">General</option>
+                                                        <option value="admin">Admin</option>
+                                                        <option value="superAdmin">Super Admin</option>
                                                     </Form.Select>
-
+                                                
                                                     <MDBInput wrapperClass='mb-3' tabindex="10" label='Contact No.' onChange={(e) => { setMobileNumber(e.target.value) }} value={mobileNumber} name=' mobileNumber' />
 
                                                 </div>
@@ -354,10 +355,10 @@ export default function UserSetUp() {
 
                                     </Modal.Body>
                                     <Modal.Footer>
-                                    <Button variant="secondary" onClick={handleClose} style={{width:'20%'}} >
+                                    <Button variant="secondary" onClick={handleClose} >
                                              Cancel 
                                         </Button>
-                                    <Button variant="primary" type='submit' block onClick={handleUnitSetup} style={{width:'20%'}}>
+                                    <Button variant="primary" type='submit' block onClick={handleUnitSetup}>
                                             Save
                                         </Button>
 
@@ -380,9 +381,9 @@ export default function UserSetUp() {
                                                 
                                                 <MDBInput wrapperClass='mb-3' label='Name' onChange={(e) => { setUserName(e.target.value) }} value={userName} name=' username' />
 
-                                                <MDBInput wrapperClass='mb-3' label='Login ID' onChange={(e) => { setLoginId(e.target.value) }} value={loginId} name='LoginId' />
+                                                <MDBInput wrapperClass='mb-3' label='E-Mail ID' onChange={(e) => { setPersonalMaildId(e.target.value) }} value={personalMaildId} name='PersonalMaildId' />
 
-                                                <Form.Select className='mb-3' onChange={(e) => { setSelectedUnit(e.target.value) }} value={selectedUnit}>
+                                                <Form.Select className='mb-3' label='Unit' name="Unit" onChange={(e) => { setSelectedUnit(e.target.value) }} value={selectedUnit}>
                                                     <option value=''>Select Unit</option>
                                                     {basicData.map((item) => (
                                                         <option key={item.Unit_Id} value={item.Unit_Short_Name}>
@@ -391,11 +392,37 @@ export default function UserSetUp() {
                                                     ))}
                                                 </Form.Select>
 
-                                                    <Form.Select className='mb-3' onChange={(e) => { setDepartment(e.target.value) }} value={department} name=' department' >
+                                                    <Form.Select className='mb-3' onChange={(e) => { setDepartment(e.target.value) }} value={department} name='department' >
                                                         <option> Select Department </option>
                                                         {basicDepartment.map((item) => (
                                                             <option key={item.Department_Id} value={item.Department_Name}>
                                                                 {item.Department_Name}
+                                                            </option>
+                                                        ))}
+                                                    </Form.Select>
+
+                                                    <Form.Select className='mb-3' onChange={(e) => { setStatus(e.target.value) }} value={status}>
+                                                        <option> Status </option>
+                                                        <option value="active">Active</option>
+                                                        <option value="inactive">InActive</option>
+                                                    </Form.Select>
+
+                                            
+
+                                                </div>
+                                                <div className='col-6'>
+                                                
+                                                <MDBInput wrapperClass='mb-3' label='Login ID' onChange={(e) => { setLoginId(e.target.value) }} value={loginId} name='LoginId' />
+
+                                                
+                                                <MDBInput wrapperClass='mb-3' label='Employee ID' onChange={(e) => { setEmpId(e.target.value) }} value={empId} name=' EmpId' />
+
+                                                
+                                                <Form.Select className='mb-3' onChange={(e) => { setDesignation(e.target.value) }} value={designation} name='designation' >
+                                                        <option> Select Designation </option>
+                                                        {basicDesgination.map((item) => (
+                                                            <option key={item.Devision_Id} value={item.Devision_Name}>
+                                                                {item.Devision_Name}
                                                             </option>
                                                         ))}
                                                     </Form.Select>
@@ -407,29 +434,6 @@ export default function UserSetUp() {
                                                         <option value="superAdmin">Super Admin</option>
                                                     </Form.Select>
 
-                                                </div>
-                                                <div className='col-6'>
-                                                   
-                                                <MDBInput wrapperClass='mb-3' label='E-Mail ID' onChange={(e) => { setPersonalMaildId(e.target.value) }} value={personalMaildId} name='PersonalMaildId' />
-
-                                                <MDBInput wrapperClass='mb-3' label='User Employee ID' onChange={(e) => { setEmpId(e.target.value) }} value={empId} name=' EmpId' />
-
-                                                
-                                                <Form.Select className='mb-3' onChange={(e) => { setDesignation(e.target.value) }} value={designation} name=' designation' >
-                                                        <option> Select Designation </option>
-                                                        {basicDesgination.map((item) => (
-                                                            <option key={item.Devision_Id} value={item.Devision_Name}>
-                                                                {item.Devision_Name}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-
-                                                    <Form.Select className='mb-3' onChange={(e) => { setStatus(e.target.value) }} value={status}>
-                                                        <option> Status </option>
-                                                        <option value="active">Active</option>
-                                                        <option value="inactive">InActive</option>
-                                                    </Form.Select>
-
                                                     <MDBInput wrapperClass='mb-3' label='Contact No.' onChange={(e) => { setMobileNumber(e.target.value) }} value={mobileNumber} name=' mobileNumber' />
 
                                                 </div>
@@ -439,10 +443,10 @@ export default function UserSetUp() {
                                     </Modal.Body>
                                     <Modal.Footer>
                                         <Button variant="secondary" onClick={closeEditForm}>
-                                            Close
+                                            Cancel
                                         </Button>
                                         <Button variant="primary" onClick={handleEditUserDetails}>
-                                            Save Changes
+                                            Save
                                         </Button>
                                     </Modal.Footer>
                                 </Modal>

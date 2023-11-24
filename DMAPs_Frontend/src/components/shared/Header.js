@@ -40,8 +40,10 @@ function CollapsibleExample() {
 							<i className="fa fa-envelope-o mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i> */}
 
 							<i className="fa fa-bell-o mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
+							
+							<a href='ms-calculator://'> <i className="fa fa-calculator  ml-0 mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i> </a>
 
-							<i className="fa fa-calculator mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }} onClick={openCalculator}></i>
+							{/* <i className="fa fa-calculator mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }} onClick={openCalculator}></i> */}
 						</div>
 					</Nav>
 					<Nav>

@@ -34,12 +34,15 @@
 
 .nav-tabs .nav-link {
     text-transform: none !important;
+    font-size: 13px !important;
+    color: #3a2f2f;
 }
 
 .h1 {
     font-size: 16px !important;
     color: #003650;
     font-weight: 600;
+    margin: 5px;
 }
 .btn-close {
     opacity: 1 !important;
@@ -61,9 +64,13 @@
     tr {
         th {
             border: 1px solid #d1cece;
+            font-size: 14px !important;
         }
         td {
             border: 1px solid #d1cece;
         }
     }
+}
+.modal-footer {
+    padding: 0px;
 }

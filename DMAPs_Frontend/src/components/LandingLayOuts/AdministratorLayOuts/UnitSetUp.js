@@ -6,6 +6,7 @@
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 
 import './UnitSetUp.scss';
 
@@ -23,6 +24,7 @@ import {
 import unitService from "../../../services/unitService";
 import { trackPromise } from 'react-promise-tracker';
 import CompanyUnitTable from './CompanyUnitTable';
+import adminService from "../../../services/adminService"
 
 
 export default function UnitSetUp() {
@@ -54,7 +56,8 @@ export default function UnitSetUp() {
 	const [contactNoError, setContactNoError] = useState('');
 	const [mailId, setMailId] = useState('')
 	const [mailIdError, setMailIdError] = useState('');
-	const [state, setState] = useState('')
+	const [state, setState] = useState('');
+	const [stateList, setStateList] = useState([]);
 	const [stateError, setStateError] = useState('');
 	const [data, setData] = useState([]);
 	const [isEditFormOpen, setIsEditFormOpen] = useState(false);
@@ -68,7 +71,8 @@ export default function UnitSetUp() {
 
 	const handleTinValidation = (value) => {
 		// Define a regular expression pattern for a 11-digit TIN
-		const tinPattern = /^\d{11}$/;
+		const tinPattern = /^$|^\d{11}$/;
+		
 		// Return whether the value matches the pattern
 		return tinPattern.test(value);
 	};
@@ -107,10 +111,10 @@ export default function UnitSetUp() {
 		}
 
 		if (!tinNo) {
-			setTinNoError('TIN No is required');
+			setTinNoError('Invalid TIN NO.(Enter 11 Digits)');
 			isValid = false;
 		} else if (!handleTinValidation(tinNo)) {
-			setTinNoError('Invalid TIN format');
+			setTinNoError('Invalid TIN NO.(Enter 11 Digits)');
 			isValid = false;
 		} else {
 			setTinNoError('');
@@ -123,7 +127,7 @@ export default function UnitSetUp() {
 			setRegNoError('');
 		}
 		if (!addressLine1) {
-			setAddressLine1Error('Address Line 1 is required');
+			setAddressLine1Error('Address is required');
 			isValid = false;
 		} else {
 			setAddressLine1Error('');
@@ -137,7 +141,7 @@ export default function UnitSetUp() {
 		}
 
 		if (!state) {
-			setStateError('State  is required');
+			setStateError('State is required');
 			isValid = false;
 		} else {
 			setStateError('');
@@ -186,7 +190,7 @@ export default function UnitSetUp() {
 		trackPromise(unitService.saveCompanyUnits({ "data": [payload] }).then((response) => {
 			//check login response
 			if (response.status === 200) {
-				alert(response.data.result);
+				// alert(response.data.result);
 				stateValues()
 				getCompanyUnitData()
 				handleClose()
@@ -209,7 +213,17 @@ export default function UnitSetUp() {
 			})
 		);
 	}
+
+	const getBasicDetails = () => {
+        trackPromise(
+            adminService.getBasicDetails().then((response) => {
+                setStateList(response.data[0].data[0].data.states)
+            })
+        );
+    }
+
 	useEffect(() => {
+		getBasicDetails();
 		getCompanyUnitData()
 	}, [])
 
@@ -267,26 +281,27 @@ export default function UnitSetUp() {
 // Delete Unit Records
 
 const deleteUnitRecord = (data) => {
-	console.log(data)
-	let payload = {
-		"Unit_Short_Name":data.Unit_Short_Name,
-		"Unit_Id": data.Unit_Id
-	}
-	trackPromise(unitService.deleteCompanyUnits({ "data": [payload] }).then((response) => {
-		//check login response
-		if (response.status === 200) {
-			alert(response.data.result)
-			getCompanyUnitData()
+	if (window.confirm("Are you sure to delete the Company Units ?"))
+    {
+		let payload = {
+			"Unit_Short_Name":data.Unit_Short_Name,
+			"Unit_Id": data.Unit_Id
 		}
-		else {
-			alert(response.data.message);
-		}
+		trackPromise(unitService.deleteCompanyUnits({ "data": [payload] }).then((response) => {
+			//check login response
+			if (response.status === 200) {
+				getCompanyUnitData()
+			}	
+			else {
+				alert(response.data.message);
+			}
 
-	}).catch((error) => {
-		//console.log(error.response.data.error)
-		alert(error.response.data.error);
-	})
-	);
+		}).catch((error) => {
+			//console.log(error.response.data.error)
+			alert(error.response.data.error);
+		})
+		);
+	}
 
 };
 
@@ -311,7 +326,7 @@ const deleteUnitRecord = (data) => {
 		trackPromise(unitService.editCompanyUnits({ "data": [payload] }).then((response) => {
 			//check login response
 			if (response.status === 200) {
-				alert(response.data.result)
+				// alert(response.data.result)
 				getCompanyUnitData()
 				closeEditForm()
 			}
@@ -371,18 +386,26 @@ const deleteUnitRecord = (data) => {
 													<MDBInput label='Address' tabindex="3" wrapperClass='mb-3' onChange={(e) => { setAddressLine1(e.target.value) }} value={addressLine1} name='addressLine1' />
 													{addressLine1Error && <p style={{ color: 'red' }}>{addressLine1Error}</p>}
 
+													<Form.Select className='mb-3' tabindex="5" label='State' onChange={(e) => { setState(e.target.value) }} value={state} name='state'  >
+                                                        <option> Select State </option>
+                                                        {stateList.map((item) => (
+                                                            <option key={item.State_Name} value={item.State_Name}>
+                                                                {item.State_Name}
+                                                            </option>
+                                                        ))}
+                                                    </Form.Select>
 
-													<MDBInput wrapperClass='mb-3' tabindex="4" label='State' onChange={(e) => { setState(e.target.value) }} value={state} name='state' />
-													{stateError && <p style={{ color: 'red' }}>{stateError}</p>}
+													{/* <MDBInput wrapperClass='mb-3' tabindex="5" label='State' onChange={(e) => { setState(e.target.value) }} value={state} name='state' />
+													{stateError && <p style={{ color: 'red' }}>{stateError}</p>} */}
 
 
 													<MDBInput wrapperClass='mb-3' tabindex="7" type='text' label='Division' onChange={(e) => { setdivision(e.target.value); }} value={division} name='division' />
 													{divisionError && <p style={{ color: 'red' }}>{divisionError}</p>}
 
-													<MDBInput wrapperClass='mb-3' type='tel' tabindex="8" label='TIN No.' onChange={(e) => { setTinNo(e.target.value) }} value={tinNo} name='tinNo' />
+													<MDBInput wrapperClass='mb-3' type='tel' tabindex="9" label='TIN No.' onChange={(e) => { setTinNo(e.target.value) }} value={tinNo} name='tinNo' />
 													{tinNoError && <p style={{ color: 'red' }}>{tinNoError}</p>}
 
-													<MDBInput wrapperClass='mb-3' tabindex="9" type='tel' label='Registration No.' onChange={(e) => { setRegNo(e.target.value) }} value={regNo} name='regNo' />
+													<MDBInput wrapperClass='mb-3' tabindex="11" type='tel' label='Registration No.' onChange={(e) => { setRegNo(e.target.value) }} value={regNo} name='regNo' />
 													{regNoError && <p style={{ color: 'red' }}>{regNoError}</p>}
 
 												</div>
@@ -394,16 +417,16 @@ const deleteUnitRecord = (data) => {
 													{shortNameError && <p style={{ color: 'red' }}>{shortNameError}</p>}
 
 													
-													<MDBInput wrapperClass='mb-3' tabindex="5" label='City' onChange={(e) => { setCity(e.target.value) }} value={city} name='city' />
+													<MDBInput wrapperClass='mb-3' tabindex="4" label='City' onChange={(e) => { setCity(e.target.value) }} value={city} name='city' />
 													{cityError && <p style={{ color: 'red' }}>{cityError}</p>}
 
 													<MDBInput wrapperClass='mb-3' tabindex="6" label='Pincode' onChange={(e) => { setPinNO(e.target.value) }} value={pinNo} name='pinNo' />
 													{pinNoError && <p style={{ color: 'red' }}>{pinNoError}</p>}
 
-													<MDBInput wrapperClass='mb-3' tabindex="10" label='Group' onChange={(e) => { setGroup(e.target.value) }} value={group} name='group' />
+													<MDBInput wrapperClass='mb-3' tabindex="8" label='Group' onChange={(e) => { setGroup(e.target.value) }} value={group} name='group' />
 													{groupError && <p style={{ color: 'red' }}>{groupError}</p>}
 
-													<MDBInput wrapperClass='mb-3' tabindex="11" label='Admin E-Mail ID' onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
+													<MDBInput wrapperClass='mb-3' tabindex="10" label='Admin E-Mail ID' onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
 													{mailIdError && <p style={{ color: 'red' }}>{mailIdError}</p>}
 
 													<MDBInput wrapperClass='mb-3' type='tel' tabindex="12" label='Admin Contact No.' onChange={(e) => { setContactNo(e.target.value) }} value={contactNo} name='contactNo' />
@@ -415,10 +438,10 @@ const deleteUnitRecord = (data) => {
 
 									</Modal.Body>
 									<Modal.Footer>
-										<Button variant="secondary" onClick={handleClose} style={{width:'20%'}}>
+										<Button variant="secondary" onClick={handleClose} >
 											Cancel
 										</Button>
-										<Button variant="primary" type='submit' onClick={handleUnitSetup} style={{width:'20%'}}>
+										<Button variant="primary" type='submit' onClick={handleUnitSetup}>
 											Save
 										</Button>
 									</Modal.Footer>
@@ -429,52 +452,51 @@ const deleteUnitRecord = (data) => {
 								<Modal show={isEditFormOpen} onHide={closeEditForm} dialogClassName="modal-50w"
 									backdrop="static">
 									<Modal.Header closeButton>
-										<Modal.Title>Edit Unit Form</Modal.Title>
+										<Modal.Title>Edit Company Units</Modal.Title>
 									</Modal.Header>
 									<Modal.Body>
 										<form onSubmit={handleEditUnit}>
 											<div className='row'>
 												<div className='col-6'>
-													<MDBInput wrapperClass='mb-3' label='Name Of Unit' onChange={(e) => { setunitName(e.target.value) }} value={unitName} name='unitName' />
-
+													<MDBInput wrapperClass='mb-3'  tabindex="1" label='Name Of Unit' readOnly onChange={(e) => { setunitName(e.target.value) }} value={unitName} name='unitName' />
 													{unitNameError && <p style={{ color: 'red' }}>{unitNameError}</p>}
 
-													<MDBInput label='Address Line 1' wrapperClass='mb-3' onChange={(e) => { setAddressLine1(e.target.value) }} value={addressLine1} name='addressLine1' />
+													<MDBInput label='Address' wrapperClass='mb-3'  tabindex="3" onChange={(e) => { setAddressLine1(e.target.value) }} value={addressLine1} name='addressLine1' />
 													{addressLine1Error && <p style={{ color: 'red' }}>{addressLine1Error}</p>}
 
-													<MDBInput wrapperClass='mb-3' label='State' onChange={(e) => { setState(e.target.value) }} value={state} name='state' />
+
+													<MDBInput wrapperClass='mb-3' label='State'  tabindex="5" onChange={(e) => { setState(e.target.value) }} value={state} name='state' />
 													{stateError && <p style={{ color: 'red' }}>{stateError}</p>}
 
-													<MDBInput wrapperClass='mb-3' type='text' label='Division' onChange={(e) => { setdivision(e.target.value); }} value={division} name='division' />
+													<MDBInput wrapperClass='mb-3' type='text'  tabindex="7" label='Division' onChange={(e) => { setdivision(e.target.value); }} value={division} name='division' />
 													{divisionError && <p style={{ color: 'red' }}>{divisionError}</p>}
 
-													<MDBInput wrapperClass='mb-3' type='tel' label='TIN No.' onChange={(e) => { setTinNo(e.target.value) }} value={tinNo} name='tinNo' />
+													<MDBInput wrapperClass='mb-3' type='tel'  tabindex="9" label='TIN No.' onChange={(e) => { setTinNo(e.target.value) }} value={tinNo} name='tinNo' />
 													{tinNoError && <p style={{ color: 'red' }}>{tinNoError}</p>}
 
-													<MDBInput wrapperClass='mb-3' type='tel' label='Register No.' onChange={(e) => { setRegNo(e.target.value) }} value={regNo} name='regNo' />
+													<MDBInput wrapperClass='mb-3' type='tel'  tabindex="11" label='Registration No.' onChange={(e) => { setRegNo(e.target.value) }} value={regNo} name='regNo' />
 													{regNoError && <p style={{ color: 'red' }}>{regNoError}</p>}
 
 												</div>
 
 												<div className='col-6'>
 
-													<MDBInput wrapperClass='mb-3' label='Unit Short Name' onChange={(e) => { setShortName(e.target.value) }} value={shortName} name='shortName' />
-
+													<MDBInput wrapperClass='mb-3' label='Short Name'  tabindex="2" readOnly onChange={(e) => { setShortName(e.target.value) }} value={shortName} name='shortName' />
 													{shortNameError && <p style={{ color: 'red' }}>{shortNameError}</p>}
 													
-													<MDBInput wrapperClass='mb-3' label='City' onChange={(e) => { setCity(e.target.value) }} value={city} name='city' />
+													<MDBInput wrapperClass='mb-3' label='City'  tabindex="4" onChange={(e) => { setCity(e.target.value) }} value={city} name='city' />
 													{cityError && <p style={{ color: 'red' }}>{cityError}</p>}
 
-													<MDBInput wrapperClass='mb-3' label='Pin Code' onChange={(e) => { setPinNO(e.target.value) }} value={pinNo} name='pinNo' />
+													<MDBInput wrapperClass='mb-3' label='Pincode'  tabindex="6" onChange={(e) => { setPinNO(e.target.value) }} value={pinNo} name='pinNo' />
 													{pinNoError && <p style={{ color: 'red' }}>{pinNoError}</p>}
 
-													<MDBInput wrapperClass='mb-3' label='Group' onChange={(e) => { setGroup(e.target.value) }} value={group} name='group' />
+													<MDBInput wrapperClass='mb-3' label='Group'  tabindex="8" onChange={(e) => { setGroup(e.target.value) }} value={group} name='group' />
 													{groupError && <p style={{ color: 'red' }}>{groupError}</p>}
 
-													<MDBInput wrapperClass='mb-3' label='Admin Mail ID' onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
+													<MDBInput wrapperClass='mb-3' label='Admin E-Mail ID'  tabindex="10" onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
 													{mailIdError && <p style={{ color: 'red' }}>{mailIdError}</p>}
 
-													<MDBInput wrapperClass='mb-3' type='tel' label='Admin Contact No.' onChange={(e) => { setContactNo(e.target.value) }} value={contactNo} name='contactNo' />
+													<MDBInput wrapperClass='mb-3' type='tel'  tabindex="12" label='Admin Contact No.' onChange={(e) => { setContactNo(e.target.value) }} value={contactNo} name='contactNo' />
 													{contactNoError && <p style={{ color: 'red' }}>{contactNoError}</p>}
 
 												</div>
@@ -484,10 +506,10 @@ const deleteUnitRecord = (data) => {
 									</Modal.Body>
 									<Modal.Footer>
                                         <Button variant="secondary" onClick={closeEditForm}>
-                                            Close
+                                            Cancel
                                         </Button>
                                         <Button variant="primary" onClick={handleEditUnit}>
-                                            Save Changes
+                                            Save
                                         </Button>
                                     </Modal.Footer>
 								</Modal>

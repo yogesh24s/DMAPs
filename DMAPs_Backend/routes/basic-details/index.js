@@ -28,6 +28,7 @@ basicDetails.get('/api/basicDetails', verifyToken,function(req, res) {
     SELECT * FROM dmaps.department;
     SELECT * FROM dmaps.designation;
     SELECT Unit_Id, Unit_Full_Name FROM dmaps.company_units;
+    SELECT * FROM dmaps.state;
 `;
 
     pool.query(sql, function (err, results, fields) {
@@ -38,6 +39,7 @@ basicDetails.get('/api/basicDetails', verifyToken,function(req, res) {
                 dataObj['department'] = results[0];
                 dataObj['designation'] = results[1];
                 dataObj['units'] = results[2];
+                dataObj['states'] = results[3];
                 response.push({ 'result': 'success', 'data': dataObj });
             } else {
                 response.push({ 'result': 'error', 'msg': 'No Results Found' });
