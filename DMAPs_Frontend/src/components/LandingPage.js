@@ -26,7 +26,7 @@ return <>
                 <Tab eventKey="second" title={<span> <i class="fa fa-table-columns"></i> Dashboard </span>}>
                     Dashboard Content
                 </Tab>
-                <Tab eventKey="third" title={<span> <i class="fa fa-toolbox"></i> Administrator </span>}>
+                <Tab eventKey="third" className='admin-tab' title={<span> <i class="fa fa-toolbox"></i> Administrator </span>}>
                     <Administrator />
                 </Tab>
                 {/* <Tab eventKey="Four" title={<span> <i class="fa fa-store"></i> Style Store </span>}>

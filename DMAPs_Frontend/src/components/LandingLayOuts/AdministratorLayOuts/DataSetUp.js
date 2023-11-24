@@ -9,6 +9,7 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import BuyerGroup from './DMAPs_Data/BuyerGroup';
 
 import './DataSetUp.scss';
 
@@ -184,71 +185,79 @@ export default function DataSetUp() {
         <MDBRow>
             <MDBCol size='1' className='no-pad-right'>
                 <MDBTabs className='flex-column text-center vertical-tab'>
+
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV1')} active={verticalActive === 'tabV1'}>
                             Human Resources
                         </MDBTabsLink>
                     </MDBTabsItem>
+                    
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV2')} active={verticalActive === 'tabV2'}>
                             Administrat
                         </MDBTabsLink>
                     </MDBTabsItem>
-                    {/* <MDBTabsItem className="vertical-link">
-                        <MDBTabsLink >
-                            Style Store
-                        </MDBTabsLink>
-                    </MDBTabsItem> */}
+
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV3')} active={verticalActive === 'tabV3'}>
                             Buyer Group
                         </MDBTabsLink>
                     </MDBTabsItem>
+                    
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV4')} active={verticalActive === 'tabV4'}>
                             Product Type
                         </MDBTabsLink>
                     </MDBTabsItem>
+                    
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV5')} active={verticalActive === 'tabV5'}>
                             Gender
                         </MDBTabsLink>
                     </MDBTabsItem>
+                    
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV6')} active={verticalActive === 'tabV6'}>
                             Season
                         </MDBTabsLink>
                     </MDBTabsItem>
+                    
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV7')} active={verticalActive === 'tabV7'}>
                             Size Grid
                         </MDBTabsLink>
                     </MDBTabsItem>
+                    
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV8')} active={verticalActive === 'tabV8'}>
                             Emb Type
                         </MDBTabsLink>
                     </MDBTabsItem>
+                    
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV9')} active={verticalActive === 'tabV9'}>
                             Print Type
                         </MDBTabsLink>
                     </MDBTabsItem>
+                    
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV10')} active={verticalActive === 'tabV10'}>
                             Washing Type
                         </MDBTabsLink>
                     </MDBTabsItem>
+                    
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV11')} active={verticalActive === 'tabV11'}>
                             Shipment Mode
                         </MDBTabsLink>
                     </MDBTabsItem>
+                    
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV12')} active={verticalActive === 'tabV12'}>
                             Country
                         </MDBTabsLink>
                     </MDBTabsItem>
+                    
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV13')} active={verticalActive === 'tabV13'}>
                             Garment Colour
@@ -265,74 +274,7 @@ export default function DataSetUp() {
 
                     </MDBTabsPane>
                     <MDBTabsPane show={verticalActive === 'tabV3'}>
-                        <div className='row'>
-                            <div className='col-12 text-right '>
-                                <Button className='primary-btn' onClick={() => setShow(true)}>
-                                    Add New
-                                </Button>
-
-                                <Modal 
-                                show={show}
-                                onHide={() => setShow(false)}
-                                dialogClassName="modal-50w"
-                                backdrop="static"
-                                keyboard={false}>
-
-                                <Modal.Header closeButton>
-                                        <Modal.Title> Add New Buyer Group </Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>
-                                    <form onSubmit={handleSubmit} style={{"margin-right":'-450px'}}>
-                                        <div className='row'>
-                                            <div className='col-3'>
-                                                
-                                                <Form.Select className='mb-2'>
-                                                    <option> Select Buyer Group</option>
-                                                </Form.Select>
-
-                                                <MDBInput wrapperClass='mb-2' label='Address' />
-
-                                                <MDBInput wrapperClass='mb-2' label='State'  />
-                                                
-                                                <MDBInput wrapperClass='mb-2' label='Contact No.'  />
-
-                                            </div>
-                                            <div className='col-3'>
-                                            <Form.Select className='mb-2'>
-                                                    <option> Select Division </option>
-                                                </Form.Select>
-                                                <MDBInput wrapperClass='mb-2' label='City'  />
-
-                                                <MDBInput wrapperClass='mb-2' label='Pincode'  />
-												
-												<MDBInput wrapperClass='mb-2' label='E-Mail ID'  />
-												
-                                               
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                    </Modal.Body>
-                                    <Modal.Footer>
-                                        <Button variant="secondary" onClick={handleClose}style={{width:'20%'}}>
-                                            Cancel
-                                        </Button>
-                                        <Button variant="primary" type='submit' block onClick={handleUnitSetup} style={{width:'20%'}}>
-                                            Save 
-                                        </Button>
-                                    </Modal.Footer>
-                                </Modal>
-                            </div>
-                            <div className='col-12'>
-                                <br/>
-                                <BootstrapTable
-                                    keyField='id'
-                                    pagination={pagination}
-                                    data={products}
-                                    columns={columns}
-                                />
-                            </div>
-                        </div>
+                        <BuyerGroup></BuyerGroup>
                     </MDBTabsPane>
                 </MDBTabsContent>
             </MDBCol>

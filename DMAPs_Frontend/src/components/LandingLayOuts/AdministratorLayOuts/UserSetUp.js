@@ -271,7 +271,7 @@ export default function UserSetUp() {
 							</div>
                             <div className='col-4 text-right '>
                                 <Button className='primary-btn' onClick={handleForm}>
-                                    Add New 
+                                    Add User <i className='fa fa-plus'> </i>
                                 </Button>
                                 <Modal
                                     show={show}
@@ -289,9 +289,9 @@ export default function UserSetUp() {
                                         
                                                 <div className='col-6'>
 
-                                                <MDBInput wrapperClass='mb-3' label='Name' tabindex="1" onChange={(e) => { setUserName(e.target.value) }} value={userName} name=' username' />
+                                                <MDBInput wrapperClass='mb-3' type='text' label='Name' tabindex="1" onChange={(e) => { setUserName(e.target.value) }} value={userName} name=' username' />
 
-                                                <MDBInput wrapperClass='mb-3' label='E-Mail ID' tabindex="3" onChange={(e) => { setPersonalMaildId(e.target.value) }} value={personalMaildId} name='PersonalMaildId' />
+                                                <MDBInput wrapperClass='mb-3' type='email' label='E-Mail ID' tabindex="3" onChange={(e) => { setPersonalMaildId(e.target.value) }} value={personalMaildId} name='PersonalMaildId' />
 
                                                 <Form.Select className='mb-3' tabindex="5" onChange={(e) => { setSelectedUnit(e.target.value) }} value={selectedUnit} name="selectedUnit" >
                                                         <option value=''>Select Unit</option>
@@ -317,17 +317,13 @@ export default function UserSetUp() {
                                                         <option value="inactive">InActive</option>
                                                     </Form.Select>
 
-                                                   
-                                                    
-                                                    
-                            
                                                 </div> 
 
                                                 <div className='col-6'>
 
-                                                <MDBInput wrapperClass='mb-3' label='Login ID' tabindex="2" onChange={(e) => { setLoginId(e.target.value) }} value={loginId} name='LoginId' />
+                                                <MDBInput wrapperClass='mb-3' type='text' label='Login ID' tabindex="2" onChange={(e) => { setLoginId(e.target.value) }} value={loginId} name='LoginId' />
                                                   
-                                                <MDBInput wrapperClass='mb-3' tabindex="4" label='Employee ID' onChange={(e) => { setEmpId(e.target.value) }} value={empId} name=' EmpId' />
+                                                <MDBInput wrapperClass='mb-3' type='text' tabindex="4" label='Employee ID' onChange={(e) => { setEmpId(e.target.value) }} value={empId} name=' EmpId' />
 
                                                    
 
@@ -347,7 +343,7 @@ export default function UserSetUp() {
                                                         <option value="superAdmin">Super Admin</option>
                                                     </Form.Select>
                                                 
-                                                    <MDBInput wrapperClass='mb-3' tabindex="10" label='Contact No.' onChange={(e) => { setMobileNumber(e.target.value) }} value={mobileNumber} name=' mobileNumber' />
+                                                    <MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Contact No.' onChange={(e) => { setMobileNumber(e.target.value) }} value={mobileNumber} name=' mobileNumber' />
 
                                                 </div>
                                             </div>
@@ -355,10 +351,10 @@ export default function UserSetUp() {
 
                                     </Modal.Body>
                                     <Modal.Footer>
-                                    <Button variant="secondary" onClick={handleClose} >
+                                    <Button variant="secondary" onClick={handleClose} style={{ width: '15%' }}>
                                              Cancel 
                                         </Button>
-                                    <Button variant="primary" type='submit' block onClick={handleUnitSetup}>
+                                    <Button variant="primary" type='submit' block onClick={handleUnitSetup} style={{ width: '15%' }}>
                                             Save
                                         </Button>
 

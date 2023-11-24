@@ -42,7 +42,7 @@
     font-size: 16px !important;
     color: #003650;
     font-weight: 600;
-    margin: 5px;
+    margin: 10px 10px 4px 0px;
 }
 .btn-close {
     opacity: 1 !important;
@@ -71,6 +71,24 @@
         }
     }
 }
+.modal-head {
+    padding: 10px !important;
+}
 .modal-footer {
-    padding: 0px;
+    padding: 0px 10px;
+}
+.modal-body {
+    padding-bottom: 0px !important;
+}
+.modal-title {
+    line-height: 36px;
+}
+
+.form-select {
+    padding: 4px 10px;
+}
+
+.tab-content {
+    padding: 2px !important;
+    background: #D0D5D5
 }

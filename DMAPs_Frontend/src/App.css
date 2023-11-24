@@ -46,3 +46,6 @@
   text-transform: none !important;
   font-size: 14px !important;
 }
+.modal-body {
+  padding-bottom: 0px !important;
+}

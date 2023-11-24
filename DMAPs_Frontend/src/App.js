@@ -36,10 +36,11 @@ class App extends Component {
     return (
       <div className="app">
         {headerComponent}
+
         <div className="az-content-wrapper">
           <AppRoutes />
         </div>
-        {/* { footerComponent } */}
+        
         <Loader
           promiseTracker={usePromiseTracker}
           color={"#3d5e61"}

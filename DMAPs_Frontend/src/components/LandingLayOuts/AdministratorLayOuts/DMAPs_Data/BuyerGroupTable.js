@@ -1,60 +1,39 @@
 import React from 'react'
-import userService from "../../../services/userService";
-import { trackPromise } from 'react-promise-tracker';
-import { useState } from 'react';
-import { useEffect } from 'react';
 import { useTable } from 'react-table';
 
-export default function CompanyUserTable(props) {
+export default function BuyerGroupTable(props) {
 	//const [data, setData] = useState([])
     let data = props.data
 	
 	const columns = React.useMemo(
 		() => [
-		  
 		  {
-			Header: 'User Name',
+			Header: 'Buyer Group Name',
 			accessor: 'User_Name',
 		  },
 		  {
-			Header: 'Employee ID',
+			Header: 'Buyer',
 			accessor: 'User_Employee_Id',
-		  },
-		  {
-			Header: 'Unit Name',
-			accessor: 'Unit_Short_Name',
-		  },
-		  {
-			Header: 'Department',
-			accessor: 'Department_Id',
-		  },
-		  {
-			Header: 'Designation',
-			accessor: 'Designation_Id',
-		  },
-		  {
-			Header: 'Contact No.',
-			accessor: 'Mobile_Num',
 		  },
 		  {
 			Header: 'E-Mail',
 			accessor: 'Mail_Id',
 		  },
 		  {
-			Header: 'Role',
-			accessor: 'User_Role',
+			Header: 'Contact No.',
+			accessor: 'Mobile_Num',
 		  },
 		  {
 			Header: 'Action',
 			accessor: 'action', // You can set a dummy accessor for the action column
 			Cell: ({ row }) => (
 				[
-					<i className='fa fa-edit pointer' onClick={(data) => {
-					  props.openEditForm(row.original)
-					}} title='Edit'> </i>,  
-					<i className='fa fa-trash ml-15 pointer' onClick={(data) => {
-						props.deleteUserRecord(row.original)
-					  }} title='Delete' > </i>
+					// <i className='fa fa-edit pointer' onClick={(data) => {
+					//   props.openEditForm(row.original)
+					// }} title='Edit'> </i>,  
+					// <i className='fa fa-trash ml-15 pointer' onClick={(data) => {
+					// 	props.deleteUserRecord(row.original)
+					//   }} title='Delete' > </i>
 				]
 			),
 		  },

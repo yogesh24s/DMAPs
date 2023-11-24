@@ -81,34 +81,8 @@ function Login() {
             alert("error.response.data.error");
         })
         );
-		// helper.setToken("eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1N2YzYTgzNi0zMWY4LTQ3Y2UtYmZkZi01YzUxYTMxMzdlNDAifQ.");
-		// helper.setRefreshToken("eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1N2YzYTgzNi0zMWY4LTQ3Y2UtYmZkZi01YzUxYTMxMzdlNDAifQ.");
-		// helper.setRole("Admin");
-		// helper.setFullName("demo user");
-		// helper.setTemporaryPasswordFlag("false");
-		// helper.setUserName("Yogesh");
-		// helper.setUserId("93fff965-d487-4fea-bdc7-6a08a1009298");
-		// helper.setAvailableLicense("9")
-
-		// Changed to false from true
-		//history.push("/landingpage");
+		
 	}
-
-
-	// const formValidation = (e) => {
-	// 	const userNameError = {};
-	// 	let isvalid = true;
-	// 	var regexp = /^[a-zA-Z0-9\- _ \s]+$/;
-	// 	if (regexp.test(e) === false) {
-	// 		setErrorHighlight(true);
-	// 		userNameError.text = "only alphanumeric, space( ), underscore (_), and hyphen (-) characters are allowed.";
-	// 		isvalid = false;
-	// 	} else {
-	// 		setErrorHighlight(false);
-	// 	}
-	// 	setUserNameError(userNameError);
-	// 	return isvalid;
-	// }
 
 	return (
 		<div>

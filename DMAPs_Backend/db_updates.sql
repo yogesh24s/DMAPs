@@ -63,3 +63,23 @@
 -- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','UTTARANCHAL',NULL,'Yogesh',CURRENT_TIMESTAMP);
 -- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','JHARKHAND',NULL,'Yogesh',CURRENT_TIMESTAMP);
 -- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','CHATTISGARH',NULL,'Yogesh',CURRENT_TIMESTAMP);
+
+CREATE TABLE `dmaps`.`buyer_groups` (
+  `Buyer_Group_Id` INT NOT NULL,
+  `Buyer_Group_Name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`Buyer_Group_Name`),
+  UNIQUE INDEX `Buyer_Group_Name_UNIQUE` (`Buyer_Group_Name` ASC) VISIBLE);
+
+ALTER TABLE `dmaps`.`buyer_groups` 
+CHANGE COLUMN `Buyer_Group_Id` `Buyer_Group_Id` INT NOT NULL AUTO_INCREMENT ,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`Buyer_Group_Id`, `Buyer_Group_Name`);
+;
+
+ALTER TABLE `dmaps`.`buyer_groups` 
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`Buyer_Group_Id`);
+;
+
+INSERT INTO `dmaps`.`buyer_groups` (`Buyer_Group_Name`) VALUES ('Levis');
+INSERT INTO `dmaps`.`buyer_groups` (`Buyer_Group_Name`) VALUES ('Mexx');
