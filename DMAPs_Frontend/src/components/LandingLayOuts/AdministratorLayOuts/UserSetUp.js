@@ -372,7 +372,7 @@ export default function UserSetUp() {
                                 <Modal show={isEditFormOpen} onHide={closeEditForm} dialogClassName="modal-50w"
                                     backdrop="static">
                                     <Modal.Header closeButton>
-                                        <Modal.Title>Edit User Form</Modal.Title>
+                                        <Modal.Title>Edit Company Users </Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
                                         <form onSubmit={handleEditUserDetails}>
