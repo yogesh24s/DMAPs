@@ -12,6 +12,7 @@ access.DMAPFunc();
 
 const companyUnit = require("../../controllers/unit.controller.js");
 const companyUsers = require("../../controllers/user.controller.js")
+const companyBuyers = require("../../controllers/buyers.controller.js");
 
 Administrator.use(bodyParser.json()); // to support JSON-encoded bodies
 Administrator.use(bodyParser.urlencoded({ // to support URL-encoded bodies
@@ -44,4 +45,10 @@ Administrator.post('/api/saveCompanyUsers',verifyToken, companyUsers.saveCompany
 Administrator.get('/api/getCompanyUsers',verifyToken, companyUsers.getCompanyUsers);
 Administrator.post('/api/editCompanyUsers',verifyToken, companyUsers.editCompanyUsers);
 Administrator.post('/api/deleteCompanyUsers',verifyToken, companyUsers.deleteCompanyUsers);
+
+Administrator.get('/api/getBuyers',verifyToken, companyBuyers.getCompanyBuyers);
+Administrator.post('/api/saveBuyers',verifyToken, companyBuyers.saveCompanyBuyers);
+Administrator.post('/api/editBuyers',verifyToken, companyBuyers.editCompanyBuyers);
+Administrator.post('/api/deleteBuyers',verifyToken, companyBuyers.deleteCompanyBuyers);
+
 module.exports = Administrator;

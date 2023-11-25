@@ -2,38 +2,39 @@ import React from 'react'
 import { useTable } from 'react-table';
 
 export default function BuyerGroupTable(props) {
-	//const [data, setData] = useState([])
+	
+	// const [data, setData] = useState([])
     let data = props.data
 	
 	const columns = React.useMemo(
 		() => [
 		  {
 			Header: 'Buyer Group Name',
-			accessor: 'User_Name',
+			accessor: 'Buyer_Group_Name',
 		  },
 		  {
 			Header: 'Buyer',
-			accessor: 'User_Employee_Id',
+			accessor: 'Buyer_Name',
 		  },
 		  {
 			Header: 'E-Mail',
-			accessor: 'Mail_Id',
+			accessor: 'Buyer_Email_Id',
 		  },
 		  {
 			Header: 'Contact No.',
-			accessor: 'Mobile_Num',
+			accessor: 'Buyer_Contact_No',
 		  },
 		  {
 			Header: 'Action',
 			accessor: 'action', // You can set a dummy accessor for the action column
 			Cell: ({ row }) => (
 				[
-					// <i className='fa fa-edit pointer' onClick={(data) => {
-					//   props.openEditForm(row.original)
-					// }} title='Edit'> </i>,  
-					// <i className='fa fa-trash ml-15 pointer' onClick={(data) => {
-					// 	props.deleteUserRecord(row.original)
-					//   }} title='Delete' > </i>
+					<i className='fa fa-edit pointer' onClick={(data) => {
+					  props.openEditForm(row.original)
+					}} title='Edit'> </i>,  
+					<i className='fa fa-trash ml-15 pointer' onClick={(data) => {
+						props.deleteBuyerGroupRecord(row.original)
+					  }} title='Delete' > </i>
 				]
 			),
 		  },

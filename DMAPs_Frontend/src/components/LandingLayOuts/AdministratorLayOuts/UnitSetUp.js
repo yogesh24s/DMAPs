@@ -460,8 +460,17 @@ const deleteUnitRecord = (data) => {
 													{addressLine1Error && <p style={{ color: 'red' }}>{addressLine1Error}</p>}
 
 
-													<MDBInput wrapperClass='mb-3' label='State'  tabindex="5" onChange={(e) => { setState(e.target.value) }} value={state} name='state' />
-													{stateError && <p style={{ color: 'red' }}>{stateError}</p>}
+													{/* <MDBInput wrapperClass='mb-3' label='State'  tabindex="5" onChange={(e) => { setState(e.target.value) }} value={state} name='state' />
+													{stateError && <p style={{ color: 'red' }}>{stateError}</p>} */}
+
+													<Form.Select className='mb-3' tabindex="5" label='State' onChange={(e) => { setState(e.target.value) }} value={state} name='state'  >
+                                                        <option> Select State </option>
+                                                        {stateList.map((item) => (
+                                                            <option key={item.State_Name} value={item.State_Name}>
+                                                                {item.State_Name}
+                                                            </option>
+                                                        ))}
+                                                    </Form.Select>
 
 													<MDBInput wrapperClass='mb-3' type='text'  tabindex="7" label='Division' onChange={(e) => { setdivision(e.target.value); }} value={division} name='division' />
 													{divisionError && <p style={{ color: 'red' }}>{divisionError}</p>}

@@ -27,42 +27,43 @@
 --           `Change_Date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
 --           PRIMARY KEY  (`State_Id`));
 
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','ANDHRA PRADESH',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','ASSAM',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','ARUNACHAL PRADESH',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','GUJRAT',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','BIHAR',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','HARYANA',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','HIMACHAL PRADESH',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','JAMMU & KASHMIR',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','KARNATAKA',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','KERALA',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','MADHYA PRADESH',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','MAHARASHTRA',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','MANIPUR',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','MEGHALAYA',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','MIZORAM',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','NAGALAND',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','ORISSA',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','PUNJAB',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','RAJASTHAN',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','SIKKIM',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','TAMIL NADU',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','TELANGANA',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','TRIPURA',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','UTTAR PRADESH',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','WEST BENGAL',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','DELHI',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','GOA',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','PONDICHERY',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','LAKSHDWEEP',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','DAMAN & DIU',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','DADRA & NAGAR',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','CHANDIGARH',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','ANDAMAN & NICOBAR',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','UTTARANCHAL',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','JHARKHAND',NULL,'Yogesh',CURRENT_TIMESTAMP);
--- INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','CHATTISGARH',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Andhra Pradesh',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Assam',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Arunachal Pradesh',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Gujrat',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Bihar',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Haryana',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Himachal Pradesh',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Jammu & Kashmir',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Karnataka',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Kerala',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Madhya Pradesh',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Maharashtra',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Manipur',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Meghalaya',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Mizoram',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Nagaland',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Orissa',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Punjab',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Rajasthan',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Sikkim',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Tamil Nadu',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Telangana',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Tripura',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Uttar Pradesh',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','West Bengal',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Delhi',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Goa',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Pondichery',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Lakshdweep',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Daman & Diu',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Dadra & Nagar',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Chandigarh',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Andaman & Nicobar',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Uttaranchal',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Jharkhand',NULL,'Yogesh',CURRENT_TIMESTAMP);
+INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Chattisgarh',NULL,'Yogesh',CURRENT_TIMESTAMP);
+
 
 CREATE TABLE `dmaps`.`buyer_groups` (
   `Buyer_Group_Id` INT NOT NULL,
@@ -83,3 +84,19 @@ ADD PRIMARY KEY (`Buyer_Group_Id`);
 
 INSERT INTO `dmaps`.`buyer_groups` (`Buyer_Group_Name`) VALUES ('Levis');
 INSERT INTO `dmaps`.`buyer_groups` (`Buyer_Group_Name`) VALUES ('Mexx');
+
+CREATE TABLE `dmaps`.`buyers` (
+  `Buyer_Id` INT NOT NULL,
+  `Buyer_Name` VARCHAR(45) NOT NULL,
+  `Buyer_Email_Id` VARCHAR(45) NOT NULL,
+  `Buyer_Contact_No` INT NOT NULL,
+  PRIMARY KEY (`Buyer_Id`));
+
+ALTER TABLE `dmaps`.`buyers` 
+CHANGE COLUMN `Buyer_Id` `Buyer_Id` INT NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `dmaps`.`buyers` 
+ADD COLUMN `Buyer_Group_Name` VARCHAR(45) NOT NULL AFTER `Buyer_Id`;
+
+ALTER TABLE `dmaps`.`buyers` 
+CHANGE COLUMN `Buyer_Contact_No` `Buyer_Contact_No` VARCHAR(15) NOT NULL ;
