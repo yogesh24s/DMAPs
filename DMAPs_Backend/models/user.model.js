@@ -29,12 +29,21 @@ const transporter = nodemailer.createTransport({
       pass: 'cmxw tzvu ftvf cpqh',
     },
   });
+
+
   const sendWelcomeEmail = (email,username, password) => {
     var mailOptions = {
         from: "developer.dmaps@gmail.com",
         to: email,
-        subject: "Welcome to DMAPS",
-        text: `We have shared the login credentials to access DMAPs.\n Username: ${username} \n Password: ${password}`,
+        subject: "Welcome to DMAPs",
+        // text: `We have shared the login credentials to access DMAPs.\n Username: ${username} \n Password: ${password}`,
+        text: `  Hi <Name>,\n\n
+        Hope this email finds you well. We are excited to invite you to <Unit> as <Role>. Please <href>click here</href> to login to the application by using the credentials below:
+        Login: ${username} \n
+        Password: ${password} \n \n
+        Please remember to change your password after the first login and update your profile. \n\n
+        Thank you \n
+        DMAPs IT Team`
       };
   
       transporter.sendMail(mailOptions, function (error, info) {
