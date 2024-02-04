@@ -9,7 +9,7 @@ class adminService {
     // };
     // console.log({headers});
     return api
-      .get("http://51.20.104.100:4000/api/basicDetails")
+      .get("http://3.92.91.120:4000/api/basicDetails")
       .then((response) => {
         return response;
       })
