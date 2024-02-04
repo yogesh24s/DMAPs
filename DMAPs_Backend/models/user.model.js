@@ -31,17 +31,16 @@ const transporter = nodemailer.createTransport({
   });
 
 
-  const sendWelcomeEmail = (email,username, password) => {
+  const sendWelcomeEmail = (email,username, password, unitname, role) => {
     var mailOptions = {
         from: "developer.dmaps@gmail.com",
         to: email,
         subject: "Welcome to DMAPs",
         // text: `We have shared the login credentials to access DMAPs.\n Username: ${username} \n Password: ${password}`,
-        text: `  Hi <Name>,\n\n
-        Hope this email finds you well. We are excited to invite you to <Unit> as <Role>. Please <href>click here</href> to login to the application by using the credentials below:
+        text: `Hi ${username},\n Hope this email finds you well. We are excited to invite you to ${unitname} as ${role}. Please <a href="http://3.92.91.120:4001/DMAPs/login" target="_blank"> click here</href> to login to the application by using the credentials below:
         Login: ${username} \n
-        Password: ${password} \n \n
-        Please remember to change your password after the first login and update your profile. \n\n
+        Password: ${password} \n
+        Please remember to change your password after the first login and update your profile. \n
         Thank you \n
         DMAPs IT Team`
       };
@@ -105,8 +104,10 @@ CompanyUsers.editCompanyUsers = result => {
 
 
 CompanyUsers.saveCompanyUsers = result => {
-    let userData = data[0]
-    let username = userData.User_Name
+    let userData = data[0];
+    let username = userData.User_Name;
+    let Unit_Name = userData.Unit_Name;
+    let Role = userData.User_Role;
     const emailParts = userData.Mail_Id.split('@');
     const userPassword = emailParts[0];
     const updatedData = { ...userData, User_Password: userPassword };
@@ -116,7 +117,7 @@ CompanyUsers.saveCompanyUsers = result => {
         .transacting(t)
         .insert(updatedData)
         .then(function(response) {
-             sendWelcomeEmail(userData.Mail_Id,username,userPassword)
+             sendWelcomeEmail(userData.Mail_Id,username,userPassword, Unit_Name,Role )
             result(null, { "result": response });
         })
         .then(t.commit)
