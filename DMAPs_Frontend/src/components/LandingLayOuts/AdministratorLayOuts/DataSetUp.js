@@ -194,7 +194,7 @@ export default function DataSetUp() {
                     
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV2')} active={verticalActive === 'tabV2'}>
-                            Administrat
+                            Administrator
                         </MDBTabsLink>
                     </MDBTabsItem>
 

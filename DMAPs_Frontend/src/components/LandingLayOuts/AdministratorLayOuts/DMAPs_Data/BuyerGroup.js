@@ -175,7 +175,7 @@ export default function BuyerGroup() {
 			</div>
 			<div className='col-4 text-right '>
 				<Button className='primary-btn' onClick={handleForm}>
-					Add Buyer <i className='fa fa-plus'> </i>
+				<i className='fa fa-plus'> </i> Buyer 
 				</Button>
 				<Modal
 					show={show}
