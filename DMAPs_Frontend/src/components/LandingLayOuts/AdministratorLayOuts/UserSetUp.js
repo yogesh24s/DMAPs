@@ -34,23 +34,42 @@ export default function UserSetUp() {
     const handleClose = () => setShow(false);
 
     const [verticalActive, setVerticalActive] = useState('tabV1');
-    const [unitName, setunitName] = useState("")
     const [userName, setUserName] = useState("")
+    const [userNameError, setUserNameError] = useState("")
+
     const [empId, setEmpId] = useState("")
+    const [empIdError, setEmpIdError] = useState("")
+
     const [department, setDepartment] = useState("")
+    const [departmentError, setDepartmentError] = useState("")
+    
     const [designation, setDesignation] = useState("")
+    const [designationError, setDesignationError] = useState("")
+
     const [mobileNumber, setMobileNumber] = useState("")
+    const [mobileNumberError, setMobileNumberError] = useState("")
+
     const [personalMaildId, setPersonalMaildId] = useState("")
+    const [personalMaildIdError, setPersonalMaildIdError] = useState("")
+
     const [userLevel, setUserLevel] = useState("")
+    const [userLevelError, setUserLevelError] = useState("")
+
     const [status, setStatus] = useState("")
+    const [statusError, setStatusError] = useState("")
+
     const [loginId, setLoginId] = useState("")
+    const [loginIdError, setLoginIdError] = useState("")
+
     const [basicData, setBasicData] = useState([])
     const [basicDesgination, setbasicDesgination] = useState([])
     const [basicDepartment, setBasicDepartment] = useState([])
+
     const [selectedUnit, setSelectedUnit] = useState('');
+    const [selectedUnitError, setSelectedUnitError] = useState('');
+
     const [data, setData] = useState([])
     const [isEditFormOpen, setIsEditFormOpen] = useState(false);
-    const [demo, setdemo] = useState("")
 
     const handleVerticalClick = (value) => {
         if (value === verticalActive) {
@@ -79,6 +98,81 @@ export default function UserSetUp() {
 
     const handleUnitSetup = (e) => {
         e.preventDefault();
+        let isValid = true;
+		if (!selectedUnit) {
+			setSelectedUnitError('Unit is required');
+			isValid = false;
+		} else {
+			setSelectedUnitError('');
+		}
+
+		if (!userName) {
+			setUserNameError('User Name is required');
+			isValid = false;
+		} else {
+			setUserNameError('');
+		}
+
+		if (!empId) {
+			setEmpIdError('Employee ID is required');
+			isValid = false;
+		} else {
+			setEmpIdError('');
+		}
+
+		if (!loginId) {
+			setLoginIdError('Login Id is required');
+			isValid = false;
+		} else {
+			setLoginIdError('');
+		}
+
+        if (!department) {
+			setDepartmentError('Department is required');
+			isValid = false;
+		} else {
+			setDepartmentError('');
+		}
+
+		if (!designation) {
+			setDesignationError('Designation is required');
+			isValid = false;
+		} else {
+			setDesignationError('');
+		}
+
+		if (!mobileNumber) {
+			setMobileNumberError('Mobile Number is required');
+			isValid = false;
+		} else {
+			setMobileNumberError('');
+		}
+
+		if (!personalMaildId) {
+			setPersonalMaildIdError('Mail ID is required');
+			isValid = false;
+		} else {
+			setPersonalMaildIdError('');
+		}
+
+        if (!status) {
+			setStatusError('Status is required');
+			isValid = false;
+		} else {
+			setStatusError('');
+		}
+
+		if (!userLevel) {
+			setUserLevelError('User Level is required');
+			isValid = false;
+		} else {
+			setUserLevelError('');
+		}
+
+		if (!isValid) {
+			return;
+		}
+
         let payload = {
             "Unit_Short_Name": selectedUnit,
             "User_Name": userName,
@@ -92,15 +186,14 @@ export default function UserSetUp() {
             "User_Role": userLevel
         }
         trackPromise(userService.saveCompanyUsers({ "data": [payload] }).then((response) => {
-            debugger
             //check login response
-            if (response.status == 200) {
+            if (response.status == 200 && response.data.data.status == "success") {
                 // alert(response.data.result);
                 getCompanyUserData()
                 handleClose()
             }
             else {
-                alert(response.data.result);
+                alert(response.data.data.result);
             }
 
         }).catch((error) => {
@@ -209,15 +302,14 @@ export default function UserSetUp() {
             "User_Role": userLevel
         }
         trackPromise(userService.editCompanyUsers({ "data": [payload] }).then((response) => {
-            debugger
             //check login response
-            if (response.status == 200) {
+            if (response.status == 200 && response.data.data.status == "success") {
                 // alert(response.data.result);
                 getCompanyUserData()
                 closeEditForm()
             }
             else {
-                alert(response.data.result);
+                alert(response.data.data.result);
             }
 
         }).catch((error) => {
@@ -229,7 +321,7 @@ export default function UserSetUp() {
 
     const deleteUserRecord = (data) => {
       
-        if (window.confirm("Are you sure to delete the Company Users ?"))
+        if (window.confirm("Are you sure to delete the Company User ?"))
         { 
             let payload = {
                 "User_Employee_Id":data.User_Employee_Id
@@ -270,8 +362,8 @@ export default function UserSetUp() {
 								<h1 className='h1'> Company Users </h1>
 							</div>
                             <div className='col-4 text-right '>
-                                <Button className='primary-btn' onClick={handleForm}>
-                                    Add User <i className='fa fa-plus'> </i>
+                                <Button className='primary-btn mt-10' onClick={handleForm}>
+                                <i className='fa fa-plus'> </i> User 
                                 </Button>
                                 <Modal
                                     show={show}
@@ -290,8 +382,10 @@ export default function UserSetUp() {
                                                 <div className='col-6'>
 
                                                 <MDBInput wrapperClass='mb-3' type='text' label='Name' tabindex="1" onChange={(e) => { setUserName(e.target.value) }} value={userName} name=' username' />
+                                                {userNameError && <p style={{ color: 'red' }}>{userNameError}</p>}
 
                                                 <MDBInput wrapperClass='mb-3' type='email' label='E-Mail ID' tabindex="3" onChange={(e) => { setPersonalMaildId(e.target.value) }} value={personalMaildId} name='PersonalMaildId' />
+                                                { personalMaildIdError && <p style={{ color: 'red' }}>{personalMaildIdError}</p>}
 
                                                 <Form.Select className='mb-3' tabindex="5" onChange={(e) => { setSelectedUnit(e.target.value) }} value={selectedUnit} name="selectedUnit" >
                                                         <option value=''>Select Unit</option>
@@ -301,6 +395,7 @@ export default function UserSetUp() {
                                                             </option>
                                                         ))}
                                                     </Form.Select>
+                                                    { selectedUnitError && <p style={{ color: 'red' }}>{selectedUnitError}</p>}
                                                     
                                                 <Form.Select className='mb-3' tabindex="7" onChange={(e) => { setDepartment(e.target.value) }} value={department} name=' department' >
                                                         <option> Select Department </option>
@@ -310,22 +405,24 @@ export default function UserSetUp() {
                                                             </option>
                                                         ))}
                                                     </Form.Select>
+                                                    { departmentError && <p style={{ color: 'red' }}>{departmentError}</p>}
 
                                                     <Form.Select className='mb-3' tabindex="9" onChange={handleStatus} value={status}>
                                                         <option> Select Status </option>
                                                         <option value="active">Active</option>
                                                         <option value="inactive">InActive</option>
                                                     </Form.Select>
+                                                    { statusError && <p style={{ color: 'red' }}>{statusError}</p>}
 
                                                 </div> 
 
                                                 <div className='col-6'>
 
                                                 <MDBInput wrapperClass='mb-3' type='text' label='Login ID' tabindex="2" onChange={(e) => { setLoginId(e.target.value) }} value={loginId} name='LoginId' />
+                                                { loginIdError && <p style={{ color: 'red' }}>{loginIdError}</p>}
                                                   
                                                 <MDBInput wrapperClass='mb-3' type='text' tabindex="4" label='Employee ID' onChange={(e) => { setEmpId(e.target.value) }} value={empId} name=' EmpId' />
-
-                                                   
+                                                { empIdError && <p style={{ color: 'red' }}>{empIdError}</p>}
 
                                                     <Form.Select className='mb-3' tabindex="6" onChange={(e) => { setDesignation(e.target.value) }} value={designation} name=' designation' >
                                                         <option> Select Designation </option>
@@ -335,6 +432,7 @@ export default function UserSetUp() {
                                                             </option>
                                                         ))}
                                                     </Form.Select>
+                                                    { designationError && <p style={{ color: 'red' }}>{designationError}</p>}
 
                                                     <Form.Select className='mb-3' tabindex="8" onChange={handleUserLevel} value={userLevel}>
                                                         <option> Select Role </option>
@@ -342,9 +440,10 @@ export default function UserSetUp() {
                                                         <option value="admin">Admin</option>
                                                         <option value="superAdmin">Super Admin</option>
                                                     </Form.Select>
+                                                    { userLevelError && <p style={{ color: 'red' }}>{userLevelError}</p>}
                                                 
                                                     <MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Contact No.' onChange={(e) => { setMobileNumber(e.target.value) }} value={mobileNumber} name=' mobileNumber' />
-
+                                                    { mobileNumberError && <p style={{ color: 'red' }}>{mobileNumberError}</p>}
                                                 </div>
                                             </div>
                                         </form>

@@ -92,13 +92,14 @@ CompanyUsers.editCompanyUsers = result => {
         .where({ User_Employee_Id: userData.User_Employee_Id })
         .update(updateData)
         .then(function(response) {
-            result(null, { "result": response });
+            result(null, { "result": "Company User are saved successfully", status: "success" });
         })
         .then(t.commit)
         .catch(t.rollback)
     })
     .catch(function(error) {
         console.log(error);
+        result(null, { "result": error.sqlMessage, status: "error" });
     })
 }
 
@@ -118,13 +119,14 @@ CompanyUsers.saveCompanyUsers = result => {
         .insert(updatedData)
         .then(function(response) {
              sendWelcomeEmail(userData.Mail_Id,username,userPassword, Unit_Name,Role )
-            result(null, { "result": response });
+             result(null, { "result": "Company User are saved successfully", status: "success" });
         })
         .then(t.commit)
         .catch(t.rollback)
     })
     .catch(function(error) {
         console.log(error);
+        result(null, { "result": error.sqlMessage, status: "error" });
     })
 
 }

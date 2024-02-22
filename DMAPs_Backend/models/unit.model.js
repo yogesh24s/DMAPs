@@ -25,7 +25,7 @@ CompanyUnit.saveCompanyUnits = result => {
         return knex('dmaps.company_units')
             .insert(data)
             .then(function(response) {
-                result(null, { "result": response });
+                result(null, { "result": "Company Unit are saved successfully", status: "success" });
             })
             .then(t.commit)
             .catch(t.rollback)
@@ -33,6 +33,7 @@ CompanyUnit.saveCompanyUnits = result => {
     })
     .catch(function(error) {
         console.log(error);
+        result(null, { "result": error.sqlMessage, status: "error" });
     });
 }
 
@@ -64,13 +65,14 @@ CompanyUnit.editCompanyUnits = result => {
         .where({ Unit_Id: unitData.Unit_Id, })
         .update(updateData)
         .then(function(response) {
-            result(null, { "result": response });
+            result(null, { "result": "Company Unit are saved successfully", status: "success" });
         })
         .then(t.commit)
         .catch(t.rollback)
     })
     .catch(function(error) {
         console.log(error);
+        result(null, { "result": error.sqlMessage, status: "error" });
     })
 }
 

@@ -25,10 +25,17 @@ export default function BuyerGroup() {
 	const handleClose = () => setShow(false);
 
 	const [selectedBuyerGroup, setSelectedBuyerGroup] = useState('');
+	const [selectedBuyerGroupError, setSelectedBuyerGroupError] = useState('');
 	const [buyerId, setBuyerId] = useState('');
+
 	const [buyerName, setBuyerName] = useState("");
+	const [buyerNameError, setBuyerNameError] = useState("");
+
 	const [contactNumber, setcontactNumber] = useState("");
+	const [contactNumberError, setcontactNumberError] = useState("");
+
 	const [mailId, setMailId] = useState("");
+	const [mailIdError, setMailIdError] = useState("");
 
 	const [buyerGroupData, setBuyerGroupData] = useState([]);
 	const [data, setData] = useState([]);
@@ -53,6 +60,39 @@ export default function BuyerGroup() {
 
 	const handleBuyerGroupSetup = (e) => {
 		e.preventDefault();
+		let isValid = true;
+
+		if (!selectedBuyerGroup) {
+			setSelectedBuyerGroupError('Buyer Group is required');
+			isValid = false;
+		} else {
+			setSelectedBuyerGroupError('');
+		}
+
+		if (!mailId) {
+			setMailIdError('Mail ID is required');
+			isValid = false;
+		} else {
+			setMailIdError('');
+		}
+
+		if (!buyerName) {
+			setBuyerNameError('Buyer Name is required');
+			isValid = false;
+		} else {
+			setBuyerNameError('');
+		}
+
+		if (!contactNumber) {
+			setcontactNumberError('Contact Number is required');
+			isValid = false;
+		} else {
+			setcontactNumberError('');
+		}
+
+		if (!isValid) {
+			return;
+		}
 
 		let payload = {
 			"Buyer_Group_Name": selectedBuyerGroup,
@@ -80,6 +120,40 @@ export default function BuyerGroup() {
 
 	const handleEditBuyer = (e) => {
 		e.preventDefault();
+		let isValid = true;
+
+		if (!selectedBuyerGroup) {
+			setSelectedBuyerGroupError('Buyer Group is required');
+			isValid = false;
+		} else {
+			setSelectedBuyerGroupError('');
+		}
+
+		if (!mailId) {
+			setMailIdError('Mail ID is required');
+			isValid = false;
+		} else {
+			setMailIdError('');
+		}
+
+		if (!buyerName) {
+			setBuyerNameError('Buyer Name is required');
+			isValid = false;
+		} else {
+			setBuyerNameError('');
+		}
+
+		if (!contactNumber) {
+			setcontactNumberError('Contact Number is required');
+			isValid = false;
+		} else {
+			setcontactNumberError('');
+		}
+
+		if (!isValid) {
+			return;
+		}
+
 		let payload = {
 			"Buyer_Id" : buyerId,
 			"Buyer_Group_Name": selectedBuyerGroup,
@@ -147,7 +221,7 @@ export default function BuyerGroup() {
 
 	const deleteBuyerGroupRecord = (data) => {
 
-		if (window.confirm("Are you sure to delete the Company Buyers ?")) {
+		if (window.confirm("Are you sure to delete the Company Buyer ?")) {
 			let payload = {
 				"Buyer_Id": data.Buyer_Id
 			}
@@ -174,7 +248,7 @@ export default function BuyerGroup() {
 				<h1 className='h1'> Buyer Group </h1>
 			</div>
 			<div className='col-4 text-right '>
-				<Button className='primary-btn' onClick={handleForm}>
+				<Button className='primary-btn mt-10' onClick={handleForm}>
 				<i className='fa fa-plus'> </i> Buyer 
 				</Button>
 				<Modal
@@ -191,7 +265,7 @@ export default function BuyerGroup() {
 						<form onSubmit={handleBuyerGroupSetup}>
 							<div className='row' >
 								<div className='col-6'>
-									<Form.Select className='mb-3' tabindex="5" onChange={(e) => { setSelectedBuyerGroup(e.target.value) }} value={selectedBuyerGroup} name="selectedBuyerGroup" >
+									<Form.Select className='mb-3' tabindex="1" required onChange={(e) => { setSelectedBuyerGroup(e.target.value) }} value={selectedBuyerGroup} name="selectedBuyerGroup" >
 										<option > Select Buyer Group</option>
 										{buyerGroupData.map((item) => (
 											<option key={item.Buyer_Group_Id} value={item.Buyer_Group_Name}>
@@ -199,15 +273,26 @@ export default function BuyerGroup() {
 											</option>
 										))}
 									</Form.Select>
+									{selectedBuyerGroupError && <p style={{ color: 'red' }}>{selectedBuyerGroupError}</p>}
 
-									<MDBInput wrapperClass='mb-3' type='email' label='E-Mail ID' tabindex="3" onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
+
+									<MDBInput wrapperClass='mb-3' type='email' required label='E-Mail ID' tabindex="3" onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
+
+									{mailIdError && <p style={{ color: 'red' }}>{mailIdError}</p>}
+
 								</div>
 
 								<div className='col-6'>
 
-									<MDBInput wrapperClass='mb-3' type='text' label='Buyer' tabindex="2" onChange={(e) => { setBuyerName(e.target.value) }} value={buyerName} name='Buyer' />
+									<MDBInput wrapperClass='mb-3' required type='text' label='Buyer' tabindex="2" onChange={(e) => { setBuyerName(e.target.value) }} value={buyerName} name='Buyer' />
 
-									<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Contact No.' onChange={(e) => { setcontactNumber(e.target.value) }} value={contactNumber} name=' contactNumber' />
+									{buyerNameError && <p style={{ color: 'red' }}>{buyerNameError}</p>}
+
+
+									<MDBInput wrapperClass='mb-3' required type='number' tabindex="4" label='Contact No.' onChange={(e) => { setcontactNumber(e.target.value) }} value={contactNumber} name=' contactNumber' />
+
+									{contactNumberError && <p style={{ color: 'red' }}>{contactNumberError}</p>}
+
 
 								</div>
 							</div>
@@ -245,15 +330,25 @@ export default function BuyerGroup() {
 											</option>
 										))}
 									</Form.Select>
+									{selectedBuyerGroupError && <p style={{ color: 'red' }}>{selectedBuyerGroupError}</p>}
+
 
 									<MDBInput wrapperClass='mb-3' type='email' label='E-Mail ID' tabindex="3" onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
+
+									{mailIdError && <p style={{ color: 'red' }}>{mailIdError}</p>}
+
 								</div>
 
 								<div className='col-6'>
 
 									<MDBInput wrapperClass='mb-3' type='text' label='Buyer' tabindex="2" onChange={(e) => { setBuyerName(e.target.value) }} value={buyerName} name='Buyer' />
+									{buyerNameError && <p style={{ color: 'red' }}>{buyerNameError}</p>}
+
 
 									<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Contact No.' onChange={(e) => { setcontactNumber(e.target.value) }} value={contactNumber} name=' contactNumber' />
+
+									{contactNumberError && <p style={{ color: 'red' }}>{contactNumberError}</p>}
+
 
 								</div>
 							</div>

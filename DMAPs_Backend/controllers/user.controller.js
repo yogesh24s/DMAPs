@@ -31,25 +31,19 @@ exports.saveCompanyUsers = (req, res) => {
 exports.editCompanyUsers = (req, res) => {
     data = req.body;
     CompanyUsers.editCompanyUsers((err, data) => {
-        if (err) {
-            res.send({
-                message:
-                    err.message || "Some error occured"
-            });
-        }
-        else {
-            res.send({ "result": "Company Users are saved successfully", "data": data });
-        }
+        res.send({"data": data });
     });
 };
 
 exports.deleteCompanyUsers = (req, res) => {
     data = req.body;
     CompanyUsers.deleteCompanyUsers((err, data) => {
-        if (err) {
+        console.log({"err" : err});
+        console.log({"data" : data});
+        if ( err == null) {
             res.send({
                 message:
-                    err.message || "Some error occured"
+                    err.sqlMessage || "Some error occured"
             });
         }
         else {

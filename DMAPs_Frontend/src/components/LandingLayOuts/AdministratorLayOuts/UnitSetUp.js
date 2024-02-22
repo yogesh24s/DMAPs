@@ -79,7 +79,6 @@ export default function UnitSetUp() {
 
 	const handleUnitSetup = (e) => {
 		e.preventDefault();
-		debugger
 		let isValid = true;
 
 		if (!unitName) {
@@ -189,14 +188,14 @@ export default function UnitSetUp() {
 
 		trackPromise(unitService.saveCompanyUnits({ "data": [payload] }).then((response) => {
 			//check login response
-			if (response.status === 200) {
+			if (response.status === 200 && response.data.data.status == "success") {
 				// alert(response.data.result);
 				stateValues()
 				getCompanyUnitData()
 				handleClose()
 			}
 			else {
-				alert(response.data.message);
+				alert(response.data.data.result);
 			}
 
 		}).catch((error) => {
@@ -281,7 +280,7 @@ export default function UnitSetUp() {
 // Delete Unit Records
 
 const deleteUnitRecord = (data) => {
-	if (window.confirm("Are you sure to delete the Company Units ?"))
+	if (window.confirm("Are you sure to delete the Company Unit ?"))
     {
 		let payload = {
 			"Unit_Short_Name":data.Unit_Short_Name,
@@ -306,7 +305,100 @@ const deleteUnitRecord = (data) => {
 };
 
 	const handleEditUnit = (e) => {
+
 		e.preventDefault();
+		let isValid = true;
+
+		if (!unitName) {
+			setUnitNameError('Unit Name is required');
+			isValid = false;
+		} else {
+			setUnitNameError('');
+		}
+
+		if (!shortName) {
+			setShortNameError('Short Name is required');
+			isValid = false;
+		} else {
+			setShortNameError('');
+		}
+
+		if (!group) {
+			setGroupError('Group is required');
+			isValid = false;
+		} else {
+			setGroupError('');
+		}
+
+		if (!division) {
+			setDivisionError('Division is required');
+			isValid = false;
+		} else {
+			setDivisionError('');
+		}
+
+		if (!tinNo) {
+			setTinNoError('TIN NO. should be 11 digits');
+			isValid = false;
+		} else if (!handleTinValidation(tinNo) && tinNo.length != '11') {
+			setTinNoError('TIN NO. should be 11 digits');
+			isValid = false;
+		} else {
+			setTinNoError('');
+		}
+
+		if (!regNo) {
+			setRegNoError('Registration No is required');
+			isValid = false;
+		} else {
+			setRegNoError('');
+		}
+		if (!addressLine1) {
+			setAddressLine1Error('Address is required');
+			isValid = false;
+		} else {
+			setAddressLine1Error('');
+		}
+
+		if (!city) {
+			setCityError('City is required');
+			isValid = false;
+		} else {
+			setCityError('');
+		}
+
+		if (!state) {
+			setStateError('State is required');
+			isValid = false;
+		} else {
+			setStateError('');
+		}
+
+		if (!pinNo) {
+			setPinNoError('Pin Number is required');
+			isValid = false;
+		} else {
+			setPinNoError('');
+		}
+
+		if (!contactNo) {
+			setContactNoError('Contact Number is required');
+			isValid = false;
+		} else {
+			setContactNoError('');
+		}
+
+		if (!mailId) {
+			setMailIdError('Mail id is required');
+			isValid = false;
+		} else {
+			setMailIdError('');
+		}
+
+		if (!isValid) {
+			return;
+		}
+
 		let payload = {
 			"Unit_Full_Name": unitName,
 			"Unit_Short_Name": shortName,
@@ -325,13 +417,13 @@ const deleteUnitRecord = (data) => {
 
 		trackPromise(unitService.editCompanyUnits({ "data": [payload] }).then((response) => {
 			//check login response
-			if (response.status === 200) {
+			if (response.status === 200 && response.data.data.status == "success") {
 				// alert(response.data.result)
 				getCompanyUnitData()
 				closeEditForm()
 			}
 			else {
-				alert(response.data.message);
+				alert(response.data.data.result);
 			}
 
 		}).catch((error) => {
@@ -361,8 +453,8 @@ const deleteUnitRecord = (data) => {
 								<h1 className='h1'> Company Units </h1>
 							</div>
 							<div className='col-4 text-right'>
-								<Button className='primary-btn' onClick={() => {setShow(true);stateValues() }}>
-									Add Unit <i className='fa fa-plus'> </i>
+								<Button className='primary-btn mt-10' onClick={() => {setShow(true);stateValues() }}>
+								<i className='fa fa-plus'> </i> Unit 
 								</Button>
 								<Modal
 									show={show}
@@ -477,6 +569,7 @@ const deleteUnitRecord = (data) => {
 
 													<MDBInput wrapperClass='mb-3' type='number'  tabindex="9" label='TIN No.' onChange={(e) => { setTinNo(e.target.value) }} value={tinNo} name='tinNo' />
 													{tinNoError && <p style={{ color: 'red' }}>{tinNoError}</p>}
+
 
 													<MDBInput wrapperClass='mb-3' type='text'  tabindex="11" label='Registration No.' onChange={(e) => { setRegNo(e.target.value) }} value={regNo} name='regNo' />
 													{regNoError && <p style={{ color: 'red' }}>{regNoError}</p>}
