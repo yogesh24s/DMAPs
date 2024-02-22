@@ -8,7 +8,8 @@ var DMAPFunc = function() {
     // mysqlHost = '34.68.62.13';
     mysqlHost = '127.0.0.1';
 
-    mysqlPwd = '@ff19E$P';
+    // mysqlPwd = '@ff19E$P';
+    mysqlPwd = 'affine123';
  
     // knex environemt
     knex = require('knex')({
