@@ -183,7 +183,7 @@ export default function DataSetUp() {
 
     return <>
         <MDBRow>
-            <MDBCol size='1' className='no-pad-right'>
+            <MDBCol size='1' style={{ width : "13%" }} className='no-pad-right'>
                 <MDBTabs className='flex-column text-center vertical-tab'>
 
                     <MDBTabsItem className="vertical-link">
@@ -265,7 +265,7 @@ export default function DataSetUp() {
                     </MDBTabsItem>
                 </MDBTabs>
             </MDBCol>
-            <MDBCol size='11' className='no-pad-left'>
+            <MDBCol size='11' style={{ width : "87%" }} className='no-pad-left'>
                 <MDBTabsContent className='unit-tab-content'>
                     <MDBTabsPane show={verticalActive === 'tabV1'}>
 

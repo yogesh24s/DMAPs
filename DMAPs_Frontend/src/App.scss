@@ -33,7 +33,7 @@ body {
   width: 100%;
   height: 64px !important;
   padding: 28px 40px 28px 40px !important;
-  background: black 0% 0% no-repeat padding-box !important;
+  background: #011f62 0% 0% no-repeat padding-box !important;
   opacity: 1;
   box-shadow: rgb(5 145 139 / 38%) 0px 25px 20px -20px !important
 }
@@ -70,20 +70,13 @@ footer {
 
 .login,
 .image {
-  min-height: calc(100vh - 64px);
+  min-height: calc(95vh - 64px);
 }
 
-
-.btn-primary {
-  @include button-variant($PrimaryViolet, darken($PrimaryViolet, 7.5%), darken($PrimaryViolet, 10%), lighten($PrimaryViolet, 5%), lighten($PrimaryViolet, 10%), darken($PrimaryViolet, 30%));
-}
-
-.btn-outline-primary {
-  @include button-outline-variant($PrimaryViolet, #FFFFFF, lighten($PrimaryViolet, 5%), $PrimaryViolet);
-}
 
 button.btn.btn-primary.login-btn {
   background-color: $PrimaryViolet;
+  cursor: pointer;
 }
 
 .logo-cls {
@@ -115,9 +108,7 @@ button.btn.btn-primary.login-btn {
   color: #1C0202 !important;
 }
 
-.navbar-cls {
-  padding-left: 13px;
-}
+
 
 table {
   width: 100%;
@@ -401,6 +392,13 @@ table {
 .nav-tabs .nav-link:focus {
   isolation: isolate;
   border-color: #eeecf2;
+  background-color: #fff0;
+}
+
+.admin-tab .nav-link:hover {
+  background-color: var(--mdb-nav-tabs-link-hover-bgc);
+  border-color: transparent;
+  background-color: #fff0 !important;
 }
 
 .file-detail {
@@ -445,24 +443,45 @@ table {
   }
 }
 .modal-header {
-    background: #001111e8;
+    background: rgb(3 40 72);
     color: #fff;
     padding: 0px 15px !important;
     /* font-size: 11px; */
 }
 .btn-primary{
-  background-color: #001111 !important;
+  background-color: #045292 !important;
 }
+
 .admin-tab .nav-item.show .nav-link, .admin-tab .nav-link.active {
   color: var(--mdb-nav-tabs-link-active-color);
-  border-color: #3b71ca99 !important 
+  border-color: #fff0 !important 
+}
+
+.admin-tab .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  background-color: #fff0 !important;
 }
 .vertical-tab  .nav-item.show .nav-link, .vertical-tab  .nav-link.active {
   color: var(--mdb-nav-tabs-link-active-color);
-  border-color: #e2edfd99 !important 
+  box-shadow:  4px 0px 6px rgb(106 92 92 / 28%), 
+    -4px 0px 6px rgb(106 92 92 / 28%), 
+    0px 1px 3px rgba(0, 0, 0, 0.08);
 }
 .tab-content {
   padding: 15px 20px;
   background: #D0D5D5;
   min-height: 71vh !important;
 }
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  font-weight: 700 !important;
+  border-top: 2px solid;
+}
+
+.nav-tabs .nav-link {
+  border-top: var(--mdb-nav-tabs-link-border-bottom-width) solid transparent;
+  border-bottom: 0px !important;
+  }
+
+  .fa-sky-blue {
+    color: #00c4ff !important;
+  }

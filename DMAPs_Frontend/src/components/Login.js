@@ -101,7 +101,7 @@ function Login() {
 					<div className="login-container">
 						<div className="login div-wrapper d-flex justify-content-center align-items-center">
 							<div className="logincard">
-								<h2 className="logintext mb-3">Login</h2>
+								{/* <h2 className="logintext mb-3">Login</h2> */}
 								<form onSubmit={submitHandler} autoComplete="off">
 									<small className="inputheader">
 										Username

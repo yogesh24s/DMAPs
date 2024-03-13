@@ -38,16 +38,14 @@ exports.editCompanyUsers = (req, res) => {
 exports.deleteCompanyUsers = (req, res) => {
     data = req.body;
     CompanyUsers.deleteCompanyUsers((err, data) => {
-        console.log({"err" : err});
-        console.log({"data" : data});
-        if ( err == null) {
+        if ( err ) {
             res.send({
                 message:
                     err.sqlMessage || "Some error occured"
             });
         }
         else {
-            res.send({ "result": "Company Users are deleted successfully", "data": data });
+            res.send({ "result": "Company User are deleted successfully", "data": data });
         }
     });
 };

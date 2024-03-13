@@ -72,6 +72,9 @@ export default function BuyerGroup() {
 		if (!mailId) {
 			setMailIdError('Mail ID is required');
 			isValid = false;
+		} else if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(mailId)) { // Check email format
+			setMailIdError('Invalid email format');
+			isValid = false;
 		} else {
 			setMailIdError('');
 		}
@@ -249,7 +252,7 @@ export default function BuyerGroup() {
 			</div>
 			<div className='col-4 text-right '>
 				<Button className='primary-btn mt-10' onClick={handleForm}>
-				<i className='fa fa-plus'> </i> Buyer 
+				<i className='fa fa-plus fa-white'> </i> Buyer 
 				</Button>
 				<Modal
 					show={show}

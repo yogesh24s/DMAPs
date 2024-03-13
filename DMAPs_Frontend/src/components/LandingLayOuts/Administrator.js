@@ -14,7 +14,8 @@ import {
     MDBTabsItem,
     MDBTabsLink,
     MDBTabsContent,
-    MDBTabsPane
+    MDBTabsPane,
+    MDBRow
 } from 'mdb-react-ui-kit';
 
 export default function Administrator() {
@@ -55,7 +56,9 @@ export default function Administrator() {
 
         <MDBTabsContent className='inner-tab-content'>
             <MDBTabsPane className="company-unit-tab" show={basicActive === 'tab1'}>
-                <UnitSetUp />
+                <MDBRow>
+                    <UnitSetUp />
+                </MDBRow>
             </MDBTabsPane>
             
             <MDBTabsPane className="user-tab" show={basicActive === 'tab2'}>

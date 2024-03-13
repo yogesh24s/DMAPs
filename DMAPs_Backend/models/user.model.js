@@ -37,12 +37,13 @@ const transporter = nodemailer.createTransport({
         to: email,
         subject: "Welcome to DMAPs",
         // text: `We have shared the login credentials to access DMAPs.\n Username: ${username} \n Password: ${password}`,
-        text: `Hi ${username},\n Hope this email finds you well. We are excited to invite you to ${unitname} as ${role}. Please <a href="http://3.92.91.120:4001/DMAPs/login" target="_blank"> click here</href> to login to the application by using the credentials below:
+        text: `Hi ${username},\n\nHope this email finds you well. We are excited to invite you to ${unitname} as ${role}. Please <a href="http://3.92.91.120:4001/DMAPs/login" target="_blank"> click here</href> to login to the application by using the credentials below:
         Login: ${username} \n
         Password: ${password} \n
         Please remember to change your password after the first login and update your profile. \n
         Thank you \n
-        DMAPs IT Team`
+        DMAPs IT Team`,
+        html: false
       };
   
       transporter.sendMail(mailOptions, function (error, info) {

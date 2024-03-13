@@ -7,7 +7,7 @@
     height: 64px;
     padding: 28px 40px 28px 40px !important;
     opacity: 1;
-    background-color: #161414;
+    background-color: #011f62;
     z-index: 1;
     width: 100%;
 }
@@ -60,7 +60,10 @@
 }
 
 .logincard {
-    width: 20%;
+    width: 30%;
+    border: 1px solid #073293;
+    padding: 15px 30px;
+    border-radius: 10px;
 }
 
 .icon-cls {

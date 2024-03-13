@@ -35,7 +35,7 @@
     padding-right:0px
 }
 .unit-tab-content {
-    background-color: #fff !important;
+    box-shadow: 5px 0px 6px rgba(0, 0, 0, 0.28), 0px 1px 3px rgb(255, 255, 255);
     padding: 0px 10px 10px !important;
 }
 .vertical-link a {
@@ -55,7 +55,7 @@
 }
 .table thead tr th {
     padding: 10px !important;
-    background-color: #0022228f;
+    background-color: rgb(3 74 86 / 49%);
     color: #fff !important;
 }
 .primary-btn {
@@ -65,3 +65,4 @@
 .mt-10{
     margin-top: 8px;
 }
+

@@ -35,15 +35,10 @@ function CollapsibleExample() {
 					</Nav>
 					<Nav style={{ marginRight:"15px", borderRight:"1px solid #fff" }}>
 						<div style={{ width: "max-content", height: "28px", borderRadius: "5px", cursor: "pointer", padding: "0 10px 0 0" }} >
-							{/* <i className="fa fa-star mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
 
-							<i className="fa fa-envelope-o mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i> */}
-
-							<i className="fa fa-bell-o mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
+							<i className="fa fa-sky-blue fa-bell-o mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
 							
-							<a href='ms-calculator://'> <i className="fa fa-calculator  ml-0 mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i> </a>
-
-							{/* <i className="fa fa-calculator mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }} onClick={openCalculator}></i> */}
+							<a href='ms-calculator://'> <i className="fa fa-sky-blue fa-calculator  ml-0 mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i> </a>
 						</div>
 					</Nav>
 					<Nav>
@@ -56,7 +51,7 @@ function CollapsibleExample() {
 							</div>
 
 							{(!history.location.pathname.includes('/changepassword')) &&
-								<div className="dropdown-content" style={{ backgroundColor: "#000" }}>
+								<div className="dropdown-content">
 									<Link className='nav-customcls top-right-icon' to="/changepassword" title="Change Password">
 										<i className="fa-solid fa-arrow-right-from-bracket fa-key"></i> Change Password  </Link>
 

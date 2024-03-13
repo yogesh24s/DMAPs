@@ -59,18 +59,7 @@ export default function ForgotPassword() {
     }
 
     return (
-
         <div>
-            {/* <Navbar className="navbar-login">
-                <Navbar.Brand className='navbar-cls' href="#home">
-                    <img
-                        src={DMAPLogo}
-                        className="d-inline-block align-top logo-cls"
-                        alt='DMAP'
-                    />
-                </Navbar.Brand>
-            </Navbar> */}
-
             <div className="login-view">
                 <div className="row no-gutter bg-image">
                     <div className="login-container">
@@ -132,7 +121,6 @@ export default function ForgotPassword() {
                     </p>
                 </footer>
             </div>
-
         </div>
     )
 }

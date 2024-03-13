@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 import './UnitSetUp.scss';
 
@@ -16,7 +18,6 @@ import {
 	MDBTabsLink,
 	MDBTabsContent,
 	MDBTabsPane,
-	MDBRow,
 	MDBCol,
 	MDBInput
 } from 'mdb-react-ui-kit';
@@ -76,6 +77,7 @@ export default function UnitSetUp() {
 		// Return whether the value matches the pattern
 		return tinPattern.test(value);
 	};
+	
 
 	const handleUnitSetup = (e) => {
 		e.preventDefault();
@@ -162,6 +164,9 @@ export default function UnitSetUp() {
 
 		if (!mailId) {
 			setMailIdError('Mail id is required');
+			isValid = false;
+		} else if (!/\S+@\S+\.\S+/.test(mailId)) { // Check if email format is invalid
+			setMailIdError('Invalid email format');
 			isValid = false;
 		} else {
 			setMailIdError('');
@@ -435,8 +440,7 @@ const deleteUnitRecord = (data) => {
 	}
 
 	return <>
-		<MDBRow>
-			<MDBCol size='1' className='no-pad-right'>
+			<MDBCol size='1' style={{ width : "13%" }} className='no-pad-right'>
 				<MDBTabs className='flex-column text-center vertical-tab'>
 					<MDBTabsItem className="vertical-link">
 						<MDBTabsLink onClick={() => handleVerticalClick('tabV1')} active={verticalActive === 'tabV1'}>
@@ -445,7 +449,7 @@ const deleteUnitRecord = (data) => {
 					</MDBTabsItem>
 				</MDBTabs>
 			</MDBCol>
-			<MDBCol size='11' className='no-pad-left'>
+			<MDBCol size='11' style={{ width : "87%" }} className='no-pad-left'>
 				<MDBTabsContent className='unit-tab-content'>
 					<MDBTabsPane show={verticalActive === 'tabV1'}>
 						<div className='row'>
@@ -454,7 +458,7 @@ const deleteUnitRecord = (data) => {
 							</div>
 							<div className='col-4 text-right'>
 								<Button className='primary-btn mt-10' onClick={() => {setShow(true);stateValues() }}>
-								<i className='fa fa-plus'> </i> Unit 
+								<i className='fa fa-plus fa-white'> </i> Unit 
 								</Button>
 								<Modal
 									show={show}
@@ -615,6 +619,6 @@ const deleteUnitRecord = (data) => {
 					</MDBTabsPane>
 				</MDBTabsContent>
 			</MDBCol>
-		</MDBRow>
+
 	</>
 }

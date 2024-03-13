@@ -92,5 +92,22 @@
 
 .tab-content {
     padding: 2px !important;
-    background: #D0D5D5
+    background: #fff
 }
+.fa {
+    color: #073293;
+}
+.fa-white {
+    color: #fff !important;
+  }
+
+//   .vertical-tab .nav-item .nav-link.active::before {
+//     content: "";
+//     position: absolute;
+//     top: 29.75%;
+//     left: 7%;
+//     transform: translateY(-50%);
+//     border-style: solid;
+//     border-width: 12px 0 12px 12px;
+//     border-color: transparent transparent transparent #073293;
+// }

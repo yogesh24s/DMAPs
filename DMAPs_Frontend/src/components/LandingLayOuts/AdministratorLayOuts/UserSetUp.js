@@ -149,11 +149,14 @@ export default function UserSetUp() {
 		}
 
 		if (!personalMaildId) {
-			setPersonalMaildIdError('Mail ID is required');
-			isValid = false;
-		} else {
-			setPersonalMaildIdError('');
-		}
+            setPersonalMaildIdError('Mail ID is required');
+            isValid = false;
+        } else if (!/\S+@\S+\.\S+/.test(personalMaildId)) { // Check if email format is invalid
+            setPersonalMaildIdError('Invalid email format');
+            isValid = false;
+        } else {
+            setPersonalMaildIdError('');
+        }
 
         if (!status) {
 			setStatusError('Status is required');
@@ -345,7 +348,7 @@ export default function UserSetUp() {
     
     return <>
         <MDBRow>
-            <MDBCol size='1' className='no-pad-right'>
+            <MDBCol size='1' style={{ width : "13%" }} className='no-pad-right'>
                 <MDBTabs className='flex-column text-center vertical-tab'>
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV1')} active={verticalActive === 'tabV1'}>
@@ -354,7 +357,7 @@ export default function UserSetUp() {
                     </MDBTabsItem>
                 </MDBTabs>
             </MDBCol>
-            <MDBCol size='11' className='no-pad-left'>
+            <MDBCol size='11' style={{ width : "87%" }} className='no-pad-left'>
                 <MDBTabsContent className='unit-tab-content'>
                     <MDBTabsPane show={verticalActive === 'tabV1'}>
                         <div className='row'>
@@ -363,7 +366,7 @@ export default function UserSetUp() {
 							</div>
                             <div className='col-4 text-right '>
                                 <Button className='primary-btn mt-10' onClick={handleForm}>
-                                <i className='fa fa-plus'> </i> User 
+                                <i className='fa fa-plus fa-white'> </i> User 
                                 </Button>
                                 <Modal
                                     show={show}
