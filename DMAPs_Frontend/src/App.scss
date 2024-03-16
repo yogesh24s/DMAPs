@@ -448,6 +448,7 @@ table {
     padding: 0px 15px !important;
     /* font-size: 11px; */
 }
+
 .btn-primary{
   background-color: #045292 !important;
 }
@@ -462,9 +463,8 @@ table {
 }
 .vertical-tab  .nav-item.show .nav-link, .vertical-tab  .nav-link.active {
   color: var(--mdb-nav-tabs-link-active-color);
-  box-shadow:  4px 0px 6px rgb(106 92 92 / 28%), 
-    -4px 0px 6px rgb(106 92 92 / 28%), 
-    0px 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 3px 3px 9px rgb(193 177 177 / 28%), 2px 0px 6px rgb(255 255 255 / 28%), 0px 1px 3px rgb(87 68 68 / 8%);
+  background-color: rgba(46, 94, 137, 0.0784313725) !important;
 }
 .tab-content {
   padding: 15px 20px;

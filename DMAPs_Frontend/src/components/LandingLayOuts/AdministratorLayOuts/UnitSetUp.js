@@ -93,6 +93,9 @@ export default function UnitSetUp() {
 		if (!shortName) {
 			setShortNameError('Short Name is required');
 			isValid = false;
+		} else if (/[^a-zA-Z0-9]/.test(shortName)) {
+			setShortNameError('Short Name cannot contain spaces or special characters');
+			isValid = false;
 		} else {
 			setShortNameError('');
 		}
@@ -124,9 +127,13 @@ export default function UnitSetUp() {
 		if (!regNo) {
 			setRegNoError('Registration No is required');
 			isValid = false;
+		} else if (!/^[a-zA-Z0-9]+$/.test(regNo)) {
+			setRegNoError('Registration No must contain only alphanumeric characters');
+			isValid = false;
 		} else {
 			setRegNoError('');
 		}
+
 		if (!addressLine1) {
 			setAddressLine1Error('Address is required');
 			isValid = false;
@@ -151,6 +158,9 @@ export default function UnitSetUp() {
 		if (!pinNo) {
 			setPinNoError('Pin Number is required');
 			isValid = false;
+		} else if (!/^\d{6}$/.test(pinNo)) {
+			setPinNoError('Pin Number must be a 6-digit number');
+			isValid = false;
 		} else {
 			setPinNoError('');
 		}
@@ -158,9 +168,13 @@ export default function UnitSetUp() {
 		if (!contactNo) {
 			setContactNoError('Contact Number is required');
 			isValid = false;
+		} else if (!/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/.test(contactNo) && !/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[2-9]\d{9}$/.test(contactNo)) {
+			setContactNoError('Please enter a valid Indian contact number');
+			isValid = false;
 		} else {
 			setContactNoError('');
 		}
+		
 
 		if (!mailId) {
 			setMailIdError('Mail id is required');
@@ -233,6 +247,20 @@ export default function UnitSetUp() {
 
 
 	function stateValues() {
+
+		setUnitNameError('');
+		setShortNameError('');
+		setGroupError('');
+		setDivisionError('');
+		setTinNoError('');
+		setRegNoError('');
+		setAddressLine1Error('');
+		setCityError('');
+		setStateError('');
+		setPinNoError('');
+		setContactNoError('');
+		setMailIdError('');
+		
 		setunitName('')
 		setShortName('')
 		setGroup('')
@@ -264,6 +292,22 @@ export default function UnitSetUp() {
         setIsEditFormOpen(true);
     };
 	function editFormDetails(data) {
+
+		setUnitNameError('');
+		setShortNameError('');
+		setGroupError('');
+		setDivisionError('');
+		setTinNoError('');
+		setRegNoError('');
+		setAddressLine1Error('');
+		setCityError('');
+		setStateError('');
+		setPinNoError('');
+		setContactNoError('');
+		setMailIdError('');
+
+	
+
 		setunitName(data.Unit_Full_Name)
 		setShortName(data.Unit_Short_Name)
 		setGroup(data.Group_Id)
@@ -324,6 +368,9 @@ const deleteUnitRecord = (data) => {
 		if (!shortName) {
 			setShortNameError('Short Name is required');
 			isValid = false;
+		} else if (/[^a-zA-Z0-9]/.test(shortName)) {
+			setShortNameError('Short Name cannot contain spaces or special characters');
+			isValid = false;
 		} else {
 			setShortNameError('');
 		}
@@ -355,9 +402,13 @@ const deleteUnitRecord = (data) => {
 		if (!regNo) {
 			setRegNoError('Registration No is required');
 			isValid = false;
+		} else if (!/^[a-zA-Z0-9]+$/.test(regNo)) {
+			setRegNoError('Registration No must contain only alphanumeric characters');
+			isValid = false;
 		} else {
 			setRegNoError('');
 		}
+
 		if (!addressLine1) {
 			setAddressLine1Error('Address is required');
 			isValid = false;
@@ -382,6 +433,9 @@ const deleteUnitRecord = (data) => {
 		if (!pinNo) {
 			setPinNoError('Pin Number is required');
 			isValid = false;
+		} else if (!/^\d{6}$/.test(pinNo)) {
+			setPinNoError('Pin Number must be a 6-digit number');
+			isValid = false;
 		} else {
 			setPinNoError('');
 		}
@@ -389,12 +443,19 @@ const deleteUnitRecord = (data) => {
 		if (!contactNo) {
 			setContactNoError('Contact Number is required');
 			isValid = false;
+		} else if (!/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/.test(contactNo) && !/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[2-9]\d{9}$/.test(contactNo)) {
+			setContactNoError('Please enter a valid Indian contact number');
+			isValid = false;
 		} else {
 			setContactNoError('');
 		}
+		
 
 		if (!mailId) {
 			setMailIdError('Mail id is required');
+			isValid = false;
+		} else if (!/\S+@\S+\.\S+/.test(mailId)) { // Check if email format is invalid
+			setMailIdError('Invalid email format');
 			isValid = false;
 		} else {
 			setMailIdError('');

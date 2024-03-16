@@ -8,8 +8,11 @@ import { Link, NavLink } from 'react-router-dom';
 import './Header.scss';
 import helper from '../../services/tokenStore';
 
+import { Button, Modal } from 'react-bootstrap';
+import Calculator from './Calculator';
 
 
+  
 function CollapsibleExample() {
 	const history = useHistory();
 	const [userName] = useState(helper.getUserName());
@@ -18,9 +21,19 @@ function CollapsibleExample() {
 		history.push('/landingPage');
 	}
 
-	const openCalculator = () => {
-		window.open('Calculator:///')
-	}
+	const [showModal, setShowModal] = useState(false);
+	  
+	const handleCloseModal = () => {
+		setShowModal(false);
+	};
+	
+	const handleOpenModal = () => {
+		setShowModal(true);
+	};
+	// const openCalculator = () => {
+	// 	window.open('Calculator:///')
+	// }
+	
 
 	return (
 		<Navbar className="navbar-custom" collapseOnSelect>
@@ -38,7 +51,9 @@ function CollapsibleExample() {
 
 							<i className="fa fa-sky-blue fa-bell-o mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
 							
-							<a href='ms-calculator://'> <i className="fa fa-sky-blue fa-calculator  ml-0 mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i> </a>
+							{/* <a href='ms-calculator://'> <i className="fa fa-sky-blue fa-calculator  ml-0 mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i> </a> */}
+
+							<a onClick={handleOpenModal}> <i className="fa fa-sky-blue fa-calculator  ml-0 mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i> </a>
 						</div>
 					</Nav>
 					<Nav>
@@ -61,10 +76,18 @@ function CollapsibleExample() {
 								</div>
 							}
 						</div>
+						<Modal show={showModal} onHide={handleCloseModal} centered>
+							<Modal.Header closeButton>
+							<Modal.Title>Calculator</Modal.Title>
+							</Modal.Header>
+							<Modal.Body>
+							<Calculator />
+							</Modal.Body>
+						</Modal>
 					</Nav>
 				</Navbar.Collapse>
 
-		</Navbar>
+		</Navbar>	
 	);
 }
 

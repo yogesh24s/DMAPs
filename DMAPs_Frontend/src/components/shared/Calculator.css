@@ -1,0 +1,56 @@
+.calculator {
+    width: 300px;
+    margin: 20px auto;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f5f5f5;
+  }
+  
+  .display {
+    font-size: 24px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    padding: 5px;
+    text-align: right;
+  }
+  
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5px;
+  }
+  
+  button {
+    font-size: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .operator,
+  .clear,
+  .equals,
+  .percentage {
+    background-color: #ff9c00;
+  }
+  
+  .operator:active {
+    background-color: #ffbf00;
+  }
+  
+  .clear,
+  .equals,
+  .percentage {
+    background-color: #fff;
+    color: #333;
+  }
+  
+  .clear:hover,
+  .equals:hover,
+  .percentage:hover {
+    background-color: #ddd;
+  }
+  

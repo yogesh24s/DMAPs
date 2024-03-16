@@ -107,18 +107,24 @@ export default function UserSetUp() {
 		}
 
 		if (!userName) {
-			setUserNameError('User Name is required');
-			isValid = false;
-		} else {
-			setUserNameError('');
-		}
+            setUserNameError('User Name is required');
+            isValid = false;
+        } else if (!/^[a-zA-Z0-9_]{3,20}$/.test(userName)) {
+            setUserNameError('User Name must be between 3 and 20 characters long and can only contain letters, numbers, and underscores');
+            isValid = false;
+        } else {
+            setUserNameError('');
+        }
 
 		if (!empId) {
-			setEmpIdError('Employee ID is required');
-			isValid = false;
-		} else {
-			setEmpIdError('');
-		}
+            setEmpIdError('Employee ID is required');
+            isValid = false;
+        } else if (!/^[a-zA-Z0-9]+$/.test(empId)) {
+            setEmpIdError('Employee ID must contain only alphanumeric characters');
+            isValid = false;
+        } else {
+            setEmpIdError('');
+        }
 
 		if (!loginId) {
 			setLoginIdError('Login Id is required');
@@ -142,11 +148,14 @@ export default function UserSetUp() {
 		}
 
 		if (!mobileNumber) {
-			setMobileNumberError('Mobile Number is required');
-			isValid = false;
-		} else {
-			setMobileNumberError('');
-		}
+            setMobileNumberError('Mobile Number is required');
+            isValid = false;
+        } else if (!/^[6-9]\d{9}$/.test(mobileNumber)) {
+            setMobileNumberError('Invalid Indian mobile number');
+            isValid = false;
+        } else {
+            setMobileNumberError('');
+        }
 
 		if (!personalMaildId) {
             setPersonalMaildIdError('Mail ID is required');
@@ -275,9 +284,31 @@ export default function UserSetUp() {
         setUserLevel()
         setStatus("")
         setLoginId("")
+
+        setSelectedUnitError('');
+        setUserNameError('');
+        setEmpIdError('');
+        setLoginIdError('');
+		setDepartmentError('');
+        setDesignationError('');
+        setMobileNumberError('');
+        setPersonalMaildIdError('');
+        setStatusError('');
+		setUserLevelError('');
     }
     const openEditForm = (data) => {
-        console.log({"dataaaa":data.Status})
+        
+        setSelectedUnitError('');
+        setUserNameError('');
+        setEmpIdError('');
+        setLoginIdError('');
+		setDepartmentError('');
+        setDesignationError('');
+        setMobileNumberError('');
+        setPersonalMaildIdError('');
+        setStatusError('');
+		setUserLevelError('');
+
         editFormDetails(data)
         setIsEditFormOpen(true);
     };
@@ -292,6 +323,93 @@ export default function UserSetUp() {
 
     const handleEditUserDetails = (e) => {
         e.preventDefault();
+        let isValid = true;
+		if (!selectedUnit) {
+			setSelectedUnitError('Unit is required');
+			isValid = false;
+		} else {
+			setSelectedUnitError('');
+		}
+
+		if (!userName) {
+            setUserNameError('User Name is required');
+            isValid = false;
+        } else if (!/^[a-zA-Z0-9_]{3,20}$/.test(userName)) {
+            setUserNameError('User Name must be between 3 and 20 characters long and can only contain letters, numbers, and underscores');
+            isValid = false;
+        } else {
+            setUserNameError('');
+        }
+
+		if (!empId) {
+            setEmpIdError('Employee ID is required');
+            isValid = false;
+        } else if (!/^[a-zA-Z0-9]+$/.test(empId)) {
+            setEmpIdError('Employee ID must contain only alphanumeric characters');
+            isValid = false;
+        } else {
+            setEmpIdError('');
+        }
+
+		if (!loginId) {
+			setLoginIdError('Login Id is required');
+			isValid = false;
+		} else {
+			setLoginIdError('');
+		}
+
+        if (!department) {
+			setDepartmentError('Department is required');
+			isValid = false;
+		} else {
+			setDepartmentError('');
+		}
+
+		if (!designation) {
+			setDesignationError('Designation is required');
+			isValid = false;
+		} else {
+			setDesignationError('');
+		}
+
+		if (!mobileNumber) {
+            setMobileNumberError('Mobile Number is required');
+            isValid = false;
+        } else if (!/^[6-9]\d{9}$/.test(mobileNumber)) {
+            setMobileNumberError('Invalid Indian mobile number');
+            isValid = false;
+        } else {
+            setMobileNumberError('');
+        }
+
+		if (!personalMaildId) {
+            setPersonalMaildIdError('Mail ID is required');
+            isValid = false;
+        } else if (!/\S+@\S+\.\S+/.test(personalMaildId)) { // Check if email format is invalid
+            setPersonalMaildIdError('Invalid email format');
+            isValid = false;
+        } else {
+            setPersonalMaildIdError('');
+        }
+
+        if (!status) {
+			setStatusError('Status is required');
+			isValid = false;
+		} else {
+			setStatusError('');
+		}
+
+		if (!userLevel) {
+			setUserLevelError('User Level is required');
+			isValid = false;
+		} else {
+			setUserLevelError('');
+		}
+
+		if (!isValid) {
+			return;
+		}
+
         let payload = {
             "Unit_Short_Name": selectedUnit,
             "User_Name": userName,
@@ -478,8 +596,10 @@ export default function UserSetUp() {
                                                 <div className='col-6'>
                                                 
                                                 <MDBInput wrapperClass='mb-3' label='Name' onChange={(e) => { setUserName(e.target.value) }} value={userName} name=' username' />
+                                                {userNameError && <p style={{ color: 'red' }}>{userNameError}</p>}
 
                                                 <MDBInput wrapperClass='mb-3' label='E-Mail ID' onChange={(e) => { setPersonalMaildId(e.target.value) }} value={personalMaildId} name='PersonalMaildId' />
+                                                { personalMaildIdError && <p style={{ color: 'red' }}>{personalMaildIdError}</p>}
 
                                                 <Form.Select className='mb-3' label='Unit' name="Unit" onChange={(e) => { setSelectedUnit(e.target.value) }} value={selectedUnit}>
                                                     <option value=''>Select Unit</option>
@@ -489,6 +609,7 @@ export default function UserSetUp() {
                                                         </option>
                                                     ))}
                                                 </Form.Select>
+                                                { selectedUnitError && <p style={{ color: 'red' }}>{selectedUnitError}</p>}
 
                                                     <Form.Select className='mb-3' onChange={(e) => { setDepartment(e.target.value) }} value={department} name='department' >
                                                         <option> Select Department </option>
@@ -498,6 +619,7 @@ export default function UserSetUp() {
                                                             </option>
                                                         ))}
                                                     </Form.Select>
+                                                    { departmentError && <p style={{ color: 'red' }}>{departmentError}</p>}
 
                                                     <Form.Select className='mb-3' onChange={(e) => { setStatus(e.target.value) }} value={status}>
                                                         <option> Status </option>
@@ -511,9 +633,11 @@ export default function UserSetUp() {
                                                 <div className='col-6'>
                                                 
                                                 <MDBInput wrapperClass='mb-3' label='Login ID' onChange={(e) => { setLoginId(e.target.value) }} value={loginId} name='LoginId' />
+                                                { loginIdError && <p style={{ color: 'red' }}>{loginIdError}</p>}
 
                                                 
                                                 <MDBInput wrapperClass='mb-3' label='Employee ID' onChange={(e) => { setEmpId(e.target.value) }} value={empId} name=' EmpId' />
+                                                { empIdError && <p style={{ color: 'red' }}>{empIdError}</p>}
 
                                                 
                                                 <Form.Select className='mb-3' onChange={(e) => { setDesignation(e.target.value) }} value={designation} name='designation' >
@@ -525,14 +649,18 @@ export default function UserSetUp() {
                                                         ))}
                                                     </Form.Select>
 
+                                                    { designationError && <p style={{ color: 'red' }}>{designationError}</p>}
+
                                                     <Form.Select className='mb-3' onChange={handleUserLevel} value={userLevel}>
                                                         <option> Role </option>
                                                         <option value="general">General</option>
                                                         <option value="admin">Admin</option>
                                                         <option value="superAdmin">Super Admin</option>
                                                     </Form.Select>
+                                                    { userLevelError && <p style={{ color: 'red' }}>{userLevelError}</p>}
 
                                                     <MDBInput wrapperClass='mb-3' label='Contact No.' onChange={(e) => { setMobileNumber(e.target.value) }} value={mobileNumber} name=' mobileNumber' />
+                                                    { mobileNumberError && <p style={{ color: 'red' }}>{mobileNumberError}</p>}
 
                                                 </div>
                                             </div>

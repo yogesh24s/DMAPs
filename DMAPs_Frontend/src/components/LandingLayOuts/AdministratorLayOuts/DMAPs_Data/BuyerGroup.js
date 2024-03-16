@@ -32,7 +32,7 @@ export default function BuyerGroup() {
 	const [buyerNameError, setBuyerNameError] = useState("");
 
 	const [contactNumber, setcontactNumber] = useState("");
-	const [contactNumberError, setcontactNumberError] = useState("");
+	const [contactNumberError, setContactNumberError] = useState("");
 
 	const [mailId, setMailId] = useState("");
 	const [mailIdError, setMailIdError] = useState("");
@@ -87,12 +87,15 @@ export default function BuyerGroup() {
 		}
 
 		if (!contactNumber) {
-			setcontactNumberError('Contact Number is required');
+			setContactNumberError('Contact Number is required');
+			isValid = false;
+		} else if (!/^[0-9]{10}$/.test(contactNumber)) {
+			setContactNumberError('Contact Number must be a 10-digit number');
 			isValid = false;
 		} else {
-			setcontactNumberError('');
+			setContactNumberError('');
 		}
-
+		
 		if (!isValid) {
 			return;
 		}
@@ -123,6 +126,7 @@ export default function BuyerGroup() {
 
 	const handleEditBuyer = (e) => {
 		e.preventDefault();
+		
 		let isValid = true;
 
 		if (!selectedBuyerGroup) {
@@ -134,6 +138,9 @@ export default function BuyerGroup() {
 
 		if (!mailId) {
 			setMailIdError('Mail ID is required');
+			isValid = false;
+		} else if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(mailId)) { // Check email format
+			setMailIdError('Invalid email format');
 			isValid = false;
 		} else {
 			setMailIdError('');
@@ -147,10 +154,13 @@ export default function BuyerGroup() {
 		}
 
 		if (!contactNumber) {
-			setcontactNumberError('Contact Number is required');
+			setContactNumberError('Contact Number is required');
+			isValid = false;
+		} else if (!/^[0-9]{10}$/.test(contactNumber)) {
+			setContactNumberError('Contact Number must be a 10-digit number');
 			isValid = false;
 		} else {
-			setcontactNumberError('');
+			setContactNumberError('');
 		}
 
 		if (!isValid) {
@@ -196,6 +206,12 @@ export default function BuyerGroup() {
 	}, [])
 
 	function editFormDetails(data) {
+		
+		setSelectedBuyerGroupError('');
+		setMailIdError('');
+		setBuyerNameError('');
+		setContactNumberError('');
+
 		setSelectedBuyerGroup(data.Buyer_Group_Name);
 		setcontactNumber(data.Buyer_Contact_No);
 		setMailId(data.Buyer_Email_Id);
@@ -203,6 +219,12 @@ export default function BuyerGroup() {
 		setBuyerId(data.Buyer_Id);
 	}
 	function settingValuesToEmpty() {
+
+		setSelectedBuyerGroupError('');
+		setMailIdError('');
+		setBuyerNameError('');
+		setContactNumberError('');
+
 		setBuyerId("");
 		setSelectedBuyerGroup("");
 		setcontactNumber("");
@@ -210,7 +232,6 @@ export default function BuyerGroup() {
 		setBuyerName("");
 	}
 	const openEditForm = (data) => {
-
 		editFormDetails(data)
 		setIsEditFormOpen(true);
 
@@ -223,7 +244,6 @@ export default function BuyerGroup() {
 
 
 	const deleteBuyerGroupRecord = (data) => {
-
 		if (window.confirm("Are you sure to delete the Company Buyer ?")) {
 			let payload = {
 				"Buyer_Id": data.Buyer_Id
