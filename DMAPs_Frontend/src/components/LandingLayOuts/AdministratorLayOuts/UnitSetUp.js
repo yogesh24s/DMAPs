@@ -168,12 +168,13 @@ export default function UnitSetUp() {
 		if (!contactNo) {
 			setContactNoError('Contact Number is required');
 			isValid = false;
-		} else if (!/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/.test(contactNo) && !/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[2-9]\d{9}$/.test(contactNo)) {
-			setContactNoError('Please enter a valid Indian contact number');
+		} else if (!/^[6789]\d{9}$/.test(contactNo)) {
+			setContactNoError('Please enter a valid 10-digit Indian mobile number');
 			isValid = false;
 		} else {
 			setContactNoError('');
 		}
+		
 		
 
 		if (!mailId) {
@@ -443,12 +444,13 @@ const deleteUnitRecord = (data) => {
 		if (!contactNo) {
 			setContactNoError('Contact Number is required');
 			isValid = false;
-		} else if (!/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/.test(contactNo) && !/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[2-9]\d{9}$/.test(contactNo)) {
-			setContactNoError('Please enter a valid Indian contact number');
+		} else if (!/^[6789]\d{9}$/.test(contactNo)) {
+			setContactNoError('Please enter a valid 10-digit Indian mobile number');
 			isValid = false;
 		} else {
 			setContactNoError('');
 		}
+		
 		
 
 		if (!mailId) {
