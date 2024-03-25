@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+
 import { useHistory } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -11,29 +12,47 @@ import helper from '../../services/tokenStore';
 import { Button, Modal } from 'react-bootstrap';
 import Calculator from './Calculator';
 
+import { useIdleTimer } from 'react-idle-timer'
 
-  
-function CollapsibleExample() {
+function HeaderComponent() {
 	const history = useHistory();
 	const [userName] = useState(helper.getUserName());
-	console.log(userName);
 	const openLandingPage = () => {
 		history.push('/landingPage');
 	}
-
-	const [showModal, setShowModal] = useState(false);
-	  
+	const [showModal, setShowModal] = useState(false); 
 	const handleCloseModal = () => {
 		setShowModal(false);
 	};
-	
 	const handleOpenModal = () => {
 		setShowModal(true);
 	};
+
 	// const openCalculator = () => {
 	// 	window.open('Calculator:///')
 	// }
+	const handleOnIdle = event => {
+		console.log('user is idle', event)
+		console.log('last active', getLastActiveTime())
+		history.push('/login');
+	  }
 	
+	  const handleOnActive = event => {
+		console.log('user is active', event)
+		console.log('time remaining', getRemainingTime())
+	  }
+	
+	  const handleOnAction = (e) => {
+		console.log('user did something', e)
+	  }
+	
+	  const { getRemainingTime, getLastActiveTime } = useIdleTimer({
+		timeout: 1000 * 60 * 1,
+		onIdle: handleOnIdle,
+		onActive: handleOnActive,
+		onAction: handleOnAction,
+		debounce: 500
+	  })
 
 	return (
 		<Navbar className="navbar-custom" collapseOnSelect>
@@ -91,4 +110,4 @@ function CollapsibleExample() {
 	);
 }
 
-export default CollapsibleExample;
+export default HeaderComponent;
