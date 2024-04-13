@@ -18,6 +18,7 @@ var access = require('./var.js');
 var loginRoutes = require('./routes/login');
 var basicDetails = require('./routes/basic-details');
 var administrator = require('./routes/Administrator');
+var styleStore = require('./routes/Style-Store');
 // const authUrl = oAuth2Client.generateAuthUrl({
 //     access_type: 'offline',
 //     scope: 'https://www.googleapis.com/auth/gmail.send'
@@ -100,7 +101,7 @@ const generateRandomKey = () => {
 app.use('/', loginRoutes);
 app.use('/', basicDetails);
 app.use('/', administrator);
-
+app.use('/', styleStore);
 // app.use('/', basicInformation);
 
 /* Below block of code for starting API */

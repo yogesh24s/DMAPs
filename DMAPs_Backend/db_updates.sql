@@ -1,102 +1,139 @@
--- TRUNCATE TABLE `dmaps`.`company_users`;
-
--- ALTER TABLE `dmaps`.`company_users` 
--- ADD COLUMN `User_Password` VARCHAR(45) NOT NULL AFTER `User_Login_ID`,
--- ADD UNIQUE INDEX `User_Name_UNIQUE` (`User_Name` ASC) VISIBLE,
--- ADD UNIQUE INDEX `User_Employee_Id_UNIQUE` (`User_Employee_Id` ASC) VISIBLE,
--- ADD UNIQUE INDEX `Mail_Id_UNIQUE` (`Mail_Id` ASC) VISIBLE,
--- ADD UNIQUE INDEX `User_Login_ID_UNIQUE` (`User_Login_ID` ASC) VISIBLE;
--- ;
-
--- ALTER TABLE `dmaps`.`company_users` 
--- ADD COLUMN `User_Profile` LONGTEXT NULL AFTER `Updated_By`;
-
--- ALTER TABLE `dmaps`.`company_users` 
--- CHANGE COLUMN `User_Profile` `User_Profile` LONGTEXT NULL DEFAULT NULL AFTER `User_Name`;
-
--- ALTER TABLE `dmaps`.`company_users` 
--- CHANGE COLUMN `User_Login_ID` `User_Login_ID` VARCHAR(45) NOT NULL ,
--- DROP INDEX `User_Name_UNIQUE` ;
-
--- CREATE TABLE dmaps.state (                                                                    
---           `State_Id` INT(11) NOT NULL AUTO_INCREMENT,                                              
---           `Country_Id` INT(11) NOT NULL,                                                           
---           `State_Name` VARCHAR(50) NOT NULL,                                                       
---           `Notes` LONGTEXT,                                                                       
---           `Changed_By` VARCHAR(50) DEFAULT NULL,                                                   
---           `Change_Date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
---           PRIMARY KEY  (`State_Id`));
-
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Andhra Pradesh',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Assam',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Arunachal Pradesh',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Gujrat',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Bihar',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Haryana',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Himachal Pradesh',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Jammu & Kashmir',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Karnataka',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Kerala',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Madhya Pradesh',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Maharashtra',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Manipur',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Meghalaya',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Mizoram',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Nagaland',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Orissa',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Punjab',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Rajasthan',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Sikkim',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Tamil Nadu',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Telangana',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Tripura',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Uttar Pradesh',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','West Bengal',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Delhi',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Goa',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Pondichery',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Lakshdweep',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Daman & Diu',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Dadra & Nagar',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Chandigarh',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Andaman & Nicobar',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Uttaranchal',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Jharkhand',NULL,'Yogesh',CURRENT_TIMESTAMP);
-INSERT INTO dmaps.state (`State_Id`,`Country_Id`,`State_Name`,`Notes`,`Changed_By`,`Change_Date`) VALUES ( NULL,'1','Chattisgarh',NULL,'Yogesh',CURRENT_TIMESTAMP);
-
-
-CREATE TABLE `dmaps`.`buyer_groups` (
-  `Buyer_Group_Id` INT NOT NULL,
-  `Buyer_Group_Name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Buyer_Group_Name`),
-  UNIQUE INDEX `Buyer_Group_Name_UNIQUE` (`Buyer_Group_Name` ASC) VISIBLE);
-
-ALTER TABLE `dmaps`.`buyer_groups` 
-CHANGE COLUMN `Buyer_Group_Id` `Buyer_Group_Id` INT NOT NULL AUTO_INCREMENT ,
-DROP PRIMARY KEY,
-ADD PRIMARY KEY (`Buyer_Group_Id`, `Buyer_Group_Name`);
-;
-
-ALTER TABLE `dmaps`.`buyer_groups` 
-DROP PRIMARY KEY,
-ADD PRIMARY KEY (`Buyer_Group_Id`);
-;
-
-INSERT INTO `dmaps`.`buyer_groups` (`Buyer_Group_Name`) VALUES ('Levis');
-INSERT INTO `dmaps`.`buyer_groups` (`Buyer_Group_Name`) VALUES ('Mexx');
-
-CREATE TABLE `dmaps`.`buyers` (
+CREATE TABLE `dmaps`.`style_entry` (
+  `Style_Entry_Id` INT NOT NULL,
   `Buyer_Id` INT NOT NULL,
-  `Buyer_Name` VARCHAR(45) NOT NULL,
-  `Buyer_Email_Id` VARCHAR(45) NOT NULL,
-  `Buyer_Contact_No` INT NOT NULL,
-  PRIMARY KEY (`Buyer_Id`));
+  `Buyer_Order_Ref_No` VARCHAR(45) NOT NULL,
+  `Style_No` VARCHAR(45) NOT NULL,
+  `Style_Description` VARCHAR(200) NULL,
+  `Size_Grid` VARCHAR(45) NULL,
+  `Product_Type` VARCHAR(45) NULL,
+  `Gender` VARCHAR(45) NULL,
+  `Season` VARCHAR(45) NULL,
+  `Marchant_Name` VARCHAR(45) NULL,
+  `Marchant_Contact` VARCHAR(45) NULL,
+  `Note` LONGTEXT NULL,
+  PRIMARY KEY (`Style_Entry_Id`),
+  UNIQUE INDEX `Style_No_UNIQUE` (`Style_No` ASC) VISIBLE,
+  UNIQUE INDEX `Buyer_Order_Ref_No_UNIQUE` (`Buyer_Order_Ref_No` ASC) VISIBLE);
 
-ALTER TABLE `dmaps`.`buyers` 
-CHANGE COLUMN `Buyer_Id` `Buyer_Id` INT NOT NULL AUTO_INCREMENT ;
 
-ALTER TABLE `dmaps`.`buyers` 
-ADD COLUMN `Buyer_Group_Name` VARCHAR(45) NOT NULL AFTER `Buyer_Id`;
+ALTER TABLE `dmaps`.`style_entry` 
+ADD COLUMN `Buyer_Group_Name` VARCHAR(45) NULL AFTER `Buyer_Group_Id`,
+CHANGE COLUMN `Buyer_Id` `Buyer_Group_Id` INT NOT NULL ;
 
-ALTER TABLE `dmaps`.`buyers` 
-CHANGE COLUMN `Buyer_Contact_No` `Buyer_Contact_No` VARCHAR(15) NOT NULL ;
+ALTER TABLE `dmaps`.`style_entry` 
+DROP COLUMN `Buyer_Group_Name`;
+
+ALTER TABLE `dmaps`.`style_entry` 
+CHANGE COLUMN `Style_Entry_Id` `Style_Entry_Id` INT NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `dmaps`.`style_entry` 
+CHANGE COLUMN `Marchant_Name` `Marchent_Name` VARCHAR(45) NULL DEFAULT NULL ,
+CHANGE COLUMN `Marchant_Contact` `Marchent_Contact` VARCHAR(45) NULL DEFAULT NULL ;
+
+ALTER TABLE `dmaps`.`style_entry` 
+ADD COLUMN `Style_Images` LONGTEXT NULL AFTER `Note`;
+
+CREATE TABLE `dmaps`.`map_size_grid` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Size_Grid` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`, `Size_Grid`),
+  UNIQUE INDEX `Size_Grid_UNIQUE` (`Size_Grid` ASC) VISIBLE,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
+
+INSERT INTO `dmaps`.`map_size_grid` (`Size_Grid`) VALUES ('M');
+INSERT INTO `dmaps`.`map_size_grid` (`Size_Grid`) VALUES ('L');
+INSERT INTO `dmaps`.`map_size_grid` (`Size_Grid`) VALUES ('XL');
+INSERT INTO `dmaps`.`map_size_grid` (`Size_Grid`) VALUES ('XXL');
+
+CREATE TABLE `dmaps`.`map_product_type` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Product_Type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`, `Product_Type`));
+
+
+INSERT INTO `dmaps`.`map_product_type` (`Product_Type`) VALUES ('Jersy');
+INSERT INTO `dmaps`.`map_product_type` (`Product_Type`) VALUES ('Shirt');
+INSERT INTO `dmaps`.`map_product_type` (`Product_Type`) VALUES ('Pant');
+INSERT INTO `dmaps`.`map_product_type` (`Product_Type`) VALUES ('T-Shirt');
+
+
+CREATE TABLE `dmaps`.`map_gender` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Gender` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`, `Gender`));
+
+INSERT INTO `dmaps`.`map_gender` (`Gender`) VALUES ('Boy');
+INSERT INTO `dmaps`.`map_gender` (`Gender`) VALUES ('Girl');
+INSERT INTO `dmaps`.`map_gender` (`Gender`) VALUES ('Men');
+INSERT INTO `dmaps`.`map_gender` (`Gender`) VALUES ('Women');
+
+CREATE TABLE `dmaps`.`map_emb_type` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Emb_Type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`, `Emb_Type`));
+
+INSERT INTO `dmaps`.`map_emb_type` (`Emb_Type`) VALUES ('A');
+INSERT INTO `dmaps`.`map_emb_type` (`Emb_Type`) VALUES ('B');
+INSERT INTO `dmaps`.`map_emb_type` (`Emb_Type`) VALUES ('C');
+
+CREATE TABLE `dmaps`.`map_washing_type` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Washing_Type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`, `Washing_Type`));
+
+INSERT INTO `dmaps`.`map_washing_type` (`Washing_Type`) VALUES ('Water');
+INSERT INTO `dmaps`.`map_washing_type` (`Washing_Type`) VALUES ('DRY');
+
+CREATE TABLE `dmaps`.`map_print_type` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Print_Type` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`, `Print_Type`));
+
+INSERT INTO `dmaps`.`map_print_type` (`Print_Type`) VALUES ('Dark');
+INSERT INTO `dmaps`.`map_print_type` (`Print_Type`) VALUES ('White');
+
+CREATE TABLE `dmaps`.`production_order_details` (
+  `PO_Id` INT NOT NULL AUTO_INCREMENT,
+  `Style_No` VARCHAR(45) NULL,
+  `PO_No` VARCHAR(45) NOT NULL,
+  `OC_No` VARCHAR(45) NULL,
+  `Emb_Type` VARCHAR(45) NULL,
+  `Print_Type` VARCHAR(45) NULL,
+  `Washing_Type` VARCHAR(45) NULL,
+  `Others` VARCHAR(45) NULL,
+  `Shipment_Mode` VARCHAR(45) NULL,
+  `Delivery_Date` VARCHAR(45) NULL,
+  `PCD` VARCHAR(45) NULL,
+  `Mote` VARCHAR(45) NULL,
+  PRIMARY KEY (`PO_Id`, `PO_No`));
+
+ALTER TABLE `dmaps`.`production_order_details` 
+ADD COLUMN `F_PO_No` VARCHAR(45) NULL AFTER `Style_No`;
+
+ALTER TABLE `dmaps`.`production_order_details` 
+CHANGE COLUMN `Mote` `Note` VARCHAR(45) NULL DEFAULT NULL ;
+
+CREATE TABLE `dmaps`.`po_garment_details` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `PO_Id` INT NULL,
+  `Garment_Color` VARCHAR(45) NULL,
+  `Destination_Country` VARCHAR(45) NULL,
+  `PO_No` VARCHAR(45) NULL,
+  `XS` FLOAT NULL,
+  `S` FLOAT NULL,
+  `M` FLOAT NULL,
+  `L` FLOAT NULL,
+  `XL` FLOAT NULL,
+  `Total` FLOAT NULL,
+  PRIMARY KEY (`id`));
+
+
+
+
+
+
+
+
+
+
+

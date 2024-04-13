@@ -22,10 +22,10 @@ import {
 	MDBInput
 } from 'mdb-react-ui-kit';
 
-import unitService from "../../../services/unitService";
+import unitService from "../../../../services/unitService";
 import { trackPromise } from 'react-promise-tracker';
 import CompanyUnitTable from './CompanyUnitTable';
-import adminService from "../../../services/adminService"
+import adminService from "../../../../services/adminService"
 
 
 export default function UnitSetUp() {

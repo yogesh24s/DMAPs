@@ -47,7 +47,7 @@ function HeaderComponent() {
 	  }
 	
 	  const { getRemainingTime, getLastActiveTime } = useIdleTimer({
-		timeout: 1000 * 60 * 2,
+		timeout: 1000 * 60 * 10,
 		onIdle: handleOnIdle,
 		onActive: handleOnActive,
 		onAction: handleOnAction,

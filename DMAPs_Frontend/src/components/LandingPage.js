@@ -8,8 +8,8 @@ import './LandingPage.scss';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 
-import Administrator  from './LandingLayOuts/Administrator';
-
+import Administrator  from "./LandingLayOuts/Administrator/Administrator"
+import StyleStore from "./LandingLayOuts/StyleStore/StyleStore"
 export default function LandingPage(){   
      
     useEffect(()=>{
@@ -29,10 +29,10 @@ return <>
                 <Tab eventKey="third" className='admin-tab' title={<span> <i class="fa fa-toolbox"></i> Administrator </span>}>
                     <Administrator />
                 </Tab>
-                {/* <Tab eventKey="Four" title={<span> <i class="fa fa-store"></i> Style Store </span>}>
-                    Style Store Content
+                <Tab eventKey="Four" className='style-store-tab' title={<span> <i class="fa fa-store"></i> Style Store </span>}>
+                    <StyleStore />
                 </Tab>
-                <Tab eventKey="Five" title={<span> <i class="fa fa-shop"></i> Fabric Store </span>}>
+                 {/*<Tab eventKey="Five" title={<span> <i class="fa fa-shop"></i> Fabric Store </span>}>
                     Fabric Store Content
                 </Tab>
                 <Tab eventKey="Six" title={<span> <i class="fa fa-store"></i> Cut Stores </span>}>

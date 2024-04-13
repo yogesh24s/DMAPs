@@ -23,10 +23,10 @@ import {
 } from 'mdb-react-ui-kit';
 
 
-import userService from "../../../services/userService";
+import userService from "../../../../services/userService";
 import { trackPromise } from 'react-promise-tracker';
 import CompanyUserTable from './CompanyUserTable';
-import adminService from "../../../services/adminService"
+import adminService from "../../../../services/adminService"
 
 export default function UserSetUp() {
 

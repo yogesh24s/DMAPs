@@ -10,10 +10,10 @@ import Form from 'react-bootstrap/Form';
 
 import './dataSet.scss';
 
-import buyerService from '../../../../services/buyerService';
+import buyerService from "../../../../../services/buyerService";
 import { trackPromise } from 'react-promise-tracker';
 import BuyerGroupTable from './BuyerGroupTable';
-import adminService from '../../../../services/adminService';
+import adminService from '../../../../../services/adminService';
 
 import {
 	MDBInput

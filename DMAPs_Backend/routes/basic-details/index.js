@@ -30,6 +30,14 @@ basicDetails.get('/api/basicDetails', verifyToken,function(req, res) {
     SELECT Unit_Id, Unit_Full_Name FROM dmaps.company_units;
     SELECT * FROM dmaps.state;
     SELECT * FROM dmaps.buyer_groups;
+    SELECT * FROM dmaps.map_gender;
+    SELECT * FROM dmaps.map_product_type;
+    SELECT * FROM dmaps.map_size_grid;
+    SELECT Style_Entry_Id, Style_No FROM dmaps.style_entry;
+    SELECT * FROM dmaps.map_emb_type;
+    SELECT * FROM dmaps.map_washing_type;
+    SELECT * FROM dmaps.map_print_type;
+
 `;
 
     pool.query(sql, function (err, results, fields) {
@@ -42,6 +50,13 @@ basicDetails.get('/api/basicDetails', verifyToken,function(req, res) {
                 dataObj['units'] = results[2];
                 dataObj['states'] = results[3];
                 dataObj['buyerGroups'] = results[4];
+                dataObj['gender'] = results[5];
+                dataObj['productType'] = results[6];
+                dataObj['sizeGrid'] = results[7];
+                dataObj['styleNo'] = results[8];
+                dataObj['embType'] = results[9];
+                dataObj['washingType'] = results[10];
+                dataObj['printType'] = results[11];
                 response.push({ 'result': 'success', 'data': dataObj });
             } else {
                 response.push({ 'result': 'error', 'msg': 'No Results Found' });

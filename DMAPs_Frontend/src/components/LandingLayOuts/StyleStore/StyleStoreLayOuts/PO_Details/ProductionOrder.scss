@@ -1,0 +1,116 @@
+
+@import '~mdb-ui-kit/css/mdb.min.css';
+
+.main-heading {
+    padding: 0px;
+    margin-bottom: 2%;
+    font: normal normal bold 24px/20px Helvetica;
+    letter-spacing: 0px !important;
+    color: #1C0202 !important;
+    font-size: 30px;
+}
+
+.sub-heading {
+    padding: 0px;
+    margin-bottom: 3%;
+    font: normal normal bold 24px/20px Helvetica;
+    letter-spacing: 0px !important;
+    color: #1C0202 !important;
+    font-size: 20px;
+}
+
+.description{
+    font-size: 14px;
+    font-weight: 500;
+    color: #6e6e6e
+}
+
+.tab-content {
+    padding: 25px 0px;
+}
+.no-pad-left {
+    padding-left:0px
+}
+.no-pad-right {
+    padding-right:0px
+}
+.unit-tab-content {
+    box-shadow: 0px 3px 5px rgb(201 178 178 / 28%), 0px 1px 3px rgb(255, 255, 255);
+    padding: 0px 10px 10px !important;
+    background-color: rgba(46, 94, 137, 0.0784313725) !important;
+}
+.vertical-link a {
+    line-height: 20px;
+}
+.text-right{
+    text-align: right;
+}
+.modal-90w {
+    max-width: 90% !important;
+}
+.modal-75w {
+    max-width: 75% !important;
+}
+.modal-85w {
+    max-width: 85% !important;
+}
+.table thead tr th {
+    padding: 10px !important;
+    background-color: rgb(3 74 86 / 49%);
+    color: #fff !important;
+}
+.primary-btn {
+    padding: 5px 10px;
+    background-color: #002222;
+}
+.mt-10{
+    margin-top: 8px;
+}
+
+.mt-20{
+    margin-top: 20px;
+}
+
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  .add-row-form input {
+    margin-right: 10px;
+  }
+  
+  .add-row-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .edit-button, .delete-button {
+    background-color: #008CBA;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .delete-button {
+    background-color: #f44336;
+  }
+  

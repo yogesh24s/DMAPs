@@ -1,0 +1,113 @@
+
+@import '~mdb-ui-kit/css/mdb.min.css';
+
+.main-heading {
+    padding: 0px;
+    margin-bottom: 2%;
+    font: normal normal bold 24px/20px Helvetica;
+    letter-spacing: 0px !important;
+    color: #1C0202 !important;
+    font-size: 30px;
+}
+
+.sub-heading {
+    padding: 0px;
+    margin-bottom: 3%;
+    font: normal normal bold 24px/20px Helvetica;
+    letter-spacing: 0px !important;
+    color: #1C0202 !important;
+    font-size: 20px;
+}
+.mt-10{
+    margin-top: 8px;
+}
+.description{
+    font-size: 14px;
+    font-weight: 500;
+    color: #6e6e6e
+}
+
+.tab-content {
+    padding: 25px 0px;
+}
+.inner-tab-content {
+    padding: 2px 0px !important
+}
+
+.nav-tabs .nav-link {
+    text-transform: none !important;
+    font-size: 13px !important;
+    color: #3a2f2f;
+}
+
+.h1 {
+    font-size: 16px !important;
+    color: #003650;
+    font-weight: 600;
+    margin: 10px 10px 4px 0px;
+}
+.btn-close {
+    opacity: 1 !important;
+    filter: invert(100%);
+}
+.ml-15 {
+    margin-left: 15px;
+}
+.pointer {
+    cursor: pointer;
+}
+.modal-title {
+    font-size: 18px !important;
+}
+.table {
+    tr:nth-child(even) {
+        background: #eeecec
+    }
+    tr {
+        th {
+            border: 1px solid #d1cece;
+            font-size: 14px !important;
+        }
+        td {
+            border: 1px solid #d1cece;
+        }
+    }
+}
+.modal-head {
+    padding: 10px !important;
+}
+.modal-footer {
+    padding: 0px 10px;
+}
+.modal-body {
+    padding-bottom: 0px !important;
+}
+.modal-title {
+    line-height: 36px;
+}
+
+.form-select {
+    padding: 4px 10px;
+}
+
+.tab-content {
+    padding: 2px !important;
+    background: #fff
+}
+.fa {
+    color: #073293;
+}
+.fa-white {
+    color: #fff !important;
+  }
+
+//   .vertical-tab .nav-item .nav-link.active::before {
+//     content: "";
+//     position: absolute;
+//     top: 29.75%;
+//     left: 7%;
+//     transform: translateY(-50%);
+//     border-style: solid;
+//     border-width: 12px 0 12px 12px;
+//     border-color: transparent transparent transparent #073293;
+// }

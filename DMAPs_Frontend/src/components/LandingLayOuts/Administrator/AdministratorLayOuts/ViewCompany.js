@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { trackPromise } from "react-promise-tracker";
-import unitService from "../../../services/unitService";
+import unitService from "../../../../services/unitService";
 export default function ViewCompany() {
     const [tableData, setTableData] = useState([])
 
