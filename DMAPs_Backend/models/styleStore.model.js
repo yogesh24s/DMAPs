@@ -9,9 +9,9 @@ const { response } = require('express');
 access.DMAPFunc();
 
 StyleStore.getStyleEntry = result => {
-    sql =`SELECT se.Style_Entry_Id, se.Buyer_Group_Id,bg.Buyer_Group_Name, se.Buyer_Order_Ref_No, se.Style_No, se.Style_Description, se.Size_Grid, se.Product_Type, se.Gender, se.Season, se.Marchent_Name, se.Marchent_Contact, se.Note, se.Style_Images
+    sql =`SELECT se.Style_Entry_Id, se.Buyer_Group_Id,bg.Buyer_Name, se.Buyer_Order_Ref_No, se.Style_No, se.Style_Description, se.Size_Grid, se.Product_Type, se.Gender, se.Season, se.Marchent_Name, se.Marchent_Contact, se.Note, se.Style_Images
     FROM dmaps.style_entry se
-    JOIN dmaps.buyer_groups bg ON se.Buyer_Group_Id = bg.Buyer_Group_Id;`;
+    JOIN dmaps.map_buyer bg ON se.Buyer_Group_Id = bg.Buyer_Id;`;
     pool.query(sql, function(err, res) {
         if (err) {
             result(null, err);

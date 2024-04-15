@@ -28,7 +28,6 @@ import { trackPromise } from 'react-promise-tracker';
 import PODetailsTable from './ProductionOrderTable';
 import adminService from "../../../../../services/adminService"
 
-
 export default function ProductionOrder() {
 
 	const [show, setShow] = useState(false);
@@ -75,76 +74,78 @@ export default function ProductionOrder() {
 	const [embTypeList, setEmbTypeList] = useState([]);
 	const [printTypeList, setPrintTypeList] = useState([]);
 	const [washingTypeList, setWashingTypeList] = useState([]);
-	
-	const [rows, setRows] = useState([]);
-	const [garmentColor, setGarmentColor] = useState('');
-	const [destinationCountry, setDestinationCountry] = useState('');
-	const [poNumber, setPONumber] = useState('');
-	const [sizes, setSizes] = useState({
-	  XS: 0,
-	  S: 0,
-	  M: 0,
-	  L: 0,
-	  XL: 0,
-	});
-	const [editingIndex, setEditingIndex] = useState(null);
-  
-	const handleAddRow = () => {
-	  const newRow = {
-		garmentColor,
-		destinationCountry,
-		poNumber,
-		...sizes,
-		total: Object.values(sizes).reduce((acc, curr) => acc + parseInt(curr), 0),
-	  };
-	  if (editingIndex !== null) {
-		// If editing an existing row, replace it
-		const updatedRows = [...rows];
-		updatedRows[editingIndex] = newRow;
-		setRows(updatedRows);
-		setEditingIndex(null); // Reset editing index after saving changes
-	  } else {
-		// If adding a new row
-		setRows([...rows, newRow]);
-	  }
-	  // Clear form fields after adding row
-	  setGarmentColor('');
-	  setDestinationCountry('');
-	  setPONumber('');
-	  setSizes({
-		XS: 0,
-		S: 0,
-		M: 0,
-		L: 0,
-		XL: 0,
-	  });
-	};
-  
-	const handleEditRow = (index) => {
-	  const rowToEdit = rows[index];
-	  setGarmentColor(rowToEdit.garmentColor);
-	  setDestinationCountry(rowToEdit.destinationCountry);
-	  setPONumber(rowToEdit.poNumber);
-	  setSizes({
-		XS: rowToEdit.XS,
-		S: rowToEdit.S,
-		M: rowToEdit.M,
-		L: rowToEdit.L,
-		XL: rowToEdit.XL,
-	  });
-	  setEditingIndex(index);
-	};
-  
-	const handleDeleteRow = (index) => {
-	  const updatedRows = [...rows];
-	  updatedRows.splice(index, 1);
-	  setRows(updatedRows);
-	  // If deleting the row being edited, reset editing index
-	  if (index === editingIndex) {
-		setEditingIndex(null);
-	  }
-	};
+	const [styleGridList, setStyleGridList] = useState([]);
 
+	const [rows, setRows] = useState([]);
+  const [garmentColor, setGarmentColor] = useState('');
+  const [destinationCountry, setDestinationCountry] = useState('');
+  const [poNumber, setPONumber] = useState('');
+  const [sizesArray, setSizesArray] = useState([]); // Default sizes
+  const [sizes, setSizes] = useState(sizesArray.reduce((acc, curr) => ({ ...acc, [curr]: 0 }), {})); // Dynamically initialize sizes state based on sizesArray
+  const [editingIndex, setEditingIndex] = useState(null);
+
+  const handleAddRow = () => {
+    const newRow = {
+      garmentColor,
+      destinationCountry,
+      poNumber,
+      ...sizes,
+      total: Object.values(sizes).reduce((acc, curr) => acc + parseInt(curr), 0),
+    };
+    if (editingIndex !== null) {
+      // If editing an existing row, replace it
+      const updatedRows = [...rows];
+      updatedRows[editingIndex] = newRow;
+      setRows(updatedRows);
+      setEditingIndex(null); // Reset editing index after saving changes
+    } else {
+      // If adding a new row
+      setRows([...rows, newRow]);
+    }
+    // Clear form fields after adding row
+    setGarmentColor('');
+    setDestinationCountry('');
+    setPONumber('');
+    setSizes(sizesArray.reduce((acc, curr) => ({ ...acc, [curr]: 0 }), {})); // Reset sizes state
+  };
+
+  const handleEditRow = (index) => {
+    const rowToEdit = rows[index];
+    setGarmentColor(rowToEdit.garmentColor);
+    setDestinationCountry(rowToEdit.destinationCountry);
+    setPONumber(rowToEdit.poNumber);
+    setSizes(rowToEdit);
+    setEditingIndex(index);
+  };
+
+  const handleDeleteRow = (index) => {
+    const updatedRows = [...rows];
+    updatedRows.splice(index, 1);
+    setRows(updatedRows);
+    // If deleting the row being edited, reset editing index
+    if (index === editingIndex) {
+      setEditingIndex(null);
+    }
+  };
+
+  const handleSizesChange = (data) => {
+    const selectedSizes = data.split(',').map(size => size.trim()); // Convert comma-separated string to array
+    setSizesArray(selectedSizes);
+    setSizes(selectedSizes.reduce((acc, curr) => ({ ...acc, [curr]: 0 }), {})); // Reset sizes state based on selected sizes
+    setRows([]); // Clear rows when sizes are changed
+  };
+
+  const handleSizeGrid = (value) => {
+	const sizeGridId = styleNoList.find(grid => grid.Style_No == value);
+
+	const sizeGridIdValue = styleGridList.find(grid => grid.Size_Grid_Id == sizeGridId.Size_Grid);
+    
+    // If a matching size grid is found, return its Size_Grid_Value
+	let SizeGridValue = sizeGridIdValue ? sizeGridIdValue.Size_Grid_Value : null
+    
+	handleSizesChange(SizeGridValue);
+};
+  
 	const handleVerticalClick = (value) => {
 		if (value === verticalActive) {
 			return;
@@ -300,6 +301,7 @@ export default function ProductionOrder() {
 				setEmbTypeList(response.data[0].data[0].data.embType)
 				setPrintTypeList(response.data[0].data[0].data.printType)
 				setWashingTypeList(response.data[0].data[0].data.washingType)
+				setStyleGridList(response.data[0].data[0].data.sizeGrid)
             })
         );
     }
@@ -570,7 +572,7 @@ const deletePODetails = (data) => {
 											<div className='row'>
 												<div className='col-3'>
 												
-												<Form.Select className='mb-3' tabindex="1" label='Style No' onChange={(e) => { setStyleNo(e.target.value) }} value={styleNo} name='styleNo'>
+												<Form.Select className='mb-3' tabindex="1" label='Style No' onChange={(e) => { setStyleNo(e.target.value); handleSizeGrid(e.target.value)}} value={styleNo} name='styleNo'>
                                                         <option> Select Style No </option>
                                                         {styleNoList.map((item) => (
                                                             <option key={item.Style_Entry_Id} value={item.Style_Entry_Id}>
@@ -651,11 +653,9 @@ const deletePODetails = (data) => {
 														<th>Garment Color</th>
 														<th>Destination Country</th>
 														<th>PO Number</th>
-														<th>XS</th>
-														<th>S</th>
-														<th>M</th>
-														<th>L</th>
-														<th>XL</th>
+														{sizesArray.map((size, index) => (
+															<th key={index}>{size}</th> // Generate table columns dynamically based on sizesArray
+														))}
 														<th>Total</th>
 														<th>Actions</th>
 														</tr>
@@ -666,12 +666,10 @@ const deletePODetails = (data) => {
 														<tr key={index}>
 															<td>{row.garmentColor}</td>
 															<td>{row.destinationCountry}</td>
-															<td>{row.PONo}</td>
-															<td>{row.XS}</td>
-															<td>{row.S}</td>
-															<td>{row.M}</td>
-															<td>{row.L}</td>
-															<td>{row.XL}</td>
+															<td>{row.poNumber}</td>
+															{sizesArray.map((size, index) => (
+															<td key={index}>{row[size]}</td> // Generate table cells dynamically based on sizesArray
+															))}
 															<td>{row.total}</td>
 															<td>
 															<button onClick={() => handleEditRow(index)} className="edit-button">Edit</button>
@@ -686,16 +684,12 @@ const deletePODetails = (data) => {
 													<div className="add-row-form">
 													<input type="text" value={garmentColor} onChange={(e) => setGarmentColor(e.target.value)} placeholder="Garment Color" />
 													<input type="text" value={destinationCountry} onChange={(e) => setDestinationCountry(e.target.value)} placeholder="Destination Country" />
-													{/* <input type="text" value={poNumber} onChange={(e) => setPONumber(e.target.value)} placeholder="PO Number" /> */}
-													<input type='text' onChange={(e) => { setPONo(e.target.value) }} value={PONo} name='poNumber' />
-											
+													<input type="text" value={poNumber} onChange={(e) => setPONumber(e.target.value)} placeholder="PO Number" />
 													{/* Input fields for each size */}
-													<input type="number" value={sizes.XS} onChange={(e) => setSizes({ ...sizes, XS: e.target.value })} placeholder="XS" />
-													<input type="number" value={sizes.S} onChange={(e) => setSizes({ ...sizes, S: e.target.value })} placeholder="S" />
-													<input type="number" value={sizes.M} onChange={(e) => setSizes({ ...sizes, M: e.target.value })} placeholder="M" />
-													<input type="number" value={sizes.L} onChange={(e) => setSizes({ ...sizes, L: e.target.value })} placeholder="L" />
-													<input type="number" value={sizes.XL} onChange={(e) => setSizes({ ...sizes, XL: e.target.value })} placeholder="XL" />
-													
+													{sizesArray.map((size, index) => (
+														<input key={index} type="number" value={sizes[size]} onChange={(e) => setSizes({ ...sizes, [size]: e.target.value })} placeholder={size} />
+													))}
+													<button onClick={handleAddRow} className="add-row-button">{editingIndex !== null ? 'Save Changes' : 'Add Row'}</button>
 													</div>
 												</div>
 											</div>
@@ -727,7 +721,7 @@ const deletePODetails = (data) => {
 										<div className='row'>
 												<div className='col-3'>
 												
-												<Form.Select className='mb-3' tabindex="1" label='Style No' onChange={(e) => { setStyleNo(e.target.value) }} value={styleNo} name='styleNo'>
+												<Form.Select className='mb-3' tabindex="1" label='Style No' onChange={(e) => { setStyleNo(e.target.value); }} value={styleNo} name='styleNo'>
                                                         <option> Select Style No </option>
                                                         {styleNoList.map((item) => (
                                                             <option key={item.Style_Entry_Id} value={item.Style_Entry_Id}>

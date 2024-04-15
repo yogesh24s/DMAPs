@@ -32,13 +32,20 @@ basicDetails.get('/api/basicDetails', verifyToken,function(req, res) {
     SELECT * FROM dmaps.buyer_groups;
     SELECT * FROM dmaps.map_gender;
     SELECT * FROM dmaps.map_product_type;
-    SELECT * FROM dmaps.map_size_grid;
-    SELECT Style_Entry_Id, Style_No FROM dmaps.style_entry;
+    SELECT Size_Grid_Id, Size_Grid_Name, Size_Grid_Value FROM dmaps.map_size_gridname;
+    SELECT Style_Entry_Id, Style_No, Size_Grid FROM dmaps.style_entry;
     SELECT * FROM dmaps.map_emb_type;
     SELECT * FROM dmaps.map_washing_type;
     SELECT * FROM dmaps.map_print_type;
-
-`;
+    SELECT * FROM dmaps.map_season;
+    SELECT * FROM dmaps.map_buyer;
+    SELECT 
+    CASE 
+      WHEN MAX(Style_No) IS NULL THEN 1 
+      ELSE MAX(Style_No) + 1 
+    END AS Next_Style_No 
+  FROM 
+    dmaps.style_entry;`;
 
     pool.query(sql, function (err, results, fields) {
         if (!err) {
@@ -57,6 +64,10 @@ basicDetails.get('/api/basicDetails', verifyToken,function(req, res) {
                 dataObj['embType'] = results[9];
                 dataObj['washingType'] = results[10];
                 dataObj['printType'] = results[11];
+                dataObj['season'] = results[12];
+                dataObj['buyer'] = results[13];
+                dataObj['nextStyleNumber'] = results[14];
+
                 response.push({ 'result': 'success', 'data': dataObj });
             } else {
                 response.push({ 'result': 'error', 'msg': 'No Results Found' });

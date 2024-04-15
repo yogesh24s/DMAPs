@@ -60,6 +60,8 @@ export default function StyleEntry() {
 	const [buyerList, setBuyerList] = useState([]);
 	const [genderList, setGenderList] = useState([]);
 	const [sizeGridList, setSizeGridList] = useState([]);
+	const [seasonList, setSeasonList] = useState([]);
+	const [nextStyleNumber, setNextStyleNumber] = useState([]);
 	const [productTypeList, setProductTypeList] = useState([]);
 	const [data, setData] = useState([]);
 	const [isEditFormOpen, setIsEditFormOpen] = useState(false);
@@ -125,7 +127,7 @@ export default function StyleEntry() {
 		let isValid = true;
 
 		if (!buyerOrderRefNo) {
-			setBuyerOrderRefNoError('Buyer order Ref No. is required');
+			setBuyerOrderRefNoError('Buyer Order Ref. No. is required');
 			isValid = false;
 		} else if (/[^a-zA-Z0-9]/.test(buyerOrderRefNo)) {
 			setBuyerOrderRefNoError('Short Name cannot contain spaces or special characters');
@@ -139,13 +141,6 @@ export default function StyleEntry() {
 			isValid = false;
 		} else {
 			setSeasonError('');
-		}
-
-		if (!note) {
-			setNoteError('Note is required');
-			isValid = false;
-		} else {
-			setNoteError('');
 		}
 
 		if (!productType) {
@@ -164,16 +159,16 @@ export default function StyleEntry() {
 		}
 
 		if (!marchantName) {
-			setMarchantNameError('Marchant Name is required');
+			setMarchantNameError('Marchent Name is required');
 			isValid = false;
 		} else if (!/^[a-zA-Z0-9]+$/.test(marchantName)) {
-			setMarchantNameError('Marchant Name must contain only alphanumeric characters');
+			setMarchantNameError('Marchent Name must contain only alphanumeric characters');
 			isValid = false;
 		} else {
 			setMarchantNameError('');
 		}
 
-		if (!styleNo) {
+		if (!nextStyleNumber) {
 			setStyleNoError('Style No. is required');
 			isValid = false;
 		} else {
@@ -216,7 +211,7 @@ export default function StyleEntry() {
 			"Product_Type": productType,
 			"Gender": gender,
 			"Marchent_Name": marchantName,
-			"Style_No": styleNo,
+			"Style_No": nextStyleNumber,
 			"Style_Description": styleDescription,
 			"Size_Grid": sizeGrid,
 			"Marchent_Contact": marchantContact,
@@ -254,10 +249,13 @@ export default function StyleEntry() {
 	const getBasicDetails = () => {
         trackPromise(
             adminService.getBasicDetails().then((response) => {
-                setBuyerList(response.data[0].data[0].data.buyerGroups);
+                setBuyerList(response.data[0].data[0].data.buyer);
 				setGenderList(response.data[0].data[0].data.gender)
 				setSizeGridList(response.data[0].data[0].data.sizeGrid)
 				setProductTypeList(response.data[0].data[0].data.productType)
+				setSeasonList(response.data[0].data[0].data.season)
+				setNextStyleNumber(response.data[0].data[0].data.nextStyleNumber[0].Next_Style_No)
+
             })
         );
     }
@@ -371,7 +369,7 @@ const deleteStyleEntry = (data) => {
 		let isValid = true;
 
 		if (!buyerOrderRefNo) {
-			setBuyerOrderRefNoError('Buyer order Ref No. is required');
+			setBuyerOrderRefNoError('Buyer Order Ref. No. is required');
 			isValid = false;
 		} else if (/[^a-zA-Z0-9]/.test(buyerOrderRefNo)) {
 			setBuyerOrderRefNoError('Short Name cannot contain spaces or special characters');
@@ -385,13 +383,6 @@ const deleteStyleEntry = (data) => {
 			isValid = false;
 		} else {
 			setSeasonError('');
-		}
-
-		if (!note) {
-			setNoteError('Note is required');
-			isValid = false;
-		} else {
-			setNoteError('');
 		}
 
 		if (!productType) {
@@ -410,16 +401,16 @@ const deleteStyleEntry = (data) => {
 		}
 
 		if (!marchantName) {
-			setMarchantNameError('Marchant Name is required');
+			setMarchantNameError('Marchent Name is required');
 			isValid = false;
 		} else if (!/^[a-zA-Z0-9]+$/.test(marchantName)) {
-			setMarchantNameError('Marchant Name must contain only alphanumeric characters');
+			setMarchantNameError('Marchent Name must contain only alphanumeric characters');
 			isValid = false;
 		} else {
 			setMarchantNameError('');
 		}
 
-		if (!styleNo) {
+		if (!nextStyleNumber) {
 			setStyleNoError('Style No. is required');
 			isValid = false;
 		} else {
@@ -538,13 +529,13 @@ const deleteStyleEntry = (data) => {
 												<Form.Select className='mb-3' tabindex="1" label='Buyer' onChange={(e) => { setBuyer(e.target.value) }} value={buyer} name='Buyer'>
                                                         <option> Select Buyer </option>
                                                         {buyerList.map((item) => (
-                                                            <option key={item.Buyer_Group_Id} value={item.Buyer_Group_Id}>
-                                                                {item.Buyer_Group_Name}
+                                                            <option key={item.Buyer_Id} value={item.Buyer_Id}>
+                                                                {item.Buyer_Name}
                                                             </option>
                                                         ))}
                                                     </Form.Select>
 
-													<MDBInput label='Style No' type='text' tabindex="3" wrapperClass='mb-3' onChange={(e) => { setStyleNo(e.target.value) }} value={styleNo} name='styleNo' />
+													<MDBInput label='Style No' readonly type='text' tabindex="3" wrapperClass='mb-3' value={nextStyleNumber} name='styleNo' />
 													{StyleNoError && <p style={{ color: 'red' }}>{StyleNoError}</p>}
 											
 
@@ -569,14 +560,14 @@ const deleteStyleEntry = (data) => {
                                                     </Form.Select>
 													{genderError && <p style={{ color: 'red' }}>{genderError}</p>}
 
-													<MDBInput wrapperClass='mb-3' tabindex="9" type='text' label='Marchant Name' onChange={(e) => { setMarchantName(e.target.value) }} value={marchantName} name='marchantName' />
+													<MDBInput wrapperClass='mb-3' tabindex="9" type='text' label='Marchent Name' onChange={(e) => { setMarchantName(e.target.value) }} value={marchantName} name='marchantName' />
 													{marchantNameError && <p style={{ color: 'red' }}>{marchantNameError}</p>}
 
 												</div>
 
 												<div className='col-3'>
 
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="2" label='Buyer Order ref No.' onChange={(e) => { setBuyerOrderRefNo(e.target.value) }} value={buyerOrderRefNo} name='buyerOrderRefNo' />
+													<MDBInput wrapperClass='mb-3' type='text' tabindex="2" label='Buyer Order Ref. No.' onChange={(e) => { setBuyerOrderRefNo(e.target.value) }} value={buyerOrderRefNo} name='buyerOrderRefNo' />
 													{buyerOrderRefNoError && <p style={{ color: 'red' }}>{buyerOrderRefNoError}</p>}
 
 													
@@ -586,18 +577,26 @@ const deleteStyleEntry = (data) => {
 													<Form.Select className='mb-3' tabindex="1" label='Size Grid' onChange={(e) => { setSizeGrid(e.target.value) }} value={sizeGrid} name='sizeGrid'>
                                                         <option> Select Size Grid </option>
                                                         {sizeGridList.map((item) => (
-                                                            <option key={item.id} value={item.Size_Grid}>
-                                                                {item.Size_Grid}
+                                                            <option key={item.Size_Grid_Id} value={item.Size_Grid_Id}>
+                                                                {item.Size_Grid_Name}
                                                             </option>
                                                         ))}
                                                     </Form.Select>
 
 													{sizeGridError && <p style={{ color: 'red' }}>{sizeGridError}</p>}
 
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Season' onChange={(e) => { setSeason(e.target.value) }} value={season} name='season' />
+													<Form.Select className='mb-3' tabindex="1" label='Season' onChange={(e) => { setSeason(e.target.value) }} value={season} name='season'>
+                                                        <option> Select Season </option>
+                                                        {seasonList.map((item) => (
+                                                            <option key={item.id} value={item.Season_Name}>
+                                                                {item.Season_Name}
+                                                            </option>
+                                                        ))}
+                                                    </Form.Select>
+
 													{seasonError && <p style={{ color: 'red' }}>{seasonError}</p>}
 
-													<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Marchant Contacct' onChange={(e) => { setMarchantContact(e.target.value) }} value={marchantContact} name='marchantContact' />
+													<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Marchent Contact No.' onChange={(e) => { setMarchantContact(e.target.value) }} value={marchantContact} name='marchantContact' />
 													{marchantContactError && <p style={{ color: 'red' }}>{marchantContactError}</p>}
 
 												</div>
@@ -632,9 +631,8 @@ const deleteStyleEntry = (data) => {
 
 													<div>
 														<div className="mb-3">
-															<label htmlFor="imageUpload"> Note </label>
-															<MDBInput wrapperClass='mb-3' type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
-															{noteError && <p style={{ color: 'red' }}>{noteError}</p>}
+															<label htmlFor="imageUpload"> Notes </label>
+															<MDBInput wrapperClass='mb-3 textarea' type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
 														</div>
 													</div>
 												</div>
@@ -669,13 +667,13 @@ const deleteStyleEntry = (data) => {
 												<Form.Select className='mb-3' tabindex="1" label='Buyer' onChange={(e) => { setBuyer(e.target.value) }} value={buyer} name='Buyer'>
                                                         <option> Select Buyer </option>
                                                         {buyerList.map((item) => (
-                                                            <option key={item.Buyer_Group_Id} value={item.Buyer_Group_Id}>
-                                                                {item.Buyer_Group_Name}
+                                                            <option key={item.Buyer_Id} value={item.Buyer_Id}>
+                                                                {item.Buyer_Name}
                                                             </option>
                                                         ))}
                                                     </Form.Select>
 
-													<MDBInput label='Style No' type='text' tabindex="3" wrapperClass='mb-3' onChange={(e) => { setStyleNo(e.target.value) }} value={styleNo} name='styleNo' />
+													<MDBInput label='Style No' readOnly type='text' tabindex="3" wrapperClass='mb-3' onChange={(e) => { setStyleNo(e.target.value) }} value={styleNo} name='styleNo' />
 													{StyleNoError && <p style={{ color: 'red' }}>{StyleNoError}</p>}
 											
 
@@ -700,14 +698,14 @@ const deleteStyleEntry = (data) => {
                                                     </Form.Select>
 													{genderError && <p style={{ color: 'red' }}>{genderError}</p>}
 
-													<MDBInput wrapperClass='mb-3' tabindex="9" type='text' label='Marchant Name' onChange={(e) => { setMarchantName(e.target.value) }} value={marchantName} name='marchantName' />
+													<MDBInput wrapperClass='mb-3' tabindex="9" type='text' label='Marchent Name' onChange={(e) => { setMarchantName(e.target.value) }} value={marchantName} name='marchantName' />
 													{marchantNameError && <p style={{ color: 'red' }}>{marchantNameError}</p>}
 
 												</div>
 
 												<div className='col-3'>
 
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="2" label='Buyer Order ref No.' onChange={(e) => { setBuyerOrderRefNo(e.target.value) }} value={buyerOrderRefNo} name='buyerOrderRefNo' />
+													<MDBInput wrapperClass='mb-3' type='text' tabindex="2" label='Buyer Order Ref. No.' onChange={(e) => { setBuyerOrderRefNo(e.target.value) }} value={buyerOrderRefNo} name='buyerOrderRefNo' />
 													{buyerOrderRefNoError && <p style={{ color: 'red' }}>{buyerOrderRefNoError}</p>}
 
 													
@@ -717,8 +715,8 @@ const deleteStyleEntry = (data) => {
 													<Form.Select className='mb-3' tabindex="1" label='Size Grid' onChange={(e) => { setSizeGrid(e.target.value) }} value={sizeGrid} name='sizeGrid'>
                                                         <option> Select Size Grid </option>
                                                         {sizeGridList.map((item) => (
-                                                            <option key={item.id} value={item.Size_Grid}>
-                                                                {item.Size_Grid}
+                                                            <option key={item.Size_Grid_Id} value={item.Size_Grid_Id}>
+                                                                {item.Size_Grid_Name}
                                                             </option>
                                                         ))}
                                                     </Form.Select>
@@ -728,7 +726,7 @@ const deleteStyleEntry = (data) => {
 													<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Season' onChange={(e) => { setSeason(e.target.value) }} value={season} name='season' />
 													{seasonError && <p style={{ color: 'red' }}>{seasonError}</p>}
 
-													<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Marchant Contacct' onChange={(e) => { setMarchantContact(e.target.value) }} value={marchantContact} name='marchantContact' />
+													<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Marchent Contacct' onChange={(e) => { setMarchantContact(e.target.value) }} value={marchantContact} name='marchantContact' />
 													{marchantContactError && <p style={{ color: 'red' }}>{marchantContactError}</p>}
 
 												</div>
@@ -763,8 +761,8 @@ const deleteStyleEntry = (data) => {
 
 													<div>
 														<div className="mb-3">
-															<label htmlFor="imageUpload"> Note </label>
-															<MDBInput wrapperClass='mb-3' type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
+															<label htmlFor="imageUpload"> Notes </label>
+															<MDBInput wrapperClass='mb-3 textarea' type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
 															{noteError && <p style={{ color: 'red' }}>{noteError}</p>}
 														</div>
 													</div>
