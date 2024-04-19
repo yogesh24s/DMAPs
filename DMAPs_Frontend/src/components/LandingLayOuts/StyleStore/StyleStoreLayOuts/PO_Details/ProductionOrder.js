@@ -106,7 +106,7 @@ export default function ProductionOrder() {
     setGarmentColor('');
     setDestinationCountry('');
     setPONumber('');
-    setSizes(sizesArray.reduce((acc, curr) => ({ ...acc, [curr]: 0 }), {})); // Reset sizes state
+    setSizes(sizesArray.reduce((acc, curr) => ({ ...acc, [curr]: '' }), {})); // Reset sizes state
   };
 
   const handleEditRow = (index) => {
@@ -131,7 +131,7 @@ export default function ProductionOrder() {
   const handleSizesChange = (data) => {
     const selectedSizes = data.split(',').map(size => size.trim()); // Convert comma-separated string to array
     setSizesArray(selectedSizes);
-    setSizes(selectedSizes.reduce((acc, curr) => ({ ...acc, [curr]: 0 }), {})); // Reset sizes state based on selected sizes
+    setSizes(selectedSizes.reduce((acc, curr) => ({ ...acc, [curr]: '' }), {})); // Reset sizes state based on selected sizes
     setRows([]); // Clear rows when sizes are changed
   };
 
@@ -263,7 +263,7 @@ export default function ProductionOrder() {
 			"Delivery_Date" : deliveryDate,
 			"PCD" : pcd,
 			"Note": note,
-			"Garment_Data" : rows
+			"Garment_Data" : JSON.stringify(rows)
 		}
 
 		trackPromise(styleStoreService.savePODetails({ "data": [payload] }).then((response) => {
@@ -307,12 +307,13 @@ export default function ProductionOrder() {
     }
 
 	useEffect(() => {
-		getBasicDetails();
+		// getBasicDetails();
 		getPOData()
 	}, [])
 
 
 	function stateValues() {
+		getBasicDetails();
 		setNote('');
 		setNoteError('');
 		setStyleNo('')
@@ -341,11 +342,11 @@ export default function ProductionOrder() {
 		setDestinationCountry('');
 		setPONumber('');
 		setSizes({
-			XS: 0,
-			S: 0,
-			M: 0,
-			L: 0,
-			XL: 0,
+			XS: '',
+			S: '',
+			M: '',
+			L: '',
+			XL: '',
 		});
 		}
 
@@ -365,6 +366,15 @@ export default function ProductionOrder() {
         editFormDetails(data)
         setIsEditFormOpen(true);
     };
+
+	const setExistingGarmentData = (data) => {
+		// Extracting sizes from the first garment data entry assuming all garments have the same sizes
+		const sizesFromData = Object.keys(data[0]).filter(key => !['garmentColor', 'destinationCountry', 'poNumber', 'total'].includes(key));
+		setSizesArray(sizesFromData);
+		// Set each garment's data into rows state
+		setRows(data);
+	};
+
 	function editFormDetails(data) {
 
 		setNoteError('');
@@ -382,6 +392,7 @@ export default function ProductionOrder() {
 		setShipmentMode(data.Shipment_Mode)
 		setDeliveryDate(data.Delivery_Date)
 		setPCD(data.PCD)
+		setExistingGarmentData(JSON.parse(data.Garment_Data))
 	}
     const closeEditForm = () => {
         setIsEditFormOpen(false);
@@ -525,7 +536,8 @@ const deletePODetails = (data) => {
 			"Shipment_Mode" : shipmentMode,
 			"Delivery_Date" : deliveryDate,
 			"PCD" : pcd,
-			"Note": note
+			"Note": note,
+			"Garment_Data" : JSON.stringify(rows)
 		}
 
 		trackPromise(styleStoreService.editPODetails({ "data": [payload] }).then((response) => {
@@ -553,7 +565,7 @@ const deletePODetails = (data) => {
 								<h1 className='h1'> Production Order Details </h1>
 							</div>
 							<div className='col-4 text-right'>
-								<Button className='primary-btn mt-10' onClick={() => {setShow(true);stateValues() }}>
+								<Button className='primary-btn mt-10' onClick={() => {setShow(true);stateValues(); setSizes({});  setRows([]); }}>
 								<i className='fa fa-plus fa-white'> </i> New PO 
 								</Button>
 								
@@ -591,11 +603,13 @@ const deletePODetails = (data) => {
 
 													<MDBInput label='OC No' type='text' tabindex="4" wrapperClass='mb-3' onChange={(e) => { setOCNo(e.target.value) }} value={OCNo} name='OCNo' />
 													{OCNoError && <p style={{ color: 'red' }}>{OCNoError}</p>}
+
+													
 												</div>
 
 												<div className='col-3'>
 													
-													<Form.Select className='mb-3' tabindex="5" label='Emb Type' onChange={(e) => { setEmbType(e.target.value) }} value={embType} name='embType'>
+												<Form.Select className='mb-3' tabindex="5" label='Emb Type' onChange={(e) => { setEmbType(e.target.value) }} value={embType} name='embType'>
                                                         <option> Select Emb Type </option>
                                                         {embTypeList.map((item) => (
                                                             <option key={item.id} value={item.Emb_Type}>
@@ -625,14 +639,13 @@ const deletePODetails = (data) => {
                                                     </Form.Select>
 													{washingTypeError && <p style={{ color: 'red' }}>{washingTypeError}</p>}
 
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
-													{othersError && <p style={{ color: 'red' }}>{othersError}</p>}
+													<MDBInput wrapperClass='mb-3' type='text' tabindex="9" label='Shipment Mode' onChange={(e) => { setShipmentMode(e.target.value) }} value={shipmentMode} name='shipmentMode' />
+													{shipmentModeError && <p style={{ color: 'red' }}>{shipmentModeError}</p>}
+
+													
 
 												</div>
 												<div className='col-6'>
-
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="9" label='Shipment Mode' onChange={(e) => { setShipmentMode(e.target.value) }} value={shipmentMode} name='shipmentMode' />
-													{shipmentModeError && <p style={{ color: 'red' }}>{shipmentModeError}</p>}
 
 													<MDBInput wrapperClass='mb-3' type='date' tabindex="10" label='Delivery Date' onChange={(e) => { setDeliveryDate(e.target.value) }} value={deliveryDate} name='deliveryDate' />
 													{deliveryDateError && <p style={{ color: 'red' }}>{deliveryDateError}</p>}
@@ -640,7 +653,10 @@ const deletePODetails = (data) => {
 													<MDBInput wrapperClass='mb-3' type='date' tabindex="11" label='PCD' onChange={(e) => { setPCD(e.target.value) }} value={pcd} name='pcd' />
 													{pcdError && <p style={{ color: 'red' }}>{pcdError}</p>}
 
-													<MDBInput wrapperClass='mb-3' label='Note'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
+													<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
+													{othersError && <p style={{ color: 'red' }}>{othersError}</p>}
+
+													<MDBInput wrapperClass='mb-3 ' label='Note'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
 													{noteError && <p style={{ color: 'red' }}>{noteError}</p>}
 
 												</div>
@@ -652,7 +668,6 @@ const deletePODetails = (data) => {
 														<tr>
 														<th>Garment Color</th>
 														<th>Destination Country</th>
-														<th>PO Number</th>
 														{sizesArray.map((size, index) => (
 															<th key={index}>{size}</th> // Generate table columns dynamically based on sizesArray
 														))}
@@ -666,14 +681,13 @@ const deletePODetails = (data) => {
 														<tr key={index}>
 															<td>{row.garmentColor}</td>
 															<td>{row.destinationCountry}</td>
-															<td>{row.poNumber}</td>
 															{sizesArray.map((size, index) => (
 															<td key={index}>{row[size]}</td> // Generate table cells dynamically based on sizesArray
 															))}
 															<td>{row.total}</td>
 															<td>
-															<button onClick={() => handleEditRow(index)} className="edit-button">Edit</button>
-															<button onClick={() => handleDeleteRow(index)} className="delete-button">Delete</button>
+															 <i className='fa fa-edit pointer' onClick={() => handleEditRow(index)} title='Edit'> </i> 
+															<i className='fa fa-trash ml-15 pointer'  onClick={() => handleDeleteRow(index)} title='Delete' > </i>
 															</td>
 														</tr>
 														))}
@@ -681,23 +695,24 @@ const deletePODetails = (data) => {
 													</table>
 
 													{/* Form for adding new row */}
-													<div className="add-row-form">
-													<input type="text" value={garmentColor} onChange={(e) => setGarmentColor(e.target.value)} placeholder="Garment Color" />
-													<input type="text" value={destinationCountry} onChange={(e) => setDestinationCountry(e.target.value)} placeholder="Destination Country" />
-													<input type="text" value={poNumber} onChange={(e) => setPONumber(e.target.value)} placeholder="PO Number" />
-													{/* Input fields for each size */}
-													{sizesArray.map((size, index) => (
-														<input key={index} type="number" value={sizes[size]} onChange={(e) => setSizes({ ...sizes, [size]: e.target.value })} placeholder={size} />
-													))}
-													<button onClick={handleAddRow} className="add-row-button">{editingIndex !== null ? 'Save Changes' : 'Add Row'}</button>
-													</div>
+													{sizesArray.length > 1 && (
+														<div className="add-row-form">
+															<input type="text" value={garmentColor} onChange={(e) => setGarmentColor(e.target.value)} placeholder="Garment Color" />
+															<input type="text" value={destinationCountry} onChange={(e) => setDestinationCountry(e.target.value)} placeholder="Destination Country" />
+															{/* Input fields for each size */}
+															{sizesArray.map((size, index) => (
+															<input key={index} type="number" value={sizes[size]} onChange={(e) => setSizes({ ...sizes, [size]: e.target.value })} placeholder={size} />
+															))}
+														</div>
+													)}
 												</div>
 											</div>
 										</form>
-
+										<Button variant="success" type="click" onClick={handleAddRow} style={{ width: '15%', marginTop: "20PX"}} >{editingIndex !== null ? 'Save Changes' : 'Add Row'} </Button>
+										{/* <i className={editingIndex !== null ? 'fa fa-save fa-1x' : 'fa fa-plus fa-1x'}> </i>  */}
 									</Modal.Body>
 									<Modal.Footer>
-									<button type="click" onClick={handleAddRow} className="add-row-button">{editingIndex !== null ? 'Save Changes' : 'Add Row'}</button>
+									
 										<Button variant="secondary" onClick={handleClose} style={{ width: '15%' }} >
 											Cancel
 										</Button>
@@ -721,7 +736,7 @@ const deletePODetails = (data) => {
 										<div className='row'>
 												<div className='col-3'>
 												
-												<Form.Select className='mb-3' tabindex="1" label='Style No' onChange={(e) => { setStyleNo(e.target.value); }} value={styleNo} name='styleNo'>
+												<Form.Select className='mb-3' tabindex="1" label='Style No' onChange={(e) => { setStyleNo(e.target.value); handleSizeGrid(e.target.value)}} value={styleNo} name='styleNo'>
                                                         <option> Select Style No </option>
                                                         {styleNoList.map((item) => (
                                                             <option key={item.Style_Entry_Id} value={item.Style_Entry_Id}>
@@ -740,11 +755,13 @@ const deletePODetails = (data) => {
 
 													<MDBInput label='OC No' type='text' tabindex="4" wrapperClass='mb-3' onChange={(e) => { setOCNo(e.target.value) }} value={OCNo} name='OCNo' />
 													{OCNoError && <p style={{ color: 'red' }}>{OCNoError}</p>}
+
+													
 												</div>
 
 												<div className='col-3'>
 													
-													<Form.Select className='mb-3' tabindex="5" label='Emb Type' onChange={(e) => { setEmbType(e.target.value) }} value={embType} name='embType'>
+												<Form.Select className='mb-3' tabindex="5" label='Emb Type' onChange={(e) => { setEmbType(e.target.value) }} value={embType} name='embType'>
                                                         <option> Select Emb Type </option>
                                                         {embTypeList.map((item) => (
                                                             <option key={item.id} value={item.Emb_Type}>
@@ -774,14 +791,13 @@ const deletePODetails = (data) => {
                                                     </Form.Select>
 													{washingTypeError && <p style={{ color: 'red' }}>{washingTypeError}</p>}
 
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
-													{othersError && <p style={{ color: 'red' }}>{othersError}</p>}
+													<MDBInput wrapperClass='mb-3' type='text' tabindex="9" label='Shipment Mode' onChange={(e) => { setShipmentMode(e.target.value) }} value={shipmentMode} name='shipmentMode' />
+													{shipmentModeError && <p style={{ color: 'red' }}>{shipmentModeError}</p>}
+
+													
 
 												</div>
 												<div className='col-6'>
-
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="9" label='Shipment Mode' onChange={(e) => { setShipmentMode(e.target.value) }} value={shipmentMode} name='shipmentMode' />
-													{shipmentModeError && <p style={{ color: 'red' }}>{shipmentModeError}</p>}
 
 													<MDBInput wrapperClass='mb-3' type='date' tabindex="10" label='Delivery Date' onChange={(e) => { setDeliveryDate(e.target.value) }} value={deliveryDate} name='deliveryDate' />
 													{deliveryDateError && <p style={{ color: 'red' }}>{deliveryDateError}</p>}
@@ -789,7 +805,10 @@ const deletePODetails = (data) => {
 													<MDBInput wrapperClass='mb-3' type='date' tabindex="11" label='PCD' onChange={(e) => { setPCD(e.target.value) }} value={pcd} name='pcd' />
 													{pcdError && <p style={{ color: 'red' }}>{pcdError}</p>}
 
-													<MDBInput wrapperClass='mb-3' label='Note'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
+													<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
+													{othersError && <p style={{ color: 'red' }}>{othersError}</p>}
+
+													<MDBInput wrapperClass='mb-3 ' label='Note'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
 													{noteError && <p style={{ color: 'red' }}>{noteError}</p>}
 
 												</div>
@@ -801,12 +820,9 @@ const deletePODetails = (data) => {
 														<tr>
 														<th>Garment Color</th>
 														<th>Destination Country</th>
-														<th>PO Number</th>
-														<th>XS</th>
-														<th>S</th>
-														<th>M</th>
-														<th>L</th>
-														<th>XL</th>
+														{sizesArray.map((size, index) => (
+															<th key={index}>{size}</th> // Generate table columns dynamically based on sizesArray
+														))}
 														<th>Total</th>
 														<th>Actions</th>
 														</tr>
@@ -817,16 +833,13 @@ const deletePODetails = (data) => {
 														<tr key={index}>
 															<td>{row.garmentColor}</td>
 															<td>{row.destinationCountry}</td>
-															<td>{row.PONo}</td>
-															<td>{row.XS}</td>
-															<td>{row.S}</td>
-															<td>{row.M}</td>
-															<td>{row.L}</td>
-															<td>{row.XL}</td>
+															{sizesArray.map((size, index) => (
+															<td key={index}>{row[size]}</td> // Generate table cells dynamically based on sizesArray
+															))}
 															<td>{row.total}</td>
 															<td>
-															<button onClick={() => handleEditRow(index)} className="edit-button">Edit</button>
-															<button onClick={() => handleDeleteRow(index)} className="delete-button">Delete</button>
+															 <i className='fa fa-edit pointer' onClick={() => handleEditRow(index)} title='Edit'> </i> 
+															<i className='fa fa-trash ml-15 pointer'  onClick={() => handleDeleteRow(index)} title='Delete' > </i>
 															</td>
 														</tr>
 														))}
@@ -834,26 +847,23 @@ const deletePODetails = (data) => {
 													</table>
 
 													{/* Form for adding new row */}
-													<div className="add-row-form">
-													<input type="text" value={garmentColor} onChange={(e) => setGarmentColor(e.target.value)} placeholder="Garment Color" />
-													<input type="text" value={destinationCountry} onChange={(e) => setDestinationCountry(e.target.value)} placeholder="Destination Country" />
-													{/* <input type="text" value={poNumber} onChange={(e) => setPONumber(e.target.value)} placeholder="PO Number" /> */}
-													<input type='text' onChange={(e) => { setPONo(e.target.value) }} value={PONo} name='poNumber' />
-											
-													{/* Input fields for each size */}
-													<input type="number" value={sizes.XS} onChange={(e) => setSizes({ ...sizes, XS: e.target.value })} placeholder="XS" />
-													<input type="number" value={sizes.S} onChange={(e) => setSizes({ ...sizes, S: e.target.value })} placeholder="S" />
-													<input type="number" value={sizes.M} onChange={(e) => setSizes({ ...sizes, M: e.target.value })} placeholder="M" />
-													<input type="number" value={sizes.L} onChange={(e) => setSizes({ ...sizes, L: e.target.value })} placeholder="L" />
-													<input type="number" value={sizes.XL} onChange={(e) => setSizes({ ...sizes, XL: e.target.value })} placeholder="XL" />
-													
-													</div>
+													{sizesArray.length > 1 && (
+														<div className="add-row-form">
+															<input type="text" value={garmentColor} onChange={(e) => setGarmentColor(e.target.value)} placeholder="Garment Color" />
+															<input type="text" value={destinationCountry} onChange={(e) => setDestinationCountry(e.target.value)} placeholder="Destination Country" />
+															{/* Input fields for each size */}
+															{sizesArray.map((size, index) => (
+															<input key={index} type="number" value={sizes[size]} onChange={(e) => setSizes({ ...sizes, [size]: e.target.value })} placeholder={size} />
+															))}
+														</div>
+													)}
 												</div>
 											</div>
 										</form>
+										<Button variant="success" type="click" onClick={handleAddRow} style={{ width: '15%', marginTop: "20PX"}} >{editingIndex !== null ? 'Save Changes' : 'Add Row'} </Button>
 									</Modal.Body>
 									<Modal.Footer>
-									<button type="click" onClick={handleAddRow} className="add-row-button">{editingIndex !== null ? 'Save Changes' : 'Add Row'}</button>
+										
                                         <Button variant="secondary" onClick={closeEditForm} style={{ width: '15%' }}>
                                             Cancel
                                         </Button>

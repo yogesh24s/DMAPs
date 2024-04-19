@@ -33,7 +33,7 @@ basicDetails.get('/api/basicDetails', verifyToken,function(req, res) {
     SELECT * FROM dmaps.map_gender;
     SELECT * FROM dmaps.map_product_type;
     SELECT Size_Grid_Id, Size_Grid_Name, Size_Grid_Value FROM dmaps.map_size_gridname;
-    SELECT Style_Entry_Id, Style_No, Size_Grid FROM dmaps.style_entry;
+    SELECT LPAD(Style_No, 6, '0') AS Style_No, Size_Grid FROM dmaps.style_entry;
     SELECT * FROM dmaps.map_emb_type;
     SELECT * FROM dmaps.map_washing_type;
     SELECT * FROM dmaps.map_print_type;

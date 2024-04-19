@@ -80,39 +80,42 @@ export default function StyleEntry() {
 	};
 
 	const handleImageUpload = (event) => {
-        const files = event.target.files;
-        if (files.length > 6) {
-            setImageUploadError("You can only upload a maximum of 6 images.");
-            return;
-        }
-        // Reset error if it was previously set
-        setImageUploadError(null);
-
-        // Array to store base64 encoded images
-        const base64ImagesArray = [];
-
-        // Iterate through each selected file
-        for (let i = 0; i < files.length; i++) {
-            const reader = new FileReader();
-            const file = files[i];
-
-            // Closure to capture the file information
-            reader.onload = (e) => {
-                const base64Image = e.target.result;
-                base64ImagesArray.push(base64Image);
-
-                // Check if all images are processed
-                if (base64ImagesArray.length === files.length) {
-                    // All images are converted to base64
-                    // Now you can save base64ImagesArray to your state
-                    setBase64Images(base64ImagesArray);
-                }
-            };
-
-            // Read the image file as a data URL
-            reader.readAsDataURL(file);
-        }
-    };
+		const files = event.target.files;
+		const totalFiles = files.length + base64Images.length; // Calculate total number of files after upload
+	
+		if (totalFiles > 6) {
+			setImageUploadError("You can only upload a maximum of 6 images.");
+			return;
+		}
+	
+		// Reset error if it was previously set
+		setImageUploadError(null);
+	
+		// Array to store base64 encoded images
+		const base64ImagesArray = [...base64Images]; // Copy existing images
+	
+		// Iterate through each selected file
+		for (let i = 0; i < files.length; i++) {
+			const reader = new FileReader();
+			const file = files[i];
+	
+			// Closure to capture the file information
+			reader.onload = (e) => {
+				const base64Image = e.target.result;
+				base64ImagesArray.push(base64Image);
+	
+				// Check if all images are processed
+				if (base64ImagesArray.length === totalFiles) {
+					// All images are converted to base64
+					// Now you can save base64ImagesArray to your state
+					setBase64Images(base64ImagesArray);
+				}
+			};
+	
+			// Read the image file as a data URL
+			reader.readAsDataURL(file);
+		}
+	};
 
     const handleNext = () => {
         setCurrentIndex((prevIndex) => (prevIndex === base64Images.length - 1 ? 0 : prevIndex + 1));
@@ -122,6 +125,19 @@ export default function StyleEntry() {
         setCurrentIndex((prevIndex) => (prevIndex === 0 ? base64Images.length - 1 : prevIndex - 1));
     };
 
+	const handleDeleteImage = (indexToDelete, event) => {
+		event.preventDefault(); // Prevent default form submission
+	
+		// Clear file input value
+		const fileInput = document.getElementById('imageUpload');
+		fileInput.value = ''; 
+	
+		// Filter out the image at the specified index
+		const updatedImages = base64Images.filter((_, index) => index !== indexToDelete);
+		setBase64Images(updatedImages);
+	};
+	
+	
 	const handleStyleEntry = (e) => {
 		e.preventDefault();
 		let isValid = true;
@@ -159,10 +175,10 @@ export default function StyleEntry() {
 		}
 
 		if (!marchantName) {
-			setMarchantNameError('Marchent Name is required');
+			setMarchantNameError('Merchant Name is required');
 			isValid = false;
 		} else if (!/^[a-zA-Z0-9]+$/.test(marchantName)) {
-			setMarchantNameError('Marchent Name must contain only alphanumeric characters');
+			setMarchantNameError('Merchant Name must contain only alphanumeric characters');
 			isValid = false;
 		} else {
 			setMarchantNameError('');
@@ -330,7 +346,6 @@ export default function StyleEntry() {
 		setBuyer(data.Buyer_Group_Id)
 		setSizeGrid(data.Size_Grid)
 		setMarchantContact(data.Marchent_Contact)
-		setStyleEntryId(data.Style_Entry_Id)
 		setBase64Images(JSON.parse(data.Style_Images))
 	}
     const closeEditForm = () => {
@@ -343,7 +358,7 @@ const deleteStyleEntry = (data) => {
 	if (window.confirm("Are you sure to delete the Style Entry ?"))
     {
 		let payload = {
-			"Style_Entry_Id":data.Style_Entry_Id
+			"Style_No":data.Style_No
 		}
 		trackPromise(styleStoreService.deleteStyleEntry({ "data": [payload] }).then((response) => {
 			//check login response
@@ -401,10 +416,10 @@ const deleteStyleEntry = (data) => {
 		}
 
 		if (!marchantName) {
-			setMarchantNameError('Marchent Name is required');
+			setMarchantNameError('Merchant Name is required');
 			isValid = false;
 		} else if (!/^[a-zA-Z0-9]+$/.test(marchantName)) {
-			setMarchantNameError('Marchent Name must contain only alphanumeric characters');
+			setMarchantNameError('Merchant Name must contain only alphanumeric characters');
 			isValid = false;
 		} else {
 			setMarchantNameError('');
@@ -448,7 +463,6 @@ const deleteStyleEntry = (data) => {
 		}
 
 		let payload = {
-			"Style_Entry_Id" : styleId,
 			"Buyer_Group_Id": buyer,
 			"Buyer_Order_Ref_No": buyerOrderRefNo,
 			"Season": season,
@@ -535,9 +549,9 @@ const deleteStyleEntry = (data) => {
                                                         ))}
                                                     </Form.Select>
 
-													<MDBInput label='Style No' readonly type='text' tabindex="3" wrapperClass='mb-3' value={nextStyleNumber} name='styleNo' />
+													{/* <MDBInput label='Style No' readonly type='text' tabindex="3" wrapperClass='mb-3' value={nextStyleNumber} name='styleNo' />
 													{StyleNoError && <p style={{ color: 'red' }}>{StyleNoError}</p>}
-											
+											 */}
 
 													<Form.Select className='mb-3' tabindex="1" label='Product Type' onChange={(e) => { setProductType(e.target.value) }} value={productType} name='productType'>
                                                         <option> Select Product Type </option>
@@ -560,18 +574,17 @@ const deleteStyleEntry = (data) => {
                                                     </Form.Select>
 													{genderError && <p style={{ color: 'red' }}>{genderError}</p>}
 
-													<MDBInput wrapperClass='mb-3' tabindex="9" type='text' label='Marchent Name' onChange={(e) => { setMarchantName(e.target.value) }} value={marchantName} name='marchantName' />
+													<MDBInput wrapperClass='mb-3' tabindex="9" type='text' label='Merchant Name' onChange={(e) => { setMarchantName(e.target.value) }} value={marchantName} name='marchantName' />
 													{marchantNameError && <p style={{ color: 'red' }}>{marchantNameError}</p>}
+
+													<MDBInput wrapperClass='mb-3' type='text' tabindex="2" label='Buyer Order Ref. No.' onChange={(e) => { setBuyerOrderRefNo(e.target.value) }} value={buyerOrderRefNo} name='buyerOrderRefNo' />
+													{buyerOrderRefNoError && <p style={{ color: 'red' }}>{buyerOrderRefNoError}</p>}
 
 												</div>
 
 												<div className='col-3'>
 
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="2" label='Buyer Order Ref. No.' onChange={(e) => { setBuyerOrderRefNo(e.target.value) }} value={buyerOrderRefNo} name='buyerOrderRefNo' />
-													{buyerOrderRefNoError && <p style={{ color: 'red' }}>{buyerOrderRefNoError}</p>}
-
-													
-													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='City' onChange={(e) => { setStyleDescription(e.target.value) }} value={styleDescription} name='styleDescription' />
+													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='Description' onChange={(e) => { setStyleDescription(e.target.value) }} value={styleDescription} name='styleDescription' />
 													{styleDescriptionError && <p style={{ color: 'red' }}>{styleDescriptionError}</p>}
 
 													<Form.Select className='mb-3' tabindex="1" label='Size Grid' onChange={(e) => { setSizeGrid(e.target.value) }} value={sizeGrid} name='sizeGrid'>
@@ -596,11 +609,14 @@ const deleteStyleEntry = (data) => {
 
 													{seasonError && <p style={{ color: 'red' }}>{seasonError}</p>}
 
-													<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Marchent Contact No.' onChange={(e) => { setMarchantContact(e.target.value) }} value={marchantContact} name='marchantContact' />
+													<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Merchant Contact No.' onChange={(e) => { setMarchantContact(e.target.value) }} value={marchantContact} name='marchantContact' />
 													{marchantContactError && <p style={{ color: 'red' }}>{marchantContactError}</p>}
+
+													<MDBInput wrapperClass='mb-3' label='Note' type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
 
 												</div>
 												<div className='col-6'>
+													
 													<div>
 														<div className="mb-3">
 															<label htmlFor="imageUpload">Upload Images (Max 6)</label>
@@ -617,22 +633,23 @@ const deleteStyleEntry = (data) => {
 														{/* Thumbnail List */}
 														<div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
 															{base64Images.map((image, index) => (
-																<img
-																	key={index}
-																	src={image}
-																	alt={`Thumbnail ${index + 1}`}
-																	style={{ width: '80px', height: '80px', borderRadius: '5px', margin: '0 5px', cursor: 'pointer' }}
-																	onClick={() => setCurrentIndex(index)}
-																	className={index === currentIndex ? 'active' : ''}
-																/>
-															))}
-														</div>
-													</div>
+																<div key={index} style={{ position: 'relative' }}>
+																	<img
+																		src={image}
+																		alt={`Thumbnail ${index + 1}`}
+																		style={{ width: '80px', height: '80px', borderRadius: '5px', margin: '0 5px', cursor: 'pointer' }}
+																		onClick={() => setCurrentIndex(index)}
+																		className={index === currentIndex ? 'active' : ''}
+																	/>
+																	<button
+																		onClick={(event) => handleDeleteImage(index, event)}
+																		style={{ position: 'absolute', top: '5px', right: '5px', background: 'transparent', border: 'none', cursor: 'pointer' }}
+																	>
+																		<i className="fa fa-trash" style={{ color: 'red' }}></i>
+																	</button>
 
-													<div>
-														<div className="mb-3">
-															<label htmlFor="imageUpload"> Notes </label>
-															<MDBInput wrapperClass='mb-3 textarea' type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
+																</div>
+															))}
 														</div>
 													</div>
 												</div>
@@ -673,9 +690,9 @@ const deleteStyleEntry = (data) => {
                                                         ))}
                                                     </Form.Select>
 
-													<MDBInput label='Style No' readOnly type='text' tabindex="3" wrapperClass='mb-3' onChange={(e) => { setStyleNo(e.target.value) }} value={styleNo} name='styleNo' />
+													{/* <MDBInput label='Style No' readonly type='text' tabindex="3" wrapperClass='mb-3' value={nextStyleNumber} name='styleNo' />
 													{StyleNoError && <p style={{ color: 'red' }}>{StyleNoError}</p>}
-											
+											 */}
 
 													<Form.Select className='mb-3' tabindex="1" label='Product Type' onChange={(e) => { setProductType(e.target.value) }} value={productType} name='productType'>
                                                         <option> Select Product Type </option>
@@ -698,18 +715,17 @@ const deleteStyleEntry = (data) => {
                                                     </Form.Select>
 													{genderError && <p style={{ color: 'red' }}>{genderError}</p>}
 
-													<MDBInput wrapperClass='mb-3' tabindex="9" type='text' label='Marchent Name' onChange={(e) => { setMarchantName(e.target.value) }} value={marchantName} name='marchantName' />
+													<MDBInput wrapperClass='mb-3' tabindex="9" type='text' label='Merchant Name' onChange={(e) => { setMarchantName(e.target.value) }} value={marchantName} name='marchantName' />
 													{marchantNameError && <p style={{ color: 'red' }}>{marchantNameError}</p>}
+
+													<MDBInput wrapperClass='mb-3' type='text' tabindex="2" label='Buyer Order Ref. No.' onChange={(e) => { setBuyerOrderRefNo(e.target.value) }} value={buyerOrderRefNo} name='buyerOrderRefNo' />
+													{buyerOrderRefNoError && <p style={{ color: 'red' }}>{buyerOrderRefNoError}</p>}
 
 												</div>
 
 												<div className='col-3'>
 
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="2" label='Buyer Order Ref. No.' onChange={(e) => { setBuyerOrderRefNo(e.target.value) }} value={buyerOrderRefNo} name='buyerOrderRefNo' />
-													{buyerOrderRefNoError && <p style={{ color: 'red' }}>{buyerOrderRefNoError}</p>}
-
-													
-													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='City' onChange={(e) => { setStyleDescription(e.target.value) }} value={styleDescription} name='styleDescription' />
+													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='Description' onChange={(e) => { setStyleDescription(e.target.value) }} value={styleDescription} name='styleDescription' />
 													{styleDescriptionError && <p style={{ color: 'red' }}>{styleDescriptionError}</p>}
 
 													<Form.Select className='mb-3' tabindex="1" label='Size Grid' onChange={(e) => { setSizeGrid(e.target.value) }} value={sizeGrid} name='sizeGrid'>
@@ -723,14 +739,25 @@ const deleteStyleEntry = (data) => {
 
 													{sizeGridError && <p style={{ color: 'red' }}>{sizeGridError}</p>}
 
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Season' onChange={(e) => { setSeason(e.target.value) }} value={season} name='season' />
+													<Form.Select className='mb-3' tabindex="1" label='Season' onChange={(e) => { setSeason(e.target.value) }} value={season} name='season'>
+                                                        <option> Select Season </option>
+                                                        {seasonList.map((item) => (
+                                                            <option key={item.id} value={item.Season_Name}>
+                                                                {item.Season_Name}
+                                                            </option>
+                                                        ))}
+                                                    </Form.Select>
+
 													{seasonError && <p style={{ color: 'red' }}>{seasonError}</p>}
 
-													<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Marchent Contacct' onChange={(e) => { setMarchantContact(e.target.value) }} value={marchantContact} name='marchantContact' />
+													<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Merchant Contact No.' onChange={(e) => { setMarchantContact(e.target.value) }} value={marchantContact} name='marchantContact' />
 													{marchantContactError && <p style={{ color: 'red' }}>{marchantContactError}</p>}
+
+													<MDBInput wrapperClass='mb-3' label='Note' type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
 
 												</div>
 												<div className='col-6'>
+													
 													<div>
 														<div className="mb-3">
 															<label htmlFor="imageUpload">Upload Images (Max 6)</label>
@@ -747,23 +774,23 @@ const deleteStyleEntry = (data) => {
 														{/* Thumbnail List */}
 														<div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
 															{base64Images.map((image, index) => (
-																<img
-																	key={index}
-																	src={image}
-																	alt={`Thumbnail ${index + 1}`}
-																	style={{ width: '80px', height: '80px', borderRadius: '5px', margin: '0 5px', cursor: 'pointer' }}
-																	onClick={() => setCurrentIndex(index)}
-																	className={index === currentIndex ? 'active' : ''}
-																/>
-															))}
-														</div>
-													</div>
+																<div key={index} style={{ position: 'relative' }}>
+																	<img
+																		src={image}
+																		alt={`Thumbnail ${index + 1}`}
+																		style={{ width: '80px', height: '80px', borderRadius: '5px', margin: '0 5px', cursor: 'pointer' }}
+																		onClick={() => setCurrentIndex(index)}
+																		className={index === currentIndex ? 'active' : ''}
+																	/>
+																	<button
+																		onClick={(event) => handleDeleteImage(index, event)}
+																		style={{ position: 'absolute', top: '5px', right: '5px', background: 'transparent', border: 'none', cursor: 'pointer' }}
+																	>
+																		<i className="fa fa-trash" style={{ color: 'red' }}></i>
+																	</button>
 
-													<div>
-														<div className="mb-3">
-															<label htmlFor="imageUpload"> Notes </label>
-															<MDBInput wrapperClass='mb-3 textarea' type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
-															{noteError && <p style={{ color: 'red' }}>{noteError}</p>}
+																</div>
+															))}
 														</div>
 													</div>
 												</div>

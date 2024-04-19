@@ -9,9 +9,10 @@ const { response } = require('express');
 access.DMAPFunc();
 
 StyleStore.getStyleEntry = result => {
-    sql =`SELECT se.Style_Entry_Id, se.Buyer_Group_Id,bg.Buyer_Name, se.Buyer_Order_Ref_No, se.Style_No, se.Style_Description, se.Size_Grid, se.Product_Type, se.Gender, se.Season, se.Marchent_Name, se.Marchent_Contact, se.Note, se.Style_Images
+    sql =`SELECT se.Buyer_Group_Id,bg.Buyer_Name, se.Buyer_Order_Ref_No, LPAD(se.Style_No, 6, '0') AS Style_No, se.Style_Description, se.Size_Grid,msg.Size_Grid_Name, se.Product_Type, se.Gender, se.Season, se.Marchent_Name, se.Marchent_Contact, se.Note, se.Style_Images
     FROM dmaps.style_entry se
-    JOIN dmaps.map_buyer bg ON se.Buyer_Group_Id = bg.Buyer_Id;`;
+    LEFT JOIN dmaps.map_buyer bg ON se.Buyer_Group_Id = bg.Buyer_Id
+    LEFT JOIN dmaps.map_size_gridname msg ON se.Size_Grid = msg.Size_Grid_Id`;
     pool.query(sql, function(err, res) {
         if (err) {
             result(null, err);
@@ -49,7 +50,6 @@ StyleStore.editStyleEntry = result => {
 		Product_Type: POData.Product_Type,
 		Gender: POData.Gender,
 		Marchent_Name: POData.Marchent_Name,
-		Style_No: POData.Style_No,
 		Style_Description: POData.Style_Description,
 		Size_Grid: POData.Size_Grid,
 		Marchent_Contact: POData.Marchent_Contact,
@@ -65,7 +65,7 @@ StyleStore.editStyleEntry = result => {
 
     knex.transaction(function(t) {
         return knex('dmaps.style_entry')
-        .where({ Style_Entry_Id: POData.Style_Entry_Id })
+        .where({ Style_No: POData.Style_No })
         .update(updateData)
         .then(function(response) {
             result(null, { "result": "Style Entry are saved successfully", status: "success" });
@@ -84,7 +84,7 @@ StyleStore.deleteStyleEntry = result => {
 
     knex.transaction(function(t) {
         return knex('dmaps.style_entry')
-        .where({ Style_Entry_Id: POData.Style_Entry_Id})
+        .where({ Style_No: POData.Style_No})
         .del()
         .then(function(response) {
             result(null, { "result": response });
@@ -124,35 +124,18 @@ StyleStore.savePODetails = result => {
         Shipment_Mode : POData.Shipment_Mode,
         Delivery_Date : POData.Delivery_Date,
         PCD : POData.PCD,
-        Note: POData.Note
+        Note: POData.Note,
+        Garment_Data : POData.Garment_Data
     };
 
     knex.transaction(function(t) {
         // Insert production order details
         return knex('dmaps.production_order_details')
             .insert(insertData)
-            .then(function(response) {
-                // Insert garment details after production order details insertion succeeds
-                const garmentData = data[0].Garment_Data[0];
-                const insertGarmentData = {
-                    PO_Id : response,
-                    Garment_Color: garmentData.garmentColor,
-                    Destination_country: garmentData.destinationCountry,
-                    PO_No: POData.PO_No,
-                    XS: garmentData.XS,
-                    S: garmentData.S,
-                    M: garmentData.M,
-                    L: garmentData.L,
-                    XL: garmentData.XL,
-                    Total: garmentData.total
-                }
-                return knex('dmaps.po_garment_details')
-                    .insert(insertGarmentData)
-                    .then(function() {
-                        // Commit the transaction if both insertions are successful
-                        t.commit();
-                        result(null, { "result": "PO and garment details are saved successfully", status: "success" });
-                    });
+            .then(function() {
+                // Commit the transaction if both insertions are successful
+                t.commit();
+                result(null, { "result": "PO and garment details are saved successfully", status: "success" });
             })
             .catch(function(error) {
                 // If there's an error, rollback the transaction
@@ -177,7 +160,8 @@ StyleStore.editPODetails = result => {
         Shipment_Mode : POData.Shipment_Mode,
         Delivery_Date : POData.Delivery_Date,
         PCD : POData.PCD,
-        Note: POData.Note
+        Note: POData.Note,
+        Garment_Data : POData.Garment_Data
     };
 
     if (!POData) {

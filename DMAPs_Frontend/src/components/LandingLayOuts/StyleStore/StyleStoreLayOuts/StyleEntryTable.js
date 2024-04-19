@@ -20,21 +20,37 @@ export default function StyleEntryTable(props) {
 			accessor: 'Style_Description',
 		  },
 		  {
-			Header: 'Size Grid',
-			accessor: 'Size_Grid',
+			Header: 'Size Grid Name',
+			accessor: 'Size_Grid_Name',
 		  },
 		  {
 			Header: 'Product Type',
 			accessor: 'Product_Type',
 		  },
 		  {
-			Header: 'Marchent Name',
+			Header: 'Merchant Name',
 			accessor: 'Marchent_Name',
 		  },
 		  {
-			Header: 'Marchent Contact',
+			Header: 'Merchant Contact',
 			accessor: 'Marchent_Contact',
 		  },
+		  {
+                Header: 'Images',
+                accessor: 'Style_Images',
+                Cell: ({ row }) => (
+                    <div>
+                        {JSON.parse(row.original.Style_Images).map((image, index) => (
+                            <img
+                                key={index}
+                                src={image}
+                                alt={`Thumbnail ${index}`}
+                                style={{ width: '25px', height: '25px', marginRight: '5px' }}
+                            />
+                        ))}
+                    </div>
+                ),
+            },
 		  {
 			Header: 'Action',
 			accessor: 'action', // You can set a dummy accessor for the action column
