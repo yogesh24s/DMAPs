@@ -70,3 +70,22 @@
 .textarea{
     height: 85px;
 }
+.attach-image-button {
+    display: inline-block;
+    background-color: #b4b4b4; /* Button color */
+    color: #ffffff; /* Text color */
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.attach-image-button:hover {
+    background-color: #0056b3; /* Button color on hover */
+    color:#fff;
+}
+.fa-paperclip {
+    color:#ffffff
+}
+.fa-paperclip:hover {
+    color:#fff
+}

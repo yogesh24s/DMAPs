@@ -184,13 +184,6 @@ export default function StyleEntry() {
 			setMarchantNameError('');
 		}
 
-		if (!nextStyleNumber) {
-			setStyleNoError('Style No. is required');
-			isValid = false;
-		} else {
-			setStyleNoError('');
-		}
-
 		if (!styleDescription) {
 			setStyleDescriptionError('Style Description is required');
 			isValid = false;
@@ -227,7 +220,6 @@ export default function StyleEntry() {
 			"Product_Type": productType,
 			"Gender": gender,
 			"Marchent_Name": marchantName,
-			"Style_No": nextStyleNumber,
 			"Style_Description": styleDescription,
 			"Size_Grid": sizeGrid,
 			"Marchent_Contact": marchantContact,
@@ -425,13 +417,6 @@ const deleteStyleEntry = (data) => {
 			setMarchantNameError('');
 		}
 
-		if (!nextStyleNumber) {
-			setStyleNoError('Style No. is required');
-			isValid = false;
-		} else {
-			setStyleNoError('');
-		}
-
 		if (!styleDescription) {
 			setStyleDescriptionError('Style Description is required');
 			isValid = false;
@@ -619,7 +604,9 @@ const deleteStyleEntry = (data) => {
 													
 													<div>
 														<div className="mb-3">
-															<label htmlFor="imageUpload">Upload Images (Max 6)</label>
+															<label for="imageUpload" class="attach-image-button">
+																<i class="fa fa-paperclip" aria-hidden="true"></i> Images (Max 6)
+															</label>
 															<input
 																type="file"
 																id="imageUpload"
@@ -627,6 +614,7 @@ const deleteStyleEntry = (data) => {
 																multiple
 																onChange={handleImageUpload}
 																className="form-control"
+																style={{display: 'none'}}
 															/>
 															{imageUploadError && <p style={{ color: 'red' }}>{imageUploadError}</p>}
 														</div>
@@ -645,7 +633,7 @@ const deleteStyleEntry = (data) => {
 																		onClick={(event) => handleDeleteImage(index, event)}
 																		style={{ position: 'absolute', top: '5px', right: '5px', background: 'transparent', border: 'none', cursor: 'pointer' }}
 																	>
-																		<i className="fa fa-trash" style={{ color: 'red' }}></i>
+																		<i className="fa fa-trash" style={{ color: 'red', position: 'absolute',  top: '-10px', right: '-10px' }}></i>
 																	</button>
 
 																</div>
@@ -760,7 +748,9 @@ const deleteStyleEntry = (data) => {
 													
 													<div>
 														<div className="mb-3">
-															<label htmlFor="imageUpload">Upload Images (Max 6)</label>
+															<label for="imageUpload" class="attach-image-button">
+																<i class="fa fa-paperclip" aria-hidden="true"></i> Images (Max 6)
+															</label>
 															<input
 																type="file"
 																id="imageUpload"
@@ -768,6 +758,7 @@ const deleteStyleEntry = (data) => {
 																multiple
 																onChange={handleImageUpload}
 																className="form-control"
+																style={{display: 'none'}}
 															/>
 															{imageUploadError && <p style={{ color: 'red' }}>{imageUploadError}</p>}
 														</div>
@@ -786,7 +777,7 @@ const deleteStyleEntry = (data) => {
 																		onClick={(event) => handleDeleteImage(index, event)}
 																		style={{ position: 'absolute', top: '5px', right: '5px', background: 'transparent', border: 'none', cursor: 'pointer' }}
 																	>
-																		<i className="fa fa-trash" style={{ color: 'red' }}></i>
+																		<i className="fa fa-trash" style={{ color: 'red', position: 'absolute',  top: '-10px', right: '-10px' }}></i>
 																	</button>
 
 																</div>

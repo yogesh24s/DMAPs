@@ -7,7 +7,7 @@ export default function PODetailsTable(props) {
 	const columns = React.useMemo(
 		() => [
 		  {
-			Header: 'Style No',
+			Header: 'Style No.',
 			accessor: 'Style_No',
 		  },
 		  {
@@ -15,7 +15,7 @@ export default function PODetailsTable(props) {
 			accessor: 'PO_No',
 		  },
 		  {
-			Header: 'OC No',
+			Header: 'OC No.',
 			accessor: 'OC_No',
 		  },
 		  {
@@ -41,10 +41,6 @@ export default function PODetailsTable(props) {
 		  {
 			Header: 'PCD',
 			accessor: 'PCD',
-		  },
-		  {
-			Header: 'Note',
-			accessor: 'Note',
 		  },
 		  {
 			Header: 'Action',

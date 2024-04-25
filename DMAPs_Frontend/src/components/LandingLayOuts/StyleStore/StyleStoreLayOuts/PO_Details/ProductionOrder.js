@@ -136,9 +136,13 @@ export default function ProductionOrder() {
   };
 
   const handleSizeGrid = (value) => {
-	const sizeGridId = styleNoList.find(grid => grid.Style_No == value);
 
-	const sizeGridIdValue = styleGridList.find(grid => grid.Size_Grid_Id == sizeGridId.Size_Grid);
+	let StyleNoList = JSON.parse(sessionStorage.getItem('StyleNoList'));
+	let SizeGridList = JSON.parse(sessionStorage.getItem('StyleGridList'));
+
+	const sizeGridId = StyleNoList.find(grid => grid.Style_No == value);
+
+	const sizeGridIdValue = SizeGridList.find(grid => grid.Size_Grid_Id == sizeGridId.Size_Grid);
     
     // If a matching size grid is found, return its Size_Grid_Value
 	let SizeGridValue = sizeGridIdValue ? sizeGridIdValue.Size_Grid_Value : null
@@ -170,13 +174,6 @@ export default function ProductionOrder() {
 			isValid = false;
 		} else {
 			setWashingTypeError('');
-		}
-
-		if (!note) {
-			setNoteError('Note is required');
-			isValid = false;
-		} else {
-			setNoteError('');
 		}
 
 		if (!styleNo) {
@@ -212,14 +209,6 @@ export default function ProductionOrder() {
 			isValid = false;
 		} else {
 			setPrintTypeError('');
-		}
-
-		if (!others) {
-			setOthersError('Others is required');
-			isValid = false;
-		} 
-		else {
-			setOthersError('');
 		}
 
 		if (!pcd) {
@@ -302,12 +291,15 @@ export default function ProductionOrder() {
 				setPrintTypeList(response.data[0].data[0].data.printType)
 				setWashingTypeList(response.data[0].data[0].data.washingType)
 				setStyleGridList(response.data[0].data[0].data.sizeGrid)
+
+				sessionStorage.setItem('StyleNoList', JSON.stringify(response.data[0].data[0].data.styleNo));
+				sessionStorage.setItem('StyleGridList', JSON.stringify(response.data[0].data[0].data.sizeGrid));
             })
         );
     }
 
 	useEffect(() => {
-		// getBasicDetails();
+		getBasicDetails();
 		getPOData()
 	}, [])
 
@@ -363,20 +355,20 @@ export default function ProductionOrder() {
 		);
 	};
 	const openEditForm = (data) => {
-        editFormDetails(data)
-        setIsEditFormOpen(true);
+        editFormDetails(data);
+		setIsEditFormOpen(true); 
     };
 
 	const setExistingGarmentData = (data) => {
 		// Extracting sizes from the first garment data entry assuming all garments have the same sizes
 		const sizesFromData = Object.keys(data[0]).filter(key => !['garmentColor', 'destinationCountry', 'poNumber', 'total'].includes(key));
-		setSizesArray(sizesFromData);
-		// Set each garment's data into rows state
-		setRows(data);
+			setSizesArray(sizesFromData);
+			// Set each garment's data into rows state
+			setRows(data);
+		
 	};
 
 	function editFormDetails(data) {
-
 		setNoteError('');
 		setStyleNoError('');
 		setPOId(data.PO_Id);
@@ -392,8 +384,15 @@ export default function ProductionOrder() {
 		setShipmentMode(data.Shipment_Mode)
 		setDeliveryDate(data.Delivery_Date)
 		setPCD(data.PCD)
-		setExistingGarmentData(JSON.parse(data.Garment_Data))
+
+		if(JSON.parse(data.Garment_Data).length != 0) {
+			setExistingGarmentData(JSON.parse(data.Garment_Data))
+		}
+		else {
+			handleSizeGrid(data.Style_No)
+		}
 	}
+
     const closeEditForm = () => {
         setIsEditFormOpen(false);
     };
@@ -444,13 +443,6 @@ const deletePODetails = (data) => {
 			setWashingTypeError('');
 		}
 
-		if (!note) {
-			setNoteError('Note is required');
-			isValid = false;
-		} else {
-			setNoteError('');
-		}
-
 		if (!styleNo) {
 			setStyleNoError('Style No. is required');
 			isValid = false;
@@ -484,14 +476,6 @@ const deletePODetails = (data) => {
 			isValid = false;
 		} else {
 			setPrintTypeError('');
-		}
-
-		if (!others) {
-			setOthersError('Others is required');
-			isValid = false;
-		} 
-		else {
-			setOthersError('');
 		}
 
 		if (!pcd) {
@@ -587,7 +571,7 @@ const deletePODetails = (data) => {
 												<Form.Select className='mb-3' tabindex="1" label='Style No' onChange={(e) => { setStyleNo(e.target.value); handleSizeGrid(e.target.value)}} value={styleNo} name='styleNo'>
                                                         <option> Select Style No </option>
                                                         {styleNoList.map((item) => (
-                                                            <option key={item.Style_Entry_Id} value={item.Style_Entry_Id}>
+                                                            <option key={item.Style_No} value={item.Style_No}>
                                                                 {item.Style_No}
                                                             </option>
                                                         ))}
@@ -654,10 +638,8 @@ const deletePODetails = (data) => {
 													{pcdError && <p style={{ color: 'red' }}>{pcdError}</p>}
 
 													<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
-													{othersError && <p style={{ color: 'red' }}>{othersError}</p>}
 
 													<MDBInput wrapperClass='mb-3 ' label='Note'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
-													{noteError && <p style={{ color: 'red' }}>{noteError}</p>}
 
 												</div>
 												<div className="col-12 mt-20">
@@ -739,7 +721,7 @@ const deletePODetails = (data) => {
 												<Form.Select className='mb-3' tabindex="1" label='Style No' onChange={(e) => { setStyleNo(e.target.value); handleSizeGrid(e.target.value)}} value={styleNo} name='styleNo'>
                                                         <option> Select Style No </option>
                                                         {styleNoList.map((item) => (
-                                                            <option key={item.Style_Entry_Id} value={item.Style_Entry_Id}>
+                                                            <option key={item.Style_No} value={item.Style_No}>
                                                                 {item.Style_No}
                                                             </option>
                                                         ))}
@@ -806,10 +788,8 @@ const deletePODetails = (data) => {
 													{pcdError && <p style={{ color: 'red' }}>{pcdError}</p>}
 
 													<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
-													{othersError && <p style={{ color: 'red' }}>{othersError}</p>}
 
 													<MDBInput wrapperClass='mb-3 ' label='Note'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
-													{noteError && <p style={{ color: 'red' }}>{noteError}</p>}
 
 												</div>
 												<div className="col-12 mt-20">
@@ -860,7 +840,8 @@ const deletePODetails = (data) => {
 												</div>
 											</div>
 										</form>
-										<Button variant="success" type="click" onClick={handleAddRow} style={{ width: '15%', marginTop: "20PX"}} >{editingIndex !== null ? 'Save Changes' : 'Add Row'} </Button>
+										<Button variant="success" type="click" onClick={handleAddRow} style={{ width: '15%', marginTop: "20PX"}} >{editingIndex !== null ? 'Save Changes' : 'Add Row'} <i class={editingIndex !== null ? 'fa fa-save' : 'fa fa-plus'}aria-hidden="true"></i>
+ </Button>
 									</Modal.Body>
 									<Modal.Footer>
 										
