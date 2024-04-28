@@ -555,7 +555,7 @@ const deletePODetails = (data) => {
 												<div className='col-3'>
 												
 												<Form.Select className='mb-3' tabindex="1" label='Style No' onChange={(e) => { setStyleNo(e.target.value); handleSizeGrid(e.target.value)}} value={styleNo} name='styleNo'>
-                                                        <option> Select Style No </option>
+                                                        <option> Select Style No. </option>
                                                         {styleNoList.map((item) => (
                                                             <option key={item.Style_No} value={item.Style_No}>
                                                                 {item.Style_No}
@@ -565,13 +565,13 @@ const deletePODetails = (data) => {
 													{styleNoError && <p style={{ color: 'red' }}>{styleNoError}</p>}
 
 
-													<MDBInput label='F PO No' type='text' tabindex="2" wrapperClass='mb-3' onChange={(e) => { setFPONo(e.target.value) }} value={fPONo} name='fPONo' />
+													<MDBInput label='F PO No.' type='text' tabindex="2" wrapperClass='mb-3' onChange={(e) => { setFPONo(e.target.value) }} value={fPONo} name='fPONo' />
 													{fPONoError && <p style={{ color: 'red' }}>{fPONoError}</p>}
 
-													<MDBInput label='PO No' type='text' tabindex="3" wrapperClass='mb-3' onChange={(e) => { setPONo(e.target.value) }} value={PONo} name='PONo' />
+													<MDBInput label='PO No.' type='text' tabindex="3" wrapperClass='mb-3' onChange={(e) => { setPONo(e.target.value) }} value={PONo} name='PONo' />
 													{PONoError && <p style={{ color: 'red' }}>{PONoError}</p>}
 
-													<MDBInput label='OC No' type='text' tabindex="4" wrapperClass='mb-3' onChange={(e) => { setOCNo(e.target.value) }} value={OCNo} name='OCNo' />
+													<MDBInput label='OC No.' type='text' tabindex="4" wrapperClass='mb-3' onChange={(e) => { setOCNo(e.target.value) }} value={OCNo} name='OCNo' />
 
 													
 												</div>
@@ -624,7 +624,7 @@ const deletePODetails = (data) => {
 
 													<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
 
-													<MDBInput wrapperClass='mb-3 ' label='Note'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
+													<MDBInput wrapperClass='mb-3 ' label='Notes'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
 
 												</div>
 												<div className="col-12 mt-20">
@@ -704,7 +704,7 @@ const deletePODetails = (data) => {
 												<div className='col-3'>
 												
 												<Form.Select className='mb-3' tabindex="1" label='Style No' onChange={(e) => { setStyleNo(e.target.value); handleSizeGrid(e.target.value)}} value={styleNo} name='styleNo'>
-                                                        <option> Select Style No </option>
+                                                        <option> Select Style No. </option>
                                                         {styleNoList.map((item) => (
                                                             <option key={item.Style_No} value={item.Style_No}>
                                                                 {item.Style_No}
@@ -714,13 +714,13 @@ const deletePODetails = (data) => {
 													{styleNoError && <p style={{ color: 'red' }}>{styleNoError}</p>}
 
 
-													<MDBInput label='F PO No' type='text' tabindex="2" wrapperClass='mb-3' onChange={(e) => { setFPONo(e.target.value) }} value={fPONo} name='fPONo' />
+													<MDBInput label='F PO No.' type='text' tabindex="2" wrapperClass='mb-3' onChange={(e) => { setFPONo(e.target.value) }} value={fPONo} name='fPONo' />
 													{fPONoError && <p style={{ color: 'red' }}>{fPONoError}</p>}
 
-													<MDBInput label='PO No' type='text' tabindex="3" wrapperClass='mb-3' onChange={(e) => { setPONo(e.target.value) }} value={PONo} name='PONo' />
+													<MDBInput label='PO No.' type='text' tabindex="3" wrapperClass='mb-3' onChange={(e) => { setPONo(e.target.value) }} value={PONo} name='PONo' />
 													{PONoError && <p style={{ color: 'red' }}>{PONoError}</p>}
 
-													<MDBInput label='OC No' type='text' tabindex="4" wrapperClass='mb-3' onChange={(e) => { setOCNo(e.target.value) }} value={OCNo} name='OCNo' />
+													<MDBInput label='OC No.' type='text' tabindex="4" wrapperClass='mb-3' onChange={(e) => { setOCNo(e.target.value) }} value={OCNo} name='OCNo' />
 
 													
 												</div>
@@ -773,7 +773,7 @@ const deletePODetails = (data) => {
 
 													<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
 
-													<MDBInput wrapperClass='mb-3 ' label='Note'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
+													<MDBInput wrapperClass='mb-3 ' label='Notes'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
 
 												</div>
 												<div className="col-12 mt-20">

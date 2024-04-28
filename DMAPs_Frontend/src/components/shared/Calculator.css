@@ -21,8 +21,8 @@
     grid-gap: 5px;
   }
   
-  button {
-    font-size: 20px;
+  .calc-btn {
+    font-size: 18px !important;
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -53,4 +53,16 @@
   .percentage:hover {
     background-color: #ddd;
   }
-  
+  .calc {
+    right: 112px;
+    position: absolute;
+    bottom: 47px;
+  }
+
+  .calc button {
+    width: 135px;
+  }
+
+  .modal-body{
+    padding-bottom: 15px !important;
+  }

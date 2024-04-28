@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Calculator.css';
 
 const Calculator = () => {
@@ -7,35 +7,58 @@ const Calculator = () => {
   const [previousValue, setPreviousValue] = useState('');
   const [operator, setOperator] = useState('');
 
-  const handleNumberClick = (number) => {
-    if (operator) {
-      // If an operator is already set, append the number to the current value
-      setCurrentValue(currentValue + number.toString());
-      setDisplay(display + number.toString());
-    } else {
-      // If no operator is set, handle as usual
-      if (display === '0') {
-        setDisplay(number.toString());
-      } else {
-        setDisplay(display + number.toString());
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      const { key } = event;
+      if (!isNaN(key) || key === '.') {
+        // Handle number and decimal key presses
+        handleNumberKeyPress(key);
+      } else if (['+', '-', '*', '/'].includes(key)) {
+        // Handle operator key presses
+        handleOperatorKeyPress(key);
+      } else if (key === 'Enter') {
+        // Handle equals key press
+        handleEqualsKeyPress();
+      } else if (key === 'Backspace') {
+        // Handle backspace key press
+        handleBackspaceKeyPress();
+      } else if (key === 'Escape') {
+        // Handle clear key press
+        handleClearKeyPress();
       }
-      setCurrentValue(currentValue + number.toString());
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [display, currentValue, operator, previousValue]);
+
+  const handleNumberKeyPress = (key) => {
+    if (operator) {
+      setCurrentValue(currentValue + key);
+      setDisplay(display + key);
+    } else {
+      if (display === '0') {
+        setDisplay(key);
+      } else {
+        setDisplay(display + key);
+      }
+      setCurrentValue(currentValue + key);
     }
   };
-  
 
-  const handleOperatorClick = (op) => {
-    // Only update the display if currentValue is not empty
+  const handleOperatorKeyPress = (key) => {
     if (currentValue !== '') {
-      setOperator(op);
+      setOperator(key);
       setPreviousValue(display);
       setCurrentValue('');
-      // Append the operator to the display along with the current value
-      setDisplay(display + ' ' + op + ' ');
+      setDisplay(display + ' ' + key + ' ');
     }
   };
-  
-  const handleEqualsClick = () => {
+
+  const handleEqualsKeyPress = () => {
     let result;
     const prev = parseFloat(previousValue);
     const current = parseFloat(currentValue);
@@ -47,7 +70,7 @@ const Calculator = () => {
       case '-':
         result = prev - current;
         break;
-      case '*':
+      case 'x':
         result = prev * current;
         break;
       case '/':
@@ -58,6 +81,21 @@ const Calculator = () => {
     }
 
     setDisplay(result.toString());
+    setCurrentValue('');
+    setPreviousValue('');
+    setOperator('');
+  };
+
+  const handleBackspaceKeyPress = () => {
+    const newDisplay = display.slice(0, -1) || '0'; // Ensure display is at least '0'
+    const newCurrentValue = currentValue.slice(0, -1) || ''; // Ensure currentValue is not null
+  
+    setDisplay(newDisplay);
+    setCurrentValue(newCurrentValue);
+  };
+  
+  const handleClearKeyPress = () => {
+    setDisplay('0');
     setCurrentValue('');
     setPreviousValue('');
     setOperator('');
@@ -76,41 +114,31 @@ const Calculator = () => {
     setCurrentValue(value.toString());
   };
 
-  const handleClearClick = () => {
-    setDisplay('0');
-    setCurrentValue('');
-    setPreviousValue('');
-    setOperator('');
-  };
-
-  const handleBackspaceClick = () => {
-    setDisplay(display.slice(0, -1));
-    setCurrentValue(currentValue.slice(0, -1));
-  };
-
   return (
     <div className="calculator">
       <div className="display">{display}</div>
       <div className="buttons">
-        <button className="clear" onClick={handleClearClick}>AC</button>
-        <button className="backspace" onClick={handleBackspaceClick}><i class="fa-solid fa-delete-left"></i></button> {/* Backspace button */}
-        <button className="operator" onClick={() => handleOperatorClick('/')}>/</button>
-        <button className="operator" onClick={handlePercentageClick}>%</button>
-        <button onClick={() => handleNumberClick(7)}>7</button>
-        <button onClick={() => handleNumberClick(8)}>8</button>
-        <button onClick={() => handleNumberClick(9)}>9</button>
-        <button className="operator" onClick={() => handleOperatorClick('*')}>*</button>
-        <button onClick={() => handleNumberClick(4)}>4</button>
-        <button onClick={() => handleNumberClick(5)}>5</button>
-        <button onClick={() => handleNumberClick(6)}>6</button>
-        <button className="operator" onClick={() => handleOperatorClick('-')}>-</button>
-        <button onClick={() => handleNumberClick(1)}>1</button>
-        <button onClick={() => handleNumberClick(2)}>2</button>
-        <button onClick={() => handleNumberClick(3)}>3</button>
-        <button className="operator" onClick={() => handleOperatorClick('+')}>+</button>
-        <button onClick={() => handleNumberClick(0)}>0</button>
-        <button onClick={handleDecimalClick}>.</button>
-        <button className="equals operator" onClick={handleEqualsClick}>=</button>
+        <button className="clear calc-btn" onClick={handleClearKeyPress}>AC</button>
+        <button className="backspace calc-btn" onClick={handleBackspaceKeyPress}><i className="fa-solid fa-delete-left"></i></button> {/* Backspace button */}
+        <button className="operator calc-btn" onClick={() => handleOperatorKeyPress('/')}><i className="fa-solid fa-divide"></i></button>
+        <button className="operator calc-btn" onClick={handlePercentageClick}> <i className="fa-solid fa-percent"></i> </button>
+        <button className='calc-btn' onClick={() => handleNumberKeyPress('7')}>7</button>
+        <button className='calc-btn' onClick={() => handleNumberKeyPress('8')}>8</button>
+        <button className='calc-btn' onClick={() => handleNumberKeyPress('9')}>9</button>
+        <button className="operator calc-btn" onClick={() => handleOperatorKeyPress('x')}><i className="fa-solid fa-xmark"></i></button>
+        <button className='calc-btn' onClick={() => handleNumberKeyPress('4')}>4</button>
+        <button className='calc-btn' onClick={() => handleNumberKeyPress('5')}>5</button>
+        <button className='calc-btn' onClick={() => handleNumberKeyPress('6')}>6</button>
+        <button className="operator calc-btn" onClick={() => handleOperatorKeyPress('-')}> <i className="fa-solid fa-minus"></i> </button>
+        <button className='calc-btn' onClick={() => handleNumberKeyPress('1')}>1</button>
+        <button className='calc-btn' onClick={() => handleNumberKeyPress('2')}>2</button>
+        <button className='calc-btn' onClick={() => handleNumberKeyPress('3')}>3</button>
+        <button className="operator calc-btn" onClick={() => handleOperatorKeyPress('+')}> <i className="fa-solid fa-plus"></i> </button>
+        <button className='calc-btn' onClick={handleDecimalClick}>.</button>
+        <button className='calc-btn' onClick={() => handleNumberKeyPress('0')}>0</button>
+      </div>
+      <div className='calc'>
+        <button className="operator calc-btn" onClick={handleEqualsKeyPress}> <i className="fa-solid fa-equals"></i> </button>
       </div>
     </div>
   );

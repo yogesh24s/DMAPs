@@ -597,7 +597,7 @@ const deleteStyleEntry = (data) => {
 													<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Merchant Contact No.' onChange={(e) => { setMarchantContact(e.target.value) }} value={marchantContact} name='marchantContact' />
 													{marchantContactError && <p style={{ color: 'red' }}>{marchantContactError}</p>}
 
-													<MDBInput wrapperClass='mb-3' label='Note' type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
+													<MDBInput wrapperClass='mb-3' label='Notes' type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
 
 												</div>
 												<div className='col-6'>
@@ -741,7 +741,7 @@ const deleteStyleEntry = (data) => {
 													<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Merchant Contact No.' onChange={(e) => { setMarchantContact(e.target.value) }} value={marchantContact} name='marchantContact' />
 													{marchantContactError && <p style={{ color: 'red' }}>{marchantContactError}</p>}
 
-													<MDBInput wrapperClass='mb-3' label='Note' type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
+													<MDBInput wrapperClass='mb-3' label='Notes' type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
 
 												</div>
 												<div className='col-6'>
