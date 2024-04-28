@@ -114,9 +114,9 @@ StyleStore.savePODetails = result => {
     const POData = data[0]; // Get the first item from the data array
     const insertData = {
         Style_No : POData.Style_No,
-        F_PO_NO :POData.F_PO_No,
-        PO_NO:POData.PO_No,
-        OC_NO:POData.OC_No,
+        F_PO_No :POData.F_PO_No,
+        PO_No:POData.PO_No,
+        OC_No:POData.OC_No,
         Emb_Type: POData.Emb_Type,
         Print_Type: POData.Print_Type,
         Washing_Type: POData.Washing_Type,
@@ -150,9 +150,9 @@ StyleStore.editPODetails = result => {
     const POData = data[0]; // Get the first item from the data array
     const updateData = {
         Style_No : POData.Style_No,
-        F_PO_NO :POData.FPO_NO,
-        PO_NO:POData.PO_NO,
-        OC_NO:POData.OC_NO,
+        F_PO_No :POData.FPO_No,
+        PO_No:POData.PO_No,
+        OC_No:POData.OC_No,
         Emb_Type: POData.Emb_Type,
         Print_Type: POData.Print_Type,
         Washing_Type: POData.Washing_Type,

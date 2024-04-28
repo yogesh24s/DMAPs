@@ -37,13 +37,7 @@ const transporter = nodemailer.createTransport({
         to: email,
         subject: "Welcome to DMAPs",
         // text: `We have shared the login credentials to access DMAPs.\n Username: ${username} \n Password: ${password}`,
-        text: `Hi ${username},\n\nHope this email finds you well. We are excited to invite you to ${unitname} as ${role}. Please <a href="http://3.92.91.120:4001/DMAPs/login" target="_blank"> click here</href> to login to the application by using the credentials below:
-        Login: ${username} \n
-        Password: ${password} \n
-        Please remember to change your password after the first login and update your profile. \n
-        Thank you \n
-        DMAPs IT Team`,
-        html: false
+        html: `Hi ${username},<br/><br/> Welcome to DMAPs, Hope this email finds you well. We are excited to invite you to <b>${unitname}</b> as <b>${role}.</b> Please <a href="http://3.92.91.120:4001/DMAPs/login" target="_blank"> click here </a> to login to the application by using the credentials below: <br/><br/> <b> Login:</b> ${username} <br/><b>Password:</b> ${password} <br/><br/>  Please remember to change your password after the first login and update your profile. <br/><br/> Thank you <br/> DMAPs IT Team`,
       };
   
       transporter.sendMail(mailOptions, function (error, info) {
@@ -108,8 +102,9 @@ CompanyUsers.editCompanyUsers = result => {
 CompanyUsers.saveCompanyUsers = result => {
     let userData = data[0];
     let username = userData.User_Name;
-    let Unit_Name = userData.Unit_Name;
+    let Unit_Name = userData.Unit_Short_Name;
     let Role = userData.User_Role;
+    console.log(userData);
     const emailParts = userData.Mail_Id.split('@');
     const userPassword = emailParts[0];
     const updatedData = { ...userData, User_Password: userPassword };
@@ -119,7 +114,7 @@ CompanyUsers.saveCompanyUsers = result => {
         .transacting(t)
         .insert(updatedData)
         .then(function(response) {
-             sendWelcomeEmail(userData.Mail_Id,username,userPassword, Unit_Name,Role )
+             sendWelcomeEmail(userData.Mail_Id, username, userPassword, Unit_Name, Role )
              result(null, { "result": "Company User are saved successfully", status: "success" });
         })
         .then(t.commit)

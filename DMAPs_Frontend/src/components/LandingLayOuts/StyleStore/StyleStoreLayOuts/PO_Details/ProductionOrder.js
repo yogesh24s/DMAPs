@@ -197,13 +197,6 @@ export default function ProductionOrder() {
 			setPONoError('');
 		}
 
-		if (!OCNo) {
-			setOCNoError('OC No. is required');
-			isValid = false;
-		} else {
-			setOCNoError('');
-		}
-
 		if (!printType) {
 			setPrintTypeError('Print Type is required');
 			isValid = false;
@@ -378,7 +371,7 @@ export default function ProductionOrder() {
 		setStyleNo(data.Style_No)
 		setFPONo(data.F_PO_No)
 		setPONo(data.PO_No)
-		setOCNo(data.PO_No)
+		setOCNo(data.OC_No)
 		setPrintType(data.Print_Type)
 		setOthers(data.Others)
 		setShipmentMode(data.Shipment_Mode)
@@ -464,13 +457,6 @@ const deletePODetails = (data) => {
 			setPONoError('');
 		}
 
-		if (!OCNo) {
-			setOCNoError('OC No. is required');
-			isValid = false;
-		} else {
-			setOCNoError('');
-		}
-
 		if (!printType) {
 			setPrintTypeError('Print Type is required');
 			isValid = false;
@@ -510,9 +496,9 @@ const deletePODetails = (data) => {
 		let payload = {
 			"PO_Id":POId,
 			"Style_No": styleNo,
-			"FPO_NO":fPONo,
-			"PO_NO":PONo,
-			"OC_NO":OCNo,
+			"FPO_No":fPONo,
+			"PO_No":PONo,
+			"OC_No":OCNo,
 			"Emb_Type": embType,
 			"Print_Type": printType,
 			"Washing_Type": washingType,
@@ -586,7 +572,6 @@ const deletePODetails = (data) => {
 													{PONoError && <p style={{ color: 'red' }}>{PONoError}</p>}
 
 													<MDBInput label='OC No' type='text' tabindex="4" wrapperClass='mb-3' onChange={(e) => { setOCNo(e.target.value) }} value={OCNo} name='OCNo' />
-													{OCNoError && <p style={{ color: 'red' }}>{OCNoError}</p>}
 
 													
 												</div>
@@ -736,7 +721,6 @@ const deletePODetails = (data) => {
 													{PONoError && <p style={{ color: 'red' }}>{PONoError}</p>}
 
 													<MDBInput label='OC No' type='text' tabindex="4" wrapperClass='mb-3' onChange={(e) => { setOCNo(e.target.value) }} value={OCNo} name='OCNo' />
-													{OCNoError && <p style={{ color: 'red' }}>{OCNoError}</p>}
 
 													
 												</div>
