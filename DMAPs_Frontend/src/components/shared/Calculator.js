@@ -13,7 +13,7 @@ const Calculator = () => {
       if (!isNaN(key) || key === '.') {
         // Handle number and decimal key presses
         handleNumberKeyPress(key);
-      } else if (['+', '-', '*', '/'].includes(key)) {
+      } else if (['+', '-', 'x', '/'].includes(key)) {
         // Handle operator key presses
         handleOperatorKeyPress(key);
       } else if (key === 'Enter') {

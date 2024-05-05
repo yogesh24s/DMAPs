@@ -46,10 +46,6 @@ export default function StyleLookupTable(props) {
                 Header: 'PO No',
                 accessor: 'PO_No',
             },
-            {
-                Header: 'Merchant Name',
-                accessor: 'Marchent_Name',
-            },
             // New columns for color and order quantity
 			{
 				Header: 'Color',
@@ -82,7 +78,32 @@ export default function StyleLookupTable(props) {
 					}
 					return ''; // Return an empty string if Garment_Data is undefined, null, or empty
 				},
-			},							
+			},
+            {
+                Header: 'Total',
+                accessor: (row) => {
+                    if (row && row.Garment_Data) {
+                        const garmentData = JSON.parse(row.Garment_Data);
+                        if (garmentData.length > 0) {
+                            // Calculate the total quantity for each style
+                            let totalQty = 0;
+                            garmentData.forEach((garment) => {
+                                totalQty += parseInt(garment.total);
+                            });
+                            return totalQty;
+                        }
+                    }
+                    return ''; // Return an empty string if Garment_Data is undefined, null, or empty
+                },
+            },
+            {
+                Header: 'Delivery Date',
+                accessor: 'Delivery_Date',
+            },
+            {
+                Header: 'Merchant Name',
+                accessor: 'Marchent_Name',
+            }                           
         ],
         []
     );
