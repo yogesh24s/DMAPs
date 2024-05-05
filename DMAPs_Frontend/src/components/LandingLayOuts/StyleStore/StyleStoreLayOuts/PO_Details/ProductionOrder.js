@@ -85,29 +85,48 @@ export default function ProductionOrder() {
   const [editingIndex, setEditingIndex] = useState(null);
 
   const handleAddRow = () => {
-    const newRow = {
-      garmentColor,
-      destinationCountry,
-      poNumber,
-      ...sizes,
-      total: Object.values(sizes).reduce((acc, curr) => acc + parseInt(curr), 0),
-    };
-    if (editingIndex !== null) {
-      // If editing an existing row, replace it
-      const updatedRows = [...rows];
-      updatedRows[editingIndex] = newRow;
-      setRows(updatedRows);
-      setEditingIndex(null); // Reset editing index after saving changes
-    } else {
-      // If adding a new row
-      setRows([...rows, newRow]);
+    // Check if any of the mandatory fields are empty
+    if (!garmentColor || !destinationCountry) {
+        // Display a notification indicating mandatory fields
+        alert("Please fill in all mandatory fields: Garment Color, Destination Country and Total");
+        return; // Exit the function without adding the row
     }
-    // Clear form fields after adding row
+
+    // Safely parse sizes and sum them up
+    const totalSizes = Object.entries(sizes)
+        .filter(([key]) => key !== 'total') // Exclude 'total' key
+        .reduce((acc, [_, value]) => {
+            const parsedValue = parseInt(value);
+            return acc + (isNaN(parsedValue) ? 0 : parsedValue);
+        }, 0);
+
+    const newRow = {
+        garmentColor,
+        destinationCountry,
+        poNumber,
+        ...sizes,
+        total: totalSizes,
+    };
+
+    // If editing an existing row
+    if (editingIndex !== null) {
+        const updatedRows = [...rows];
+        updatedRows[editingIndex] = newRow;
+        setRows(updatedRows);
+        setEditingIndex(null); // Reset editing index after saving changes
+    } else {
+        // If adding a new row
+        setRows([...rows, newRow]);
+    }
+
+    // Clear form fields after adding/editing row
     setGarmentColor('');
     setDestinationCountry('');
     setPONumber('');
     setSizes(sizesArray.reduce((acc, curr) => ({ ...acc, [curr]: '' }), {})); // Reset sizes state
-  };
+};
+
+
 
   const handleEditRow = (index) => {
     const rowToEdit = rows[index];
@@ -664,11 +683,11 @@ const deletePODetails = (data) => {
 													{/* Form for adding new row */}
 													{sizesArray.length > 1 && (
 														<div className="add-row-form">
-															<input type="text" value={garmentColor} onChange={(e) => setGarmentColor(e.target.value)} placeholder="Garment Color" />
-															<input type="text" value={destinationCountry} onChange={(e) => setDestinationCountry(e.target.value)} placeholder="Destination Country" />
+															<input type="text" required value={garmentColor} onChange={(e) => setGarmentColor(e.target.value)} placeholder="Garment Color" />
+															<input type="text" required value={destinationCountry} onChange={(e) => setDestinationCountry(e.target.value)} placeholder="Destination Country" />
 															{/* Input fields for each size */}
 															{sizesArray.map((size, index) => (
-															<input key={index} type="number" value={sizes[size]} onChange={(e) => setSizes({ ...sizes, [size]: e.target.value })} placeholder={size} />
+															<input key={index} required type="number" value={sizes[size]} onChange={(e) => setSizes({ ...sizes, [size]: e.target.value })} placeholder={size} />
 															))}
 														</div>
 													)}

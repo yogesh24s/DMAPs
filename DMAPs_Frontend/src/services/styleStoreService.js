@@ -47,6 +47,15 @@ class styleStoreService {
       return api.post(`http://3.92.91.120:4000/api/deletePODetails/`, payload)
     }
 
+    getStyleLookupDetails(){
+      return api
+      .get("http://3.92.91.120:4000/api/getStyleLookupDetails/")
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {});
+    }
+
 }
 
 export default new styleStoreService();

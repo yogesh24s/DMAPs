@@ -17,6 +17,8 @@ import {
 
 import StyleEntry from './StyleStoreLayOuts/StyleEntry';
 
+import StyleLookup from './StyleStoreLayOuts/StyleLookup';
+
 export default function StyleStore() {
 
     const [basicActive, setBasicActive] = useState('tab3');
@@ -58,7 +60,7 @@ export default function StyleStore() {
             </MDBTabsPane>
             <MDBTabsPane className="style-lookup-tab" show={basicActive === 'tab2'}>
                 <MDBRow>
-                    
+                    <StyleLookup />
                 </MDBRow>
             </MDBTabsPane>
             <MDBTabsPane className="style-dashboard-tab" show={basicActive === 'tab3'}>

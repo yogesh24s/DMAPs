@@ -45,5 +45,7 @@ StyleStore.get('/api/getPODetails',verifyToken, styleStore.getPODetails);
 StyleStore.post('/api/savePODetails',verifyToken, styleStore.savePODetails);
 StyleStore.post('/api/deletePODetails',verifyToken, styleStore.deletePODetails);
 
+StyleStore.get('/api/getStyleLookupDetails',verifyToken, styleStore.getStyleLookupDetails);
+
 
 module.exports = StyleStore;

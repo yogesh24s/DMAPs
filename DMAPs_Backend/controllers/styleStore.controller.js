@@ -105,3 +105,17 @@ exports.deletePODetails = (req, res) => {
             res.send({ "result": "PO Details are deleted successfully", "data": data });
     });
 };
+
+exports.getStyleLookupDetails = (req, res) => {
+    StyleStore.getStyleLookupDetails((err, data) => {
+        if (err)
+            res.send({
+                message:
+                    err.message || "Some error occured"
+            });
+        else {
+            res.send(data);
+        }
+           
+    });
+};

@@ -204,4 +204,53 @@ StyleStore.deletePODetails = result => {
     })
 }
 
+StyleStore.getStyleLookupDetails = result => {
+    sql =`SELECT 
+    se.Style_No,
+    se.Buyer_Group_Id,
+    mb.Buyer_Name,
+    Buyer_Order_Ref_No,
+    se.Style_Description,
+    se.Size_Grid,
+    ms.Size_Grid_Name,
+    se.Product_Type,
+    se.Gender,
+    se.Season,
+    se.Marchent_Name,
+    se.Marchent_Contact,
+    se.Note,
+    se.Style_Images,
+    pod.PO_Id,
+    pod.F_PO_No,
+    pod.PO_No,
+    pod.PO_No,
+    pod.OC_No,
+    pod.Emb_Type,
+    pod.Print_Type,
+    pod.Washing_Type,
+    pod.Others,
+    pod.Shipment_Mode,
+    pod.Delivery_Date,
+    pod.PCD,
+    pod.Note,
+    pod.Garment_Data
+FROM
+    dmaps.style_entry AS se
+        LEFT JOIN
+    dmaps.production_order_details AS pod ON se.Style_No = pod.Style_No
+     LEFT JOIN
+    dmaps.map_buyer AS mb ON mb.Buyer_Id = se.Buyer_Group_Id
+    LEFT JOIN
+    dmaps.map_size_gridname AS ms ON ms.Size_Grid_Id = se.Size_Grid`;
+    pool.query(sql, function(err, res) {
+        if (err) {
+            result(null, err);
+            return;
+        }
+        dataObj = {};
+        dataObj['Style_Lookup'] = res;
+        result(null, dataObj);
+    });
+};
+
 module.exports = StyleStore;

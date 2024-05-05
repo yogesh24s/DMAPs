@@ -1,0 +1,32 @@
+.ul-table {
+    display: table;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    width: 100%;
+}
+
+.ul-table li {
+    display: table-cell;
+    padding: 10px; /* Add padding as needed */
+    border: 1px solid black; /* Optional: Add border for visual clarity */
+    cursor: default; /* Disable pointer */
+    width: 100%;
+}
+
+.table-lookup {
+    tr:nth-child(even) {
+        background: #eeecec
+    }
+    tr {
+        th {
+            border: 1px solid #d1cece;
+            font-size: 14px !important;
+        }
+        td {
+            border: 1px solid #d1cece;
+           padding: 0px !important;
+           vertical-align: middle;
+        }
+    }
+}
