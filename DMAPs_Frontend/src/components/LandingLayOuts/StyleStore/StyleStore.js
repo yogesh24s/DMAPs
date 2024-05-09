@@ -19,6 +19,9 @@ import StyleEntry from './StyleStoreLayOuts/StyleEntry';
 
 import StyleLookup from './StyleStoreLayOuts/StyleLookup';
 
+import StyleDashboard from './StyleStoreLayOuts/StyleDashboard';
+
+
 export default function StyleStore() {
 
     const [basicActive, setBasicActive] = useState('tab3');
@@ -55,7 +58,7 @@ export default function StyleStore() {
         <MDBTabsContent className='inner-tab-content'>
             <MDBTabsPane className="style-entry-tab" show={basicActive === 'tab1'}>
                 <MDBRow>
-                    
+                 <StyleDashboard />
                 </MDBRow>
             </MDBTabsPane>
             <MDBTabsPane className="style-lookup-tab" show={basicActive === 'tab2'}>

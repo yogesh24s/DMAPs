@@ -247,9 +247,23 @@ export default function ProductionOrder() {
 			setShipmentModeError('');
 		}
 
+		const totalSizes = Object.entries(sizes)
+        .filter(([key]) => key !== 'total') // Exclude 'total' key
+        .reduce((acc, [_, value]) => {
+            const parsedValue = parseInt(value);
+            return acc + (isNaN(parsedValue) ? 0 : parsedValue);
+        }, 0);
+
+		if (garmentColor || destinationCountry || totalSizes) {
+			// Display a notification indicating mandatory fields
+			alert("You have filled something on Garment Details but not added, Please click on Add Row before SAVE");
+			return; // Exit the function without adding the row
+		}
+	
 		if (!isValid) {
 			return;
 		}
+
 
 		let payload = {
 			"Style_No": styleNo,
@@ -367,6 +381,9 @@ export default function ProductionOrder() {
 		);
 	};
 	const openEditForm = (data) => {
+		setGarmentColor('');
+		setDestinationCountry('');
+		
         editFormDetails(data);
 		setIsEditFormOpen(true); 
     };
@@ -502,9 +519,22 @@ const deletePODetails = (data) => {
 		if (!shipmentMode) {
 			setShipmentModeError('Shipment Mode is required');
 			isValid = false;
-		} 
+		}
 		else {
 			setShipmentModeError('');
+		}
+
+		const totalSizes = Object.entries(sizes)
+        .filter(([key]) => key !== 'total') // Exclude 'total' key
+        .reduce((acc, [_, value]) => {
+            const parsedValue = parseInt(value);
+            return acc + (isNaN(parsedValue) ? 0 : parsedValue);
+        }, 0);
+
+		if (garmentColor || destinationCountry || totalSizes) {
+			// Display a notification indicating mandatory fields
+			alert("You have filled something on Garment Details but not added, Please click on Add Row before SAVE");
+			return; // Exit the function without adding the row
 		}
 		
 

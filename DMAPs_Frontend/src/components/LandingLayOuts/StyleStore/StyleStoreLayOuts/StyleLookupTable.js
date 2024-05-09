@@ -55,7 +55,7 @@ export default function StyleLookupTable(props) {
 						if (garmentData.length > 0) {
 							return garmentData.map((color, index) => (
 								<ul key={index} className='ul-table'>
-									<li style={{ border: '1px solid #d1cece', textAlign: 'center' }}>{color.garmentColor}</li>
+									<li style={{ border: '0px solid #d1cece', textAlign: 'center' }}>{color.garmentColor}</li>
 								</ul>
 							));
 						}
