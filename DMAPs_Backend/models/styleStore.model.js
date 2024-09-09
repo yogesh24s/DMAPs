@@ -98,7 +98,32 @@ StyleStore.deleteStyleEntry = result => {
 }
 
 StyleStore.getPODetails = result => {
-    sql =`SELECT * FROM dmaps.production_order_details;`;
+    sql =`
+    SELECT 
+    se.Size_Grid,
+    msg.Size_Grid_Name,
+    se.Buyer_Group_Id,
+    bg.Buyer_Name,
+    se.Buyer_Order_Ref_No,
+    se.Style_Description,
+    se.Product_Type,
+    se.Gender,
+    se.Season,
+    se.Marchent_Name,
+    se.Note,
+    se.Style_Images,
+    pod.*
+FROM
+    dmaps.production_order_details pod
+        Left JOIN
+    dmaps.style_entry se ON pod.Style_No = se.Style_No
+        LEFT JOIN
+    dmaps.map_buyer bg ON se.Buyer_Group_Id = bg.Buyer_Id
+        LEFT JOIN
+    dmaps.map_size_gridname msg ON se.Size_Grid = msg.Size_Grid_Id
+ORDER BY
+    LPAD(se.Style_No, 6, '0');
+`;
     pool.query(sql, function(err, res) {
         if (err) {
             result(null, err);

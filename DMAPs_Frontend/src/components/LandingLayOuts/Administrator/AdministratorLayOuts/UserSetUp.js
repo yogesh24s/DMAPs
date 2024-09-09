@@ -109,12 +109,13 @@ export default function UserSetUp() {
 		if (!userName) {
             setUserNameError('User Name is required');
             isValid = false;
-        } else if (!/^[a-zA-Z0-9_]{3,20}$/.test(userName)) {
-            setUserNameError('User Name must be between 3 and 20 characters long and can only contain letters, numbers, and underscores');
+        } else if (!/^[a-zA-Z0-9_ ]{3,20}$/.test(userName)) {
+            setUserNameError('User Name must be between 3 and 20 characters long and can only contain letters, numbers, underscores, and spaces');
             isValid = false;
         } else {
             setUserNameError('');
         }
+        
 
 		if (!empId) {
             setEmpIdError('Employee ID is required');
@@ -334,12 +335,13 @@ export default function UserSetUp() {
 		if (!userName) {
             setUserNameError('User Name is required');
             isValid = false;
-        } else if (!/^[a-zA-Z0-9_]{3,20}$/.test(userName)) {
-            setUserNameError('User Name must be between 3 and 20 characters long and can only contain letters, numbers, and underscores');
+        } else if (!/^[a-zA-Z0-9_ ]{3,20}$/.test(userName)) {
+            setUserNameError('User Name must be between 3 and 20 characters long and can only contain letters, numbers, underscores, and spaces');
             isValid = false;
         } else {
             setUserNameError('');
         }
+        
 
 		if (!empId) {
             setEmpIdError('Employee ID is required');

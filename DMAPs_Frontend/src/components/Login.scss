@@ -111,3 +111,28 @@
 .invalid {
     border: 1px solid red !important;
 }
+
+.input-group {
+    position: relative;
+  }
+  
+  .input-group .form-control {
+    padding-right: 2.5rem; // Adjust padding to make room for the icon
+  }
+  
+  .input-group .input-group-text {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  
+  .input-group .input-group-text img {
+    height: 1.5rem; // Adjust icon size if needed
+    width: 1.5rem; // Adjust icon size if needed
+  }
+  

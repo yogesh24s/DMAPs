@@ -5,7 +5,7 @@ var DMAPFunc = function() {
     bodyParser = require('body-parser');
 
     // local database viariable
-    // mysqlHost = '34.68.62.13';
+    // mysqlHost = '3.92.91.120';
     mysqlHost = '127.0.0.1';
 
     // mysqlPwd = '@ff19E$P';

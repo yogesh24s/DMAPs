@@ -1,168 +1,93 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Calculator.css';
 
 const Calculator = () => {
   const [display, setDisplay] = useState('0');
   const [currentValue, setCurrentValue] = useState('');
-  const [previousValue, setPreviousValue] = useState('');
-  const [operator, setOperator] = useState('');
-  const [isACSelected, setIsACSelected] = useState(false); // Track whether AC is selected
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      const { key } = event;
-      if (!isNaN(key) || key === '.') {
-        // Handle number and decimal key presses
-        handleNumberKeyPress(key);
-      } else if (['+', '-', 'x', '/', '*'].includes(key)) {
-        // Handle operator key presses
-        handleOperatorKeyPress(key);
-      } else if (key === 'Enter' || key === '=') {
-        // Handle equals key press
-        handleEqualsKeyPress();
-      } else if (key === 'Backspace') {
-        // Handle backspace key press
-        handleBackspaceKeyPress();
-      } else if (key === 'Escape') {
-        // Handle clear key press
-        handleClearKeyPress();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [display, currentValue, operator, previousValue, isACSelected]); // Include isACSelected in dependencies
-
-  const handleNumberKeyPress = (key) => {
-    if (isACSelected) { // If AC is selected, clear display
-      setDisplay(key);
-      setCurrentValue(key);
-      setPreviousValue('');
-      setOperator('');
-      setIsACSelected(false); // Unselect AC
-    } else {
-      if (operator) {
-        setCurrentValue(currentValue + key);
-        setDisplay(display + key);
-      } else {
-        if (display === '0' || previousValue !== '' || display === 'Infinity' || display === '-Infinity') {
-          setDisplay(key);
-        } else {
-          setDisplay(display + key);
-        }
-        setCurrentValue(currentValue + key);
-      }
-    }
-  };
-
-  const handleOperatorKeyPress = (key) => {
-    if (currentValue !== '') {
-      setOperator(key);
-      setPreviousValue(display);
-      setCurrentValue('');
-      setDisplay(display + ' ' + key + ' ');
-      setIsACSelected(false); // Unselect AC
-    }
-  };
-
-  const handleEqualsKeyPress = () => {
-    let result;
-    const prev = parseFloat(previousValue);
-    const current = parseFloat(currentValue);
-
-    switch (operator) {
-      case '+':
-        result = prev + current;
-        break;
-      case '-':
-        result = prev - current;
-        break;
-      case 'x':
-        result = prev * current;
-        break;
-      case '*':
-        result = prev * current;
-        break;
-      case '/':
-        result = prev / current;
-        break;
-      default:
-        return;
-    }
-
-    setDisplay(result.toString());
-    setCurrentValue('');
-    setPreviousValue('');
-    setOperator('');
-    setIsACSelected(false); // Unselect AC
-  };
-
-  const handleBackspaceKeyPress = () => {
-    const newDisplay = display.slice(0, -1) || '0'; // Ensure display is at least '0'
-    const newCurrentValue = currentValue.slice(0, -1) || ''; // Ensure currentValue is not null
-
-    setDisplay(newDisplay);
-    setCurrentValue(newCurrentValue);
-    setIsACSelected(false); // Unselect AC
-  };
+  const [expression, setExpression] = useState('');
 
   const handleClearKeyPress = () => {
     setDisplay('0');
     setCurrentValue('');
-    setPreviousValue('');
-    setOperator('');
-    setIsACSelected(true); // Select AC
+    setExpression('');
+  };
+
+  const handleNumberKeyPress = (key) => {
+    if (currentValue.includes('.') && key === '.') return; // Avoid multiple decimals
+
+    const newValue = currentValue + key;
+    setCurrentValue(newValue);
+    setDisplay(display === '0' || display === 'Infinity' || display === '-Infinity' ? key : display + key);
+  };
+
+  const handleOperatorKeyPress = (key) => {
+    if (currentValue !== '' || key === '-') {
+      setExpression(expression + currentValue + key);
+      setDisplay(display + ' ' + key + ' ');
+      setCurrentValue('');
+    }
+  };
+
+  const handleEqualsKeyPress = () => {
+    if (currentValue !== '') {
+      const fullExpression = expression + currentValue;
+      try {
+        const result = eval(fullExpression.replace(/x/g, '*'));
+        setDisplay(result.toString());
+        setCurrentValue(result.toString());
+        setExpression('');
+      } catch (error) {
+        setDisplay('Error');
+      }
+    }
+  };
+
+  const handleBackspaceKeyPress = () => {
+    if (currentValue) {
+      const newValue = currentValue.slice(0, -1) || '0';
+      setCurrentValue(newValue);
+      setDisplay(display.slice(0, -1) || '0');
+    }
   };
 
   const handleDecimalClick = () => {
     if (!currentValue.includes('.')) {
+      const newValue = currentValue + '.';
+      setCurrentValue(newValue);
       setDisplay(display + '.');
-      setCurrentValue(currentValue + '.');
-      setIsACSelected(false); // Unselect AC
     }
   };
 
   const handlePercentageClick = () => {
-    const value = parseFloat(display) / 100;
+    const value = parseFloat(currentValue || display) / 100;
     setDisplay(value.toString());
     setCurrentValue(value.toString());
-    setIsACSelected(false); // Unselect AC
+    setExpression('');
   };
 
   return (
     <div className="calculator">
       <div className="display">{display}</div>
       <div className="buttons">
-
         <button className="clear calc-btn" onClick={handleClearKeyPress}>AC</button>
-        <button className="backspace calc-btn" onClick={handleBackspaceKeyPress}><i className="fa-solid fa-delete-left"></i></button> {/* Backspace button */}
-        <button className="operator calc-btn" onClick={handlePercentageClick}> <i className="fa-solid fa-percent"></i> </button>
+        <button className="backspace calc-btn" onClick={handleBackspaceKeyPress}><i className="fa-solid fa-delete-left"></i></button>
+        <button className="operator calc-btn" onClick={handlePercentageClick}><i className="fa-solid fa-percent"></i></button>
         <button className="operator calc-btn" onClick={() => handleOperatorKeyPress('/')}><i className="fa-solid fa-divide"></i></button>
-
-        <button className='calc-btn' onClick={() => handleNumberKeyPress('7')}>7</button>
-        <button className='calc-btn' onClick={() => handleNumberKeyPress('8')}>8</button>
-        <button className='calc-btn' onClick={() => handleNumberKeyPress('9')}>9</button>
+        <button className="calc-btn" onClick={() => handleNumberKeyPress('7')}>7</button>
+        <button className="calc-btn" onClick={() => handleNumberKeyPress('8')}>8</button>
+        <button className="calc-btn" onClick={() => handleNumberKeyPress('9')}>9</button>
         <button className="operator calc-btn" onClick={() => handleOperatorKeyPress('x')}><i className="fa-solid fa-xmark"></i></button>
-
-
-        <button className='calc-btn' onClick={() => handleNumberKeyPress('4')}>4</button>
-        <button className='calc-btn' onClick={() => handleNumberKeyPress('5')}>5</button>
-        <button className='calc-btn' onClick={() => handleNumberKeyPress('6')}>6</button>
-        <button className="operator calc-btn" onClick={() => handleOperatorKeyPress('-')}> <i className="fa-solid fa-minus"></i> </button>
-
-        <button className='calc-btn' onClick={() => handleNumberKeyPress('1')}>1</button>
-        <button className='calc-btn' onClick={() => handleNumberKeyPress('2')}>2</button>
-        <button className='calc-btn' onClick={() => handleNumberKeyPress('3')}>3</button>
-        <button className="operator calc-btn" onClick={() => handleOperatorKeyPress('+')}> <i className="fa-solid fa-plus"></i> </button>
-
-        <button className='calc-btn' onClick={handleDecimalClick}>.</button>
-        <button className='calc-btn' onClick={() => handleNumberKeyPress('0')}>0</button>
-      </div>
-      <div className='calc'>
-        <button className="operator calc-btn" onClick={handleEqualsKeyPress}> <i className="fa-solid fa-equals"></i> </button>
+        <button className="calc-btn" onClick={() => handleNumberKeyPress('4')}>4</button>
+        <button className="calc-btn" onClick={() => handleNumberKeyPress('5')}>5</button>
+        <button className="calc-btn" onClick={() => handleNumberKeyPress('6')}>6</button>
+        <button className="operator calc-btn" onClick={() => handleOperatorKeyPress('-')}><i className="fa-solid fa-minus"></i></button>
+        <button className="calc-btn" onClick={() => handleNumberKeyPress('1')}>1</button>
+        <button className="calc-btn" onClick={() => handleNumberKeyPress('2')}>2</button>
+        <button className="calc-btn" onClick={() => handleNumberKeyPress('3')}>3</button>
+        <button className="operator calc-btn" onClick={() => handleOperatorKeyPress('+')}><i className="fa-solid fa-plus"></i></button>
+        <button className="calc-btn" onClick={handleDecimalClick}>.</button>
+        <button className="calc-btn" onClick={() => handleNumberKeyPress('0')}>0</button>
+        <button className="operator calc-btn" onClick={handleEqualsKeyPress}><i className="fa-solid fa-equals"></i></button>
       </div>
     </div>
   );

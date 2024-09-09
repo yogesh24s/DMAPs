@@ -177,15 +177,16 @@ export default function StyleEntry() {
 		if (!marchantName) {
 			setMarchantNameError('Merchant Name is required');
 			isValid = false;
-		} else if (!/^[a-zA-Z0-9]+$/.test(marchantName)) {
-			setMarchantNameError('Merchant Name must contain only alphanumeric characters');
+		} else if (!/^[a-zA-Z0-9 ]+$/.test(marchantName)) {
+			setMarchantNameError('Merchant Name must contain only alphanumeric characters and spaces');
 			isValid = false;
 		} else {
 			setMarchantNameError('');
 		}
+		
 
 		if (!styleDescription) {
-			setStyleDescriptionError('Style Description is required');
+			setStyleDescriptionError('Buyer Style No is required');
 			isValid = false;
 		} else {
 			setStyleDescriptionError('');
@@ -410,15 +411,16 @@ const deleteStyleEntry = (data) => {
 		if (!marchantName) {
 			setMarchantNameError('Merchant Name is required');
 			isValid = false;
-		} else if (!/^[a-zA-Z0-9]+$/.test(marchantName)) {
-			setMarchantNameError('Merchant Name must contain only alphanumeric characters');
+		} else if (!/^[a-zA-Z0-9 ]+$/.test(marchantName)) {
+			setMarchantNameError('Merchant Name must contain only alphanumeric characters and spaces');
 			isValid = false;
 		} else {
 			setMarchantNameError('');
 		}
+		
 
 		if (!styleDescription) {
-			setStyleDescriptionError('Style Description is required');
+			setStyleDescriptionError('Buyer Style No is required');
 			isValid = false;
 		} else {
 			setStyleDescriptionError('');
@@ -492,7 +494,7 @@ const deleteStyleEntry = (data) => {
 
 					<MDBTabsItem className="vertical-link">
 						<MDBTabsLink onClick={() => handleVerticalClick('tabV2')} active={verticalActive === 'tabV2'}>
-							PO Details
+							Order Details
 						</MDBTabsLink>
 					</MDBTabsItem>
 
@@ -569,7 +571,7 @@ const deleteStyleEntry = (data) => {
 
 												<div className='col-3'>
 
-													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='Description' onChange={(e) => { setStyleDescription(e.target.value) }} value={styleDescription} name='styleDescription' />
+													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='Buyer Style No' onChange={(e) => { setStyleDescription(e.target.value) }} value={styleDescription} name='styleDescription' />
 													{styleDescriptionError && <p style={{ color: 'red' }}>{styleDescriptionError}</p>}
 
 													<Form.Select className='mb-3' tabindex="1" label='Size Grid' onChange={(e) => { setSizeGrid(e.target.value) }} value={sizeGrid} name='sizeGrid'>
@@ -713,7 +715,7 @@ const deleteStyleEntry = (data) => {
 
 												<div className='col-3'>
 
-													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='Description' onChange={(e) => { setStyleDescription(e.target.value) }} value={styleDescription} name='styleDescription' />
+													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='Buyer Style No' onChange={(e) => { setStyleDescription(e.target.value) }} value={styleDescription} name='styleDescription' />
 													{styleDescriptionError && <p style={{ color: 'red' }}>{styleDescriptionError}</p>}
 
 													<Form.Select className='mb-3' tabindex="1" label='Size Grid' onChange={(e) => { setSizeGrid(e.target.value) }} value={sizeGrid} name='sizeGrid'>

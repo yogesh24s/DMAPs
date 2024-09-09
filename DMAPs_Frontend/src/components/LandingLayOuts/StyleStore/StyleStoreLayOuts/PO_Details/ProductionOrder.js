@@ -84,6 +84,14 @@ export default function ProductionOrder() {
   const [sizes, setSizes] = useState(sizesArray.reduce((acc, curr) => ({ ...acc, [curr]: 0 }), {})); // Dynamically initialize sizes state based on sizesArray
   const [editingIndex, setEditingIndex] = useState(null);
 
+  const [BuyerName, setBuyerName] = useState('');
+  const [StyleDescription, setStyleDescription] = useState('');
+  const [SizeGridName, setSizeGridName] = useState('');
+  const [ProductType, setProductType] = useState('');
+  const [MerchantName, setMerchantName] = useState('');
+  const [MerchantContact, setMerchantContact] = useState('');
+  const [GenderView, setGenderView] = useState('');
+
   const handleAddRow = () => {
     // Check if any of the mandatory fields are empty
     if (!garmentColor || !destinationCountry) {
@@ -161,12 +169,35 @@ export default function ProductionOrder() {
 
 	const sizeGridId = StyleNoList.find(grid => grid.Style_No == value);
 
-	const sizeGridIdValue = SizeGridList.find(grid => grid.Size_Grid_Id == sizeGridId.Size_Grid);
+	if(sizeGridId){
+		setBuyerName(sizeGridId.Buyer_Name);
+		setStyleDescription(sizeGridId.Style_Description);
+		setSizeGridName(sizeGridId.Size_Grid_Name);
+		setProductType(sizeGridId.Product_Type);
+		setMerchantName(sizeGridId.Marchent_Name);
+		setMerchantContact(sizeGridId.Marchent_Contact);
+		setGenderView(sizeGridId.Gender);
+
+		const sizeGridIdValue = SizeGridList.find(grid => grid.Size_Grid_Id == sizeGridId.Size_Grid);	
     
-    // If a matching size grid is found, return its Size_Grid_Value
-	let SizeGridValue = sizeGridIdValue ? sizeGridIdValue.Size_Grid_Value : null
-    
-	handleSizesChange(SizeGridValue);
+		// If a matching size grid is found, return its Size_Grid_Value
+		let SizeGridValue = sizeGridIdValue ? sizeGridIdValue.Size_Grid_Value : null
+		
+		handleSizesChange(SizeGridValue);
+	}
+	else {
+		setBuyerName('');
+		setStyleDescription('');
+		setSizeGridName('');
+		setProductType('');
+		setMerchantName('');
+		setMerchantContact('');
+		setGenderView('');
+
+	}
+	
+
+	
 };
   
 	const handleVerticalClick = (value) => {
@@ -178,6 +209,7 @@ export default function ProductionOrder() {
 
 	const handlePODetails = (e) => {
 		e.preventDefault();
+		handleAddRow();
 		let isValid = true;
 
 		if (!embType) {
@@ -257,7 +289,7 @@ export default function ProductionOrder() {
 		if (garmentColor || destinationCountry || totalSizes) {
 			// Display a notification indicating mandatory fields
 			alert("You have filled something on Garment Details but not added, Please click on Add Row before SAVE");
-			return; // Exit the function without adding the row
+			// return; // Exit the function without adding the row
 		}
 	
 		if (!isValid) {
@@ -413,6 +445,15 @@ export default function ProductionOrder() {
 		setShipmentMode(data.Shipment_Mode)
 		setDeliveryDate(data.Delivery_Date)
 		setPCD(data.PCD)
+
+		setBuyerName(data.Buyer_Name);
+		setStyleDescription(data.Style_Description);
+		setSizeGridName(data.Size_Grid_Name);
+		setProductType(data.Product_Type);
+		setMerchantName(data.Marchent_Name);
+		setMerchantContact(data.Marchent_Contact);
+		setGenderView(data.Gender);
+
 
 		if(JSON.parse(data.Garment_Data).length != 0) {
 			setExistingGarmentData(JSON.parse(data.Garment_Data))
@@ -599,21 +640,78 @@ const deletePODetails = (data) => {
 										<Modal.Title> Add New Production Order  </Modal.Title>
 									</Modal.Header>
 									<Modal.Body>
+										
+										
+
 										<form onSubmit={handlePODetails}>
 											<div className='row'>
+
 												<div className='col-3'>
-												
-												<Form.Select className='mb-3' tabindex="1" label='Style No' onChange={(e) => { setStyleNo(e.target.value); handleSizeGrid(e.target.value)}} value={styleNo} name='styleNo'>
-                                                        <option> Select Style No. </option>
-                                                        {styleNoList.map((item) => (
-                                                            <option key={item.Style_No} value={item.Style_No}>
-                                                                {item.Style_No}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
+													<Form.Select className='mb-3' tabindex="1" label='Style No' onChange={(e) => { setStyleNo(e.target.value); 		
+														handleSizeGrid(e.target.value)}} value={styleNo} name='styleNo'>
+															<option> Select Style No. </option>
+															{styleNoList.map((item) => (
+																<option key={item.Style_No} value={item.Style_No}>
+																	{item.Style_No}
+																</option>
+															))}
+													</Form.Select>
 													{styleNoError && <p style={{ color: 'red' }}>{styleNoError}</p>}
 
-
+												</div>
+												{styleNo || styleNo != '' ? (
+												<div className='row'>
+													<div className='col-3'>
+													<div className="data-row">
+														<label className='label-read' htmlFor="name">Buyer:</label>
+														<span className='span-read'> {BuyerName} </span>
+													</div>
+													</div>
+													<div className='col-3'>
+													<div className="data-row">
+														<label className='label-read' htmlFor="name">Buyer Style No:</label>
+														<span className='span-read'> {StyleDescription} </span>
+													</div>
+													</div>
+													<div className='col-3'>
+													<div className="data-row">
+														<label className='label-read' htmlFor="name">Size Grid Name:</label>
+														<span className='span-read'> {SizeGridName} </span>
+													</div>
+													</div>
+													<div className='col-12'>
+													<div className='row'>
+														<div className='col-3'>
+														<div className="data-row">
+															<label className='label-read' htmlFor="name">Gender:</label>
+															<span className='span-read'> {GenderView} </span>
+														</div>
+														</div>
+														<div className='col-3'>
+														<div className="data-row">
+															<label className='label-read' htmlFor="name">Product Type:</label>
+															<span className='span-read'> {ProductType} </span>
+														</div>
+														</div>
+														<div className='col-3'>
+														<div className="data-row">
+															<label className='label-read' htmlFor="name">Merchant Name:</label>
+															<span className='span-read'> {MerchantName} </span>
+														</div>
+														</div>
+														<div className='col-3'>
+														<div className="data-row">
+															<label className='label-read' htmlFor="name">Merchant Contact:</label>
+															<span className='span-read'> {MerchantContact} </span>
+														</div>
+														</div>
+													</div>
+													</div>
+												</div>
+												) : null}
+											</div>
+											<div className='row'>
+												<div className='col-3'>
 													<MDBInput label='F PO No.' type='text' tabindex="2" wrapperClass='mb-3' onChange={(e) => { setFPONo(e.target.value) }} value={fPONo} name='fPONo' />
 													{fPONoError && <p style={{ color: 'red' }}>{fPONoError}</p>}
 
@@ -726,6 +824,8 @@ const deletePODetails = (data) => {
 										</form>
 										<Button variant="success" type="click" onClick={handleAddRow} style={{ width: '15%', marginTop: "20PX"}} >{editingIndex !== null ? 'Save Changes' : 'Add Row'} </Button>
 										{/* <i className={editingIndex !== null ? 'fa fa-save fa-1x' : 'fa fa-plus fa-1x'}> </i>  */}
+
+
 									</Modal.Body>
 									<Modal.Footer>
 									
@@ -761,8 +861,63 @@ const deletePODetails = (data) => {
                                                         ))}
                                                     </Form.Select>
 													{styleNoError && <p style={{ color: 'red' }}>{styleNoError}</p>}
-
-
+												</div>
+												</div>
+												<div className='row'>
+												
+												<div className='col-12'>
+												{styleNo || styleNo != '' ? (
+												<div className='row'>
+													<div className='col-3'>
+													<div className="data-row">
+														<label className='label-read' htmlFor="name">Buyer:</label>
+														<span className='span-read'> {BuyerName} </span>
+													</div>
+													</div>
+													<div className='col-3'>
+													<div className="data-row">
+														<label className='label-read' htmlFor="name">Buyer Style No:</label>
+														<span className='span-read'> {StyleDescription} </span>
+													</div>
+													</div>
+													<div className='col-3'>
+													<div className="data-row">
+														<label className='label-read' htmlFor="name">Size Grid Name:</label>
+														<span className='span-read'> {SizeGridName} </span>
+													</div>
+													</div>
+													<div className='col-12'>
+													<div className='row'>
+														<div className='col-3'>
+														<div className="data-row">
+															<label className='label-read' htmlFor="name">Gender:</label>
+															<span className='span-read'> {GenderView} </span>
+														</div>
+														</div>
+														<div className='col-3'>
+														<div className="data-row">
+															<label className='label-read' htmlFor="name">Product Type:</label>
+															<span className='span-read'> {ProductType} </span>
+														</div>
+														</div>
+														<div className='col-3'>
+														<div className="data-row">
+															<label className='label-read' htmlFor="name">Merchant Name:</label>
+															<span className='span-read'> {MerchantName} </span>
+														</div>
+														</div>
+														<div className='col-3'>
+														<div className="data-row">
+															<label className='label-read' htmlFor="name">Merchant Contact:</label>
+															<span className='span-read'> {MerchantContact} </span>
+														</div>
+														</div>
+													</div>
+													</div>
+												</div>
+												) : null}
+												</div>
+												<div className='col-3'>
 													<MDBInput label='F PO No.' type='text' tabindex="2" wrapperClass='mb-3' onChange={(e) => { setFPONo(e.target.value) }} value={fPONo} name='fPONo' />
 													{fPONoError && <p style={{ color: 'red' }}>{fPONoError}</p>}
 

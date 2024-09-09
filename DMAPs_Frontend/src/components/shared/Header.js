@@ -95,12 +95,12 @@ function HeaderComponent() {
 								</div>
 							}
 						</div>
-						<Modal show={showModal} onHide={handleCloseModal} centered>
+						<Modal show={showModal} onHide={handleCloseModal} backdrop="static" centered>
 							<Modal.Header closeButton>
 							<Modal.Title>Calculator</Modal.Title>
 							</Modal.Header>
 							<Modal.Body>
-							<Calculator />
+								<Calculator />
 							</Modal.Body>
 						</Modal>
 					</Nav>
