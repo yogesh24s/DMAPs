@@ -2,7 +2,8 @@ import React from 'react';
 import { useTable } from 'react-table';
 
 export default function PODetailsTable(props) {
-    let data = props.data;
+    const { data, openEditForm } = props;
+
 
     const columns = React.useMemo(
         () => [
