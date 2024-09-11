@@ -110,6 +110,7 @@ StyleStore.getPODetails = result => {
     se.Gender,
     se.Season,
     se.Marchent_Name,
+    se.Marchent_Contact,
     se.Note,
     se.Style_Images,
     pod.*

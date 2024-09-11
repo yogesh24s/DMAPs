@@ -571,7 +571,7 @@ const deleteStyleEntry = (data) => {
 
 												<div className='col-3'>
 
-													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='Buyer Style No' onChange={(e) => { setStyleDescription(e.target.value) }} value={styleDescription} name='styleDescription' />
+													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='Buyer Style No.' onChange={(e) => { setStyleDescription(e.target.value) }} value={styleDescription} name='styleDescription' />
 													{styleDescriptionError && <p style={{ color: 'red' }}>{styleDescriptionError}</p>}
 
 													<Form.Select className='mb-3' tabindex="1" label='Size Grid' onChange={(e) => { setSizeGrid(e.target.value) }} value={sizeGrid} name='sizeGrid'>
@@ -715,7 +715,7 @@ const deleteStyleEntry = (data) => {
 
 												<div className='col-3'>
 
-													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='Buyer Style No' onChange={(e) => { setStyleDescription(e.target.value) }} value={styleDescription} name='styleDescription' />
+													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='Buyer Style No.' onChange={(e) => { setStyleDescription(e.target.value) }} value={styleDescription} name='styleDescription' />
 													{styleDescriptionError && <p style={{ color: 'red' }}>{styleDescriptionError}</p>}
 
 													<Form.Select className='mb-3' tabindex="1" label='Size Grid' onChange={(e) => { setSizeGrid(e.target.value) }} value={sizeGrid} name='sizeGrid'>

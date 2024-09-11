@@ -11,8 +11,16 @@ export default function PODetailsTable(props) {
                 accessor: 'Style_No',
             },
             {
-                Header: 'PO No.',
+                Header: 'Order No.',
                 accessor: 'PO_No',
+                Cell: ({ row }) => (
+                    <div
+                        style={{ cursor: 'pointer', textAlign: 'center', fontWeight: '500', color:'#1053b7' }}
+                        onClick={() => openEditForm(row.original)}
+                    >
+                        {row.values.PO_No}
+                    </div>
+                ),
             },
             {
                 Header: 'OC No.',

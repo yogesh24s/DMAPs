@@ -28,6 +28,8 @@ body {
   background-color: rgb(0 0 0 / 5%);
 }
 .navbar-custom {
+  position: sticky !important;
+  z-index: 9999;
   top: 0px;
   left: 0px;
   width: 100%;
@@ -487,4 +489,8 @@ table {
 
   .modal-90w {
     max-width: 90% !important;
+    margin-top: 70px !important;
+}
+.modal-50w {
+  margin-top: 70px !important;
 }
