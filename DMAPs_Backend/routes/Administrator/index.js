@@ -1,6 +1,7 @@
 'use strict';
 
 const Administrator = require('express').Router();
+const bodyParser = require('body-parser');
 
 // Load dependencies
 const path = require('path');

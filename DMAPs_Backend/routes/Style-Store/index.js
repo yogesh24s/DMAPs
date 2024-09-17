@@ -1,6 +1,7 @@
 'use strict';
 
 const StyleStore = require('express').Router();
+const bodyParser = require('body-parser');
 
 // Load dependencies
 const path = require('path');

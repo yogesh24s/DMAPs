@@ -6,24 +6,30 @@ import api from "./interceptor";
 
 class unitService {
     saveCompanyUnits(payload) {
-      return api.post(`http://3.92.91.120:4000/api/saveCompanyUnits/`, payload)
+      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      return api.post(`${apiUrl}/api/saveCompanyUnits/`, payload);
     }
 
     editCompanyUnits(payload) {
-      return api.post(`http://3.92.91.120:4000/api/editCompanyUnits/`, payload)
+      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      return api.post(`${apiUrl}/api/editCompanyUnits/`, payload);
     }
 
     deleteCompanyUnits(payload) {
-      return api.post(`http://3.92.91.120:4000/api/deleteCompanyUnits/`, payload)
+      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      return api.post(`${apiUrl}/api/deleteCompanyUnits/`, payload);
     }
  
-    getCompanyUnits(){
-        return api
-      .get("http://3.92.91.120:4000/api/getCompanyUnits/")
-      .then((response) => {
-        return response;
-      })
-      .catch((err) => {});
+    getCompanyUnits() {
+      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      return api
+        .get(`${apiUrl}/api/getCompanyUnits/`)
+        .then((response) => {
+          return response;
+        })
+        .catch((err) => {
+          console.error("Error fetching company units:", err);
+        });
     }
 }
 

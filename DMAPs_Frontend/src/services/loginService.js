@@ -6,17 +6,22 @@ import api from "./interceptor";
 
 class loginService {
   login(payload) {
-    return api.post(`http://3.92.91.120:4000/login/`, payload)
+    const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+    return api.post(`${apiUrl}/login/`, payload);
   }
+
   forgotPassword(payload) {
-    return api.post(`http://3.92.91.120:4000/api/forgotPassword`, payload)
+    const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+    return api.post(`${apiUrl}/api/forgotPassword`, payload);
   }
 
   changePassword(payload) {
-    return api.post(`http://3.92.91.120:4000/changePassword`, payload)
+    const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+    return api.post(`${apiUrl}/changePassword`, payload);
   }
 
   logout() {
+    // Remove all user-related session and local storage data
     sessionStorage.removeItem("accessToken");
     sessionStorage.removeItem("userRole");
     sessionStorage.removeItem("userId");

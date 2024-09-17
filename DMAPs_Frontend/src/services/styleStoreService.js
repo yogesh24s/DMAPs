@@ -4,57 +4,66 @@
  */
 import api from "./interceptor";
 
+const apiUrl = process.env.REACT_APP_API_URL; // Base URL from environment variable
+
 class styleStoreService {
-    getStyleEntry(){
-      return api
-      .get("http://3.92.91.120:4000/api/getStyleEntry/")
+  
+  getStyleEntry() {
+    return api
+      .get(`${apiUrl}/api/getStyleEntry/`) // Use environment variable
       .then((response) => {
         return response;
       })
-      .catch((err) => {});
-    }
-    
-    saveStyleEntry(payload) {
-      return api.post(`http://3.92.91.120:4000/api/saveStyleEntry/`, payload)
-    }
+      .catch((err) => {
+        console.error("Error fetching style entry:", err);
+      });
+  }
+  
+  saveStyleEntry(payload) {
+    return api.post(`${apiUrl}/api/saveStyleEntry/`, payload); // Use environment variable
+  }
 
-    editStyleEntry(payload) {
-      return api.post(`http://3.92.91.120:4000/api/editStyleEntry/`, payload)
-    }
+  editStyleEntry(payload) {
+    return api.post(`${apiUrl}/api/editStyleEntry/`, payload); // Use environment variable
+  }
 
-    deleteStyleEntry(payload) {
-      return api.post(`http://3.92.91.120:4000/api/deleteStyleEntry/`, payload)
-    }
+  deleteStyleEntry(payload) {
+    return api.post(`${apiUrl}/api/deleteStyleEntry/`, payload); // Use environment variable
+  }
 
-    getPODetails(){
-      return api
-      .get("http://3.92.91.120:4000/api/getPODetails/")
+  getPODetails() {
+    return api
+      .get(`${apiUrl}/api/getPODetails/`) // Use environment variable
       .then((response) => {
         return response;
       })
-      .catch((err) => {});
-    }
+      .catch((err) => {
+        console.error("Error fetching PO details:", err);
+      });
+  }
 
-    savePODetails(payload) {
-      return api.post(`http://3.92.91.120:4000/api/savePODetails/`, payload)
-    }
+  savePODetails(payload) {
+    return api.post(`${apiUrl}/api/savePODetails/`, payload); // Use environment variable
+  }
 
-    editPODetails(payload) {
-      return api.post(`http://3.92.91.120:4000/api/editPODetails/`, payload)
-    }
+  editPODetails(payload) {
+    return api.post(`${apiUrl}/api/editPODetails/`, payload); // Use environment variable
+  }
 
-    deletePODetails(payload) {
-      return api.post(`http://3.92.91.120:4000/api/deletePODetails/`, payload)
-    }
+  deletePODetails(payload) {
+    return api.post(`${apiUrl}/api/deletePODetails/`, payload); // Use environment variable
+  }
 
-    getStyleLookupDetails(){
-      return api
-      .get("http://3.92.91.120:4000/api/getStyleLookupDetails/")
+  getStyleLookupDetails() {
+    return api
+      .get(`${apiUrl}/api/getStyleLookupDetails/`) // Use environment variable
       .then((response) => {
         return response;
       })
-      .catch((err) => {});
-    }
+      .catch((err) => {
+        console.error("Error fetching style lookup details:", err);
+      });
+  }
 
 }
 

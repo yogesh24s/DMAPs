@@ -1,29 +1,43 @@
 /**
- * owner : retrAIver
- * author : Manish from Affine
+ * owner : 
+ * author :
  */
 import api from "./interceptor";
 
 class documentService {
   uploadFiles(file, remarks) {
+    const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
     const payload = new FormData();
+    
     payload.append("remarks", remarks);
-    file.forEach((ele, i) => {
+    file.forEach((ele) => {
       payload.append("files", ele);
     });
+
     const config = {
       headers: { "content-type": "multipart/form-data" },
     };
-    return api.post(`/documentService/uploadfile/`, payload, config);
-  }
 
-  getAllDocuments() {
-    return api
-      .get("documentService/uploaded_files_list/")
+    return api.post(`${apiUrl}/documentService/uploadfile/`, payload, config)
       .then((response) => {
         return response;
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.error("Error uploading files:", err);
+      });
+  }
+
+  getAllDocuments() {
+    const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+
+    return api
+      .get(`${apiUrl}/documentService/uploaded_files_list/`)
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => {
+        console.error("Error fetching documents list:", err);
+      });
   }
 }
 

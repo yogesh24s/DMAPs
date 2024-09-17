@@ -4,6 +4,7 @@ const basicDetails = require('express').Router();
 
 var access = require('../../var.js');
 var {verifyToken} = require('../Shared/jwt.js')
+const bodyParser = require('body-parser');
 
 
 access.DMAPFunc();

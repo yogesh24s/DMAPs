@@ -1,29 +1,36 @@
 /**
  * owner : 
- * author :
+ * author : 
  */
 import api from "./interceptor";
 
 class userService {
 
     saveCompanyUsers(payload) {
-      return api.post(`http://3.92.91.120:4000/api/saveCompanyUsers`, payload);
+      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      return api.post(`${apiUrl}/api/saveCompanyUsers`, payload);
     }
+
     editCompanyUsers(payload) {
-      return api.post(`http://3.92.91.120:4000/api/editCompanyUsers`, payload);
+      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      return api.post(`${apiUrl}/api/editCompanyUsers`, payload);
     }
 
     deleteCompanyUsers(payload) {
-      return api.post(`http://3.92.91.120:4000/api/deleteCompanyUsers`, payload);
+      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      return api.post(`${apiUrl}/api/deleteCompanyUsers`, payload);
     }
 
-    getCompanyUsers(){
-        return api
-      .get("http://3.92.91.120:4000/api/getCompanyUsers")
-      .then((response) => {
-        return response;
-      })
-      .catch((err) => {});
+    getCompanyUsers() {
+      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      return api
+        .get(`${apiUrl}/api/getCompanyUsers`)
+        .then((response) => {
+          return response;
+        })
+        .catch((err) => {
+          console.error("Error fetching company users:", err);
+        });
     }
 }
 

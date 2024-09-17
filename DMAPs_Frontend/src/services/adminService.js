@@ -1,22 +1,21 @@
-//import api from "./interceptor";
+// import api from "./interceptor";
 import api from "./interceptor";
+
 class adminService {
   getBasicDetails() {
-    // let token = localStorage.getItem("token");
-    // const headers = {
-    //   "Content-Type": "application/json",
-    //   "Authorization": `Bearer ${token}`,
-    // };
-    // console.log({headers});
+    const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
     return api
-      .get("http://3.92.91.120:4000/api/basicDetails")
+      .get(`${apiUrl}/api/basicDetails`)
       .then((response) => {
         return response;
       })
       .catch((err) => {
-        // Handle errors
-       // alert(err.message)
-        alert(err.response.data.message);
+        // Handle errors and show meaningful messages
+        if (err.response && err.response.data && err.response.data.message) {
+          alert(err.response.data.message);
+        } else {
+          alert("An error occurred. Please try again.");
+        }
       });
   }
 }

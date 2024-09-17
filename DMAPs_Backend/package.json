@@ -5,7 +5,8 @@
     "version": "0.0.1",
     "private": true,
     "scripts": {
-        "start": "nodemon app.js > app.log 2>&1"
+        "start": "env-cmd -e development nodemon app.js",
+        "start:prod": "env-cmd -e production nodemon app.js"
     },
     "dependencies": {
         "axios": "^1.0.0-alpha.1",
@@ -17,6 +18,7 @@
         "cors": "^2.8.5",
         "crypto-js": "^3.1.9-1",
         "csvtojson": "^2.0.10",
+        "dotenv": "^16.4.5",
         "exceljs": "^1.9.1",
         "express": "^4.17.1",
         "flatted": "^2.0.0",

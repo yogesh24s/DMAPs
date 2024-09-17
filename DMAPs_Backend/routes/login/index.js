@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 var nodemailer = require("nodemailer");
 var { jwtTokenGenerate, verifyToken } = require('../Shared/jwt.js')
 const crypto = require('crypto');
+const bodyParser = require('body-parser');
 
 access.DMAPFunc();
 
