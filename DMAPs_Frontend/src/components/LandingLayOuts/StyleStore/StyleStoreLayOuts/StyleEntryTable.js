@@ -8,7 +8,7 @@ export default function StyleEntryTable(props) {
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Style No.',
+                Header: 'DMAPS No.',
                 accessor: 'Style_No',
                 Cell: ({ row }) => (
                     <div
@@ -24,7 +24,7 @@ export default function StyleEntryTable(props) {
                 accessor: 'Buyer_Name',
             },
             {
-                Header: 'Buyer Style No',
+                Header: 'Buyer Style No.',
                 accessor: 'Style_Description',
             },
             {

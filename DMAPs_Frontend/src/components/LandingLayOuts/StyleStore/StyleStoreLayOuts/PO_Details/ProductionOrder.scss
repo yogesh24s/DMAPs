@@ -155,3 +155,23 @@
   .form-select:disabled {
     background-color: #f5f5f5ab;
 }
+.hr {
+  border-bottom: 1px solid #eee;
+}
+.border-back {
+  background-color: #ccc;
+}
+.hr {
+  border: none;
+  height: 5px; /* height of the hr */
+  background-color: #333; /* color of the hr */
+  border-radius: 10px 10px 0 0; /* top radius */
+  margin: 20px 0; /* space around the hr */
+}
+
+.h6{
+  margin: 0px 0px 25px 0px;
+  border-bottom: 2px dotted #ddd;
+  color: #011f62;
+  font-weight: 600;
+}

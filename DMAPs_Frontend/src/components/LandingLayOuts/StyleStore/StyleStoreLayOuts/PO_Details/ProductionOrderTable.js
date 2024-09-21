@@ -8,7 +8,7 @@ export default function PODetailsTable(props) {
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Style No.',
+                Header: 'DMAPS No.',
                 accessor: 'Style_No',
             },
             {
@@ -24,11 +24,19 @@ export default function PODetailsTable(props) {
                 ),
             },
             {
-                Header: 'OC No.',
+                Header: (
+                    <span title="Order Confirmation Number">
+                        OC No.
+                    </span>
+                ),
                 accessor: 'OC_No',
             },
             {
-                Header: 'Emb Type',
+                Header: (
+                    <span title="Embroidery Type">
+                        Emb Type
+                    </span>
+                ),
                 accessor: 'Emb_Type',
             },
             {
@@ -48,7 +56,11 @@ export default function PODetailsTable(props) {
                 accessor: 'Delivery_Date',
             },
             {
-                Header: 'PCD',
+                Header: (
+                    <span title="Plan to Cut Date">
+                        PCD
+                    </span>
+                ),
                 accessor: 'PCD',
             },
             {
@@ -64,7 +76,7 @@ export default function PODetailsTable(props) {
         ],
         [props]
     );
-
+    
     const {
         getTableProps,
         getTableBodyProps,

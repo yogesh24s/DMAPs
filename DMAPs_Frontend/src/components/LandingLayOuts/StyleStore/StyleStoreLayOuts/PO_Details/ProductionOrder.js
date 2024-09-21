@@ -228,7 +228,7 @@ export default function ProductionOrder() {
 		}
 
 		if (!styleNo) {
-			setStyleNoError('Style No. is required');
+			setStyleNoError('DMAPS No. is required');
 			isValid = false;
 		} else {
 			setStyleNoError('');
@@ -514,7 +514,7 @@ const deletePODetails = (data) => {
 		}
 
 		if (!styleNo) {
-			setStyleNoError('Style No. is required');
+			setStyleNoError('DMAPS No. is required');
 			isValid = false;
 		} else {
 			setStyleNoError('');
@@ -622,7 +622,7 @@ const deletePODetails = (data) => {
 	return <>
 			<div className='row'>
 							<div className='col-8'>
-								<h1 className='h1'> Production Order Details </h1>
+								<h1 className='h1'> Order Details </h1>
 							</div>
 							<div className='col-4 text-right'>
 								<Button className='primary-btn mt-10' onClick={() => {setShow(true);stateValues(); setSizes({});  setRows([]); }}>
@@ -637,19 +637,15 @@ const deletePODetails = (data) => {
 									keyboard={false}>
 
 									<Modal.Header closeButton>
-										<Modal.Title> Add New Production Order  </Modal.Title>
+										<Modal.Title> Add New Order  </Modal.Title>
 									</Modal.Header>
 									<Modal.Body>
-										
-										
-
 										<form onSubmit={handlePODetails}>
 											<div className='row'>
-
 												<div className='col-3'>
-													<Form.Select className='mb-3' tabindex="1" label='Style No' onChange={(e) => { setStyleNo(e.target.value); 		
+													<Form.Select className='mb-3' tabindex="1" label='DMAPS No.' onChange={(e) => { setStyleNo(e.target.value); 		
 														handleSizeGrid(e.target.value)}} value={styleNo} name='styleNo'>
-															<option> Select Style No. </option>
+															<option> Select DMAPS No. </option>
 															{styleNoList.map((item) => (
 																<option key={item.Style_No} value={item.Style_No}>
 																	{item.Style_No}
@@ -710,6 +706,7 @@ const deletePODetails = (data) => {
 												</div>
 												) : null}
 											</div>
+											<h6 className='h6'> Order Details </h6>
 											<div className='row'>
 												<div className='col-3'>
 													<MDBInput label='F PO No.' type='text' tabindex="2" wrapperClass='mb-3' onChange={(e) => { setFPONo(e.target.value) }} value={fPONo} name='fPONo' />
@@ -845,14 +842,14 @@ const deletePODetails = (data) => {
 								<Modal show={isEditFormOpen} onHide={closeEditForm} dialogClassName="modal-90w"
 									backdrop="static">
 									<Modal.Header closeButton>
-										<Modal.Title>Edit Style Entry </Modal.Title>
+										<Modal.Title>Edit Order Details </Modal.Title>
 									</Modal.Header>
 									<Modal.Body>
 										<form onSubmit={handleEditStyleEntry}>
 										<div className='row'>
 												<div className='col-3'>
-												<Form.Select className='mb-3' tabindex="1" label='Style No' onChange={(e) => { setStyleNo(e.target.value); handleSizeGrid(e.target.value)}} value={styleNo} name='styleNo' disabled>
-                                                        <option> Select Style No. </option>
+												<Form.Select className='mb-3' tabindex="1" label='DMAPS No.' onChange={(e) => { setStyleNo(e.target.value); handleSizeGrid(e.target.value)}} value={styleNo} name='styleNo' disabled>
+                                                        <option> Select DMAPS No. </option>
                                                         {styleNoList.map((item) => (
                                                             <option key={item.Style_No} value={item.Style_No}>
                                                                 {item.Style_No}
@@ -915,7 +912,12 @@ const deletePODetails = (data) => {
 													</div>
 												</div>
 												) : null}
+
+												<h6 className='h6'> Order Details </h6>
 												</div>
+
+												
+
 												<div className='col-3'>
 													<MDBInput label='F PO No.' type='text' tabindex="2" wrapperClass='mb-3' onChange={(e) => { setFPONo(e.target.value) }} value={fPONo} name='fPONo' />
 													{fPONoError && <p style={{ color: 'red' }}>{fPONoError}</p>}
@@ -983,34 +985,34 @@ const deletePODetails = (data) => {
 													{/* Reactive form */}
 													<table>
 													{/* Table headers */}
-													<thead>
-														<tr>
-														<th>Garment Color</th>
-														<th>Destination Country</th>
-														{sizesArray.map((size, index) => (
-															<th key={index}>{size}</th> // Generate table columns dynamically based on sizesArray
-														))}
-														<th>Total</th>
-														<th>Actions</th>
-														</tr>
-													</thead>
-													{/* Table body */}
-													<tbody>
-														{rows.map((row, index) => (
-														<tr key={index}>
-															<td>{row.garmentColor}</td>
-															<td>{row.destinationCountry}</td>
+														<thead>
+															<tr>
+															<th>Garment Color</th>
+															<th>Destination Country</th>
 															{sizesArray.map((size, index) => (
-															<td key={index}>{row[size]}</td> // Generate table cells dynamically based on sizesArray
+																<th key={index}>{size}</th> // Generate table columns dynamically based on sizesArray
 															))}
-															<td>{row.total}</td>
-															<td>
-															 <i className='fa fa-edit pointer' onClick={() => handleEditRow(index)} title='Edit'> </i> 
-															<i className='fa fa-trash ml-15 pointer'  onClick={() => handleDeleteRow(index)} title='Delete' > </i>
-															</td>
-														</tr>
-														))}
-													</tbody>
+															<th>Total</th>
+															<th>Actions</th>
+															</tr>
+														</thead>
+														{/* Table body */}
+														<tbody>
+															{rows.map((row, index) => (
+															<tr key={index}>
+																<td>{row.garmentColor}</td>
+																<td>{row.destinationCountry}</td>
+																{sizesArray.map((size, index) => (
+																<td key={index}>{row[size]}</td> // Generate table cells dynamically based on sizesArray
+																))}
+																<td>{row.total}</td>
+																<td>
+																<i className='fa fa-edit pointer' onClick={() => handleEditRow(index)} title='Edit'> </i> 
+																<i className='fa fa-trash ml-15 pointer'  onClick={() => handleDeleteRow(index)} title='Delete' > </i>
+																</td>
+															</tr>
+															))}
+														</tbody>
 													</table>
 
 													{/* Form for adding new row */}
