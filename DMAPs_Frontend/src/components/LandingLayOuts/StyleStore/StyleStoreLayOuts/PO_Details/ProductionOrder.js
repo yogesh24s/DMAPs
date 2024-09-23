@@ -92,68 +92,108 @@ export default function ProductionOrder() {
   const [MerchantContact, setMerchantContact] = useState('');
   const [GenderView, setGenderView] = useState('');
 
-  const handleAddRow = () => {
-    // Check if any of the mandatory fields are empty
-    if (!garmentColor || !destinationCountry) {
-        // Display a notification indicating mandatory fields
-        alert("Please fill in all mandatory fields: Garment Color, Destination Country and Total");
-        return; // Exit the function without adding the row
-    }
 
-    // Safely parse sizes and sum them up
-    const totalSizes = Object.entries(sizes)
+  const handleSizeChange = (e, size) => {
+	const { value } = e.target;
+	const updatedSizes = { ...sizes, [size]: value };
+	setSizes(updatedSizes);
+
+	// Update the row if editing
+	if (editingIndex !== null) {
+		const updatedRows = [...rows];
+		updatedRows[editingIndex].sizes = updatedSizes;
+		updatedRows[editingIndex].total = calculateTotal(updatedSizes); // Recalculate total if needed
+		setRows(updatedRows); // Update table rows immediately
+	}
+};
+
+// Calculate total of all sizes
+const calculateTotal = (sizes) => {
+	return Object.values(sizes).reduce((sum, size) => sum + (parseInt(size) || 0), 0);
+};
+
+// const handleAddRow = () => {
+// 	if (editingIndex !== null) {
+// 		// Save edited row
+// 		const updatedRows = [...rows];
+// 		updatedRows[editingIndex] = { garmentColor, destinationCountry, sizes, total: calculateTotal(sizes) };
+// 		setRows(updatedRows);
+// 		setEditingIndex(null);
+// 	} else {
+// 		// Add new row
+// 		setRows([...rows, { garmentColor, destinationCountry, sizes, total: calculateTotal(sizes) }]);
+// 	}
+	
+// 	// Reset form
+// 	setGarmentColor('');
+// 	setDestinationCountry('');
+
+// };
+
+const handleAddRow = () => {
+    // Create a new row object with the current form values
+	const totalSizes = Object.entries(sizes)
         .filter(([key]) => key !== 'total') // Exclude 'total' key
         .reduce((acc, [_, value]) => {
             const parsedValue = parseInt(value);
             return acc + (isNaN(parsedValue) ? 0 : parsedValue);
         }, 0);
 
-    const newRow = {
-        garmentColor,
-        destinationCountry,
-        poNumber,
-        ...sizes,
-        total: totalSizes,
-    };
-
-    // If editing an existing row
-    if (editingIndex !== null) {
-        const updatedRows = [...rows];
-        updatedRows[editingIndex] = newRow;
-        setRows(updatedRows);
-        setEditingIndex(null); // Reset editing index after saving changes
-    } else {
-        // If adding a new row
-        setRows([...rows, newRow]);
-    }
-
-    // Clear form fields after adding/editing row
-    setGarmentColor('');
-    setDestinationCountry('');
-    setPONumber('');
-    setSizes(sizesArray.reduce((acc, curr) => ({ ...acc, [curr]: '' }), {})); // Reset sizes state
+	if (garmentColor && destinationCountry && totalSizes) {
+		const newRow = {
+			garmentColor,
+			destinationCountry,
+			sizes: { ...sizes }, // Ensure sizes are correctly nested under 'sizes'
+			total: Object.values(sizes).reduce((acc, size) => acc + parseInt(size || 0, 10), 0), // Calculate total sizes
+		};
+	
+		if (editingIndex !== null) {
+			// If we're editing an existing row, update the specific row
+			const updatedRows = [...rows];
+			updatedRows[editingIndex] = newRow;
+			setRows(updatedRows);
+			setEditingIndex(null); // Reset editing index after saving
+		} else {
+			// If we're adding a new row, add it to the rows array
+			setRows([...rows, newRow]);
+		}
+	
+		// Reset the sizes values while keeping the keys
+		const resetSizes = sizesArray.reduce((acc, size) => {
+			acc[size] = ''; // Reset each size value to an empty string
+			return acc;
+		}, {});
+	
+		// Reset form values after adding a row
+		setGarmentColor('');
+		setDestinationCountry('');
+		setSizes(resetSizes); // Apply the reset sizes
+		
+	}
+	else {
+		
+		alert("Please fill all the Garment Details");
+		return; // Exit the function without adding the row
+	}
+    
 };
 
 
 
-  const handleEditRow = (index) => {
-    const rowToEdit = rows[index];
-    setGarmentColor(rowToEdit.garmentColor);
-    setDestinationCountry(rowToEdit.destinationCountry);
-    setPONumber(rowToEdit.poNumber);
-    setSizes(rowToEdit);
-    setEditingIndex(index);
-  };
 
+const handleEditRow = (index) => {
+	const rowToEdit = rows[index];
+	setGarmentColor(rowToEdit.garmentColor);
+	setDestinationCountry(rowToEdit.destinationCountry);
+	setSizes(rowToEdit);
+	setEditingIndex(index);
+};
+
+  // Delete row function
   const handleDeleteRow = (index) => {
-    const updatedRows = [...rows];
-    updatedRows.splice(index, 1);
-    setRows(updatedRows);
-    // If deleting the row being edited, reset editing index
-    if (index === editingIndex) {
-      setEditingIndex(null);
-    }
-  };
+	const updatedRows = rows.filter((_, i) => i !== index);
+	setRows(updatedRows);
+};
 
   const handleSizesChange = (data) => {
     const selectedSizes = data.split(',').map(size => size.trim()); // Convert comma-separated string to array
@@ -209,7 +249,7 @@ export default function ProductionOrder() {
 
 	const handlePODetails = (e) => {
 		e.preventDefault();
-		handleAddRow();
+		// handleAddRow();
 		let isValid = true;
 
 		if (!embType) {
@@ -296,6 +336,17 @@ export default function ProductionOrder() {
 			return;
 		}
 
+		const modifiedData = rows.map(item => {
+			return {
+				garmentColor: item.garmentColor,
+				destinationCountry: item.destinationCountry,
+				total: item.total,
+				...item.sizes // Spread sizes into the new object
+			};
+		});
+		
+		// Now modifiedData contains the desired structure
+		console.log(modifiedData);
 
 		let payload = {
 			"Style_No": styleNo,
@@ -310,7 +361,7 @@ export default function ProductionOrder() {
 			"Delivery_Date" : deliveryDate,
 			"PCD" : pcd,
 			"Note": note,
-			"Garment_Data" : JSON.stringify(rows)
+			"Garment_Data" : JSON.stringify(modifiedData)
 		}
 
 		trackPromise(styleStoreService.savePODetails({ "data": [payload] }).then((response) => {
@@ -572,16 +623,28 @@ const deletePODetails = (data) => {
             return acc + (isNaN(parsedValue) ? 0 : parsedValue);
         }, 0);
 
-		if (garmentColor || destinationCountry || totalSizes) {
-			// Display a notification indicating mandatory fields
-			alert("You have filled something on Garment Details but not added, Please click on Add Row before SAVE");
-			return; // Exit the function without adding the row
-		}
-		
+		// if (garmentColor || destinationCountry || totalSizes) {
+		// 	// Display a notification indicating mandatory fields
+		// 	alert("You have filled something on Garment Details but not added, Please click on Add Row before SAVE");
+		// 	// return; // Exit the function without adding the row
+		// }
 
 		if (!isValid) {
 			return;
 		}
+
+
+		const modifiedData = rows.map(item => {
+			return {
+				garmentColor: item.garmentColor,
+				destinationCountry: item.destinationCountry,
+				total: item.total,
+				...item.sizes // Spread sizes into the new object
+			};
+		});
+		
+		// Now modifiedData contains the desired structure
+		console.log(modifiedData);
 
 		let payload = {
 			"PO_Id":POId,
@@ -616,7 +679,6 @@ const deletePODetails = (data) => {
 			alert(error.response.data.error);
 		})
 		);
-
 	}
 
 	return <>
@@ -716,8 +778,6 @@ const deletePODetails = (data) => {
 													{PONoError && <p style={{ color: 'red' }}>{PONoError}</p>}
 
 													<MDBInput label='OC No.' type='text' tabindex="4" wrapperClass='mb-3' onChange={(e) => { setOCNo(e.target.value) }} value={OCNo} name='OCNo' />
-
-													
 												</div>
 
 												<div className='col-3'>
@@ -789,37 +849,50 @@ const deletePODetails = (data) => {
 													{/* Table body */}
 													<tbody>
 														{rows.map((row, index) => (
-														<tr key={index}>
-															<td>{row.garmentColor}</td>
-															<td>{row.destinationCountry}</td>
-															{sizesArray.map((size, index) => (
-															<td key={index}>{row[size]}</td> // Generate table cells dynamically based on sizesArray
-															))}
-															<td>{row.total}</td>
-															<td>
-															 <i className='fa fa-edit pointer' onClick={() => handleEditRow(index)} title='Edit'> </i> 
-															<i className='fa fa-trash ml-15 pointer'  onClick={() => handleDeleteRow(index)} title='Delete' > </i>
-															</td>
-														</tr>
+															<tr key={index}>
+																<td>{row.garmentColor || 'N/A'}</td>
+																<td>{row.destinationCountry || 'N/A'}</td>
+																{sizesArray.map((size, i) => (
+																	<td key={i}>
+																		{row.sizes && row.sizes[size] !== undefined 
+																			? row.sizes[size] 
+																			: 0} {/* Default to 0 or another value if undefined */}
+																	</td>
+																))}
+																<td>{row.total || 0}</td> {/* Ensure total is defined or default to 0 */}
+																<td>
+																	{/* <i className='fa fa-edit pointer' onClick={() => handleEditRow(index)} title='Edit'> </i>  */}
+																	<i className='fa fa-trash ml-15 pointer' onClick={() => handleDeleteRow(index)} title='Delete' > </i>
+																</td>
+															</tr>
 														))}
 													</tbody>
+
 													</table>
 
 													{/* Form for adding new row */}
 													{sizesArray.length > 1 && (
 														<div className="add-row-form">
-															<input type="text" required value={garmentColor} onChange={(e) => setGarmentColor(e.target.value)} placeholder="Garment Color" />
-															<input type="text" required value={destinationCountry} onChange={(e) => setDestinationCountry(e.target.value)} placeholder="Destination Country" />
+															
+															<MDBInput label='Garment Color' required value={garmentColor} onChange={(e) => setGarmentColor(e.target.value)} />
+															<MDBInput label='Destination Country' required value={destinationCountry} onChange={(e) => setDestinationCountry(e.target.value)} />
 															{/* Input fields for each size */}
 															{sizesArray.map((size, index) => (
-															<input key={index} required type="number" value={sizes[size]} onChange={(e) => setSizes({ ...sizes, [size]: e.target.value })} placeholder={size} />
+																<MDBInput label={size}
+																	key={index}
+																	required
+																	type="number"
+																	value={sizes[size]}
+																	onChange={(e) => handleSizeChange(e, size)}
+																	
+																/>
 															))}
 														</div>
 													)}
 												</div>
 											</div>
 										</form>
-										<Button variant="success" type="click" onClick={handleAddRow} style={{ width: '15%', marginTop: "20PX"}} >{editingIndex !== null ? 'Save Changes' : 'Add Row'} </Button>
+										<Button variant="success" type="click" onClick={handleAddRow} style={{ float: 'right', width: '5%', marginTop: "0PX" }}> <i className='fa fa-plus fa-1x white'> </i>   </Button>
 										{/* <i className={editingIndex !== null ? 'fa fa-save fa-1x' : 'fa fa-plus fa-1x'}> </i>  */}
 
 
@@ -985,52 +1058,60 @@ const deletePODetails = (data) => {
 													{/* Reactive form */}
 													<table>
 													{/* Table headers */}
-														<thead>
-															<tr>
-															<th>Garment Color</th>
-															<th>Destination Country</th>
-															{sizesArray.map((size, index) => (
-																<th key={index}>{size}</th> // Generate table columns dynamically based on sizesArray
-															))}
-															<th>Total</th>
-															<th>Actions</th>
-															</tr>
-														</thead>
-														{/* Table body */}
-														<tbody>
-															{rows.map((row, index) => (
+													<thead>
+														<tr>
+														<th>Garment Color</th>
+														<th>Destination Country</th>
+														{sizesArray.map((size, index) => (
+															<th key={index}>{size}</th> // Generate table columns dynamically based on sizesArray
+														))}
+														<th>Total</th>
+														<th>Actions</th>
+														</tr>
+													</thead>
+													{/* Table body */}
+													<tbody>
+														{rows.map((row, index) => (
 															<tr key={index}>
-																<td>{row.garmentColor}</td>
-																<td>{row.destinationCountry}</td>
-																{sizesArray.map((size, index) => (
-																<td key={index}>{row[size]}</td> // Generate table cells dynamically based on sizesArray
+																<td>{row.garmentColor || 'N/A'}</td>
+																<td>{row.destinationCountry || 'N/A'}</td>
+																{sizesArray.map((size, i) => (
+																	<td key={index}> {row.sizes && row.sizes[size] !== undefined 
+																		? row.sizes[size] 
+																		: row[size]}</td>
 																))}
-																<td>{row.total}</td>
+																<td>{row.total || 0}</td> {/* Ensure total is defined or default to 0 */}
 																<td>
-																<i className='fa fa-edit pointer' onClick={() => handleEditRow(index)} title='Edit'> </i> 
-																<i className='fa fa-trash ml-15 pointer'  onClick={() => handleDeleteRow(index)} title='Delete' > </i>
+																	<i className='fa fa-edit pointer' onClick={() => handleEditRow(index)} title='Edit'> </i> 
+																	<i className='fa fa-trash ml-15 pointer' onClick={() => handleDeleteRow(index)} title='Delete' > </i>
 																</td>
 															</tr>
-															))}
-														</tbody>
+														))}
+													</tbody>
+
 													</table>
 
 													{/* Form for adding new row */}
 													{sizesArray.length > 1 && (
 														<div className="add-row-form">
-															<input type="text" value={garmentColor} onChange={(e) => setGarmentColor(e.target.value)} placeholder="Garment Color" />
-															<input type="text" value={destinationCountry} onChange={(e) => setDestinationCountry(e.target.value)} placeholder="Destination Country" />
+															<MDBInput label='Garment Color' required value={garmentColor} onChange={(e) => setGarmentColor(e.target.value)} />
+															<MDBInput label='Destination Country' required value={destinationCountry} onChange={(e) => setDestinationCountry(e.target.value)} />
 															{/* Input fields for each size */}
 															{sizesArray.map((size, index) => (
-															<input key={index} type="number" value={sizes[size]} onChange={(e) => setSizes({ ...sizes, [size]: e.target.value })} placeholder={size} />
+																<MDBInput label={size}
+																	key={index}
+																	required
+																	type="number"
+																	value={sizes[size]}
+																	onChange={(e) => handleSizeChange(e, size)}
+																/>
 															))}
 														</div>
 													)}
 												</div>
 											</div>
 										</form>
-										<Button variant="success" type="click" onClick={handleAddRow} style={{ width: '15%', marginTop: "20PX"}} >{editingIndex !== null ? 'Save Changes' : 'Add Row'} <i class={editingIndex !== null ? 'fa fa-save' : 'fa fa-plus'}aria-hidden="true"></i>
- </Button>
+										<Button variant="success" type="click" onClick={handleAddRow} style={{ float: 'right', width: '5%', marginTop: "0PX" }}> <i className='fa fa-plus fa-1x white'> </i>   </Button>
 									</Modal.Body>
 									<Modal.Footer>
 										
