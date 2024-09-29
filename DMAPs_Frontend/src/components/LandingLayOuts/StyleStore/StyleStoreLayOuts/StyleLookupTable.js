@@ -121,7 +121,7 @@ export default function StyleLookupTable(props) {
 
     return (
         <div className='mt-4'>
-            <table {...getTableProps()} className="table-lookup striped" striped>
+            <table {...getTableProps()} className="table table-lookup striped" striped>
                 <thead>
                     {headerGroups.map((headerGroup) => (
                         <tr {...headerGroup.getHeaderGroupProps()}>

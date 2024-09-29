@@ -395,7 +395,8 @@ export default function ProductionOrder() {
 		setStyleDescription(data.Style_Description);
 		setSizeGridName(data.Size_Grid_Name);
 		setProductType(data.Product_Type);
-		setMerchantName(data.Marchent_Contact);
+		setMerchantName(data.Marchent_Name);
+		setMerchantContact(data.Marchent_Contact);
 		setGenderView(data.Gender);
 	  
 		// Parse and set garment data
@@ -707,7 +708,7 @@ return <>
 								<div className="col-12 mt-20 parentDivStyle">
 								{sizesArray && sizesArray.length > 0 ? (
 									<>
-										<table border="1" className='tableStyle'>
+										<table border="1" className='table tableStyle'>
 										<thead>
 											<tr>
 											<th className='thTdStyle'>Garment Color</th>
@@ -926,7 +927,7 @@ return <>
 
 								</div>
 								<div className="col-12 mt-20 parentDivStyle">
-									<table border="1" cellPadding="10" className='tableStyle'>
+									<table border="1" cellPadding="10" className='table tableStyle'>
 										<thead>
 										<tr>
 											<th className='thTdStyle'>Garment Color</th>

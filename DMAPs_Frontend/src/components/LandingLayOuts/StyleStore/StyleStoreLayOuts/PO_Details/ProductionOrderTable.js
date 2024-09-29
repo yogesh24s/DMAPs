@@ -16,7 +16,7 @@ export default function PODetailsTable(props) {
                 accessor: 'PO_No',
                 Cell: ({ row }) => (
                     <div
-                        style={{ cursor: 'pointer', textAlign: 'center', fontWeight: '500', color:'#1053b7' }}
+                        className='custom-link'
                         onClick={() => openEditForm(row.original)}
                     >
                         {row.values.PO_No}

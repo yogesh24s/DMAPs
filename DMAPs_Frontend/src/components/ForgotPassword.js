@@ -94,7 +94,7 @@ export default function ForgotPassword() {
                                                 className="btn btn-primary login-btn mt-1"
                                                 
                                             >
-                                                <span>Login</span>
+                                                <span> Submit </span>
                                             </button>
                                         </div>
                                     </div>

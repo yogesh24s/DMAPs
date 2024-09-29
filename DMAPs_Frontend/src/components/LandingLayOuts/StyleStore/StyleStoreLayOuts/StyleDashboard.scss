@@ -4,7 +4,7 @@
 .main-heading {
     padding: 0px;
     margin-bottom: 2%;
-    font: normal normal bold 24px/20px Helvetica;
+    font: normal normal bold 24px/20px 'Poppins', Arial, Helvetica, sans-serif;
     letter-spacing: 0px !important;
     color: #1C0202 !important;
     font-size: 30px;
@@ -13,7 +13,7 @@
 .sub-heading {
     padding: 0px;
     margin-bottom: 3%;
-    font: normal normal bold 24px/20px Helvetica;
+    font: normal normal bold 24px/20px 'Poppins', Arial, Helvetica, sans-serif;
     letter-spacing: 0px !important;
     color: #1C0202 !important;
     font-size: 20px;
@@ -35,10 +35,33 @@
     padding-right:0px
 }
 .unit-tab-content {
-    box-shadow: 0px 3px 5px rgb(201 178 178 / 28%), 0px 1px 3px rgb(255, 255, 255);
-    padding: 0px 10px 10px !important;
-    background-color: rgba(46, 94, 137, 0.0784313725) !important;
+    /* Adjust box-shadow to match vertical tab */
+    box-shadow: 2px 2px 9px rgb(41 48 135 / 28%), 
+    2px 1px 3px rgba(255, 255, 255, 9.28), 
+    0px 1px 3px rgba(87, 68, 68, 0.08);
+
+    /* Padding as requested */
+    padding: 0px 10px 0px !important;
+
+    /* Adjust background to be more in line with the vertical tab active style */
+    background-color: rgba(255, 255, 255, 0.85) !important;
+
+    /* Add smooth transitions for both background and shadow */
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    border-left : 2px solid #3b71ca;
 }
+
+/* Optional hover or focus state to match vertical tab active behavior */
+.unit-tab-content:hover, 
+.unit-tab-content:focus {
+    background-color: rgba(255, 255, 255, 1) !important; /* Fully opaque background on hover */
+
+    /* Enhanced shadow on hover */
+    box-shadow: 0px 0px 8px rgba(193, 177, 177, 0.35), 
+                4px 2px 8px rgba(255, 255, 255, 0.3), 
+                0px 2px 5px rgba(87, 68, 68, 0.1);
+}
+
 .vertical-link a {
     line-height: 20px;
 }
@@ -56,8 +79,8 @@
 }
 .table thead tr th {
     padding: 10px !important;
-    background-color: rgb(3 74 86 / 49%);
-    color: #fff !important;
+    background-color: rgb(227 230 236);
+    color: #0d2448b3 !important;
 }
 .primary-btn {
     padding: 5px 10px;

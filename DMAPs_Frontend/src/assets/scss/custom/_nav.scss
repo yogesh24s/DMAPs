@@ -204,7 +204,7 @@
       @include hover-focus() { background-color: darken($gray-400, 5%); }
 
       &::before {
-        font-family: 'Ionicons';
+        font-family: 'Poppins', Arial, Helvetica, sans-serif;;
         font-size: 18px;
         position: absolute;
         top: -4px;

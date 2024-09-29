@@ -4,7 +4,7 @@
 .main-heading {
     padding: 0px;
     margin-bottom: 2%;
-    font: normal normal bold 24px/20px Helvetica;
+    font: normal normal bold 24px/20px 'Poppins', Arial, Helvetica, sans-serif;
     letter-spacing: 0px !important;
     color: #1C0202 !important;
     font-size: 30px;
@@ -13,7 +13,7 @@
 .sub-heading {
     padding: 0px;
     margin-bottom: 3%;
-    font: normal normal bold 24px/20px Helvetica;
+    font: normal normal bold 24px/20px 'Poppins', Arial, Helvetica, sans-serif;
     letter-spacing: 0px !important;
     color: #1C0202 !important;
     font-size: 20px;
@@ -38,6 +38,7 @@
     text-transform: none !important;
     font-size: 13px !important;
     color: #3a2f2f;
+    font-weight: 400;
 }
 
 .h1 {
@@ -66,7 +67,9 @@
     tr {
         th {
             border: 1px solid #d1cece;
-            font-size: 14px !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
+            color: #0d2448b3;
         }
         td {
             border: 1px solid #d1cece;

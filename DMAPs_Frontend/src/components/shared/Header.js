@@ -65,14 +65,14 @@ function HeaderComponent() {
 					<Nav className="me-auto">
 
 					</Nav>
-					<Nav style={{ marginRight:"15px", borderRight:"1px solid #fff" }}>
+					<Nav style={{ marginRight:"15px", borderRight:"1px solid #065091" }}>
 						<div style={{ width: "max-content", height: "28px", borderRadius: "5px", cursor: "pointer", padding: "0 10px 0 0" }} >
 
-							<i className="fa fa-sky-blue fa-bell-o mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
+							<i className="fa fa-sky-blue fa-bell-o mx-3 hover-yellow" aria-hidden="true" style={{ color: "#065091", width: "max-content" }}></i>
 							
 							{/* <a href='ms-calculator://'> <i className="fa fa-sky-blue fa-calculator  ml-0 mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i> </a> */}
 
-							<a onClick={handleOpenModal}> <i className="fa fa-sky-blue fa-calculator  ml-0 mx-3 hover-yellow" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i> </a>
+							<a onClick={handleOpenModal}> <i className="fa fa-sky-blue fa-calculator  ml-0 mx-3 hover-yellow" aria-hidden="true" style={{ color: "#065091", width: "max-content" }}></i> </a>
 						</div>
 					</Nav>
 					<Nav>
@@ -81,7 +81,7 @@ function HeaderComponent() {
 								<div className="dropbtn" style={{ height: "40px", width: "40px", borderRadius: "50%",display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
 								<i className="fa fa-user-tie fa-1x" aria-hidden="true" style={{ color: "#fff", width: "max-content" }}></i>
 								</div>
-								<span style={{ color: "#ffff", marginLeft: "5px" }}>{userName}</span>
+								<span style={{ color: "#065091", marginLeft: "5px", textTransform: "uppercase" }}>{userName}</span>
 							</div>
 
 							{(!history.location.pathname.includes('/changepassword')) &&

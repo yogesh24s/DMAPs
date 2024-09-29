@@ -36,7 +36,7 @@
 
   /* Dropdown Button */
 .dropbtn {
-    background-color: #00c4ff;
+    background-color: #065091;
     color: white;
     padding: 16px;
     font-size: 16px;
@@ -75,9 +75,9 @@
   .dropdown:hover .dropdown-content {display: block;}
   
   /* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown:hover .dropbtn {background-color: #fff; cursor: pointer;}
+  .dropdown:hover .dropbtn {background-color: rgb(255, 217, 90); cursor: pointer;}
 
-  .dropdown:hover .dropbtn .fa{color: #00c4ff !important}
+  .dropdown:hover .dropbtn .fa{color: #065091 !important}
   .hover-yellow:hover {
     color: rgb(255, 217, 90) !important;
   }

@@ -12,7 +12,7 @@ export default function StyleEntryTable(props) {
                 accessor: 'Style_No',
                 Cell: ({ row }) => (
                     <div
-                        style={{ cursor: 'pointer', textAlign: 'center', fontWeight: '500', color:'#1053b7' }}
+                        className='custom-link'
                         onClick={() => openEditForm(row.original)}
                     >
                         {row.values.Style_No}
