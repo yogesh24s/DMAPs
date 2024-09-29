@@ -90,7 +90,7 @@ export default function ProductionOrder() {
     	updatedRows[rowIndex].isEditable = !updatedRows[rowIndex].isEditable; // Toggle edit mode
     	setRows(updatedRows);
   	};
-
+	  
 	const handleDeleteRow = (rowIndex) => {
 		const updatedRows = rows.filter((_, index) => index !== rowIndex);
 		setRows(updatedRows);
@@ -437,7 +437,7 @@ export default function ProductionOrder() {
 	}
 	};
 
-	const handleEditStyleEntry  = (e) => {
+	const handleEditStyleEntry  = (e, data, index) => {
 
 	e.preventDefault();
 	let isValid = true;
@@ -547,7 +547,15 @@ export default function ProductionOrder() {
 		if (response.status === 200 && response.data.data.status == "success") {
 			// alert(response.data.result)
 			getPOData()
-			closeEditForm()
+			if(data == 'save'){
+
+				closeEditForm()
+			}
+			else{
+				const updatedRows = [...rows];
+    			updatedRows[index].isEditable = !updatedRows[index].isEditable; // Toggle edit mode
+    			setRows(updatedRows);
+			}
 		}
 		else {
 			alert(response.data.data.result);
@@ -796,7 +804,7 @@ return <>
 						<Modal.Title>Edit Order Details </Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<form onSubmit={handleEditStyleEntry}>
+						<form>
 						<div className='row'>
 								<div className='col-3'>
 								<Form.Select className='mb-3' tabindex="1" label='DMAPS No.' onChange={(e) => { setStyleNo(e.target.value); handleSizeGrid(e.target.value)}} value={styleNo} name='styleNo' disabled>
@@ -1002,10 +1010,29 @@ return <>
 												</td>
 											))}
 											<td className='thTdStyle'>{row.total}</td>
-											<td className='thTdStyle'>
-												<i className='fa fa-edit pointer' onClick={() => handleEditRow(rowIndex)} title='Edit'> </i>
-												<i className='fa fa-trash ml-15 pointer' onClick={() => handleDeleteRow(rowIndex)} title='Delete'> </i>
+											<td className="thTdStyle">
+											{/* Toggle between Edit and Save buttons based on isEditable */}
+											{row.isEditable ? (
+												<i
+												className="fa fa-save pointer"
+												onClick={(e) => handleEditStyleEntry(e, 'edit', rowIndex)}
+												title="Save"
+												></i>
+											) : (
+												<i
+												className="fa fa-edit pointer"
+												onClick={() => handleEditRow(rowIndex)}
+												title="Edit"
+												></i>
+											)}
+											{/* Trash icon to delete the row */}
+											<i
+												className="fa fa-trash ml-15 pointer"
+												onClick={() => handleDeleteRow(rowIndex)}
+												title="Delete"
+											></i>
 											</td>
+
 											</tr>
 										))}
 										</tbody>
@@ -1019,7 +1046,7 @@ return <>
 						<Button variant="secondary" onClick={closeEditForm} style={{ width: '15%' }}>
 							Cancel
 						</Button>
-						<Button variant="primary" onClick={handleEditStyleEntry} style={{ width: '15%' }}>
+						<Button variant="primary" onClick={(e) => handleEditStyleEntry(e, 'save', '99999')} style={{ width: '15%' }}>
 							Save
 						</Button>
 					</Modal.Footer>
