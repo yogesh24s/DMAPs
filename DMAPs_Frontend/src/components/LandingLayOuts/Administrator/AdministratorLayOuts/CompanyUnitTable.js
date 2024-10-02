@@ -47,7 +47,7 @@ export default function CompanyUnitTable(props) {
 			accessor: 'Email_Id',
 		  },
 		  {
-			Header: 'Action',
+			Header: 'Actions',
 			accessor: 'action', // You can set a dummy accessor for the action column
 			Cell: ({ row }) => ([
 				<i className='fa fa-edit pointer' onClick={(data) => {

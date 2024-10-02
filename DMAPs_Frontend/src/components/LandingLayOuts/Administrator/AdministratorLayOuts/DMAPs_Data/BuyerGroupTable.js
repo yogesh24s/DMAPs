@@ -25,7 +25,7 @@ export default function BuyerGroupTable(props) {
 			accessor: 'Buyer_Contact_No',
 		  },
 		  {
-			Header: 'Action',
+			Header: 'Actions',
 			accessor: 'action', // You can set a dummy accessor for the action column
 			Cell: ({ row }) => (
 				[

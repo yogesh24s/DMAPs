@@ -45,7 +45,7 @@ export default function CompanyUserTable(props) {
 			accessor: 'User_Role',
 		  },
 		  {
-			Header: 'Action',
+			Header: 'Actions',
 			accessor: 'action', // You can set a dummy accessor for the action column
 			Cell: ({ row }) => (
 				[

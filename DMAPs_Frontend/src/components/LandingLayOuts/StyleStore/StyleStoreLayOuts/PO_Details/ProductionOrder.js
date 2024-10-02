@@ -80,7 +80,7 @@ export default function ProductionOrder() {
 			isEditable: true,
 		}]);
 		// Reset the form
-		setGarmentColor("");
+		setGarmentColor('#000000');
 		setDestinationCountry("");
 		setSizes({}); // Reset sizes to an empty object
   	};
@@ -107,7 +107,7 @@ export default function ProductionOrder() {
 
 		// Reset rows with new sizes
 		const newRow = {
-		garmentColor: '',
+		garmentColor: '#000000',
 		destinationCountry: '',
 		sizes: initialSizes,
 		total: 0, // Initial total is 0
@@ -126,7 +126,7 @@ export default function ProductionOrder() {
 		}, {});
 
 		const newRow = {
-			garmentColor: '',
+			garmentColor: '#000000',
 			destinationCountry: '',
 			sizes: initialSizes,
 			total: 0,
@@ -358,7 +358,7 @@ export default function ProductionOrder() {
 		setDeliveryDateError('')
 		setPCD('')
 		setPCDError('')
-		setGarmentColor('');
+		setGarmentColor('#000000');
 		setDestinationCountry('');
 		setSizes({});
 	}
@@ -575,7 +575,7 @@ return <>
 			</div>
 			<div className='col-4 text-right'>
 				<Button className='primary-btn mt-10' onClick={() => {setShow(true);stateValues(); setSizes({});  setRows([]); }}>
-				<i className='fa fa-plus fa-white'> </i> New PO 
+				<i className='fa fa-plus fa-white'> </i> New Order
 				</Button>
 				
 				<Modal
@@ -603,57 +603,55 @@ return <>
 									{styleNoError && <p style={{ color: 'red' }}>{styleNoError}</p>}
 
 								</div>
-								{styleNo || styleNo != '' ? (
-								<div className='row'>
-									<div className='col-3'>
+							</div>
+							{styleNo ? (
+								<>
+							<div className='row'>
+							<div className='col-3'>
 									<div className="data-row">
-										<label className='label-read' htmlFor="name">Buyer</label>
-										<span className='span-read'> {BuyerName} </span>
-									</div>
-									</div>
-									<div className='col-3'>
-									<div className="data-row">
-										<label className='label-read' htmlFor="name">Buyer Style No.</label>
-										<span className='span-read'> {StyleDescription} </span>
-									</div>
-									</div>
-									<div className='col-3'>
-									<div className="data-row">
-										<label className='label-read' htmlFor="name">Size Grid Name</label>
-										<span className='span-read'> {SizeGridName} </span>
-									</div>
-									</div>
-									<div className='col-12'>
-									<div className='row'>
-										<div className='col-3'>
-										<div className="data-row">
-											<label className='label-read' htmlFor="name">Gender</label>
-											<span className='span-read'> {GenderView} </span>
-										</div>
-										</div>
-										<div className='col-3'>
-										<div className="data-row">
-											<label className='label-read' htmlFor="name">Product Type</label>
-											<span className='span-read'> {ProductType} </span>
-										</div>
-										</div>
-										<div className='col-3'>
-										<div className="data-row">
-											<label className='label-read' htmlFor="name">Merchant Name</label>
-											<span className='span-read'> {MerchantName} </span>
-										</div>
-										</div>
-										<div className='col-3'>
-										<div className="data-row">
-											<label className='label-read' htmlFor="name">Merchant Contact</label>
-											<span className='span-read'> {MerchantContact} </span>
-										</div>
-										</div>
-									</div>
+									<label className='label-read' htmlFor="name">Buyer</label>
+									<span className='span-read'> {BuyerName} </span>
 									</div>
 								</div>
+								<div className='col-3'>
+									<div className="data-row">
+									<label className='label-read' htmlFor="name">Buyer Style No.</label>
+									<span className='span-read'> {StyleDescription} </span>
+									</div>
+								</div>
+								<div className='col-3'>
+									<div className="data-row">
+									<label className='label-read' htmlFor="name">Size Grid Name</label>
+									<span className='span-read'> {SizeGridName} </span>
+									</div>
+								</div>
+								<div className='col-3'>
+									<div className="data-row">
+									<label className='label-read' htmlFor="name">Gender</label>
+									<span className='span-read'> {GenderView} </span>
+									</div>
+								</div>
+								<div className='col-3'>
+									<div className="data-row">
+									<label className='label-read' htmlFor="name">Product Type</label>
+									<span className='span-read'> {ProductType} </span>
+									</div>
+								</div>
+								<div className='col-3'>
+									<div className="data-row">
+									<label className='label-read' htmlFor="name">Merchant Name</label>
+									<span className='span-read'> {MerchantName} </span>
+									</div>
+								</div>
+								<div className='col-3'>
+									<div className="data-row">
+									<label className='label-read' htmlFor="name">Merchant Contact No.</label>
+									<span className='span-read'> {MerchantContact} </span>
+									</div>
+								</div>
+							</div>	
+								 </>
 								) : null}
-							</div>
 							<h6 className='h6'> Order Details </h6>
 							<div className='row'>
 								<div className='col-3'>
@@ -667,8 +665,21 @@ return <>
 								</div>
 
 								<div className='col-3'>
-									
-								<Form.Select className='mb-3' tabindex="5" label='Emb Type' onChange={(e) => { setEmbType(e.target.value) }} value={embType} name='embType'>
+								<div className="mb-3" style={{ position: 'relative' }}>
+									{embType ? <label
+										htmlFor="embType"
+										style={{
+										position: 'absolute',
+										top: '-10px',
+										left: '10px',
+										backgroundColor: 'white',
+										padding: '0 5px',
+										fontSize: '12px',
+										}}
+									>
+										Emb. Type
+									</label> : ''}
+									<Form.Select className='mb-3' tabindex="5" label='Emb Type' onChange={(e) => { setEmbType(e.target.value) }} value={embType} name='embType'>
 										<option> Select Emb Type </option>
 										{embTypeList.map((item) => (
 											<option key={item.id} value={item.Emb_Type}>
@@ -677,55 +688,86 @@ return <>
 										))}
 									</Form.Select>
 									{embTypeError && <p style={{ color: 'red' }}>{embTypeError}</p>}
+									</div>
+									<div className="mb-3" style={{ position: 'relative' }}>
+										{printType ? <label
+											htmlFor="printType"
+											style={{
+											position: 'absolute',
+											top: '-10px',
+											left: '10px',
+											backgroundColor: 'white',
+											padding: '0 5px',
+											fontSize: '12px',
+											}}
+										>
+											Print Type
+										</label> : ''}
+										<Form.Select className='mb-3' tabindex="6" label='Print Type' onChange={(e) => { setPrintType(e.target.value) }} value={printType} name='printType'>
+											<option> Select Print Type </option>
+											{printTypeList.map((item) => (
+												<option key={item.id} value={item.Print_Type}>
+													{item.Print_Type}
+												</option>
+											))}
+										</Form.Select>
+										{printTypeError && <p style={{ color: 'red' }}>{printTypeError}</p>}
+									</div>
 
-									<Form.Select className='mb-3' tabindex="6" label='Print Type' onChange={(e) => { setPrintType(e.target.value) }} value={printType} name='printType'>
-										<option> Select Print Type </option>
-										{printTypeList.map((item) => (
-											<option key={item.id} value={item.Print_Type}>
-												{item.Print_Type}
-											</option>
-										))}
-									</Form.Select>
-									{printTypeError && <p style={{ color: 'red' }}>{printTypeError}</p>}
-
-									<Form.Select className='mb-3' tabindex="7" label='Washing Type' onChange={(e) => { setWashingType(e.target.value) }} value={washingType} name='washingType'>
-										<option> Select Washing Type </option>
-										{washingTypeList.map((item) => (
-											<option key={item.id} value={item.Washing_Type}>
-												{item.Washing_Type}
-											</option>
-										))}
-									</Form.Select>
-									{washingTypeError && <p style={{ color: 'red' }}>{washingTypeError}</p>}
-
-									<MDBInput wrapperClass='mb-3' type='text' tabindex="9" label='Shipment Mode' onChange={(e) => { setShipmentMode(e.target.value) }} value={shipmentMode} name='shipmentMode' />
-									{shipmentModeError && <p style={{ color: 'red' }}>{shipmentModeError}</p>}
-
+									<div className="mb-3" style={{ position: 'relative' }}>
+										{washingType ? <label
+											htmlFor="washingType"
+											style={{
+											position: 'absolute',
+											top: '-10px',
+											left: '10px',
+											backgroundColor: 'white',
+											padding: '0 5px',
+											fontSize: '12px',
+											}}
+										>
+											Washing Type
+										</label> : ''}									
+										<Form.Select className='mb-3' tabindex="7" label='Washing Type' onChange={(e) => { setWashingType(e.target.value) }} value={washingType} name='washingType'>
+											<option> Select Washing Type </option>
+											{washingTypeList.map((item) => (
+												<option key={item.id} value={item.Washing_Type}>
+													{item.Washing_Type}
+												</option>
+											))}
+										</Form.Select>
+										{washingTypeError && <p style={{ color: 'red' }}>{washingTypeError}</p>}
+									</div>
 								</div>
-								<div className='col-6'>
-									<MDBInput wrapperClass='mb-3' type='date' tabindex="10" label='Delivery Date' onChange={(e) => { setDeliveryDate(e.target.value) }} value={deliveryDate} name='deliveryDate' />
+								<div className='col-3'>
+									<MDBInput wrapperClass='mb-3' type='date' placeholder="dd/mm/yyyy" tabindex="10" label='Delivery Date' onChange={(e) => { setDeliveryDate(e.target.value) }} value={deliveryDate} name='deliveryDate' />
 									{deliveryDateError && <p style={{ color: 'red' }}>{deliveryDateError}</p>}
 
 									<MDBInput wrapperClass='mb-3' type='date' tabindex="11" label='PCD' onChange={(e) => { setPCD(e.target.value) }} value={pcd} name='pcd' />
 									{pcdError && <p style={{ color: 'red' }}>{pcdError}</p>}
 
+									<MDBInput wrapperClass='mb-3' type='text' tabindex="9" label='Shipment Mode' onChange={(e) => { setShipmentMode(e.target.value) }} value={shipmentMode} name='shipmentMode' />
+									{shipmentModeError && <p style={{ color: 'red' }}>{shipmentModeError}</p>}
+								</div>
+
+								<div className='col-3'>
 									<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
 
-									<MDBInput wrapperClass='mb-3 ' label='Notes'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
+									<MDBInput style={{height:"86px"}} wrapperClass='mb-3 ' label='Notes'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
 								</div>
 								<div className="col-12 mt-20 parentDivStyle">
-								{sizesArray && sizesArray.length > 0 ? (
+								{styleNo && sizesArray && sizesArray.length > 0 ? (
 									<>
 										<table border="1" className='table tableStyle'>
 										<thead>
 											<tr>
-											<th className='thTdStyle'>Garment Color</th>
-											<th className='thTdStyle'>Destination Country</th>
+											<th  style={{width :'100px'}}>Garment Color</th>
+											<th  style={{width :'100px'}}>Destination Country</th>
 											{sizesArray.map((sizeKey) => (
 												<th className='thTdStyle' key={sizeKey}>{sizeKey}</th>
 											))}
-											<th className='thTdStyle'>Total</th>
-											<th className='thTdStyle'>Actions</th>
+											<th  style={{width :'50px'}}>Total</th>
+											<th  style={{width :'60px'}}>Actions</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -734,7 +776,7 @@ return <>
 												<td className='thTdStyle'>
 												<input 
 													type="color" 
-													value={row.garmentColor}
+													value={row.garmentColor || '#000000' }
 													onChange={(e) => {
 													const updatedRows = [...rows];
 													updatedRows[rowIndex].garmentColor = e.target.value;
@@ -776,7 +818,7 @@ return <>
 											))}
 										</tbody>
 										</table>
-										<Button variant="success" onClick={addNewRow} style={{ float: 'right', width: '5%', marginTop: "0PX" }}> <i className='fa fa-plus fa-1x white'> </i>   </Button>
+										<Button variant="success" onClick={addNewRow} style={{ float: 'right', width: '5%', marginTop: "-20PX" }}> <i className='fa fa-plus fa-1x white'> </i>   </Button>
 									</>
 									) : null}
 
@@ -863,7 +905,7 @@ return <>
 										</div>
 										<div className='col-3'>
 										<div className="data-row">
-											<label className='label-read' htmlFor="name">Merchant Contact</label>
+											<label className='label-read' htmlFor="name">Merchant Contact No.</label>
 											<span className='span-read'> {MerchantContact} </span>
 										</div>
 										</div>
@@ -887,6 +929,20 @@ return <>
 								</div>
 
 								<div className='col-3'>
+								<div className="mb-3" style={{ position: 'relative' }}>
+									{embType ? <label
+										htmlFor="embType"
+										style={{
+										position: 'absolute',
+										top: '-10px',
+										left: '10px',
+										backgroundColor: 'white',
+										padding: '0 5px',
+										fontSize: '12px',
+										}}
+									>
+										Emb. Type
+									</label> : ''}
 									<Form.Select className='mb-3' tabindex="5" label='Emb Type' onChange={(e) => { setEmbType(e.target.value) }} value={embType} name='embType'>
 										<option> Select Emb Type </option>
 										{embTypeList.map((item) => (
@@ -896,7 +952,22 @@ return <>
 										))}
 									</Form.Select>
 									{embTypeError && <p style={{ color: 'red' }}>{embTypeError}</p>}
+								</div>
 
+								<div className="mb-3" style={{ position: 'relative' }}>
+									{printType ? <label
+										htmlFor="printType"
+										style={{
+										position: 'absolute',
+										top: '-10px',
+										left: '10px',
+										backgroundColor: 'white',
+										padding: '0 5px',
+										fontSize: '12px',
+										}}
+									>
+										Print Type
+									</label> : ''}
 									<Form.Select className='mb-3' tabindex="6" label='Print Type' onChange={(e) => { setPrintType(e.target.value) }} value={printType} name='printType'>
 										<option> Select Print Type </option>
 										{printTypeList.map((item) => (
@@ -906,7 +977,22 @@ return <>
 										))}
 									</Form.Select>
 									{printTypeError && <p style={{ color: 'red' }}>{printTypeError}</p>}
+								</div>
 
+								<div className="mb-3" style={{ position: 'relative' }}>
+									{washingType ? <label
+										htmlFor="washingType"
+										style={{
+										position: 'absolute',
+										top: '-10px',
+										left: '10px',
+										backgroundColor: 'white',
+										padding: '0 5px',
+										fontSize: '12px',
+										}}
+									>
+										Washing Type
+									</label> : ''}
 									<Form.Select className='mb-3' tabindex="7" label='Washing Type' onChange={(e) => { setWashingType(e.target.value) }} value={washingType} name='washingType'>
 										<option> Select Washing Type </option>
 										{washingTypeList.map((item) => (
@@ -916,35 +1002,37 @@ return <>
 										))}
 									</Form.Select>
 									{washingTypeError && <p style={{ color: 'red' }}>{washingTypeError}</p>}
-
-									<MDBInput wrapperClass='mb-3' type='text' tabindex="9" label='Shipment Mode' onChange={(e) => { setShipmentMode(e.target.value) }} value={shipmentMode} name='shipmentMode' />
-									{shipmentModeError && <p style={{ color: 'red' }}>{shipmentModeError}</p>}
-
 								</div>
-								<div className='col-6'>
-
+								</div>
+								<div className='col-3'>
 									<MDBInput wrapperClass='mb-3' type='date' tabindex="10" label='Delivery Date' onChange={(e) => { setDeliveryDate(e.target.value) }} value={deliveryDate} name='deliveryDate' />
 									{deliveryDateError && <p style={{ color: 'red' }}>{deliveryDateError}</p>}
 
 									<MDBInput wrapperClass='mb-3' type='date' tabindex="11" label='PCD' onChange={(e) => { setPCD(e.target.value) }} value={pcd} name='pcd' />
 									{pcdError && <p style={{ color: 'red' }}>{pcdError}</p>}
 
-									<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
-
-									<MDBInput wrapperClass='mb-3 ' label='Notes'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
+									<MDBInput wrapperClass='mb-3' type='text' tabindex="9" label='Shipment Mode' onChange={(e) => { setShipmentMode(e.target.value) }} value={shipmentMode} name='shipmentMode' />
+									{shipmentModeError && <p style={{ color: 'red' }}>{shipmentModeError}</p>}
 
 								</div>
+
+								<div className='col-3'>
+									<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
+
+									<MDBInput style={{ height: '86px' }} wrapperClass='mb-3 ' label='Notes'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
+								</div>
+
 								<div className="col-12 mt-20 parentDivStyle">
 									<table border="1" cellPadding="10" className='table tableStyle'>
 										<thead>
 										<tr>
-											<th className='thTdStyle'>Garment Color</th>
-											<th className='thTdStyle'>Destination Country</th>
+											<th style={{width :'100px'}}>Garment Color</th>
+											<th style={{width :'100px'}}>Destination Country</th>
 											{sizeKeys.map((sizeKey) => (
 											<th key={sizeKey} className='thTdStyle'>{sizeKey}</th>
 											))}
-											<th className='thTdStyle'>Total</th>
-											<th className='thTdStyle'>Actions</th>
+											<th style={{width :'50px'}}>Total</th>
+											<th style={{width :'60px'}}>Actions</th>
 										</tr>
 										</thead>
 										<tbody>
@@ -1037,7 +1125,7 @@ return <>
 										))}
 										</tbody>
 									</table>
-									<Button variant="success" onClick={addNewRow} style={{ float: 'right', width: '5%', marginTop: "0PX" }}> <i className='fa fa-plus fa-1x white'> </i> </Button>
+									<Button variant="success" onClick={addNewRow} style={{ float: 'right', width: '5%', marginTop: "-20PX" }}> <i className='fa fa-plus fa-1x white'> </i> </Button>
 								</div>
 							</div>
 						</form>

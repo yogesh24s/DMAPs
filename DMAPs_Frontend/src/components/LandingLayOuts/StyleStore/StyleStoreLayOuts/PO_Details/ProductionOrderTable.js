@@ -34,7 +34,7 @@ export default function PODetailsTable(props) {
             {
                 Header: (
                     <span title="Embroidery Type">
-                        Emb Type
+                        Emb. Type
                     </span>
                 ),
                 accessor: 'Emb_Type',
@@ -64,7 +64,7 @@ export default function PODetailsTable(props) {
                 accessor: 'PCD',
             },
             {
-                Header: 'Action',
+                Header: 'Actions',
                 accessor: 'action',
                 Cell: ({ row }) => (
                     <>

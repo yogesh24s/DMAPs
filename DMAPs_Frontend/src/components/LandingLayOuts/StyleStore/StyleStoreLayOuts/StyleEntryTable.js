@@ -63,7 +63,7 @@ export default function StyleEntryTable(props) {
                 },
             },
             {
-                Header: 'Action',
+                Header: 'Actions',
                 accessor: 'action',
                 Cell: ({ row }) => (
                     <>
