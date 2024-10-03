@@ -113,3 +113,27 @@
 .fa-paperclip:hover {
     color:#fff
 }
+.react-datepicker-wrapper {
+    width: 100%;
+}
+
+.form-group-date {
+    position: relative;
+}
+  
+.form-group-date label {
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background-color: white;
+    padding: 0 5px;
+    font-size: 10px;
+    color: #555;
+    z-index: 9;
+}
+  
+  .form-control-date {
+    padding-top: 0px; /* Adjust padding for label space */
+    position: relative;
+  }
+  

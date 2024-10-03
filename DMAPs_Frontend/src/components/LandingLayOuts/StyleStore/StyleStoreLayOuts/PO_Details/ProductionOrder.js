@@ -13,6 +13,9 @@ import styleStoreService from "../../../../../services/styleStoreService";
 import { trackPromise } from 'react-promise-tracker';
 import PODetailsTable from './ProductionOrderTable';
 import adminService from "../../../../../services/adminService"
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default function ProductionOrder() {
 	const [show, setShow] = useState(false);
@@ -740,10 +743,50 @@ return <>
 									</div>
 								</div>
 								<div className='col-3'>
-									<MDBInput wrapperClass='mb-3' type='date' placeholder="dd/mm/yyyy" tabindex="10" label='Delivery Date' onChange={(e) => { setDeliveryDate(e.target.value) }} value={deliveryDate} name='deliveryDate' />
+									{/* <MDBInput wrapperClass='mb-3' type='date' placeholder="dd/mm/yyyy" tabindex="10" label='Delivery Date' onChange={(e) => { setDeliveryDate(e.target.value) }} value={deliveryDate} name='deliveryDate' /> */}
+
+									<DatePicker
+											selected={deliveryDate}
+											className="form-control-date"
+											onChange={(date) => setDeliveryDate(date)} // Correct way to handle date change
+											dateFormat="dd/MM/yyyy"  // Format the display of the date
+											placeholderText="dd/mm/yyyy"
+											
+											customInput={
+											<MDBInput
+												type="text"
+												wrapperClass='mb-3'
+												label='Delivery Date'
+												id="deliveryDate"  // Linking the label with the input
+												tabIndex="10"  // Correct case for tabindex
+												name="deliveryDate"
+												value={deliveryDate ? moment(deliveryDate).format("DD/MM/YYYY") : ''}
+											/>
+											}
+										/>
+
 									{deliveryDateError && <p style={{ color: 'red' }}>{deliveryDateError}</p>}
 
-									<MDBInput wrapperClass='mb-3' type='date' tabindex="11" label='PCD' onChange={(e) => { setPCD(e.target.value) }} value={pcd} name='pcd' />
+									{/* <MDBInput wrapperClass='mb-3' type='date' tabindex="11" label='PCD' onChange={(e) => { setPCD(e.target.value) }} value={pcd} name='pcd' /> */}
+
+									<DatePicker
+											selected={pcd}
+											className="mb-3 form-control-date"
+											onChange={(date) => setPCD(date)} // Correct way to handle date change
+											dateFormat="dd/MM/yyyy"  // Format the display of the date
+											placeholderText="dd/mm/yyyy"
+											name="pcd"
+											customInput={
+											<MDBInput
+												type="text"
+												label='PCD'
+												id="pcd"  // Linking the label with the input
+												tabIndex="11"  // Correct case for tabindex
+												name="pcd"
+												value={pcd ? moment(pcd).format("DD/MM/YYYY") : ''}
+											/>
+											}
+										/>	
 									{pcdError && <p style={{ color: 'red' }}>{pcdError}</p>}
 
 									<MDBInput wrapperClass='mb-3' type='text' tabindex="9" label='Shipment Mode' onChange={(e) => { setShipmentMode(e.target.value) }} value={shipmentMode} name='shipmentMode' />
@@ -1005,10 +1048,49 @@ return <>
 								</div>
 								</div>
 								<div className='col-3'>
-									<MDBInput wrapperClass='mb-3' type='date' tabindex="10" label='Delivery Date' onChange={(e) => { setDeliveryDate(e.target.value) }} value={deliveryDate} name='deliveryDate' />
+									{/* <MDBInput wrapperClass='mb-3' type='date' tabindex="10" label='Delivery Date' onChange={(e) => { setDeliveryDate(e.target.value) }} value={deliveryDate} name='deliveryDate' /> */}
+
+									<DatePicker
+											selected={deliveryDate}
+											className="form-control-date"
+											onChange={(date) => setDeliveryDate(date)} // Correct way to handle date change
+											dateFormat="dd/MM/yyyy"  // Format the display of the date
+											placeholderText="dd/mm/yyyy"
+											customInput={
+											<MDBInput
+												type="text"
+												wrapperClass='mb-3'
+												label='Delivery Date'
+												id="deliveryDate"  // Linking the label with the input
+												tabIndex="10"  // Correct case for tabindex
+												name="deliveryDate"
+												value={deliveryDate ? moment(deliveryDate).format("DD/MM/YYYY") : ''}
+											/>
+											}
+										/>
 									{deliveryDateError && <p style={{ color: 'red' }}>{deliveryDateError}</p>}
 
-									<MDBInput wrapperClass='mb-3' type='date' tabindex="11" label='PCD' onChange={(e) => { setPCD(e.target.value) }} value={pcd} name='pcd' />
+									{/* <MDBInput wrapperClass='mb-3' type='date' tabindex="11" label='PCD' onChange={(e) => { setPCD(e.target.value) }} value={pcd} name='pcd' /> */}
+
+									<DatePicker
+											selected={pcd}
+											className="mb-3 form-control-date"
+											onChange={(date) => setPCD(date)} // Correct way to handle date change
+											dateFormat="dd/MM/yyyy"  // Format the display of the date
+											placeholderText="dd/mm/yyyy"
+											name="pcd"
+											customInput={
+											<MDBInput
+												type="text"
+												label='PCD'
+												id="pcd"  // Linking the label with the input
+												tabIndex="11"  // Correct case for tabindex
+												name="pcd"
+												value={pcd ? moment(pcd).format("DD/MM/YYYY") : ''}
+											/>
+											}
+									/>	
+
 									{pcdError && <p style={{ color: 'red' }}>{pcdError}</p>}
 
 									<MDBInput wrapperClass='mb-3' type='text' tabindex="9" label='Shipment Mode' onChange={(e) => { setShipmentMode(e.target.value) }} value={shipmentMode} name='shipmentMode' />

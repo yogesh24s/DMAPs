@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTable } from 'react-table';
+import moment from 'moment';
 
 export default function PODetailsTable(props) {
     const { data, openEditForm } = props;
@@ -54,6 +55,7 @@ export default function PODetailsTable(props) {
             {
                 Header: 'Delivery Date',
                 accessor: 'Delivery_Date',
+                Cell: ({ value }) => value ? moment(value).format('DD/MM/YYYY') : 'N/A',
             },
             {
                 Header: (
@@ -62,6 +64,7 @@ export default function PODetailsTable(props) {
                     </span>
                 ),
                 accessor: 'PCD',
+                Cell: ({ value }) => value ? moment(value).format('DD/MM/YYYY') : 'N/A',
             },
             {
                 Header: 'Actions',

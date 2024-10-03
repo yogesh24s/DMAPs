@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTable } from 'react-table';
+import moment from 'moment';
 
 export default function StyleLookupTable(props) {
     const data = props.data;
@@ -55,7 +56,17 @@ export default function StyleLookupTable(props) {
 						if (garmentData.length > 0) {
 							return garmentData.map((color, index) => (
 								<ul key={index} className='ul-table'>
-									<li style={{ border: '0px solid #d1cece', textAlign: 'center' }}>{color.garmentColor}</li>
+									<li style={{ border: '0px solid #d1cece', textAlign: 'center' }}>
+
+                                        <div style={{
+													backgroundColor: color.garmentColor,
+													width: '25px',
+													height: '25px',
+													borderRadius: '4px',
+													border: '1px solid #ccc',
+												}}
+                                            ></div>
+                                    </li>
 								</ul>
 							));
 						}
@@ -99,6 +110,7 @@ export default function StyleLookupTable(props) {
             {
                 Header: 'Delivery Date',
                 accessor: 'Delivery_Date',
+                Cell: ({ value }) => value ? moment(value).format('DD/MM/YYYY') : 'N/A',
             },
             {
                 Header: 'Merchant Name',
