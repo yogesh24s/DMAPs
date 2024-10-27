@@ -26,6 +26,7 @@ import unitService from "../../../../services/unitService";
 import { trackPromise } from 'react-promise-tracker';
 import CompanyUnitTable from './CompanyUnitTable';
 import adminService from "../../../../services/adminService"
+import UnitForm from './UnitFormModal';
 
 
 export default function UnitSetUp() {
@@ -73,14 +74,15 @@ export default function UnitSetUp() {
 	const handleTinValidation = (value) => {
 		// Define a regular expression pattern for a 11-digit TIN
 		const tinPattern = /^$|^\d{11}$/;
-		
+
 		// Return whether the value matches the pattern
 		return tinPattern.test(value);
 	};
-	
+
 
 	const handleUnitSetup = (e) => {
 		e.preventDefault();
+		debugger
 		let isValid = true;
 
 		if (!unitName) {
@@ -166,6 +168,7 @@ export default function UnitSetUp() {
 		}
 
 		if (!contactNo) {
+			debugger
 			setContactNoError('Contact Number is required');
 			isValid = false;
 		} else if (!/^[6789]\d{9}$/.test(contactNo)) {
@@ -174,8 +177,8 @@ export default function UnitSetUp() {
 		} else {
 			setContactNoError('');
 		}
-		
-		
+
+
 
 		if (!mailId) {
 			setMailIdError('Mail id is required');
@@ -234,12 +237,12 @@ export default function UnitSetUp() {
 	}
 
 	const getBasicDetails = () => {
-        trackPromise(
-            adminService.getBasicDetails().then((response) => {
-                setStateList(response.data[0].data[0].data.states)
-            })
-        );
-    }
+		trackPromise(
+			adminService.getBasicDetails().then((response) => {
+				setStateList(response.data[0].data[0].data.states)
+			})
+		);
+	}
 
 	useEffect(() => {
 		getBasicDetails();
@@ -261,7 +264,7 @@ export default function UnitSetUp() {
 		setPinNoError('');
 		setContactNoError('');
 		setMailIdError('');
-		
+
 		setunitName('')
 		setShortName('')
 		setGroup('')
@@ -289,9 +292,9 @@ export default function UnitSetUp() {
 		);
 	};
 	const openEditForm = (data) => {
-        editFormDetails(data)
-        setIsEditFormOpen(true);
-    };
+		editFormDetails(data)
+		setIsEditFormOpen(true);
+	};
 	function editFormDetails(data) {
 
 		setUnitNameError('');
@@ -307,7 +310,7 @@ export default function UnitSetUp() {
 		setContactNoError('');
 		setMailIdError('');
 
-	
+
 
 		setunitName(data.Unit_Full_Name)
 		setShortName(data.Unit_Short_Name)
@@ -323,36 +326,35 @@ export default function UnitSetUp() {
 		setMailId(data.Email_Id)
 		setUnitId(data.Unit_Id)
 	}
-    const closeEditForm = () => {
-        setIsEditFormOpen(false);
-    };
+	const closeEditForm = () => {
+		setIsEditFormOpen(false);
+	};
 
-// Delete Unit Records
+	// Delete Unit Records
 
-const deleteUnitRecord = (data) => {
-	if (window.confirm("Are you sure to delete the Company Unit ?"))
-    {
-		let payload = {
-			"Unit_Short_Name":data.Unit_Short_Name,
-			"Unit_Id": data.Unit_Id
-		}
-		trackPromise(unitService.deleteCompanyUnits({ "data": [payload] }).then((response) => {
-			//check login response
-			if (response.status === 200) {
-				getCompanyUnitData()
-			}	
-			else {
-				alert(response.data.message);
+	const deleteUnitRecord = (data) => {
+		if (window.confirm("Are you sure to delete the Company Unit ?")) {
+			let payload = {
+				"Unit_Short_Name": data.Unit_Short_Name,
+				"Unit_Id": data.Unit_Id
 			}
+			trackPromise(unitService.deleteCompanyUnits({ "data": [payload] }).then((response) => {
+				//check login response
+				if (response.status === 200) {
+					getCompanyUnitData()
+				}
+				else {
+					alert(response.data.message);
+				}
 
-		}).catch((error) => {
-			//console.log(error.response.data.error)
-			alert(error.response.data.error);
-		})
-		);
-	}
+			}).catch((error) => {
+				//console.log(error.response.data.error)
+				alert(error.response.data.error);
+			})
+			);
+		}
 
-};
+	};
 
 	const handleEditUnit = (e) => {
 
@@ -450,8 +452,8 @@ const deleteUnitRecord = (data) => {
 		} else {
 			setContactNoError('');
 		}
-		
-		
+
+
 
 		if (!mailId) {
 			setMailIdError('Mail id is required');
@@ -503,185 +505,70 @@ const deleteUnitRecord = (data) => {
 	}
 
 	return <>
-			<MDBCol size='1' style={{ width : "13%" }} className='no-pad-right'>
-				<MDBTabs className='flex-column text-center vertical-tab'>
-					<MDBTabsItem className="vertical-link">
-						<MDBTabsLink onClick={() => handleVerticalClick('tabV1')} active={verticalActive === 'tabV1'}>
-							Baseline
-						</MDBTabsLink>
-					</MDBTabsItem>
-				</MDBTabs>
-			</MDBCol>
-			<MDBCol size='11' style={{ width : "87%" }} className='no-pad-left'>
-				<MDBTabsContent className='unit-tab-content'>
-					<MDBTabsPane show={verticalActive === 'tabV1'}>
-						<div className='row'>
-							<div className='col-8'>
-								<h1 className='h1'> Company Units </h1>
-							</div>
-							<div className='col-4 text-right'>
-								<Button className='primary-btn mt-10' onClick={() => {setShow(true);stateValues() }}>
-								<i className='fa fa-plus fa-white'> </i> Unit 
-								</Button>
-								<Modal
-									show={show}
-									onHide={() => setShow(false)}
-									dialogClassName="modal-50w"
-									backdrop="static"
-									keyboard={false}>
-
-									<Modal.Header closeButton>
-										<Modal.Title> Add New Unit  </Modal.Title>
-									</Modal.Header>
-									<Modal.Body>
-										<form onSubmit={handleUnitSetup}>
-											<div className='row'>
-												<div className='col-6'>
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="1" label='Name of Unit' onChange={(e) => { setunitName(e.target.value) }} value={unitName} name='unitName' />
-													{unitNameError && <p style={{ color: 'red' }}>{unitNameError}</p>}
-
-													<MDBInput label='Address' type='text' tabindex="3" wrapperClass='mb-3' onChange={(e) => { setAddressLine1(e.target.value) }} value={addressLine1} name='addressLine1' />
-													{addressLine1Error && <p style={{ color: 'red' }}>{addressLine1Error}</p>}
-
-													<Form.Select className='mb-3' tabindex="5" label='State' onChange={(e) => { setState(e.target.value) }} value={state} name='state'  >
-                                                        <option> Select State </option>
-                                                        {stateList.map((item) => (
-                                                            <option key={item.State_Name} value={item.State_Name}>
-                                                                {item.State_Name}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-
-													<MDBInput wrapperClass='mb-3' tabindex="7" type='text' label='Division' onChange={(e) => { setdivision(e.target.value); }} value={division} name='division' />
-													{divisionError && <p style={{ color: 'red' }}>{divisionError}</p>}
-
-													<MDBInput wrapperClass='mb-3' type='number' tabindex="9" label='TIN No.' onChange={(e) => { setTinNo(e.target.value) }} value={tinNo} name='tinNo' />
-													{tinNoError && <p style={{ color: 'red' }}>{tinNoError}</p>}
-
-													<MDBInput wrapperClass='mb-3' tabindex="11" type='text' label='Registration No.' onChange={(e) => { setRegNo(e.target.value) }} value={regNo} name='regNo' />
-													{regNoError && <p style={{ color: 'red' }}>{regNoError}</p>}
-
-												</div>
-
-												<div className='col-6'>
-
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="2" label='Short Name' onChange={(e) => { setShortName(e.target.value) }} value={shortName} name='shortName' />
-													{shortNameError && <p style={{ color: 'red' }}>{shortNameError}</p>}
-
-													
-													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='City' onChange={(e) => { setCity(e.target.value) }} value={city} name='city' />
-													{cityError && <p style={{ color: 'red' }}>{cityError}</p>}
-
-													<MDBInput wrapperClass='mb-3' tabindex="6" type='number' label='Pincode' onChange={(e) => { setPinNO(e.target.value) }} value={pinNo} name='pinNo' />
-													{pinNoError && <p style={{ color: 'red' }}>{pinNoError}</p>}
-
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Group' onChange={(e) => { setGroup(e.target.value) }} value={group} name='group' />
-													{groupError && <p style={{ color: 'red' }}>{groupError}</p>}
-
-													<MDBInput wrapperClass='mb-3' type='email' tabindex="10" label='Admin E-Mail ID' onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
-													{mailIdError && <p style={{ color: 'red' }}>{mailIdError}</p>}
-
-													<MDBInput wrapperClass='mb-3' type='number' tabindex="12" label='Admin Contact No.' onChange={(e) => { setContactNo(e.target.value) }} value={contactNo} name='contactNo' />
-													{contactNoError && <p style={{ color: 'red' }}>{contactNoError}</p>}
-
-												</div>
-											</div>
-										</form>
-
-									</Modal.Body>
-									<Modal.Footer>
-										<Button variant="secondary" onClick={handleClose} style={{ width: '15%' }} >
-											Cancel
-										</Button>
-										<Button variant="primary" type='submit' onClick={handleUnitSetup}  style={{ width: '15%' }}>
-											Save
-										</Button>
-									</Modal.Footer>
-								</Modal>
-							</div>
-							<div className='col-12'>
-
-								<CompanyUnitTable defaultPageSize={10} data={data} openEditForm={openEditForm} deleteUnitRecord = {deleteUnitRecord} />
-
-								<Modal show={isEditFormOpen} onHide={closeEditForm} dialogClassName="modal-50w"
-									backdrop="static">
-									<Modal.Header closeButton>
-										<Modal.Title>Edit Company Unit</Modal.Title>
-									</Modal.Header>
-									<Modal.Body>
-										<form onSubmit={handleEditUnit}>
-											<div className='row'>
-												<div className='col-6'>
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="1" label='Name of Unit' readOnly onChange={(e) => { setunitName(e.target.value) }} value={unitName} name='unitName' />
-													{unitNameError && <p style={{ color: 'red' }}>{unitNameError}</p>}
-
-													<MDBInput label='Address' type='text' wrapperClass='mb-3'  tabindex="3" onChange={(e) => { setAddressLine1(e.target.value) }} value={addressLine1} name='addressLine1' />
-													{addressLine1Error && <p style={{ color: 'red' }}>{addressLine1Error}</p>}
-
-
-													{/* <MDBInput wrapperClass='mb-3' label='State'  tabindex="5" onChange={(e) => { setState(e.target.value) }} value={state} name='state' />
-													{stateError && <p style={{ color: 'red' }}>{stateError}</p>} */}
-
-													<Form.Select className='mb-3' tabindex="5" label='State' onChange={(e) => { setState(e.target.value) }} value={state} name='state'  >
-                                                        <option> Select State </option>
-                                                        {stateList.map((item) => (
-                                                            <option key={item.State_Name} value={item.State_Name}>
-                                                                {item.State_Name}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-
-													<MDBInput wrapperClass='mb-3' type='text'  tabindex="7" label='Division' onChange={(e) => { setdivision(e.target.value); }} value={division} name='division' />
-													{divisionError && <p style={{ color: 'red' }}>{divisionError}</p>}
-
-													<MDBInput wrapperClass='mb-3' type='number'  tabindex="9" label='TIN No.' onChange={(e) => { setTinNo(e.target.value) }} value={tinNo} name='tinNo' />
-													{tinNoError && <p style={{ color: 'red' }}>{tinNoError}</p>}
-
-
-													<MDBInput wrapperClass='mb-3' type='text'  tabindex="11" label='Registration No.' onChange={(e) => { setRegNo(e.target.value) }} value={regNo} name='regNo' />
-													{regNoError && <p style={{ color: 'red' }}>{regNoError}</p>}
-
-												</div>
-
-												<div className='col-6'>
-
-													<MDBInput wrapperClass='mb-3' type='text' label='Short Name'  tabindex="2" readOnly onChange={(e) => { setShortName(e.target.value) }} value={shortName} name='shortName' />
-													{shortNameError && <p style={{ color: 'red' }}>{shortNameError}</p>}
-													
-													<MDBInput wrapperClass='mb-3' label='City' type='text'  tabindex="4" onChange={(e) => { setCity(e.target.value) }} value={city} name='city' />
-													{cityError && <p style={{ color: 'red' }}>{cityError}</p>}
-
-													<MDBInput wrapperClass='mb-3' label='Pincode' type='number'  tabindex="6" onChange={(e) => { setPinNO(e.target.value) }} value={pinNo} name='pinNo' />
-													{pinNoError && <p style={{ color: 'red' }}>{pinNoError}</p>}
-
-													<MDBInput wrapperClass='mb-3' label='Group' type='text'  tabindex="8" onChange={(e) => { setGroup(e.target.value) }} value={group} name='group' />
-													{groupError && <p style={{ color: 'red' }}>{groupError}</p>}
-
-													<MDBInput wrapperClass='mb-3' type='email' label='Admin E-Mail ID'  tabindex="10" onChange={(e) => { setMailId(e.target.value) }} value={mailId} name='mailId' />
-													{mailIdError && <p style={{ color: 'red' }}>{mailIdError}</p>}
-
-													<MDBInput wrapperClass='mb-3' type='number'  tabindex="12" label='Admin Contact No.' onChange={(e) => { setContactNo(e.target.value) }} value={contactNo} name='contactNo' />
-													{contactNoError && <p style={{ color: 'red' }}>{contactNoError}</p>}
-
-												</div>
-											</div>
-										</form>
-
-									</Modal.Body>
-									<Modal.Footer>
-                                        <Button variant="secondary" onClick={closeEditForm} style={{ width: '15%' }}>
-                                            Cancel
-                                        </Button>
-                                        <Button variant="primary" onClick={handleEditUnit} style={{ width: '15%' }}>
-                                            Save
-                                        </Button>
-                                    </Modal.Footer>
-								</Modal>
-							</div>
+		<MDBCol size='1' style={{ width: "13%" }} className='no-pad-right'>
+			<MDBTabs className='flex-column text-center vertical-tab'>
+				<MDBTabsItem className="vertical-link">
+					<MDBTabsLink onClick={() => handleVerticalClick('tabV1')} active={verticalActive === 'tabV1'}>
+						Baseline
+					</MDBTabsLink>
+				</MDBTabsItem>
+			</MDBTabs>
+		</MDBCol>
+		<MDBCol size='11' style={{ width: "87%" }} className='no-pad-left'>
+			<MDBTabsContent className='unit-tab-content'>
+				<MDBTabsPane show={verticalActive === 'tabV1'}>
+					<div className='row'>
+						<div className='col-8'>
+							<h1 className='h1'> Company Units </h1>
 						</div>
-					</MDBTabsPane>
-				</MDBTabsContent>
-			</MDBCol>
+						<div className='col-4 text-right'>
+							<Button className='primary-btn mt-10' onClick={() => { setShow(true); stateValues() }}>
+								<i className='fa fa-plus fa-white'> </i> Unit
+							</Button>
+							<UnitForm
+								show={show}
+								handleClose={handleClose}
+								handleSubmit={handleUnitSetup}
+								unitName={unitName} setUnitName={setunitName} unitNameError={unitNameError}
+								addressLine1={addressLine1} setAddressLine1={setAddressLine1} addressLine1Error={addressLine1Error}
+								state={state} setState={setState} stateList={stateList}
+								division={division} setDivision={setdivision} divisionError={divisionError}
+								tinNo={tinNo} setTinNo={setTinNo} tinNoError={tinNoError}
+								regNo={regNo} setRegNo={setRegNo} regNoError={regNoError}
+								shortName={shortName} setShortName={setShortName} shortNameError={shortNameError}
+								city={city} setCity={setCity} cityError={cityError}
+								pinNo={pinNo} setPinNO={setPinNO} pinNoError={pinNoError}
+								group={group} setGroup={setGroup} groupError={groupError}
+								mailId={mailId} setMailId={setMailId} mailIdError={mailIdError}
+								contactNo={contactNo} setContactNo={setContactNo} contactNoError={contactNoError}
+							/>
+						</div>
+						<div className='col-12'>
+
+							<CompanyUnitTable defaultPageSize={10} data={data} openEditForm={openEditForm} deleteUnitRecord={deleteUnitRecord} />
+							<UnitForm
+								show={isEditFormOpen}
+								handleClose={closeEditForm}
+								handleSubmit={handleEditUnit}
+								unitName={unitName} setUnitName={setunitName} unitNameError={unitNameError}
+								addressLine1={addressLine1} setAddressLine1={setAddressLine1} addressLine1Error={addressLine1Error}
+								state={state} setState={setState} stateList={stateList}
+								division={division} setDivision={setdivision} divisionError={divisionError}
+								tinNo={tinNo} setTinNo={setTinNo} tinNoError={tinNoError}
+								regNo={regNo} setRegNo={setRegNo} regNoError={regNoError}
+								shortName={shortName} setShortName={setShortName} shortNameError={shortNameError}
+								city={city} setCity={setCity} cityError={cityError}
+								pinNo={pinNo} setPinNO={setPinNO} pinNoError={pinNoError}
+								group={group} setGroup={setGroup} groupError={groupError}
+								mailId={mailId} setMailId={setMailId} mailIdError={mailIdError}
+								contactNo={contactNo} setContactNo={setContactNo} contactNoError={contactNoError}
+							/>
+							
+						</div>
+					</div>
+				</MDBTabsPane>
+			</MDBTabsContent>
+		</MDBCol>
 
 	</>
 }
