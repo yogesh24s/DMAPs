@@ -41,5 +41,8 @@
         "rotating-file-stream": "^1.4.0",
         "translate": "^1.0.2",
         "xlsx": "^0.16.9"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.7"
     }
 }
