@@ -14,6 +14,10 @@ access.DMAPFunc();
 const companyUnit = require("../../controllers/unit.controller.js");
 const companyUsers = require("../../controllers/user.controller.js")
 const companyBuyers = require("../../controllers/buyers.controller.js");
+const gender = require("../../controllers/gender.controller.js");
+const productType = require("../../controllers/product.controller.js");
+const season = require("../../controllers/season.controller.js");
+const sizeGrid = require("../../controllers/sizegrid.controller.js");
 
 Administrator.use(bodyParser.json()); // to support JSON-encoded bodies
 Administrator.use(bodyParser.urlencoded({ // to support URL-encoded bodies
@@ -51,5 +55,19 @@ Administrator.get('/api/getBuyers',verifyToken, companyBuyers.getCompanyBuyers);
 Administrator.post('/api/saveBuyers',verifyToken, companyBuyers.saveCompanyBuyers);
 Administrator.post('/api/editBuyers',verifyToken, companyBuyers.editCompanyBuyers);
 Administrator.post('/api/deleteBuyers',verifyToken, companyBuyers.deleteCompanyBuyers);
+
+Administrator.post('/api/saveGender',verifyToken, gender.saveGender);
+Administrator.get('/api/getGender',verifyToken, gender.getGender);
+
+Administrator.post('/api/saveProductType',verifyToken, productType.saveProductType);
+Administrator.get('/api/getProductType',verifyToken, productType.getProductType);
+
+Administrator.post('/api/saveSeason',verifyToken, season.saveSeason);
+Administrator.get('/api/getSeason',verifyToken, season.getSeason);
+
+Administrator.post('/api/saveSizeGrid',verifyToken, sizeGrid.saveSizeGrid);
+Administrator.get('/api/getSizeGrid',verifyToken, sizeGrid.getSizeGrid);
+
+
 
 module.exports = Administrator;

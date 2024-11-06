@@ -1,0 +1,31 @@
+const season = require("../models/season.model.js");
+
+
+exports.saveSeason = (req, res) => {
+    data = req.body;
+    console.log("LINE 6",data);
+    
+    season.saveSeason((err, data) => {
+        if (err)
+            res.send({
+                message:
+                    err.message || "Some error occured"
+            });
+        else
+            res.send({ "result": "gender saved  successfully", "data": data });
+    });
+};
+
+exports.getSeason = (req, res) => {
+    season.getSeason((err, data) => {
+        if (err)
+            res.send({
+                message:
+                    err.message || "Some error occured"
+            });
+        else {
+            res.send(data);
+        }
+           
+    });
+};

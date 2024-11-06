@@ -27,6 +27,10 @@ import {
 
 // import userService from "../../../services/userService";
 import { trackPromise } from 'react-promise-tracker';
+import Gender from './DMAPs_Data/Gender/Gender';
+import ProductType from './DMAPs_Data/ProductType/ProductType';
+import Season from './DMAPs_Data/SEASON/Season';
+import SizeGrid from './DMAPs_Data/SizeGrid/SizeGrid';
 
 
 export default function DataSetUp() {
@@ -186,17 +190,17 @@ export default function DataSetUp() {
             <MDBCol size='1' style={{ width : "13%" }} className='no-pad-right'>
                 <MDBTabs className='flex-column text-center vertical-tab'>
 
-                    <MDBTabsItem className="vertical-link">
+                    {/* <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV1')} active={verticalActive === 'tabV1'}>
                             Human Resources
                         </MDBTabsLink>
-                    </MDBTabsItem>
+                    </MDBTabsItem> */}
                     
-                    <MDBTabsItem className="vertical-link">
+                    {/* <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV2')} active={verticalActive === 'tabV2'}>
                             Administrator
                         </MDBTabsLink>
-                    </MDBTabsItem>
+                    </MDBTabsItem> */}
 
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV3')} active={verticalActive === 'tabV3'}>
@@ -275,6 +279,18 @@ export default function DataSetUp() {
                     </MDBTabsPane>
                     <MDBTabsPane show={verticalActive === 'tabV3'}>
                         <BuyerGroup></BuyerGroup>
+                    </MDBTabsPane>
+                    <MDBTabsPane show={verticalActive === 'tabV4'}>
+                        <ProductType></ProductType>
+                    </MDBTabsPane>
+                    <MDBTabsPane show={verticalActive === 'tabV5'}>
+                        <Gender></Gender>
+                    </MDBTabsPane>
+                    <MDBTabsPane show={verticalActive === 'tabV6'}>
+                        <Season></Season>
+                    </MDBTabsPane>
+                    <MDBTabsPane show={verticalActive === 'tabV7'}>
+                        <SizeGrid></SizeGrid>
                     </MDBTabsPane>
                 </MDBTabsContent>
             </MDBCol>
