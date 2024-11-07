@@ -18,6 +18,9 @@ const gender = require("../../controllers/gender.controller.js");
 const productType = require("../../controllers/product.controller.js");
 const season = require("../../controllers/season.controller.js");
 const sizeGrid = require("../../controllers/sizegrid.controller.js");
+const printType = require("../../controllers/printtype.controller.js");
+
+const washingType = require("../../controllers/washing.controller.js");
 
 Administrator.use(bodyParser.json()); // to support JSON-encoded bodies
 Administrator.use(bodyParser.urlencoded({ // to support URL-encoded bodies
@@ -68,6 +71,12 @@ Administrator.get('/api/getSeason',verifyToken, season.getSeason);
 Administrator.post('/api/saveSizeGrid',verifyToken, sizeGrid.saveSizeGrid);
 Administrator.get('/api/getSizeGrid',verifyToken, sizeGrid.getSizeGrid);
 
+Administrator.post('/api/savePrintType',verifyToken, printType.savePrintType);
+Administrator.get('/api/getPrintType',verifyToken, printType.getPrintType);
+
+Administrator.post('/api/saveWashingType',verifyToken, washingType.saveWashingType);
+Administrator.get('/api/getWashingType',verifyToken, washingType.getWashingType);
+Administrator.post('/api/deletewashingType',verifyToken, washingType.deletewashingType);
 
 
 module.exports = Administrator;

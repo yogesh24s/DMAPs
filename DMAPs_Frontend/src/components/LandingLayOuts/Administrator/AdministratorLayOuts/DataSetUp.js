@@ -31,6 +31,8 @@ import Gender from './DMAPs_Data/Gender/Gender';
 import ProductType from './DMAPs_Data/ProductType/ProductType';
 import Season from './DMAPs_Data/SEASON/Season';
 import SizeGrid from './DMAPs_Data/SizeGrid/SizeGrid';
+import PrintType from './DMAPs_Data/PrintType/PrintType';
+import WashingType from './DMAPs_Data/ProductType/WashingType/WashingType';
 
 
 export default function DataSetUp() {
@@ -250,23 +252,23 @@ export default function DataSetUp() {
                         </MDBTabsLink>
                     </MDBTabsItem>
                     
-                    <MDBTabsItem className="vertical-link">
+                    {/* <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV11')} active={verticalActive === 'tabV11'}>
                             Shipment Mode
                         </MDBTabsLink>
-                    </MDBTabsItem>
+                    </MDBTabsItem> */}
                     
-                    <MDBTabsItem className="vertical-link">
+                    {/* <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV12')} active={verticalActive === 'tabV12'}>
                             Country
                         </MDBTabsLink>
-                    </MDBTabsItem>
+                    </MDBTabsItem> */}
                     
-                    <MDBTabsItem className="vertical-link">
+                    {/* <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV13')} active={verticalActive === 'tabV13'}>
                             Garment Colour
                         </MDBTabsLink>
-                    </MDBTabsItem>
+                    </MDBTabsItem> */}
                 </MDBTabs>
             </MDBCol>
             <MDBCol size='11' style={{ width : "87%" }} className='no-pad-left'>
@@ -291,6 +293,12 @@ export default function DataSetUp() {
                     </MDBTabsPane>
                     <MDBTabsPane show={verticalActive === 'tabV7'}>
                         <SizeGrid></SizeGrid>
+                    </MDBTabsPane>
+                    <MDBTabsPane show={verticalActive === 'tabV9'}>
+                        <PrintType></PrintType>
+                    </MDBTabsPane>
+                    <MDBTabsPane show={verticalActive === 'tabV10'}>
+                        <WashingType></WashingType>
                     </MDBTabsPane>
                 </MDBTabsContent>
             </MDBCol>
