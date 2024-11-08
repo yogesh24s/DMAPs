@@ -1,13 +1,13 @@
-const sizeGrid = function(sizeGrid) {}
+const embType = function(embtype) {}
 const path = require('path');
 var access = require('../var.js');
 access.DMAPFunc();
 
 
-sizeGrid.saveSizeGrid = result => {
+embType.saveEmbType = result => {
     console.log("dat",data);
     knex.transaction(function(t) {
-        return knex('dmaps.map_size_grid')
+        return knex('dmaps.map_emb_type')
             .insert(data)
             .then(function(response) {
                 result(null, { "result": response });
@@ -21,26 +21,26 @@ sizeGrid.saveSizeGrid = result => {
     });
 }
 
-sizeGrid.getSizeGrid = result => {
-    sql =`SELECT * FROM dmaps.map_size_grid;`;
+embType.getEmbType = result => {
+    sql =`SELECT * FROM dmaps.map_emb_type;`;
     pool.query(sql, function(err, res) {
         if (err) {
             result(null, err);
             return;
         }
         dataObj = {};
-        dataObj['sizeGrid'] = res;
+        dataObj['emb_type'] = res;
         result(null, dataObj);
     });
 };
 
-sizeGrid.deleteSizeGrid = result => {
-    const sizeGrid = data[0]; // Get the first item from the data array
-    console.log("data",sizeGrid);
+embType.deleteEmbType = result => {
+    const embType = data[0]; // Get the first item from the data array
+    console.log("data",embType);
     
     knex.transaction(function(t) {
-        return knex('dmaps.map_size_grid')
-        .where({ id: sizeGrid.id})
+        return knex('dmaps.map_emb_type')
+        .where({ id: embType.id})
         .del()
         .then(function(response) {
             result(null, { "result": response });
@@ -54,4 +54,4 @@ sizeGrid.deleteSizeGrid = result => {
 }
 
 
-module.exports = sizeGrid;
+module.exports = embType;

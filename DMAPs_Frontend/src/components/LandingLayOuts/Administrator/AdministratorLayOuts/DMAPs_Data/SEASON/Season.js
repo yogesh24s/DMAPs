@@ -56,6 +56,29 @@ export default function Season() {
         getSeason()
     }, [])
 
+    const deleteSeasonType = (data) => {
+        debugger
+		if (window.confirm("Are you sure to delete the Season  Type ?")) {
+			let payload = {
+				"id": data.id
+			}
+			trackPromise(seasonService.deleteSeasonType({ "data": [payload] }).then((response) => {
+				//check login response
+				if (response.status === 200) {
+					getSeason()
+				}
+				else {
+					alert(response.data.message);
+				}
+
+			}).catch((error) => {
+				//console.log(error.response.data.error)
+				alert(error.response.data.error);
+			})
+			);
+		}
+	};
+
     return (
         <div>
             <div className='row'>

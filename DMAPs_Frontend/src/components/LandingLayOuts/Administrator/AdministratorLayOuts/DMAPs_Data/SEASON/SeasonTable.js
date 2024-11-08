@@ -22,7 +22,7 @@ export default function SeasonTable(props) {
 					  props.openEditForm(row.original)
 					}} title='Edit'> </i>,  
 					<i className='fa fa-trash ml-15 pointer' onClick={(data) => {
-						props.deleteBuyerGroupRecord(row.original)
+						props.deleteSeasonType(row.original)
 					  }} title='Delete' > </i>
 				]
 			),

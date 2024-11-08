@@ -3,34 +3,35 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { MDBInput, MDBRadio } from 'mdb-react-ui-kit';
 import { trackPromise } from 'react-promise-tracker';
-import washingtypeService from '../../../../../../../services/washingtypeService';
-import WashingTypeTable from './WashingTypeTable';
+import embTypeService from '../../../../../../services/embService';
+import EmbTypeTable from './EmbTypeTable';
 
-export default function WashingType() {
-    const [washingType, setWashingType] = useState("")
+export default function EmbType() {
+    const [embType, setEmbType] = useState("")
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const [washingTypeData, setWashingTypeData] = useState([])
+    const [embTypeData, setEmbTypeData] = useState([])
 
     const handleForm =() => {
         setShow(true)
     }
 
-    function handleWashingType() {
+    function handleEmbType() {
         debugger
         let payload = {
-            "washing_type": washingType,
+            "emb_type": embType,
 
         }
         debugger
         trackPromise(
             new Promise((resolve, reject) => {
-                const result = washingtypeService.saveWashingType({ "data": [payload] });
+                const result = embTypeService.saveEmbType({ "data": [payload] });
                 if (result) resolve(result);
-                else reject(new Error("genderService.saveGender returned undefined"));
+                else reject(new Error(""));
             })
                 .then(response => {
                     if (response.status === 200) {
+                        // getPrintType()
                         handleClose();
                     } else {
                         alert(response.data.result);
@@ -43,32 +44,32 @@ export default function WashingType() {
 
     }
 
-    const getPrintType = () => {
+    const getEmbType = () => {
         debugger
 		trackPromise(
-			washingtypeService.getWashingType().then((response) => {
+			embTypeService.getEmbType().then((response) => {
                 debugger
-                console.log("printtype,",response.data.print_type);
+                console.log("printtype,",response.data.emb_type);
                 
-				setWashingTypeData(response.data.washing_type)
+				setEmbTypeData(response.data.emb_type)
 			})
 		);
 	}
 	useEffect(() => {
-		getPrintType()
+		getEmbType()
 	}, [])
 
 
-    const deleteWashingRecord = (data) => {
+    const deleteEmbType = (data) => {
         debugger
-		if (window.confirm("Are you sure to delete the Company Buyer ?")) {
+		if (window.confirm("Are you sure to delete the Emb  Type ?")) {
 			let payload = {
 				"id": data.id
 			}
-			trackPromise(washingtypeService.deleteWashingRecord({ "data": [payload] }).then((response) => {
+			trackPromise(embTypeService.deleteEmbType({ "data": [payload] }).then((response) => {
 				//check login response
 				if (response.status === 200) {
-					getPrintType()
+					getEmbType()
 				}
 				else {
 					alert(response.data.message);
@@ -81,15 +82,16 @@ export default function WashingType() {
 			);
 		}
 	};
+
   return (
     <div>
       <div className='row'>
             <div className='col-8'>
-                <h1 className='h1'> Washing Type </h1>
+                <h1 className='h1'> Emb Type </h1>
             </div>
             <div className='col-4 text-right'>
                 <Button className='primary-btn mt-10' onClick={handleForm}>
-                    <i className='fa fa-plus fa-white'> </i> Washing Type
+                    <i className='fa fa-plus fa-white'> </i> Emb Type
                 </Button>
                 <Modal show={show}
                     onHide={() => setShow(false)}
@@ -101,12 +103,12 @@ export default function WashingType() {
                         <Modal.Title> Add New Washing Type </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <form onSubmit={handleWashingType}>
+                        <form onSubmit={handleEmbType}>
                             <div className='row'>
                                 <div className='col-6'>
-                                    <label>Print Type</label>
+                                    <label>Emb Type</label>
                                     <div className="mb-3">
-                                    <MDBInput wrapperClass='mb-3' type='text' required label='Washing Type' tabindex="3" onChange={(e) => { setWashingType(e.target.value) }} value={washingType} name='washingType' />
+                                    <MDBInput wrapperClass='mb-3' type='text' required label='Emb Type' tabindex="3" onChange={(e) => { setEmbType(e.target.value) }} value={embType} name='embType' />
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +119,7 @@ export default function WashingType() {
 						<Button variant="secondary" onClick={handleClose} style={{ width: '15%' }}>
 							Cancel
 						</Button>
-						<Button variant="primary" onClick={handleWashingType} style={{ width: '15%' }}>
+						<Button variant="primary" onClick={handleEmbType} style={{ width: '15%' }}>
 							Save
 						</Button>
 					</Modal.Footer>
@@ -125,7 +127,7 @@ export default function WashingType() {
                 </Modal>
             </div>
             <div className='col-12'>
-            <WashingTypeTable data={washingTypeData} deleteWashingRecord={deleteWashingRecord} />
+            <EmbTypeTable data={embTypeData} deleteEmbType={deleteEmbType} />
 
             </div>
         </div>

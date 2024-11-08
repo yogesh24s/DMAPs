@@ -29,3 +29,18 @@ exports.getPrintType = (req, res) => {
            
     });
 };
+
+exports.deletePrintType = (req, res) => {
+    data = req.body;
+    console.log("data contorller",data);
+    
+    printType.deletePrintType((err, data) => {
+        if (err)
+            res.send({
+                message:
+                    err.message || "Some error occured"
+            });
+        else
+            res.send({ "result": "Print type is deleted successfully", "data": data });
+    });
+};

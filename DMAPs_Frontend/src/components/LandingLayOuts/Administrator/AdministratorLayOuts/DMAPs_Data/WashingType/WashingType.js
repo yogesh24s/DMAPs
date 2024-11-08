@@ -3,35 +3,35 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { MDBInput, MDBRadio } from 'mdb-react-ui-kit';
 import { trackPromise } from 'react-promise-tracker';
-import printtypeService from '../../../../../../services/printtypeService';
-import PrintTypeTable from './PrintTypeTable';
+import WashingTypeTable from './WashingTypeTable';
+import washingtypeService from '../../../../../../services/washingtypeService';
 
-export default function PrintType() {
-
-    const [printType, setPrintType] = useState("")
+export default function WashingType() {
+    const [washingType, setWashingType] = useState("")
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const [printTypeData, setPrintTypeData] = useState([])
+    const [washingTypeData, setWashingTypeData] = useState([])
 
     const handleForm =() => {
         setShow(true)
     }
 
-    function handlePrintType() {
+    function handleWashingType() {
         debugger
         let payload = {
-            "print_type": printType,
+            "washing_type": washingType,
 
         }
         debugger
         trackPromise(
             new Promise((resolve, reject) => {
-                const result = printtypeService.savePrintType({ "data": [payload] });
+                const result = washingtypeService.saveWashingType({ "data": [payload] });
                 if (result) resolve(result);
-                else reject(new Error(""));
+                else reject(new Error("genderService.saveGender returned undefined"));
             })
                 .then(response => {
                     if (response.status === 200) {
+                        getPrintType()
                         handleClose();
                     } else {
                         alert(response.data.result);
@@ -47,11 +47,11 @@ export default function PrintType() {
     const getPrintType = () => {
         debugger
 		trackPromise(
-			printtypeService.getPrintType().then((response) => {
+			washingtypeService.getWashingType().then((response) => {
                 debugger
                 console.log("printtype,",response.data.print_type);
                 
-				setPrintTypeData(response.data.print_type)
+				setWashingTypeData(response.data.washing_type)
 			})
 		);
 	}
@@ -59,13 +59,14 @@ export default function PrintType() {
 		getPrintType()
 	}, [])
 
-    const deletePrintType = (data) => {
+
+    const deleteWashingRecord = (data) => {
         debugger
-		if (window.confirm("Are you sure to delete the Print  Type ?")) {
+		if (window.confirm("Are you sure to delete the Washing  Type ?")) {
 			let payload = {
 				"id": data.id
 			}
-			trackPromise(printtypeService.deletePrintType({ "data": [payload] }).then((response) => {
+			trackPromise(washingtypeService.deleteWashingRecord({ "data": [payload] }).then((response) => {
 				//check login response
 				if (response.status === 200) {
 					getPrintType()
@@ -85,11 +86,11 @@ export default function PrintType() {
     <div>
       <div className='row'>
             <div className='col-8'>
-                <h1 className='h1'> Print Type </h1>
+                <h1 className='h1'> Washing Type </h1>
             </div>
             <div className='col-4 text-right'>
                 <Button className='primary-btn mt-10' onClick={handleForm}>
-                    <i className='fa fa-plus fa-white'> </i> Print Type
+                    <i className='fa fa-plus fa-white'> </i> Washing Type
                 </Button>
                 <Modal show={show}
                     onHide={() => setShow(false)}
@@ -98,15 +99,15 @@ export default function PrintType() {
                     keyboard={false}>
 
                     <Modal.Header closeButton style={{ color: 'white' }}>
-                        <Modal.Title> Add New Product Type </Modal.Title>
+                        <Modal.Title> Add New Washing Type </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <form onSubmit={handlePrintType}>
+                        <form onSubmit={handleWashingType}>
                             <div className='row'>
                                 <div className='col-6'>
                                     <label>Print Type</label>
                                     <div className="mb-3">
-                                    <MDBInput wrapperClass='mb-3' type='text' required label='Print Type' tabindex="3" onChange={(e) => { setPrintType(e.target.value) }} value={printType} name='printType' />
+                                    <MDBInput wrapperClass='mb-3' type='text' required label='Washing Type' tabindex="3" onChange={(e) => { setWashingType(e.target.value) }} value={washingType} name='washingType' />
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +118,7 @@ export default function PrintType() {
 						<Button variant="secondary" onClick={handleClose} style={{ width: '15%' }}>
 							Cancel
 						</Button>
-						<Button variant="primary" onClick={handlePrintType} style={{ width: '15%' }}>
+						<Button variant="primary" onClick={handleWashingType} style={{ width: '15%' }}>
 							Save
 						</Button>
 					</Modal.Footer>
@@ -125,7 +126,7 @@ export default function PrintType() {
                 </Modal>
             </div>
             <div className='col-12'>
-            <PrintTypeTable data={printTypeData}  deletePrintType = {deletePrintType} />
+            <WashingTypeTable data={washingTypeData} deleteWashingRecord={deleteWashingRecord} />
 
             </div>
         </div>

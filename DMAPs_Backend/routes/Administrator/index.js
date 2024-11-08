@@ -19,7 +19,7 @@ const productType = require("../../controllers/product.controller.js");
 const season = require("../../controllers/season.controller.js");
 const sizeGrid = require("../../controllers/sizegrid.controller.js");
 const printType = require("../../controllers/printtype.controller.js");
-
+const embType = require("../../controllers/emb.controller.js");
 const washingType = require("../../controllers/washing.controller.js");
 
 Administrator.use(bodyParser.json()); // to support JSON-encoded bodies
@@ -70,13 +70,19 @@ Administrator.get('/api/getSeason',verifyToken, season.getSeason);
 
 Administrator.post('/api/saveSizeGrid',verifyToken, sizeGrid.saveSizeGrid);
 Administrator.get('/api/getSizeGrid',verifyToken, sizeGrid.getSizeGrid);
+Administrator.post('/api/deleteSizeGrid',verifyToken, sizeGrid.deleteSizeGrid);
 
 Administrator.post('/api/savePrintType',verifyToken, printType.savePrintType);
 Administrator.get('/api/getPrintType',verifyToken, printType.getPrintType);
+Administrator.post('/api/deletePrintType',verifyToken, printType.deletePrintType);
 
 Administrator.post('/api/saveWashingType',verifyToken, washingType.saveWashingType);
 Administrator.get('/api/getWashingType',verifyToken, washingType.getWashingType);
 Administrator.post('/api/deletewashingType',verifyToken, washingType.deletewashingType);
 
+
+Administrator.post('/api/saveEmbType',verifyToken, embType.saveEmbType);
+Administrator.get('/api/getEmbType',verifyToken, embType.getEmbType);
+Administrator.post('/api/deleteEmbType',verifyToken, embType.deleteEmbType);
 
 module.exports = Administrator;

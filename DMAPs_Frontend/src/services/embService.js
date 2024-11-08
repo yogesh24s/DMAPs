@@ -4,19 +4,20 @@
  */
 import api from "./interceptor";
 
-class sizeGridService {
+class embTypeService {
 
-    saveSizeGrid(payload) {
+    saveEmbType(payload) {
       debugger
+      // alert(payload)
       const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
       console.log(payload)
-      return api.post(`${apiUrl}/api/saveSizeGrid`, payload);
+      return api.post(`${apiUrl}/api/saveEmbType`, payload);
     }
 
-    getSizeGrid() {
+    getEmbType() {
       const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
       return api
-        .get(`${apiUrl}/api/getSizeGrid`)
+        .get(`${apiUrl}/api/getEmbType`)
         .then((response) => {
           return response;
         })
@@ -25,15 +26,14 @@ class sizeGridService {
         });
     }
 
-
     // editCompanyBuyers(payload) {
     //   const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
     //   return api.post(`${apiUrl}/api/editBuyers`, payload);
     // }
 
-    deleteSizeGrid(payload) {
+    deleteEmbType(payload) {
       const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
-      return api.post(`${apiUrl}/api/deleteSizeGrid`, payload);
+      return api.post(`${apiUrl}/api/deleteEmbType`, payload);
     }
 
     // getCompanyBuyers() {
@@ -49,4 +49,4 @@ class sizeGridService {
     // }
 }
 
-export default new sizeGridService();
+export default new embTypeService();

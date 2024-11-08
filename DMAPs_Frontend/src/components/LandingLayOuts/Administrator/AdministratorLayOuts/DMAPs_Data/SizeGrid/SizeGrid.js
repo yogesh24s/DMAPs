@@ -54,6 +54,30 @@ export default function SizeGrid() {
         getSizeGrid()
     }, [])
 
+
+    const deleteSizeGrid = (data) => {
+        debugger
+		if (window.confirm("Are you sure to delete the Size Grid   ?")) {
+			let payload = {
+				"id": data.id
+			}
+			trackPromise(sizeGridService.deleteSizeGrid({ "data": [payload] }).then((response) => {
+				//check login response
+				if (response.status === 200) {
+					getSizeGrid()
+				}
+				else {
+					alert(response.data.message);
+				}
+
+			}).catch((error) => {
+				//console.log(error.response.data.error)
+				alert(error.response.data.error);
+			})
+			);
+		}
+	};
+
   return (
     <div>
             <div className='row'>
@@ -98,7 +122,7 @@ export default function SizeGrid() {
                     </Modal>
                 </div>
                 <div className='col-12'>
-                    <SizeGridTable data={sizeGridData} />
+                    <SizeGridTable data={sizeGridData} deleteSizeGrid={deleteSizeGrid} />
 
                 </div>
             </div>

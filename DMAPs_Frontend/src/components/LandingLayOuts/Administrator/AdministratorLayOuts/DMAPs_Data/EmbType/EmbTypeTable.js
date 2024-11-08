@@ -1,28 +1,30 @@
 import React from 'react'
 import { useTable } from 'react-table';
 
-export default function SizeGridTable(props) {
+
+export default function EmbTypeTable(props) {
+
     let data = props.data
-	console.log(data);
+	console.log("data",data);
     
 	const columns = React.useMemo(
 		() => [
 		  
 		  {
-			Header: 'Size Grid',
-			accessor: 'Size_Grid',
+			Header: 'Emb Type',
+			accessor: 'Emb_Type',
 		  },
 		  
 		  {
 			Header: 'Actions',
-			accessor: 'action', 
+			accessor: 'action', // You can set a dummy accessor for the action column
 			Cell: ({ row }) => (
 				[
 					<i className='fa fa-edit pointer' onClick={(data) => {
 					  props.openEditForm(row.original)
 					}} title='Edit'> </i>,  
 					<i className='fa fa-trash ml-15 pointer' onClick={(data) => {
-						props.deleteSizeGrid(row.original)
+						props.deleteEmbType(row.original)
 					  }} title='Delete' > </i>
 				]
 			),
@@ -42,7 +44,7 @@ export default function SizeGridTable(props) {
 		data,
 	  });
   return (
-<div className='mt-4'>
+    <div className='mt-4'>
       <table {...getTableProps()} className="table">
         <thead>
           {headerGroups.map((headerGroup) => (

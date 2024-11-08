@@ -1,23 +1,23 @@
-const sizeGrid = require("../models/sizeGrid.model.js");
+const embType = require("../models/embtype.model.js");
 
 
-exports.saveSizeGrid = (req, res) => {
+exports.saveEmbType = (req, res) => {
     data = req.body;
     console.log("LINE 6",data);
     
-    sizeGrid.saveSizeGrid((err, data) => {
+    embType.saveEmbType((err, data) => {
         if (err)
             res.send({
                 message:
                     err.message || "Some error occured"
             });
         else
-            res.send({ "result": "gender saved  successfully", "data": data });
+            res.send({ "result": "Emb Type saved  successfully", "data": data });
     });
 };
 
-exports.getSizeGrid = (req, res) => {
-    sizeGrid.getSizeGrid((err, data) => {
+exports.getEmbType = (req, res) => {
+    embType.getEmbType((err, data) => {
         if (err)
             res.send({
                 message:
@@ -30,17 +30,17 @@ exports.getSizeGrid = (req, res) => {
     });
 };
 
-exports.deleteSizeGrid = (req, res) => {
+exports.deleteEmbType = (req, res) => {
     data = req.body;
     console.log("data contorller",data);
     
-    sizeGrid.deleteSizeGrid((err, data) => {
+    embType.deleteEmbType((err, data) => {
         if (err)
             res.send({
                 message:
                     err.message || "Some error occured"
             });
         else
-            res.send({ "result": "Size  Grid are deleted successfully", "data": data });
+            res.send({ "result": "Emb type is deleted successfully", "data": data });
     });
 };

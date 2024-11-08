@@ -32,7 +32,8 @@ import ProductType from './DMAPs_Data/ProductType/ProductType';
 import Season from './DMAPs_Data/SEASON/Season';
 import SizeGrid from './DMAPs_Data/SizeGrid/SizeGrid';
 import PrintType from './DMAPs_Data/PrintType/PrintType';
-import WashingType from './DMAPs_Data/ProductType/WashingType/WashingType';
+import WashingType from './DMAPs_Data/WashingType/WashingType';
+import EmbType from './DMAPs_Data/EmbType/EmbType';
 
 
 export default function DataSetUp() {
@@ -299,6 +300,9 @@ export default function DataSetUp() {
                     </MDBTabsPane>
                     <MDBTabsPane show={verticalActive === 'tabV10'}>
                         <WashingType></WashingType>
+                    </MDBTabsPane>
+                    <MDBTabsPane show={verticalActive === 'tabV8'}>
+                        <EmbType></EmbType>
                     </MDBTabsPane>
                 </MDBTabsContent>
             </MDBCol>
