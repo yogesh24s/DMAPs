@@ -29,6 +29,7 @@ import StyleEntryTable from './StyleEntryTable';
 import adminService from "../../../../services/adminService"
 
 import ProductionOrder from './PO_Details/ProductionOrder';
+import StyleModal from './StyleModal';
 
 export default function StyleEntry() {
 
@@ -68,8 +69,8 @@ export default function StyleEntry() {
 	const [styleId, setStyleEntryId] = useState("");
 
 	const [base64Images, setBase64Images] = useState([]);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [imageUploadError, setImageUploadError] = useState(null);
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const [imageUploadError, setImageUploadError] = useState(null);
 
 
 	const handleVerticalClick = (value) => {
@@ -82,28 +83,28 @@ export default function StyleEntry() {
 	const handleImageUpload = (event) => {
 		const files = event.target.files;
 		const totalFiles = files.length + base64Images.length; // Calculate total number of files after upload
-	
+
 		if (totalFiles > 6) {
 			setImageUploadError("You can only upload a maximum of 6 images.");
 			return;
 		}
-	
+
 		// Reset error if it was previously set
 		setImageUploadError(null);
-	
+
 		// Array to store base64 encoded images
 		const base64ImagesArray = [...base64Images]; // Copy existing images
-	
+
 		// Iterate through each selected file
 		for (let i = 0; i < files.length; i++) {
 			const reader = new FileReader();
 			const file = files[i];
-	
+
 			// Closure to capture the file information
 			reader.onload = (e) => {
 				const base64Image = e.target.result;
 				base64ImagesArray.push(base64Image);
-	
+
 				// Check if all images are processed
 				if (base64ImagesArray.length === totalFiles) {
 					// All images are converted to base64
@@ -111,33 +112,33 @@ export default function StyleEntry() {
 					setBase64Images(base64ImagesArray);
 				}
 			};
-	
+
 			// Read the image file as a data URL
 			reader.readAsDataURL(file);
 		}
 	};
 
-    const handleNext = () => {
-        setCurrentIndex((prevIndex) => (prevIndex === base64Images.length - 1 ? 0 : prevIndex + 1));
-    };
+	const handleNext = () => {
+		setCurrentIndex((prevIndex) => (prevIndex === base64Images.length - 1 ? 0 : prevIndex + 1));
+	};
 
-    const handlePrevious = () => {
-        setCurrentIndex((prevIndex) => (prevIndex === 0 ? base64Images.length - 1 : prevIndex - 1));
-    };
+	const handlePrevious = () => {
+		setCurrentIndex((prevIndex) => (prevIndex === 0 ? base64Images.length - 1 : prevIndex - 1));
+	};
 
 	const handleDeleteImage = (indexToDelete, event) => {
 		event.preventDefault(); // Prevent default form submission
-	
+
 		// Clear file input value
 		const fileInput = document.getElementById('imageUpload');
-		fileInput.value = ''; 
-	
+		fileInput.value = '';
+
 		// Filter out the image at the specified index
 		const updatedImages = base64Images.filter((_, index) => index !== indexToDelete);
 		setBase64Images(updatedImages);
 	};
-	
-	
+
+
 	const handleStyleEntry = (e) => {
 		e.preventDefault();
 		let isValid = true;
@@ -183,7 +184,7 @@ export default function StyleEntry() {
 		} else {
 			setMarchantNameError('');
 		}
-		
+
 
 		if (!styleDescription) {
 			setStyleDescriptionError('Buyer Style No is required');
@@ -198,7 +199,7 @@ export default function StyleEntry() {
 		} else {
 			setSizeGridError('');
 		}
-		
+
 
 		if (!marchantContact) {
 			setMarchantContactError('Mail id is required');
@@ -224,8 +225,8 @@ export default function StyleEntry() {
 			"Style_Description": styleDescription,
 			"Size_Grid": sizeGrid,
 			"Marchent_Contact": marchantContact,
-			"Note":note,
-			"Style_Images" : JSON.stringify(base64Images)
+			"Note": note,
+			"Style_Images": JSON.stringify(base64Images)
 		}
 
 		trackPromise(styleStoreService.saveStyleEntry({ "data": [payload] }).then((response) => {
@@ -256,18 +257,18 @@ export default function StyleEntry() {
 	}
 
 	const getBasicDetails = () => {
-        trackPromise(
-            adminService.getBasicDetails().then((response) => {
-                setBuyerList(response.data[0].data[0].data.buyer);
+		trackPromise(
+			adminService.getBasicDetails().then((response) => {
+				setBuyerList(response.data[0].data[0].data.buyer);
 				setGenderList(response.data[0].data[0].data.gender)
 				setSizeGridList(response.data[0].data[0].data.sizeGrid)
 				setProductTypeList(response.data[0].data[0].data.productType)
 				setSeasonList(response.data[0].data[0].data.season)
 				setNextStyleNumber(response.data[0].data[0].data.nextStyleNumber[0].Next_Style_No)
 
-            })
-        );
-    }
+			})
+		);
+	}
 
 	useEffect(() => {
 		getBasicDetails();
@@ -314,9 +315,9 @@ export default function StyleEntry() {
 		);
 	};
 	const openEditForm = (data) => {
-        editFormDetails(data)
-        setIsEditFormOpen(true);
-    };
+		editFormDetails(data)
+		setIsEditFormOpen(true);
+	};
 	function editFormDetails(data) {
 
 		setSeasonError('');
@@ -341,37 +342,36 @@ export default function StyleEntry() {
 		setMarchantContact(data.Marchent_Contact)
 		setBase64Images(JSON.parse(data.Style_Images))
 	}
-    const closeEditForm = () => {
-        setIsEditFormOpen(false);
-    };
+	const closeEditForm = () => {
+		setIsEditFormOpen(false);
+	};
 
-// Delete Unit Records
+	// Delete Unit Records
 
-const deleteStyleEntry = (data) => {
-	if (window.confirm("Are you sure to delete the Style Entry ?"))
-    {
-		let payload = {
-			"Style_No":data.Style_No
-		}
-		trackPromise(styleStoreService.deleteStyleEntry({ "data": [payload] }).then((response) => {
-			//check login response
-			if (response.status === 200) {
-				getStyleEntryData()
-			}	
-			else {
-				alert(response.data.message);
+	const deleteStyleEntry = (data) => {
+		if (window.confirm("Are you sure to delete the Style Entry ?")) {
+			let payload = {
+				"Style_No": data.Style_No
 			}
+			trackPromise(styleStoreService.deleteStyleEntry({ "data": [payload] }).then((response) => {
+				//check login response
+				if (response.status === 200) {
+					getStyleEntryData()
+				}
+				else {
+					alert(response.data.message);
+				}
 
-		}).catch((error) => {
-			//console.log(error.response.data.error)
-			alert(error.response.data.error);
-		})
-		);
-	}
+			}).catch((error) => {
+				//console.log(error.response.data.error)
+				alert(error.response.data.error);
+			})
+			);
+		}
 
-};
+	};
 
-	const handleEditStyleEntry  = (e) => {
+	const handleEditStyleEntry = (e) => {
 
 		e.preventDefault();
 		let isValid = true;
@@ -417,7 +417,7 @@ const deleteStyleEntry = (data) => {
 		} else {
 			setMarchantNameError('');
 		}
-		
+
 
 		if (!styleDescription) {
 			setStyleDescriptionError('Buyer Style No is required');
@@ -432,7 +432,7 @@ const deleteStyleEntry = (data) => {
 		} else {
 			setSizeGridError('');
 		}
-		
+
 
 		if (!marchantContact) {
 			setMarchantContactError('Mail id is required');
@@ -443,7 +443,7 @@ const deleteStyleEntry = (data) => {
 		} else {
 			setMarchantContactError('');
 		}
-		
+
 
 		if (!isValid) {
 			return;
@@ -460,8 +460,8 @@ const deleteStyleEntry = (data) => {
 			"Style_Description": styleDescription,
 			"Size_Grid": sizeGrid,
 			"Marchent_Contact": marchantContact,
-			"Note":note,
-			"Style_Images" : JSON.stringify(base64Images)
+			"Note": note,
+			"Style_Images": JSON.stringify(base64Images)
 		}
 
 		trackPromise(styleStoreService.editStyleEntry({ "data": [payload] }).then((response) => {
@@ -484,330 +484,138 @@ const deleteStyleEntry = (data) => {
 	}
 
 	return <>
-			<MDBCol size='1' style={{ width : "13%" }} className='no-pad-right'>
-				<MDBTabs className='flex-column text-center vertical-tab'>
-					<MDBTabsItem className="vertical-link">
-						<MDBTabsLink onClick={() => handleVerticalClick('tabV1')} active={verticalActive === 'tabV1'}>
-							Style Details
-						</MDBTabsLink>
-					</MDBTabsItem>
+		<MDBCol size='1' style={{ width: "13%" }} className='no-pad-right'>
+			<MDBTabs className='flex-column text-center vertical-tab'>
+				<MDBTabsItem className="vertical-link">
+					<MDBTabsLink onClick={() => handleVerticalClick('tabV1')} active={verticalActive === 'tabV1'}>
+						Style Details
+					</MDBTabsLink>
+				</MDBTabsItem>
 
-					<MDBTabsItem className="vertical-link">
-						<MDBTabsLink onClick={() => handleVerticalClick('tabV2')} active={verticalActive === 'tabV2'}>
-							Order Details
-						</MDBTabsLink>
-					</MDBTabsItem>
+				<MDBTabsItem className="vertical-link">
+					<MDBTabsLink onClick={() => handleVerticalClick('tabV2')} active={verticalActive === 'tabV2'}>
+						Order Details
+					</MDBTabsLink>
+				</MDBTabsItem>
 
-				</MDBTabs>
-			</MDBCol>
-			<MDBCol size='11' style={{ width : "87%" }} className='no-pad-left'>
-				<MDBTabsContent className='unit-tab-content'>
-					<MDBTabsPane show={verticalActive === 'tabV1'}>
-						<div className='row'>
-							<div className='col-8'>
-								<h1 className='h1'> Style Details </h1>
-							</div>
-							<div className='col-4 text-right'>
-								<Button className='primary-btn mt-10' onClick={() => {setShow(true);stateValues() }}>
-								<i className='fa fa-plus fa-white'> </i> New Style 
-								</Button>
-								
-								<Modal
-									show={show}
-									onHide={() => setShow(false)}
-									dialogClassName="modal-90w"
-									backdrop="static"
-									keyboard={false}>
-
-									<Modal.Header closeButton>
-										<Modal.Title> Add New Style  </Modal.Title>
-									</Modal.Header>
-									<Modal.Body>
-										<form onSubmit={handleStyleEntry}>
-											<div className='row'>
-												<div className='col-3'>
-
-												<Form.Select className='mb-3' tabindex="1" label='Buyer' onChange={(e) => { setBuyer(e.target.value) }} value={buyer} name='Buyer'>
-                                                        <option> Select Buyer </option>
-                                                        {buyerList.map((item) => (
-                                                            <option key={item.Buyer_Id} value={item.Buyer_Id}>
-                                                                {item.Buyer_Name}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-
-													{/* <MDBInput label='Style No' readonly type='text' tabindex="3" wrapperClass='mb-3' value={nextStyleNumber} name='styleNo' />
-													{StyleNoError && <p style={{ color: 'red' }}>{StyleNoError}</p>}
-											 */}
-
-													<Form.Select className='mb-3' tabindex="1" label='Product Type' onChange={(e) => { setProductType(e.target.value) }} value={productType} name='productType'>
-                                                        <option> Select Product Type </option>
-                                                        {productTypeList.map((item) => (
-                                                            <option key={item.id} value={item.Product_Type}>
-                                                                {item.Product_Type}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-
-													{productTypeError && <p style={{ color: 'red' }}>{productTypeError}</p>}
-
-													<Form.Select className='mb-3' tabindex="1" label='Gender' onChange={(e) => { setGender(e.target.value) }} value={gender} name='gender'>
-                                                        <option> Select Gender </option>
-                                                        {genderList.map((item) => (
-                                                            <option key={item.id} value={item.Gender}>
-                                                                {item.Gender}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-													{genderError && <p style={{ color: 'red' }}>{genderError}</p>}
-
-													<MDBInput wrapperClass='mb-3' tabindex="9" type='text' label='Merchant Name' onChange={(e) => { setMarchantName(e.target.value) }} value={marchantName} name='marchantName' />
-													{marchantNameError && <p style={{ color: 'red' }}>{marchantNameError}</p>}
-
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="2" label='Buyer Order Ref. No.' onChange={(e) => { setBuyerOrderRefNo(e.target.value) }} value={buyerOrderRefNo} name='buyerOrderRefNo' />
-													{buyerOrderRefNoError && <p style={{ color: 'red' }}>{buyerOrderRefNoError}</p>}
-
-												</div>
-
-												<div className='col-3'>
-
-													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='Buyer Style No.' onChange={(e) => { setStyleDescription(e.target.value) }} value={styleDescription} name='styleDescription' />
-													{styleDescriptionError && <p style={{ color: 'red' }}>{styleDescriptionError}</p>}
-
-													<Form.Select className='mb-3' tabindex="1" label='Size Grid' onChange={(e) => { setSizeGrid(e.target.value) }} value={sizeGrid} name='sizeGrid'>
-                                                        <option> Select Size Grid </option>
-                                                        {sizeGridList.map((item) => (
-                                                            <option key={item.Size_Grid_Id} value={item.Size_Grid_Id}>
-                                                                {item.Size_Grid_Name}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-
-													{sizeGridError && <p style={{ color: 'red' }}>{sizeGridError}</p>}
-
-													<Form.Select className='mb-3' tabindex="1" label='Season' onChange={(e) => { setSeason(e.target.value) }} value={season} name='season'>
-                                                        <option> Select Season </option>
-                                                        {seasonList.map((item) => (
-                                                            <option key={item.id} value={item.Season_Name}>
-                                                                {item.Season_Name}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-
-													{seasonError && <p style={{ color: 'red' }}>{seasonError}</p>}
-
-													<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Merchant Contact No.' onChange={(e) => { setMarchantContact(e.target.value) }} value={marchantContact} name='marchantContact' />
-													{marchantContactError && <p style={{ color: 'red' }}>{marchantContactError}</p>}
-
-													<MDBInput wrapperClass='mb-3' label='Notes' type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
-
-												</div>
-												<div className='col-6'>
-													
-													<div>
-														<div className="mb-3">
-															<label for="imageUpload" class="attach-image-button">
-																<i class="fa fa-paperclip" aria-hidden="true"></i> Images (Max 6)
-															</label>
-															<input
-																type="file"
-																id="imageUpload"
-																accept="image/*"
-																multiple
-																onChange={handleImageUpload}
-																className="form-control"
-																style={{display: 'none'}}
-															/>
-															{imageUploadError && <p style={{ color: 'red' }}>{imageUploadError}</p>}
-														</div>
-														{/* Thumbnail List */}
-														<div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-															{base64Images.map((image, index) => (
-																<div key={index} style={{ position: 'relative' }}>
-																	<img
-																		src={image}
-																		alt={`Thumbnail ${index + 1}`}
-																		style={{ width: '80px', height: '80px', borderRadius: '5px', margin: '0 5px', cursor: 'pointer' }}
-																		onClick={() => setCurrentIndex(index)}
-																		className={index === currentIndex ? 'active' : ''}
-																	/>
-																	<button
-																		onClick={(event) => handleDeleteImage(index, event)}
-																		style={{ position: 'absolute', top: '5px', right: '5px', background: 'transparent', border: 'none', cursor: 'pointer' }}
-																	>
-																		<i className="fa fa-trash" style={{ color: 'red', position: 'absolute',  top: '-10px', right: '-10px' }}></i>
-																	</button>
-
-																</div>
-															))}
-														</div>
-													</div>
-												</div>
-											</div>
-										</form>
-
-									</Modal.Body>
-									<Modal.Footer>
-										<Button variant="secondary" onClick={handleClose} style={{ width: '15%' }} >
-											Cancel
-										</Button>
-										<Button variant="primary" type='submit' onClick={handleStyleEntry}  style={{ width: '15%' }}>
-											Save
-										</Button>
-									</Modal.Footer>
-								</Modal>
-							</div>
-							<div className='col-12'>
-
-								<StyleEntryTable defaultPageSize={10} data={data} openEditForm={openEditForm} deleteStyleEntry = {deleteStyleEntry} />
-
-								<Modal show={isEditFormOpen} onHide={closeEditForm} dialogClassName="modal-90w"
-									backdrop="static">
-									<Modal.Header closeButton>
-										<Modal.Title>Edit Style Entry </Modal.Title>
-									</Modal.Header>
-									<Modal.Body>
-										<form onSubmit={handleEditStyleEntry}>
-										<div className='row'>
-												<div className='col-3'>
-
-												<Form.Select className='mb-3' tabindex="1" label='Buyer' onChange={(e) => { setBuyer(e.target.value) }} value={buyer} name='Buyer'>
-                                                        <option> Select Buyer </option>
-                                                        {buyerList.map((item) => (
-                                                            <option key={item.Buyer_Id} value={item.Buyer_Id}>
-                                                                {item.Buyer_Name}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-
-													{/* <MDBInput label='Style No' readonly type='text' tabindex="3" wrapperClass='mb-3' value={nextStyleNumber} name='styleNo' />
-													{StyleNoError && <p style={{ color: 'red' }}>{StyleNoError}</p>}
-											 */}
-
-													<Form.Select className='mb-3' tabindex="1" label='Product Type' onChange={(e) => { setProductType(e.target.value) }} value={productType} name='productType'>
-                                                        <option> Select Product Type </option>
-                                                        {productTypeList.map((item) => (
-                                                            <option key={item.id} value={item.Product_Type}>
-                                                                {item.Product_Type}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-
-													{productTypeError && <p style={{ color: 'red' }}>{productTypeError}</p>}
-
-													<Form.Select className='mb-3' tabindex="1" label='Gender' onChange={(e) => { setGender(e.target.value) }} value={gender} name='gender'>
-                                                        <option> Select Gender </option>
-                                                        {genderList.map((item) => (
-                                                            <option key={item.id} value={item.Gender}>
-                                                                {item.Gender}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-													{genderError && <p style={{ color: 'red' }}>{genderError}</p>}
-
-													<MDBInput wrapperClass='mb-3' tabindex="9" type='text' label='Merchant Name' onChange={(e) => { setMarchantName(e.target.value) }} value={marchantName} name='marchantName' />
-													{marchantNameError && <p style={{ color: 'red' }}>{marchantNameError}</p>}
-
-													<MDBInput wrapperClass='mb-3' type='text' tabindex="2" label='Buyer Order Ref. No.' onChange={(e) => { setBuyerOrderRefNo(e.target.value) }} value={buyerOrderRefNo} name='buyerOrderRefNo' />
-													{buyerOrderRefNoError && <p style={{ color: 'red' }}>{buyerOrderRefNoError}</p>}
-
-												</div>
-
-												<div className='col-3'>
-
-													<MDBInput wrapperClass='mb-3' tabindex="4" type='text' label='Buyer Style No.' onChange={(e) => { setStyleDescription(e.target.value) }} value={styleDescription} name='styleDescription' />
-													{styleDescriptionError && <p style={{ color: 'red' }}>{styleDescriptionError}</p>}
-
-													<Form.Select className='mb-3' tabindex="1" label='Size Grid' onChange={(e) => { setSizeGrid(e.target.value) }} value={sizeGrid} name='sizeGrid'>
-                                                        <option> Select Size Grid </option>
-                                                        {sizeGridList.map((item) => (
-                                                            <option key={item.Size_Grid_Id} value={item.Size_Grid_Id}>
-                                                                {item.Size_Grid_Name}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-
-													{sizeGridError && <p style={{ color: 'red' }}>{sizeGridError}</p>}
-
-													<Form.Select className='mb-3' tabindex="1" label='Season' onChange={(e) => { setSeason(e.target.value) }} value={season} name='season'>
-                                                        <option> Select Season </option>
-                                                        {seasonList.map((item) => (
-                                                            <option key={item.id} value={item.Season_Name}>
-                                                                {item.Season_Name}
-                                                            </option>
-                                                        ))}
-                                                    </Form.Select>
-
-													{seasonError && <p style={{ color: 'red' }}>{seasonError}</p>}
-
-													<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Merchant Contact No.' onChange={(e) => { setMarchantContact(e.target.value) }} value={marchantContact} name='marchantContact' />
-													{marchantContactError && <p style={{ color: 'red' }}>{marchantContactError}</p>}
-
-													<MDBInput wrapperClass='mb-3' label='Notes' type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
-
-												</div>
-												<div className='col-6'>
-													
-													<div>
-														<div className="mb-3">
-															<label for="imageUpload" class="attach-image-button">
-																<i class="fa fa-paperclip" aria-hidden="true"></i> Images (Max 6)
-															</label>
-															<input
-																type="file"
-																id="imageUpload"
-																accept="image/*"
-																multiple
-																onChange={handleImageUpload}
-																className="form-control"
-																style={{display: 'none'}}
-															/>
-															{imageUploadError && <p style={{ color: 'red' }}>{imageUploadError}</p>}
-														</div>
-														{/* Thumbnail List */}
-														<div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-															{base64Images.map((image, index) => (
-																<div key={index} style={{ position: 'relative' }}>
-																	<img
-																		src={image}
-																		alt={`Thumbnail ${index + 1}`}
-																		style={{ width: '80px', height: '80px', borderRadius: '5px', margin: '0 5px', cursor: 'pointer' }}
-																		onClick={() => setCurrentIndex(index)}
-																		className={index === currentIndex ? 'active' : ''}
-																	/>
-																	<button
-																		onClick={(event) => handleDeleteImage(index, event)}
-																		style={{ position: 'absolute', top: '5px', right: '5px', background: 'transparent', border: 'none', cursor: 'pointer' }}
-																	>
-																		<i className="fa fa-trash" style={{ color: 'red', position: 'absolute',  top: '-10px', right: '-10px' }}></i>
-																	</button>
-
-																</div>
-															))}
-														</div>
-													</div>
-												</div>
-											</div>
-										</form>
-									</Modal.Body>
-									<Modal.Footer>
-                                        <Button variant="secondary" onClick={closeEditForm} style={{ width: '15%' }}>
-                                            Cancel
-                                        </Button>
-                                        <Button variant="primary" onClick={handleEditStyleEntry} style={{ width: '15%' }}>
-                                            Save
-                                        </Button>
-                                    </Modal.Footer>
-								</Modal>
-							</div>
+			</MDBTabs>
+		</MDBCol>
+		<MDBCol size='11' style={{ width: "87%" }} className='no-pad-left'>
+			<MDBTabsContent className='unit-tab-content'>
+				<MDBTabsPane show={verticalActive === 'tabV1'}>
+					<div className='row'>
+						<div className='col-8'>
+							<h1 className='h1'> Style Details </h1>
 						</div>
-					</MDBTabsPane>
+						<div className='col-4 text-right'>
+							<Button className='primary-btn mt-10' onClick={() => { setShow(true); stateValues() }}>
+								<i className='fa fa-plus fa-white'> </i> New Style
+							</Button>
 
-					<MDBTabsPane show={verticalActive === 'tabV2'}>
-						<ProductionOrder />
-					</MDBTabsPane>
-				</MDBTabsContent>
-			</MDBCol>
+							<StyleModal
+    show={show}
+    handleClose={handleClose}
+    handleStyleEntry={handleStyleEntry}
+    setBuyer={setBuyer}
+    buyer={buyer}
+    buyerList={buyerList}
+    setProductType={setProductType}
+    productType={productType}
+    productTypeList={productTypeList}
+    productTypeError={productTypeError}
+    setGender={setGender}
+    gender={gender}
+    genderList={genderList}
+    genderError={genderError}
+    setMarchantName={setMarchantName}
+    marchantName={marchantName}
+    marchantNameError={marchantNameError}
+    setBuyerOrderRefNo={setBuyerOrderRefNo}
+    buyerOrderRefNo={buyerOrderRefNo}
+    buyerOrderRefNoError={buyerOrderRefNoError}
+    setStyleDescription={setStyleDescription}
+    styleDescription={styleDescription}
+    styleDescriptionError={styleDescriptionError}
+    setSizeGrid={setSizeGrid}
+    sizeGrid={sizeGrid}
+    sizeGridList={sizeGridList}
+    sizeGridError={sizeGridError}
+    setSeason={setSeason}
+    season={season}
+    seasonList={seasonList}
+    seasonError={seasonError}
+    setMarchantContact={setMarchantContact}
+    marchantContact={marchantContact}
+    marchantContactError={marchantContactError}
+    setNote={setNote}
+    note={note}
+    handleImageUpload={handleImageUpload}
+    imageUploadError={imageUploadError}
+    base64Images={base64Images}
+    handleDeleteImage={handleDeleteImage}
+    setCurrentIndex={setCurrentIndex}
+    currentIndex={currentIndex}
+	add = "add"
+/>
+						</div>
+						<div className='col-12'>
+
+							<StyleEntryTable defaultPageSize={10} data={data} openEditForm={openEditForm} deleteStyleEntry={deleteStyleEntry} />
+
+							<StyleModal
+    show={isEditFormOpen}
+    onHide={closeEditForm}
+    handleEditStyleEntry={handleEditStyleEntry}
+    setBuyer={setBuyer}
+    buyer={buyer}
+    buyerList={buyerList}
+    setProductType={setProductType}
+    productType={productType}
+    productTypeList={productTypeList}
+    productTypeError={productTypeError}
+    setGender={setGender}
+    gender={gender}
+    genderList={genderList}
+    genderError={genderError}
+    setMarchantName={setMarchantName}
+    marchantName={marchantName}
+    marchantNameError={marchantNameError}
+    setBuyerOrderRefNo={setBuyerOrderRefNo}
+    buyerOrderRefNo={buyerOrderRefNo}
+    buyerOrderRefNoError={buyerOrderRefNoError}
+    setStyleDescription={setStyleDescription}
+    styleDescription={styleDescription}
+    styleDescriptionError={styleDescriptionError}
+    setSizeGrid={setSizeGrid}
+    sizeGrid={sizeGrid}
+    sizeGridList={sizeGridList}
+    sizeGridError={sizeGridError}
+    setSeason={setSeason}
+    season={season}
+    seasonList={seasonList}
+    seasonError={seasonError}
+    setMarchantContact={setMarchantContact}
+    marchantContact={marchantContact}
+    marchantContactError={marchantContactError}
+    setNote={setNote}
+    note={note}
+    handleImageUpload={handleImageUpload}
+    imageUploadError={imageUploadError}
+    base64Images={base64Images}
+    handleDeleteImage={handleDeleteImage}
+    setCurrentIndex={setCurrentIndex}
+    currentIndex={currentIndex}
+	add = "edit"
+/>
+						</div>
+					</div>
+				</MDBTabsPane>
+
+				<MDBTabsPane show={verticalActive === 'tabV2'}>
+					<ProductionOrder />
+				</MDBTabsPane>
+			</MDBTabsContent>
+		</MDBCol>
 
 	</>
 }

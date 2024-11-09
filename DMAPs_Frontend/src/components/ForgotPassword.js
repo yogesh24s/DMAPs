@@ -25,12 +25,12 @@ export default function ForgotPassword() {
 		const payload = {
 			'email': email
 		}
-        debugger
+        
 		trackPromise(loginService.forgotPassword({ "data": [payload] }).then((response) => {
             //check login response
 			//data[0].data[0].result
 			//let token = response.data[0].data[0].token
-            debugger
+            
             if (response.data[0].data[0].result == "success") {
 				
 				//

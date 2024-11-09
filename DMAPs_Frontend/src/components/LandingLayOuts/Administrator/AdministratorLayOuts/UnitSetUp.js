@@ -82,7 +82,7 @@ export default function UnitSetUp() {
 
 	const handleUnitSetup = (e) => {
 		e.preventDefault();
-		debugger
+		
 		let isValid = true;
 
 		if (!unitName) {
@@ -168,7 +168,7 @@ export default function UnitSetUp() {
 		}
 
 		if (!contactNo) {
-			debugger
+			
 			setContactNoError('Contact Number is required');
 			isValid = false;
 		} else if (!/^[6789]\d{9}$/.test(contactNo)) {

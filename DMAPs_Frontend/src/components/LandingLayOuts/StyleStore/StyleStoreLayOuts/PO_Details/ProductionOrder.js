@@ -16,6 +16,8 @@ import adminService from "../../../../../services/adminService"
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
+import OrderModal from './OrderModal';
+import EditOrderModal from './EditOrderModal';
 
 export default function ProductionOrder() {
 	const [show, setShow] = useState(false);
@@ -50,20 +52,20 @@ export default function ProductionOrder() {
 	const [washingTypeList, setWashingTypeList] = useState([]);
 	const [rows, setRows] = useState([]);
 	const [sizeKeys, setSizeKeys] = useState([]);
-  	const [garmentColor, setGarmentColor] = useState('');
-  	const [destinationCountry, setDestinationCountry] = useState('');
-  	const [sizesArray, setSizesArray] = useState([]); // Default sizes
- 	const [sizes, setSizes] = useState(sizesArray.reduce((acc, curr) => ({ ...acc, [curr]: 0 }), {})); // Dynamically initialize sizes state based on sizesArray
- 	const [editingIndex, setEditingIndex] = useState(null);
- 	const [BuyerName, setBuyerName] = useState('');
-  	const [StyleDescription, setStyleDescription] = useState('');
-  	const [SizeGridName, setSizeGridName] = useState('');
-  	const [ProductType, setProductType] = useState('');
-  	const [MerchantName, setMerchantName] = useState('');
-  	const [MerchantContact, setMerchantContact] = useState('');
-  	const [GenderView, setGenderView] = useState('');
-  	const [rowData, setRowData] = useState(null); // Initialize rowData
-// Calculate total of all sizes
+	const [garmentColor, setGarmentColor] = useState('');
+	const [destinationCountry, setDestinationCountry] = useState('');
+	const [sizesArray, setSizesArray] = useState([]); // Default sizes
+	const [sizes, setSizes] = useState(sizesArray.reduce((acc, curr) => ({ ...acc, [curr]: 0 }), {})); // Dynamically initialize sizes state based on sizesArray
+	const [editingIndex, setEditingIndex] = useState(null);
+	const [BuyerName, setBuyerName] = useState('');
+	const [StyleDescription, setStyleDescription] = useState('');
+	const [SizeGridName, setSizeGridName] = useState('');
+	const [ProductType, setProductType] = useState('');
+	const [MerchantName, setMerchantName] = useState('');
+	const [MerchantContact, setMerchantContact] = useState('');
+	const [GenderView, setGenderView] = useState('');
+	const [rowData, setRowData] = useState(null); // Initialize rowData
+	// Calculate total of all sizes
 	const calculateTotal = (sizes) => {
 		return Object.values(sizes).reduce((sum, size) => sum + (parseInt(size) || 0), 0);
 	};
@@ -74,7 +76,7 @@ export default function ProductionOrder() {
 			acc[sizeKey] = ""; // Initialize each size with an empty string
 			return acc;
 		}, {});
-	
+
 		setRows([...rows, {
 			garmentColor,
 			destinationCountry,
@@ -86,61 +88,61 @@ export default function ProductionOrder() {
 		setGarmentColor('#000000');
 		setDestinationCountry("");
 		setSizes({}); // Reset sizes to an empty object
-  	};
+	};
 
 	const handleEditRow = (rowIndex) => {
-    	const updatedRows = [...rows];
-    	updatedRows[rowIndex].isEditable = !updatedRows[rowIndex].isEditable; // Toggle edit mode
-    	setRows(updatedRows);
-  	};
-	  
+		const updatedRows = [...rows];
+		updatedRows[rowIndex].isEditable = !updatedRows[rowIndex].isEditable; // Toggle edit mode
+		setRows(updatedRows);
+	};
+
 	const handleDeleteRow = (rowIndex) => {
 		const updatedRows = rows.filter((_, index) => index !== rowIndex);
 		setRows(updatedRows);
 	};
 
 	const handleSizesChange = (data) => {
-    	const selectedSizes = data.split(',').map(size => size.trim());
-    	setSizesArray(selectedSizes);
-    	// Initialize a new sizes object
+		const selectedSizes = data.split(',').map(size => size.trim());
+		setSizesArray(selectedSizes);
+		// Initialize a new sizes object
 		const initialSizes = selectedSizes.reduce((acc, size) => {
-		acc[size] = ''; // Default each size value as empty
-		return acc;
+			acc[size] = ''; // Default each size value as empty
+			return acc;
 		}, {});
 
 		// Reset rows with new sizes
 		const newRow = {
-		garmentColor: '#000000',
-		destinationCountry: '',
-		sizes: initialSizes,
-		total: 0, // Initial total is 0
-		isEditable : false
-		};
-
-		setRows([newRow]); // Only one row initially
-  	};
-
-//  UseEffect to ensure rows are updated when sizesArray changes
-	useEffect(() => {
-		if (sizesArray.length > 0) {
-		const initialSizes = sizesArray.reduce((acc, size) => {
-			acc[size] = ''; // Initialize size values as empty strings
-			return acc;
-		}, {});
-
-		const newRow = {
 			garmentColor: '#000000',
 			destinationCountry: '',
 			sizes: initialSizes,
-			total: 0,
-			isEditable : false
+			total: 0, // Initial total is 0
+			isEditable: false
 		};
 
-		// Set the new row in rows
-		setRows([newRow]);
+		setRows([newRow]); // Only one row initially
+	};
+
+	//  UseEffect to ensure rows are updated when sizesArray changes
+	useEffect(() => {
+		if (sizesArray.length > 0) {
+			const initialSizes = sizesArray.reduce((acc, size) => {
+				acc[size] = ''; // Initialize size values as empty strings
+				return acc;
+			}, {});
+
+			const newRow = {
+				garmentColor: '#000000',
+				destinationCountry: '',
+				sizes: initialSizes,
+				total: 0,
+				isEditable: false
+			};
+
+			// Set the new row in rows
+			setRows([newRow]);
 		}
 	}, [sizesArray]);
-  
+
 	const handleSizeGrid = (value) => {
 		let StyleNoList = JSON.parse(sessionStorage.getItem('StyleNoList')) || [];
 		let SizeGridList = JSON.parse(sessionStorage.getItem('StyleGridList')) || [];
@@ -159,7 +161,7 @@ export default function ProductionOrder() {
 			// Ensure SizeGridValue is not null or undefined
 			if (SizeGridValue) {
 				// Make sure to clean any previous sizes before setting new ones
-				setSizesArray([]); 
+				setSizesArray([]);
 				handleSizesChange(SizeGridValue);
 			} else {
 				console.error("Size grid value is not available.");
@@ -185,7 +187,7 @@ export default function ProductionOrder() {
 			setEmbTypeError('Emb Type is required');
 			isValid = false;
 		}
-	    else {
+		else {
 			setEmbTypeError('');
 		}
 
@@ -227,7 +229,7 @@ export default function ProductionOrder() {
 		if (!pcd) {
 			setPCDError('PCD is required');
 			isValid = false;
-		} 
+		}
 		else {
 			setPCDError('');
 		}
@@ -235,7 +237,7 @@ export default function ProductionOrder() {
 		if (!deliveryDate) {
 			setDeliveryDateError('Delivery Date is required');
 			isValid = false;
-		} 
+		}
 		else {
 			setDeliveryDateError('');
 		}
@@ -243,18 +245,18 @@ export default function ProductionOrder() {
 		if (!shipmentMode) {
 			setShipmentModeError('Shipment Mode is required');
 			isValid = false;
-		} 
+		}
 		else {
 			setShipmentModeError('');
 		}
 
 		const totalSizes = Object.entries(sizes)
-        .filter(([key]) => key !== 'total') // Exclude 'total' key
-        .reduce((acc, [_, value]) => {
-            const parsedValue = parseInt(value);
-            return acc + (isNaN(parsedValue) ? 0 : parsedValue);
-        }, 0);
-	
+			.filter(([key]) => key !== 'total') // Exclude 'total' key
+			.reduce((acc, [_, value]) => {
+				const parsedValue = parseInt(value);
+				return acc + (isNaN(parsedValue) ? 0 : parsedValue);
+			}, 0);
+
 		if (!isValid) {
 			return;
 		}
@@ -267,7 +269,7 @@ export default function ProductionOrder() {
 		// 		...item.sizes // Spread sizes into the new object
 		// 	};
 		// });
-		
+
 		// // Now modifiedData contains the desired structure
 		// console.log(modifiedData);
 		const updatedRows = rows.map((row) => ({
@@ -277,18 +279,18 @@ export default function ProductionOrder() {
 
 		let payload = {
 			"Style_No": styleNo,
-			"F_PO_No":fPONo,
-			"PO_No":PONo,
-			"OC_No":OCNo,
+			"F_PO_No": fPONo,
+			"PO_No": PONo,
+			"OC_No": OCNo,
 			"Emb_Type": embType,
 			"Print_Type": printType,
 			"Washing_Type": washingType,
-			"Others":others,
-			"Shipment_Mode" : shipmentMode,
-			"Delivery_Date" : deliveryDate,
-			"PCD" : pcd,
+			"Others": others,
+			"Shipment_Mode": shipmentMode,
+			"Delivery_Date": deliveryDate,
+			"PCD": pcd,
 			"Note": note,
-			"Garment_Data" : JSON.stringify(updatedRows)
+			"Garment_Data": JSON.stringify(updatedRows)
 		}
 
 		trackPromise(styleStoreService.savePODetails({ "data": [payload] }).then((response) => {
@@ -320,17 +322,17 @@ export default function ProductionOrder() {
 	}
 
 	const getBasicDetails = () => {
-        trackPromise(
-            adminService.getBasicDetails().then((response) => {
-                setStyleNoList(response.data[0].data[0].data.styleNo);
+		trackPromise(
+			adminService.getBasicDetails().then((response) => {
+				setStyleNoList(response.data[0].data[0].data.styleNo);
 				setEmbTypeList(response.data[0].data[0].data.embType)
 				setPrintTypeList(response.data[0].data[0].data.printType)
 				setWashingTypeList(response.data[0].data[0].data.washingType)
 				sessionStorage.setItem('StyleNoList', JSON.stringify(response.data[0].data[0].data.styleNo));
 				sessionStorage.setItem('StyleGridList', JSON.stringify(response.data[0].data[0].data.sizeGrid));
-            })
-        );
-    }
+			})
+		);
+	}
 
 	useEffect(() => {
 		getBasicDetails();
@@ -368,9 +370,9 @@ export default function ProductionOrder() {
 
 	const openEditForm = (data) => {
 		// Reset existing size data before editing
-		setSizesArray([]); 
+		setSizesArray([]);
 		editFormDetails(data);
-		setIsEditFormOpen(true); 
+		setIsEditFormOpen(true);
 	};
 
 	const setExistingGarmentData = (data) => {
@@ -401,35 +403,166 @@ export default function ProductionOrder() {
 		setMerchantName(data.Marchent_Name);
 		setMerchantContact(data.Marchent_Contact);
 		setGenderView(data.Gender);
-	  
+
 		// Parse and set garment data
 		const garmentData = JSON.parse(data.Garment_Data);
 		if (garmentData.length !== 0) {
-		  setExistingGarmentData(garmentData);
+			setExistingGarmentData(garmentData);
 		} else {
-		  handleSizeGrid(data.Style_No);
+			handleSizeGrid(data.Style_No);
 		}
 	}
-	  
-    const closeEditForm = () => {
-        setIsEditFormOpen(false);
-    };
 
-// Delete Unit Records
+	const closeEditForm = () => {
+		setIsEditFormOpen(false);
+	};
+
+	// Delete Unit Records
 
 	const deletePODetails = (data) => {
-	if (window.confirm("Are you sure to delete the Style Entry ?"))
-    {
-		let payload = {
-			"PO_Id":data.PO_Id
+		if (window.confirm("Are you sure to delete the Style Entry ?")) {
+			let payload = {
+				"PO_Id": data.PO_Id
+			}
+			trackPromise(styleStoreService.deletePODetails({ "data": [payload] }).then((response) => {
+				//check login response
+				if (response.status === 200) {
+					getPOData()
+				}
+				else {
+					alert(response.data.message);
+				}
+
+			}).catch((error) => {
+				//console.log(error.response.data.error)
+				alert(error.response.data.error);
+			})
+			);
 		}
-		trackPromise(styleStoreService.deletePODetails({ "data": [payload] }).then((response) => {
+	};
+
+	const handleEditStyleEntry = (e, data, index) => {
+
+		e.preventDefault();
+		let isValid = true;
+
+		if (!embType) {
+			setEmbTypeError('Emb Type is required');
+			isValid = false;
+		}
+		else {
+			setEmbTypeError('');
+		}
+
+		if (!washingType) {
+			setWashingTypeError('Washing Type is required');
+			isValid = false;
+		} else {
+			setWashingTypeError('');
+		}
+
+		if (!styleNo) {
+			setStyleNoError('DMAPS No. is required');
+			isValid = false;
+		} else {
+			setStyleNoError('');
+		}
+
+		if (!fPONo) {
+			setFPONoError('FPO No. is required');
+			isValid = false;
+		} else {
+			setFPONoError('');
+		}
+
+		if (!PONo) {
+			setPONoError('Order No. is required');
+			isValid = false;
+		} else {
+			setPONoError('');
+		}
+
+		if (!printType) {
+			setPrintTypeError('Print Type is required');
+			isValid = false;
+		} else {
+			setPrintTypeError('');
+		}
+
+		if (!pcd) {
+			setPCDError('PCD is required');
+			isValid = false;
+		}
+		else {
+			setPCDError('');
+		}
+
+		if (!deliveryDate) {
+			setDeliveryDateError('Delivery Date is required');
+			isValid = false;
+		}
+		else {
+			setDeliveryDateError('');
+		}
+
+		if (!shipmentMode) {
+			setShipmentModeError('Shipment Mode is required');
+			isValid = false;
+		}
+		else {
+			setShipmentModeError('');
+		}
+
+		const totalSizes = Object.entries(sizes)
+			.filter(([key]) => key !== 'total') // Exclude 'total' key
+			.reduce((acc, [_, value]) => {
+				const parsedValue = parseInt(value);
+				return acc + (isNaN(parsedValue) ? 0 : parsedValue);
+			}, 0);
+
+		if (!isValid) {
+			return;
+		}
+
+		const updatedRows = rows.map((row) => ({
+			...row,
+			isEditable: false, // Set isEditable to false before saving
+		}));
+
+		let payload = {
+			"PO_Id": POId,
+			"Style_No": styleNo,
+			"FPO_No": fPONo,
+			"PO_No": PONo,
+			"OC_No": OCNo,
+			"Emb_Type": embType,
+			"Print_Type": printType,
+			"Washing_Type": washingType,
+			"Others": others,
+			"Shipment_Mode": shipmentMode,
+			"Delivery_Date": deliveryDate,
+			"PCD": pcd,
+			"Note": note,
+			"Garment_Data": JSON.stringify(updatedRows)
+		}
+
+		trackPromise(styleStoreService.editPODetails({ "data": [payload] }).then((response) => {
 			//check login response
-			if (response.status === 200) {
+			if (response.status === 200 && response.data.data.status == "success") {
+				// alert(response.data.result)
 				getPOData()
-			}	
+				if (data == 'save') {
+
+					closeEditForm()
+				}
+				else {
+					const updatedRows = [...rows];
+					updatedRows[index].isEditable = !updatedRows[index].isEditable; // Toggle edit mode
+					setRows(updatedRows);
+				}
+			}
 			else {
-				alert(response.data.message);
+				alert(response.data.data.result);
 			}
 
 		}).catch((error) => {
@@ -438,789 +571,137 @@ export default function ProductionOrder() {
 		})
 		);
 	}
-	};
 
-	const handleEditStyleEntry  = (e, data, index) => {
-
-	e.preventDefault();
-	let isValid = true;
-
-	if (!embType) {
-		setEmbTypeError('Emb Type is required');
-		isValid = false;
-	}
-	else {
-		setEmbTypeError('');
-	}
-
-	if (!washingType) {
-		setWashingTypeError('Washing Type is required');
-		isValid = false;
-	} else {
-		setWashingTypeError('');
-	}
-
-	if (!styleNo) {
-		setStyleNoError('DMAPS No. is required');
-		isValid = false;
-	} else {
-		setStyleNoError('');
-	}
-
-	if (!fPONo) {
-		setFPONoError('FPO No. is required');
-		isValid = false;
-	} else {
-		setFPONoError('');
-	}
-
-	if (!PONo) {
-		setPONoError('Order No. is required');
-		isValid = false;
-	} else {
-		setPONoError('');
-	}
-
-	if (!printType) {
-		setPrintTypeError('Print Type is required');
-		isValid = false;
-	} else {
-		setPrintTypeError('');
-	}
-
-	if (!pcd) {
-		setPCDError('PCD is required');
-		isValid = false;
-	} 
-	else {
-		setPCDError('');
-	}
-
-	if (!deliveryDate) {
-		setDeliveryDateError('Delivery Date is required');
-		isValid = false;
-	} 
-	else {
-		setDeliveryDateError('');
-	}
-
-	if (!shipmentMode) {
-		setShipmentModeError('Shipment Mode is required');
-		isValid = false;
-	}
-	else {
-		setShipmentModeError('');
-	}
-
-	const totalSizes = Object.entries(sizes)
-	.filter(([key]) => key !== 'total') // Exclude 'total' key
-	.reduce((acc, [_, value]) => {
-		const parsedValue = parseInt(value);
-		return acc + (isNaN(parsedValue) ? 0 : parsedValue);
-	}, 0);
-
-	if (!isValid) {
-		return;
-	}
-
-	const updatedRows = rows.map((row) => ({
-		...row,
-		isEditable: false, // Set isEditable to false before saving
-	}));
-
-	let payload = {
-		"PO_Id":POId,
-		"Style_No": styleNo,
-		"FPO_No":fPONo,
-		"PO_No":PONo,
-		"OC_No":OCNo,
-		"Emb_Type": embType,
-		"Print_Type": printType,
-		"Washing_Type": washingType,
-		"Others":others,
-		"Shipment_Mode" : shipmentMode,
-		"Delivery_Date" : deliveryDate,
-		"PCD" : pcd,
-		"Note": note,
-		"Garment_Data" : JSON.stringify(updatedRows)
-	}
-
-	trackPromise(styleStoreService.editPODetails({ "data": [payload] }).then((response) => {
-		//check login response
-		if (response.status === 200 && response.data.data.status == "success") {
-			// alert(response.data.result)
-			getPOData()
-			if(data == 'save'){
-
-				closeEditForm()
-			}
-			else{
-				const updatedRows = [...rows];
-    			updatedRows[index].isEditable = !updatedRows[index].isEditable; // Toggle edit mode
-    			setRows(updatedRows);
-			}
-		}
-		else {
-			alert(response.data.data.result);
-		}
-
-	}).catch((error) => {
-		//console.log(error.response.data.error)
-		alert(error.response.data.error);
-	})
-	);
-	}
-
-return <>
+	return <>
 		<div className='row'>
 			<div className='col-8'>
 				<h1 className='h1'> Order Details </h1>
 			</div>
 			<div className='col-4 text-right'>
-				<Button className='primary-btn mt-10' onClick={() => {setShow(true);stateValues(); setSizes({});  setRows([]); }}>
-				<i className='fa fa-plus fa-white'> </i> New Order
+				<Button className='primary-btn mt-10' onClick={() => { setShow(true); stateValues(); setSizes({}); setRows([]); }}>
+					<i className='fa fa-plus fa-white'> </i> New Order
 				</Button>
-				
-				<Modal
+
+				<OrderModal
 					show={show}
-					onHide={() => setShow(false)}
-					dialogClassName="modal-90w"
-					backdrop="static"
-					keyboard={false}>
-					<Modal.Header closeButton>
-						<Modal.Title> Add New Order  </Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						<form onSubmit={handlePODetails}>
-							<div className='row'>
-								<div className='col-3'>
-									<Form.Select className='mb-3' tabindex="1" label='DMAPS No.' onChange={(e) => { setStyleNo(e.target.value); 		
-										handleSizeGrid(e.target.value)}} value={styleNo} name='styleNo'>
-											<option> Select DMAPS No. </option>
-											{styleNoList.map((item) => (
-												<option key={item.Style_No} value={item.Style_No}>
-													{item.Style_No}
-												</option>
-											))}
-									</Form.Select>
-									{styleNoError && <p style={{ color: 'red' }}>{styleNoError}</p>}
+					handleClose={handleClose}
+					handlePODetails={handlePODetails}
+					styleNoList={styleNoList}
+					embTypeList={embTypeList}
+					printTypeList={printTypeList}
+					washingTypeList={washingTypeList}
+					rows={rows}
+					sizesArray={sizesArray}
+					handleDeleteRow={handleDeleteRow}
+					handleSizeGrid={handleSizeGrid}
+					addNewRow={addNewRow}
+					calculateTotal={calculateTotal}
+					BuyerName={BuyerName}
+					StyleDescription={StyleDescription}
+					SizeGridName={SizeGridName}
+					GenderView={GenderView}
+					ProductType={ProductType}
+					MerchantName={MerchantName}
+					MerchantContact={MerchantContact}
+					styleNo={styleNo}
+					setStyleNo={setStyleNo}
+					styleNoError={styleNoError}
+					fPONo={fPONo}
+					setFPONo={setFPONo}
+					fPONoError={fPONoError}
+					PONo={PONo}
+					setPONo={setPONo}
+					PONoError={PONoError}
+					OCNo={OCNo}
+					setOCNo={setOCNo}
+					embType={embType}
+					setEmbType={setEmbType}
+					embTypeError={embTypeError}
+					printType={printType}
+					setPrintType={setPrintType}
+					printTypeError={printTypeError}
+					washingType={washingType}
+					setWashingType={setWashingType}
+					washingTypeError={washingTypeError}
+					deliveryDate={deliveryDate}
+					setDeliveryDate={setDeliveryDate}
+					deliveryDateError={deliveryDateError}
+					pcd={pcd}
+					setPCD={setPCD}
+					pcdError={pcdError}
+					shipmentMode={shipmentMode}
+					setShipmentMode={setShipmentMode}
+					shipmentModeError={shipmentModeError}
+					others={others}
+					setOthers={setOthers}
+					note={note}
+					setNote={setNote}
+					add="add"
+				/>
 
-								</div>
-							</div>
-							{styleNo ? (
-								<>
-							<div className='row'>
-							<div className='col-3'>
-									<div className="data-row">
-									<label className='label-read' htmlFor="name">Buyer</label>
-									<span className='span-read'> {BuyerName} </span>
-									</div>
-								</div>
-								<div className='col-3'>
-									<div className="data-row">
-									<label className='label-read' htmlFor="name">Buyer Style No.</label>
-									<span className='span-read'> {StyleDescription} </span>
-									</div>
-								</div>
-								<div className='col-3'>
-									<div className="data-row">
-									<label className='label-read' htmlFor="name">Size Grid Name</label>
-									<span className='span-read'> {SizeGridName} </span>
-									</div>
-								</div>
-								<div className='col-3'>
-									<div className="data-row">
-									<label className='label-read' htmlFor="name">Gender</label>
-									<span className='span-read'> {GenderView} </span>
-									</div>
-								</div>
-								<div className='col-3'>
-									<div className="data-row">
-									<label className='label-read' htmlFor="name">Product Type</label>
-									<span className='span-read'> {ProductType} </span>
-									</div>
-								</div>
-								<div className='col-3'>
-									<div className="data-row">
-									<label className='label-read' htmlFor="name">Merchant Name</label>
-									<span className='span-read'> {MerchantName} </span>
-									</div>
-								</div>
-								<div className='col-3'>
-									<div className="data-row">
-									<label className='label-read' htmlFor="name">Merchant Contact No.</label>
-									<span className='span-read'> {MerchantContact} </span>
-									</div>
-								</div>
-							</div>	
-								 </>
-								) : null}
-							<h6 className='h6'> Order Details </h6>
-							<div className='row'>
-								<div className='col-3'>
-									<MDBInput label='F PO No.' type='text' tabindex="2" wrapperClass='mb-3' onChange={(e) => { setFPONo(e.target.value) }} value={fPONo} name='fPONo' />
-									{fPONoError && <p style={{ color: 'red' }}>{fPONoError}</p>}
-
-									<MDBInput label='Order No.' type='text' tabindex="3" wrapperClass='mb-3' onChange={(e) => { setPONo(e.target.value) }} value={PONo} name='PONo' />
-									{PONoError && <p style={{ color: 'red' }}>{PONoError}</p>}
-
-									<MDBInput label='OC No.' type='text' tabindex="4" wrapperClass='mb-3' onChange={(e) => { setOCNo(e.target.value) }} value={OCNo} name='OCNo' />
-								</div>
-
-								<div className='col-3'>
-								<div className="mb-3" style={{ position: 'relative' }}>
-									{embType ? <label
-										htmlFor="embType"
-										style={{
-										position: 'absolute',
-										top: '-10px',
-										left: '10px',
-										backgroundColor: 'white',
-										padding: '0 5px',
-										fontSize: '12px',
-										}}
-									>
-										Emb. Type
-									</label> : ''}
-									<Form.Select className='mb-3' tabindex="5" label='Emb Type' onChange={(e) => { setEmbType(e.target.value) }} value={embType} name='embType'>
-										<option> Select Emb Type </option>
-										{embTypeList.map((item) => (
-											<option key={item.id} value={item.Emb_Type}>
-												{item.Emb_Type}
-											</option>
-										))}
-									</Form.Select>
-									{embTypeError && <p style={{ color: 'red' }}>{embTypeError}</p>}
-									</div>
-									<div className="mb-3" style={{ position: 'relative' }}>
-										{printType ? <label
-											htmlFor="printType"
-											style={{
-											position: 'absolute',
-											top: '-10px',
-											left: '10px',
-											backgroundColor: 'white',
-											padding: '0 5px',
-											fontSize: '12px',
-											}}
-										>
-											Print Type
-										</label> : ''}
-										<Form.Select className='mb-3' tabindex="6" label='Print Type' onChange={(e) => { setPrintType(e.target.value) }} value={printType} name='printType'>
-											<option> Select Print Type </option>
-											{printTypeList.map((item) => (
-												<option key={item.id} value={item.Print_Type}>
-													{item.Print_Type}
-												</option>
-											))}
-										</Form.Select>
-										{printTypeError && <p style={{ color: 'red' }}>{printTypeError}</p>}
-									</div>
-
-									<div className="mb-3" style={{ position: 'relative' }}>
-										{washingType ? <label
-											htmlFor="washingType"
-											style={{
-											position: 'absolute',
-											top: '-10px',
-											left: '10px',
-											backgroundColor: 'white',
-											padding: '0 5px',
-											fontSize: '12px',
-											}}
-										>
-											Washing Type
-										</label> : ''}									
-										<Form.Select className='mb-3' tabindex="7" label='Washing Type' onChange={(e) => { setWashingType(e.target.value) }} value={washingType} name='washingType'>
-											<option> Select Washing Type </option>
-											{washingTypeList.map((item) => (
-												<option key={item.id} value={item.Washing_Type}>
-													{item.Washing_Type}
-												</option>
-											))}
-										</Form.Select>
-										{washingTypeError && <p style={{ color: 'red' }}>{washingTypeError}</p>}
-									</div>
-								</div>
-								<div className='col-3'>
-									{/* <MDBInput wrapperClass='mb-3' type='date' placeholder="dd/mm/yyyy" tabindex="10" label='Delivery Date' onChange={(e) => { setDeliveryDate(e.target.value) }} value={deliveryDate} name='deliveryDate' /> */}
-
-									<DatePicker
-											selected={deliveryDate}
-											className="form-control-date"
-											onChange={(date) => setDeliveryDate(date)} // Correct way to handle date change
-											dateFormat="dd/MM/yyyy"  // Format the display of the date
-											placeholderText="dd/mm/yyyy"
-											
-											customInput={
-											<MDBInput
-												type="text"
-												wrapperClass='mb-3'
-												label='Delivery Date'
-												id="deliveryDate"  // Linking the label with the input
-												tabIndex="10"  // Correct case for tabindex
-												name="deliveryDate"
-												value={deliveryDate ? moment(deliveryDate).format("DD/MM/YYYY") : ''}
-											/>
-											}
-										/>
-
-									{deliveryDateError && <p style={{ color: 'red' }}>{deliveryDateError}</p>}
-
-									{/* <MDBInput wrapperClass='mb-3' type='date' tabindex="11" label='PCD' onChange={(e) => { setPCD(e.target.value) }} value={pcd} name='pcd' /> */}
-
-									<DatePicker
-											selected={pcd}
-											className="mb-3 form-control-date"
-											onChange={(date) => setPCD(date)} // Correct way to handle date change
-											dateFormat="dd/MM/yyyy"  // Format the display of the date
-											placeholderText="dd/mm/yyyy"
-											name="pcd"
-											customInput={
-											<MDBInput
-												type="text"
-												label='PCD'
-												id="pcd"  // Linking the label with the input
-												tabIndex="11"  // Correct case for tabindex
-												name="pcd"
-												value={pcd ? moment(pcd).format("DD/MM/YYYY") : ''}
-											/>
-											}
-										/>	
-									{pcdError && <p style={{ color: 'red' }}>{pcdError}</p>}
-
-									<MDBInput wrapperClass='mb-3' type='text' tabindex="9" label='Shipment Mode' onChange={(e) => { setShipmentMode(e.target.value) }} value={shipmentMode} name='shipmentMode' />
-									{shipmentModeError && <p style={{ color: 'red' }}>{shipmentModeError}</p>}
-								</div>
-
-								<div className='col-3'>
-									<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
-
-									<MDBInput style={{height:"86px"}} wrapperClass='mb-3 ' label='Notes'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
-								</div>
-								<div className="col-12 mt-20 parentDivStyle">
-								{styleNo && sizesArray && sizesArray.length > 0 ? (
-									<>
-										<table border="1" className='table tableStyle'>
-										<thead>
-											<tr>
-											<th  style={{width :'100px'}}>Garment Color</th>
-											<th  style={{width :'100px'}}>Destination Country</th>
-											{sizesArray.map((sizeKey) => (
-												<th className='thTdStyle' key={sizeKey}>{sizeKey}</th>
-											))}
-											<th  style={{width :'50px'}}>Total</th>
-											<th  style={{width :'60px'}}>Actions</th>
-											</tr>
-										</thead>
-										<tbody>
-											{rows.map((row, rowIndex) => (
-											<tr key={rowIndex}>
-												<td className='thTdStyle'>
-												<input 
-													type="color" 
-													value={row.garmentColor || '#000000' }
-													onChange={(e) => {
-													const updatedRows = [...rows];
-													updatedRows[rowIndex].garmentColor = e.target.value;
-													setRows(updatedRows);
-													}}
-												/>
-												</td>
-												<td className='thTdStyle'>
-												<input 
-													type="text" 
-													value={row.destinationCountry}
-													onChange={(e) => {
-													const updatedRows = [...rows];
-													updatedRows[rowIndex].destinationCountry = e.target.value;
-													setRows(updatedRows);
-													}}
-												/>
-												</td>
-												{/* Dynamically generate size inputs */}
-												{sizesArray.map((sizeKey) => (
-												<td className='thTdStyle' key={sizeKey}>
-													<input
-													type="number"
-													value={row.sizes[sizeKey] || ''}
-													onChange={(e) => {
-														const updatedRows = [...rows];
-														updatedRows[rowIndex].sizes[sizeKey] = e.target.value;
-														updatedRows[rowIndex].total = calculateTotal(updatedRows[rowIndex].sizes); // Recalculate total
-														setRows(updatedRows);
-													}}
-													/>
-												</td>
-												))}
-												<td className='thTdStyle'>{row.total}</td>
-												<td className='thTdStyle'>
-													<i className='fa fa-trash ml-15 pointer' onClick={() => handleDeleteRow(rowIndex)} title='Delete'> </i>
-												</td>
-											</tr>
-											))}
-										</tbody>
-										</table>
-										<Button variant="success" onClick={addNewRow} style={{ float: 'right', width: '5%', marginTop: "-20PX" }}> <i className='fa fa-plus fa-1x white'> </i>   </Button>
-									</>
-									) : null}
-
-								</div>
-							</div>
-						</form>
-					</Modal.Body>
-					<Modal.Footer>
-						<Button variant="secondary" onClick={handleClose} style={{ width: '15%' }} >
-							Cancel
-						</Button>
-						<Button variant="primary" type='submit' onClick={handlePODetails}  style={{ width: '15%' }}>
-							Save
-						</Button>
-					</Modal.Footer>
-				</Modal>
 			</div>
 			<div className='col-12'>
 
-				<PODetailsTable defaultPageSize={10} data={data} openEditForm={openEditForm} deletePODetails = {deletePODetails} />
+				<PODetailsTable defaultPageSize={10} data={data} openEditForm={openEditForm} deletePODetails={deletePODetails} />
 
-				<Modal show={isEditFormOpen} onHide={closeEditForm} dialogClassName="modal-90w"
-					backdrop="static">
-					<Modal.Header closeButton>
-						<Modal.Title>Edit Order Details </Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						<form>
-						<div className='row'>
-								<div className='col-3'>
-								<Form.Select className='mb-3' tabindex="1" label='DMAPS No.' onChange={(e) => { setStyleNo(e.target.value); handleSizeGrid(e.target.value)}} value={styleNo} name='styleNo' disabled>
-										<option> Select DMAPS No. </option>
-										{styleNoList.map((item) => (
-											<option key={item.Style_No} value={item.Style_No}>
-												{item.Style_No}
-											</option>
-										))}
-									</Form.Select>
-									{styleNoError && <p style={{ color: 'red' }}>{styleNoError}</p>}
-								</div>
-								</div>
-								<div className='row'>
-								
-								<div className='col-12'>
-								{styleNo || styleNo != '' ? (
-								<div className='row'>
-									<div className='col-3'>
-									<div className="data-row">
-										<label className='label-read' htmlFor="name">Buyer</label>
-										<span className='span-read'> {BuyerName} </span>
-									</div>
-									</div>
-									<div className='col-3'>
-									<div className="data-row">
-										<label className='label-read' htmlFor="name">Buyer Style No.</label>
-										<span className='span-read'> {StyleDescription} </span>
-									</div>
-									</div>
-									<div className='col-3'>
-									<div className="data-row">
-										<label className='label-read' htmlFor="name">Size Grid Name</label>
-										<span className='span-read'> {SizeGridName} </span>
-									</div>
-									</div>
-									<div className='col-12'>
-									<div className='row'>
-										<div className='col-3'>
-										<div className="data-row">
-											<label className='label-read' htmlFor="name">Gender</label>
-											<span className='span-read'> {GenderView} </span>
-										</div>
-										</div>
-										<div className='col-3'>
-										<div className="data-row">
-											<label className='label-read' htmlFor="name">Product Type</label>
-											<span className='span-read'> {ProductType} </span>
-										</div>
-										</div>
-										<div className='col-3'>
-										<div className="data-row">
-											<label className='label-read' htmlFor="name">Merchant Name</label>
-											<span className='span-read'> {MerchantName} </span>
-										</div>
-										</div>
-										<div className='col-3'>
-										<div className="data-row">
-											<label className='label-read' htmlFor="name">Merchant Contact No.</label>
-											<span className='span-read'> {MerchantContact} </span>
-										</div>
-										</div>
-									</div>
-									</div>
-								</div>
-								) : null}
+				<EditOrderModal
+					isEditFormOpen={isEditFormOpen}
+					closeEditForm={closeEditForm}
+					styleNo={styleNo}
+					styleNoList={styleNoList}
+					styleNoError={styleNoError}
+					handleSizeGrid={handleSizeGrid}
+					setStyleNo={setStyleNo}
+					BuyerName={BuyerName}
+					StyleDescription={StyleDescription}
+					SizeGridName={SizeGridName}
+					GenderView={GenderView}
+					ProductType={ProductType}
+					MerchantName={MerchantName}
+					MerchantContact={MerchantContact}
+					fPONo={fPONo}
+					setFPONo={setFPONo}
+					fPONoError={fPONoError}
+					PONo={PONo}
+					setPONo={setPONo}
+					PONoError={PONoError}
+					OCNo={OCNo}
+					setOCNo={setOCNo}
+					embType={embType}
+					setEmbType={setEmbType}
+					embTypeList={embTypeList}
+					embTypeError={embTypeError}
+					printType={printType}
+					setPrintType={setPrintType}
+					printTypeList={printTypeList}
+					printTypeError={printTypeError}
+					washingType={washingType}
+					setWashingType={setWashingType}
+					washingTypeList={washingTypeList}
+					washingTypeError={washingTypeError}
+					deliveryDate={deliveryDate}
+					setDeliveryDate={setDeliveryDate}
+					deliveryDateError={deliveryDateError}
+					pcd={pcd}
+					setPCD={setPCD}
+					pcdError={pcdError}
+					shipmentMode={shipmentMode}
+					setShipmentMode={setShipmentMode}
+					shipmentModeError={shipmentModeError}
+					others={others}
+					setOthers={setOthers}
+					note={note}
+					setNote={setNote}
+					rows={rows}
+					setRows={setRows}
+					addNewRow={addNewRow}
+					handleEditRow={handleEditRow}
+					handleDeleteRow={handleDeleteRow}
+					handleEditStyleEntry={handleEditStyleEntry}
+					calculateTotal={calculateTotal}
+					sizeKeys={sizeKeys}
+				/>
 
-								<h6 className='h6'> Order Details </h6>
-								</div>
-								
-								<div className='col-3'>
-									<MDBInput label='F PO No.' type='text' tabindex="2" wrapperClass='mb-3' onChange={(e) => { setFPONo(e.target.value) }} value={fPONo} name='fPONo' />
-									{fPONoError && <p style={{ color: 'red' }}>{fPONoError}</p>}
-
-									<MDBInput label='Order No.' type='text' tabindex="3" wrapperClass='mb-3' onChange={(e) => { setPONo(e.target.value) }} value={PONo} name='PONo' />
-									{PONoError && <p style={{ color: 'red' }}>{PONoError}</p>}
-
-									<MDBInput label='OC No.' type='text' tabindex="4" wrapperClass='mb-3' onChange={(e) => { setOCNo(e.target.value) }} value={OCNo} name='OCNo' />
-									
-								</div>
-
-								<div className='col-3'>
-								<div className="mb-3" style={{ position: 'relative' }}>
-									{embType ? <label
-										htmlFor="embType"
-										style={{
-										position: 'absolute',
-										top: '-10px',
-										left: '10px',
-										backgroundColor: 'white',
-										padding: '0 5px',
-										fontSize: '12px',
-										}}
-									>
-										Emb. Type
-									</label> : ''}
-									<Form.Select className='mb-3' tabindex="5" label='Emb Type' onChange={(e) => { setEmbType(e.target.value) }} value={embType} name='embType'>
-										<option> Select Emb Type </option>
-										{embTypeList.map((item) => (
-											<option key={item.id} value={item.Emb_Type}>
-												{item.Emb_Type}
-											</option>
-										))}
-									</Form.Select>
-									{embTypeError && <p style={{ color: 'red' }}>{embTypeError}</p>}
-								</div>
-
-								<div className="mb-3" style={{ position: 'relative' }}>
-									{printType ? <label
-										htmlFor="printType"
-										style={{
-										position: 'absolute',
-										top: '-10px',
-										left: '10px',
-										backgroundColor: 'white',
-										padding: '0 5px',
-										fontSize: '12px',
-										}}
-									>
-										Print Type
-									</label> : ''}
-									<Form.Select className='mb-3' tabindex="6" label='Print Type' onChange={(e) => { setPrintType(e.target.value) }} value={printType} name='printType'>
-										<option> Select Print Type </option>
-										{printTypeList.map((item) => (
-											<option key={item.id} value={item.Print_Type}>
-												{item.Print_Type}
-											</option>
-										))}
-									</Form.Select>
-									{printTypeError && <p style={{ color: 'red' }}>{printTypeError}</p>}
-								</div>
-
-								<div className="mb-3" style={{ position: 'relative' }}>
-									{washingType ? <label
-										htmlFor="washingType"
-										style={{
-										position: 'absolute',
-										top: '-10px',
-										left: '10px',
-										backgroundColor: 'white',
-										padding: '0 5px',
-										fontSize: '12px',
-										}}
-									>
-										Washing Type
-									</label> : ''}
-									<Form.Select className='mb-3' tabindex="7" label='Washing Type' onChange={(e) => { setWashingType(e.target.value) }} value={washingType} name='washingType'>
-										<option> Select Washing Type </option>
-										{washingTypeList.map((item) => (
-											<option key={item.id} value={item.Washing_Type}>
-												{item.Washing_Type}
-											</option>
-										))}
-									</Form.Select>
-									{washingTypeError && <p style={{ color: 'red' }}>{washingTypeError}</p>}
-								</div>
-								</div>
-								<div className='col-3'>
-									{/* <MDBInput wrapperClass='mb-3' type='date' tabindex="10" label='Delivery Date' onChange={(e) => { setDeliveryDate(e.target.value) }} value={deliveryDate} name='deliveryDate' /> */}
-
-									<DatePicker
-											selected={deliveryDate}
-											className="form-control-date"
-											onChange={(date) => setDeliveryDate(date)} // Correct way to handle date change
-											dateFormat="dd/MM/yyyy"  // Format the display of the date
-											placeholderText="dd/mm/yyyy"
-											customInput={
-											<MDBInput
-												type="text"
-												wrapperClass='mb-3'
-												label='Delivery Date'
-												id="deliveryDate"  // Linking the label with the input
-												tabIndex="10"  // Correct case for tabindex
-												name="deliveryDate"
-												value={deliveryDate ? moment(deliveryDate).format("DD/MM/YYYY") : ''}
-											/>
-											}
-										/>
-									{deliveryDateError && <p style={{ color: 'red' }}>{deliveryDateError}</p>}
-
-									{/* <MDBInput wrapperClass='mb-3' type='date' tabindex="11" label='PCD' onChange={(e) => { setPCD(e.target.value) }} value={pcd} name='pcd' /> */}
-
-									<DatePicker
-											selected={pcd}
-											className="mb-3 form-control-date"
-											onChange={(date) => setPCD(date)} // Correct way to handle date change
-											dateFormat="dd/MM/yyyy"  // Format the display of the date
-											placeholderText="dd/mm/yyyy"
-											name="pcd"
-											customInput={
-											<MDBInput
-												type="text"
-												label='PCD'
-												id="pcd"  // Linking the label with the input
-												tabIndex="11"  // Correct case for tabindex
-												name="pcd"
-												value={pcd ? moment(pcd).format("DD/MM/YYYY") : ''}
-											/>
-											}
-									/>	
-
-									{pcdError && <p style={{ color: 'red' }}>{pcdError}</p>}
-
-									<MDBInput wrapperClass='mb-3' type='text' tabindex="9" label='Shipment Mode' onChange={(e) => { setShipmentMode(e.target.value) }} value={shipmentMode} name='shipmentMode' />
-									{shipmentModeError && <p style={{ color: 'red' }}>{shipmentModeError}</p>}
-
-								</div>
-
-								<div className='col-3'>
-									<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
-
-									<MDBInput style={{ height: '86px' }} wrapperClass='mb-3 ' label='Notes'  type='textarea' tabindex="12"  onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
-								</div>
-
-								<div className="col-12 mt-20 parentDivStyle">
-									<table border="1" cellPadding="10" className='table tableStyle'>
-										<thead>
-										<tr>
-											<th style={{width :'100px'}}>Garment Color</th>
-											<th style={{width :'100px'}}>Destination Country</th>
-											{sizeKeys.map((sizeKey) => (
-											<th key={sizeKey} className='thTdStyle'>{sizeKey}</th>
-											))}
-											<th style={{width :'50px'}}>Total</th>
-											<th style={{width :'60px'}}>Actions</th>
-										</tr>
-										</thead>
-										<tbody>
-										{rows.map((row, rowIndex) => (
-											<tr key={rowIndex}>
-											<td className='thTdStyle'>
-												{row.isEditable ? (
-													<input
-														type="color"
-														value={row.garmentColor}
-														onChange={(e) => {
-														const updatedRows = [...rows];
-														updatedRows[rowIndex].garmentColor = e.target.value;
-														setRows(updatedRows);
-														}}
-													/>
-												) : (
-													<div
-													style={{
-														backgroundColor: row.garmentColor,
-														width: '25px',
-														height: '25px',
-														borderRadius: '4px',
-														border: '1px solid #ccc',
-													}}
-													></div>
-												)}
-											</td>
-											<td className='thTdStyle'>
-												{row.isEditable ? (
-													<input
-														type="text"
-														value={row.destinationCountry}
-														onChange={(e) => {
-														const updatedRows = [...rows];
-														updatedRows[rowIndex].destinationCountry = e.target.value;
-														setRows(updatedRows);
-														}}
-													/>
-												) : (
-													row.destinationCountry
-													
-												)}
-											</td>
-											{/* Dynamically generate size fields */}
-											{sizeKeys.map((sizeKey) => (
-												<td className='thTdStyle' key={sizeKey}>
-												{row.isEditable ? (
-													<input
-													type="number"
-													value={row.sizes[sizeKey] || ''}
-													onChange={(e) => {
-														const updatedRows = [...rows];
-														updatedRows[rowIndex].sizes[sizeKey] = e.target.value;
-														updatedRows[rowIndex].total = calculateTotal(updatedRows[rowIndex].sizes); 
-														setRows(updatedRows);
-													}}
-													/>
-												) : (
-													row.sizes[sizeKey] || ''
-													
-												)}
-												</td>
-											))}
-											<td className='thTdStyle'>{row.total}</td>
-											<td className="thTdStyle">
-											{/* Toggle between Edit and Save buttons based on isEditable */}
-											{row.isEditable ? (
-												<i
-												className="fa fa-save pointer"
-												onClick={(e) => handleEditStyleEntry(e, 'edit', rowIndex)}
-												title="Save"
-												></i>
-											) : (
-												<i
-												className="fa fa-edit pointer"
-												onClick={() => handleEditRow(rowIndex)}
-												title="Edit"
-												></i>
-											)}
-											{/* Trash icon to delete the row */}
-											<i
-												className="fa fa-trash ml-15 pointer"
-												onClick={() => handleDeleteRow(rowIndex)}
-												title="Delete"
-											></i>
-											</td>
-
-											</tr>
-										))}
-										</tbody>
-									</table>
-									<Button variant="success" onClick={addNewRow} style={{ float: 'right', width: '5%', marginTop: "-20PX" }}> <i className='fa fa-plus fa-1x white'> </i> </Button>
-								</div>
-							</div>
-						</form>
-					</Modal.Body>
-					<Modal.Footer>	
-						<Button variant="secondary" onClick={closeEditForm} style={{ width: '15%' }}>
-							Cancel
-						</Button>
-						<Button variant="primary" onClick={(e) => handleEditStyleEntry(e, 'save', '99999')} style={{ width: '15%' }}>
-							Save
-						</Button>
-					</Modal.Footer>
-				</Modal>
 			</div>
 		</div>
 	</>

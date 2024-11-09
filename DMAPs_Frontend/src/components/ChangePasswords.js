@@ -25,7 +25,7 @@ export default function ChangePassword() {
         
         //alert("Hello")
         let token = sessionStorage.getItem("accessToken")
-        debugger
+        
         let payload = {
             currentPassword : currentPassword,
             newPassword: newPassword,
@@ -37,7 +37,7 @@ export default function ChangePassword() {
 			//data[0].data[0].result
 			//let token = response.data[0].data[0].token
             console.log(response);
-            debugger
+            
             if (response.data[0].data[0].result == "success") {
 				
                 alert(response.data[0].data[0].message)
