@@ -44,3 +44,19 @@ exports.deletePrintType = (req, res) => {
             res.send({ "result": "Print type is deleted successfully", "data": data });
     });
 };
+
+
+exports.updatePrintType = (req, res) => {
+    data = req.body;
+    console.log("updatePrintType",data);
+    
+    printType.updatePrintType((err, data) => {
+        if (err)
+            res.send({
+                message:
+                    err.message || "Some error occured"
+            });
+        else
+            res.send({ "result": "Print type updated successfully", "data": data });
+    });
+};

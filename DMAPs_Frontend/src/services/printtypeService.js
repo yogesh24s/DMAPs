@@ -7,15 +7,15 @@ import api from "./interceptor";
 class printTypeService {
 
     savePrintType(payload) {
-      debugger
+      
       // alert(payload)
-      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
       console.log(payload)
       return api.post(`${apiUrl}/api/savePrintType`, payload);
     }
 
     getPrintType() {
-      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
       return api
         .get(`${apiUrl}/api/getPrintType`)
         .then((response) => {
@@ -26,18 +26,25 @@ class printTypeService {
         });
     }
 
+
+    updatePrintType(payload) {
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
+      console.log(payload)
+      return api.post(`${apiUrl}/api/updatePrintType`, payload);
+    }
+
     // editCompanyBuyers(payload) {
-    //   const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+    //   const apiUrl = 'http://localhost:4000'; // Read base URL from environment
     //   return api.post(`${apiUrl}/api/editBuyers`, payload);
     // }
 
     deletePrintType(payload) {
-      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
       return api.post(`${apiUrl}/api/deletePrintType`, payload);
     }
 
     // getCompanyBuyers() {
-    //   const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+    //   const apiUrl = 'http://localhost:4000'; // Read base URL from environment
     //   return api
     //     .get(`${apiUrl}/api/getBuyers`)
     //     .then((response) => {

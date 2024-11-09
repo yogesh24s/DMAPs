@@ -44,3 +44,17 @@ exports.deleteEmbType = (req, res) => {
             res.send({ "result": "Emb type is deleted successfully", "data": data });
     });
 };
+
+
+exports.editEmbType = (req, res) => {
+    data = req.body;
+    embType.editEmbType((err, data) => {
+        if (err)
+            res.send({
+                message:
+                    err.message || "Some error occured"
+            });
+        else
+            res.send({ "result": "Company Buyers are saved successfully", "data": data });
+    });
+};

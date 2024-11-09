@@ -57,32 +57,47 @@ Administrator.post('/api/deleteCompanyUsers',verifyToken, companyUsers.deleteCom
 Administrator.get('/api/getBuyers',verifyToken, companyBuyers.getCompanyBuyers);
 Administrator.post('/api/saveBuyers',verifyToken, companyBuyers.saveCompanyBuyers);
 Administrator.post('/api/editBuyers',verifyToken, companyBuyers.editCompanyBuyers);
+
 Administrator.post('/api/deleteBuyers',verifyToken, companyBuyers.deleteCompanyBuyers);
 
 Administrator.post('/api/saveGender',verifyToken, gender.saveGender);
 Administrator.get('/api/getGender',verifyToken, gender.getGender);
+Administrator.post('/api/updateGender',verifyToken, gender.updateGender);
+
 
 Administrator.post('/api/saveProductType',verifyToken, productType.saveProductType);
 Administrator.get('/api/getProductType',verifyToken, productType.getProductType);
+Administrator.post('/api/editProductType',verifyToken, productType.editProductType);
+
 
 Administrator.post('/api/saveSeason',verifyToken, season.saveSeason);
 Administrator.get('/api/getSeason',verifyToken, season.getSeason);
+Administrator.post('/api/updateSeason',verifyToken, season.editSeason);
+
 
 Administrator.post('/api/saveSizeGrid',verifyToken, sizeGrid.saveSizeGrid);
 Administrator.get('/api/getSizeGrid',verifyToken, sizeGrid.getSizeGrid);
 Administrator.post('/api/deleteSizeGrid',verifyToken, sizeGrid.deleteSizeGrid);
+Administrator.post('/api/updateSizeGrid',verifyToken, sizeGrid.updateSizeGrid);
+
 
 Administrator.post('/api/savePrintType',verifyToken, printType.savePrintType);
 Administrator.get('/api/getPrintType',verifyToken, printType.getPrintType);
 Administrator.post('/api/deletePrintType',verifyToken, printType.deletePrintType);
+Administrator.post('/api/updatePrintType',verifyToken, printType.updatePrintType);
+
 
 Administrator.post('/api/saveWashingType',verifyToken, washingType.saveWashingType);
 Administrator.get('/api/getWashingType',verifyToken, washingType.getWashingType);
 Administrator.post('/api/deletewashingType',verifyToken, washingType.deletewashingType);
+Administrator.post('/api/updateWashingType',verifyToken, washingType.updateWashingType);
+
 
 
 Administrator.post('/api/saveEmbType',verifyToken, embType.saveEmbType);
 Administrator.get('/api/getEmbType',verifyToken, embType.getEmbType);
 Administrator.post('/api/deleteEmbType',verifyToken, embType.deleteEmbType);
+Administrator.post('/api/updateEmbType',verifyToken, embType.editEmbType);
+
 
 module.exports = Administrator;

@@ -383,7 +383,7 @@ export default function BuyerGroup() {
 							Cancel
 						</Button>
 						<Button variant="primary" onClick={handleEditBuyer} style={{ width: '15%' }}>
-							Save
+						{buyerId ? "Update" : "Save"}
 						</Button>
 					</Modal.Footer>
 				</Modal>

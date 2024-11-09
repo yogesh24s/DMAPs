@@ -7,15 +7,15 @@ import api from "./interceptor";
 class washingTypeService {
 
     saveWashingType(payload) {
-      debugger
+      
       // alert(payload)
-      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
       console.log(payload)
       return api.post(`${apiUrl}/api/saveWashingType`, payload);
     }
 
     getWashingType() {
-      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
       return api
         .get(`${apiUrl}/api/getWashingType`)
         .then((response) => {
@@ -26,21 +26,22 @@ class washingTypeService {
         });
     }
 
-    // editCompanyBuyers(payload) {
-    //   const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
-    //   return api.post(`${apiUrl}/api/editBuyers`, payload);
-    // }
+    updateWashingType(payload) {
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
+      console.log(payload)
+      return api.post(`${apiUrl}/api/updateWashingType`, payload);
+    }
 
     deleteWashingRecord(payload) {
-      debugger
+      
       console.log(payload);
       
-      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
       return api.post(`${apiUrl}/api/deletewashingType`, payload);
     }
 
     // getCompanyBuyers() {
-    //   const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+    //   const apiUrl = 'http://localhost:4000'; // Read base URL from environment
     //   return api
     //     .get(`${apiUrl}/api/getBuyers`)
     //     .then((response) => {

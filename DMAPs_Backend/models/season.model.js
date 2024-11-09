@@ -35,4 +35,33 @@ season.getSeason = result => {
 };
 
 
+season.updateSeason = result => {
+    const seasonData = data[0]; // Get the first item from the data array
+    console.log('$$$$$$$', seasonData)
+    const updateData = {
+        id : seasonData.id,
+        Season_Name: seasonData.Season_Name
+    };
+
+    if (!seasonData) {
+        // Handle the case where data[0] doesn't exist
+        result("No data to update", null);
+        return;
+    }
+
+    knex.transaction(function(t) {
+        return knex('dmaps.map_season')
+        .where({ id: seasonData.id})
+        .update(updateData)
+        .then(function(response) {
+            result(null, { "result": response });
+        })
+        .then(t.commit)
+        .catch(t.rollback)
+    })
+    .catch(function(error) {
+        console.log(error);
+    })
+}
+
 module.exports = season;

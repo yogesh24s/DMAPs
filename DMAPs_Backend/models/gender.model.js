@@ -35,4 +35,34 @@ gender.getGender = result => {
 };
 
 
+gender.editGender = result => {
+    const GenderData = data[0]; // Get the first item from the data array
+    console.log('$$$$$$$', GenderData)
+    const updateData = {
+        id : GenderData.id,
+        Gender: GenderData.Gender
+    };
+
+    if (!GenderData) {
+        // Handle the case where data[0] doesn't exist
+        result("No data to update", null);
+        return;
+    }
+
+    knex.transaction(function(t) {
+        return knex('dmaps.map_gender')
+        .where({ id: GenderData.id})
+        .update(updateData)
+        .then(function(response) {
+            result(null, { "result": response });
+        })
+        .then(t.commit)
+        .catch(t.rollback)
+    })
+    .catch(function(error) {
+        console.log(error);
+    })
+}
+
+
 module.exports = gender;

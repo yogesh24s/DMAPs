@@ -3,7 +3,7 @@ import api from "./interceptor";
 
 class adminService {
   getBasicDetails() {
-    const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+    const apiUrl = 'http://localhost:4000'; // Read base URL from environment
     return api
       .get(`${apiUrl}/api/basicDetails`)
       .then((response) => {

@@ -44,3 +44,19 @@ exports.deleteSizeGrid = (req, res) => {
             res.send({ "result": "Size  Grid are deleted successfully", "data": data });
     });
 };
+
+
+exports.updateSizeGrid = (req, res) => {
+    data = req.body;
+    console.log("LINE 6",data);
+    
+    sizeGrid.updateSizeGrid((err, data) => {
+        if (err)
+            res.send({
+                message:
+                    err.message || "Some error occured"
+            });
+        else
+            res.send({ "result": "gender saved  successfully", "data": data });
+    });
+};

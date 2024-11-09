@@ -29,3 +29,16 @@ exports.getProductType = (req, res) => {
            
     });
 };
+
+exports.editProductType = (req, res) => {
+    data = req.body;
+    productType.editProductType((err, data) => {
+        if (err)
+            res.send({
+                message:
+                    err.message || "Some error occured"
+            });
+        else
+            res.send({ "result": "Company Buyers are saved successfully", "data": data });
+    });
+};

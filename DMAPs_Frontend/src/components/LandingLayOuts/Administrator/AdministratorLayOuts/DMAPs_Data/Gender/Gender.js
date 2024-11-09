@@ -1,43 +1,44 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { MDBInput, MDBRadio } from 'mdb-react-ui-kit';
+import { MDBInput } from 'mdb-react-ui-kit';
 import genderService from '../../../../../../services/genderService';
 import { trackPromise } from 'react-promise-tracker';
 import GenderTable from './GenderTable';
 
 export default function Gender() {
     const [show, setShow] = useState(false);
-    const [gender, setGender] = React.useState('');
-    const [genderData, setGenderData] = useState([])
+    const [gender, setGender] = useState([]);
+    const [genderData, setGenderData] = useState([]);
+    const [genderId, setGenderId] = useState(null); // State for edit mode
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+        setGenderId(null); // Reset edit data on close
+        setGender(''); // Clear input field
+    };
 
-    function handleForm() {
-        // settingValuesToEmpty()
-        setShow(true)
-    }
+    const handleForm = () => {
+        setShow(true);
+    };
 
-
-    // function handleForm () {
-
-    // }
     function handleGender() {
-        debugger
         let payload = {
-            "gender": gender,
+            "Gender": gender,
+            ...(genderId && { "id": genderId }) // Include id if editing
+        };
 
-        }
-        debugger
+        const apiCall = genderId
+            ? genderService.updateGender({ data: [payload] }) // Update if editing
+            : genderService.saveGender({ data: [payload] }); // Save if new entry
+
         trackPromise(
-            new Promise((resolve, reject) => {
-                const result = genderService.saveGender({ "data": [payload] });
-                if (result) resolve(result);
-                else reject(new Error("genderService.saveGender returned undefined"));
-            })
+            apiCall
                 .then(response => {
                     if (response.status === 200) {
-                        handleClose();
+                        alert(genderId ? "Gender updated successfully" : "Gender added successfully");
+                        getGender(); // Refresh data
+                        handleClose(); // Close modal
                     } else {
                         alert(response.data.result);
                     }
@@ -46,80 +47,82 @@ export default function Gender() {
                     alert(error.response?.data?.error || error.message);
                 })
         );
-
     }
 
     const getGender = () => {
         trackPromise(
             genderService.getGender().then((response) => {
-                debugger
-                setGenderData(response.data.gender)
+                setGenderData(response.data.gender);
             })
         );
-    }
+    };
+
     useEffect(() => {
-        getGender()
-    }, [])
+        getGender();
+    }, []);
+
+    const openEditForm = (data) => {
+        setGenderId(data.id); // Set data for editing or null for new entry
+        setGender(data.Gender); 
+        setShow(true);
+    };
+
+    const deleteBuyerGroupRecord = (data) => {
+        console.log(data);
+    }
 
     return (
         <div className='row'>
             <div className='col-8'>
-                <h1 className='h1'> Gender </h1>
+                <h1 className='h1'>Gender</h1>
             </div>
             <div className='col-4 text-right'>
                 <Button className='primary-btn mt-10' onClick={handleForm}>
                     <i className='fa fa-plus fa-white'> </i> Gender
                 </Button>
-                <Modal show={show}
-                    onHide={() => setShow(false)}
+                <Modal
+                    show={show}
+                    onHide={handleClose}
                     dialogClassName="modal-50w"
                     backdrop="static"
-                    keyboard={false}>
-
+                    keyboard={false}
+                >
                     <Modal.Header closeButton style={{ color: 'white' }}>
-                        <Modal.Title> Add New Gender </Modal.Title>
+                        <Modal.Title>{genderId ? "Edit Gender" : "Add New Gender"}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <form onSubmit={handleGender}>
+                        <form onSubmit={(e) => { e.preventDefault(); handleGender(); }}>
                             <div className='row'>
                                 <div className='col-6'>
-                                    <label>Gender</label>
                                     <div className="mb-3">
-                                        <MDBRadio
-                                            name='gender'
-                                            id='male'
-                                            label='Male'
-                                            value='male'
+                                        <MDBInput
+                                            wrapperClass='mb-3'
+                                            type='text'
+                                            required
+                                            label='Gender'
+                                            tabIndex="3"
                                             onChange={(e) => setGender(e.target.value)}
-                                        />
-                                        <MDBRadio
+                                            value={gender}
                                             name='gender'
-                                            id='female'
-                                            label='Female'
-                                            value='female'
-                                            onChange={(e) => setGender(e.target.value)}
                                         />
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </Modal.Body>
-
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose} style={{ width: '15%' }}>
                             Cancel
                         </Button>
                         <Button variant="primary" onClick={handleGender} style={{ width: '15%' }}>
-                            Save
+                        {genderId ? "Update" : "Save"}
                         </Button>
                     </Modal.Footer>
-
                 </Modal>
             </div>
             <div className='col-12'>
-                <GenderTable data={genderData} />
-
+                <GenderTable data={genderData} openEditForm={openEditForm} deleteBuyerGroupRecord={deleteBuyerGroupRecord}/>
             </div>
         </div>
-    )
+    );
 }

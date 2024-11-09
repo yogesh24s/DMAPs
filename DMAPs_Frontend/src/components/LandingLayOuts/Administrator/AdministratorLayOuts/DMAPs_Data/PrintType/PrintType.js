@@ -1,37 +1,44 @@
-import React, { useEffect, useState } from 'react'
+// PrintType.js
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { MDBInput, MDBRadio } from 'mdb-react-ui-kit';
+import { MDBInput } from 'mdb-react-ui-kit';
 import { trackPromise } from 'react-promise-tracker';
-import printtypeService from '../../../../../../services/printtypeService';
+import printTypeService from '../../../../../../services/printtypeService';
 import PrintTypeTable from './PrintTypeTable';
 
 export default function PrintType() {
-
-    const [printType, setPrintType] = useState("")
+    const [printType, setPrintType] = useState("");
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const [printTypeData, setPrintTypeData] = useState([])
+    const [printTypeData, setPrintTypeData] = useState([]);
+    const [printTypeId, setPrintTypeId] = useState(null);
 
-    const handleForm =() => {
-        setShow(true)
-    }
+    const handleClose = () => {
+        setShow(false);
+        setPrintType(""); // Clear input
+        setPrintTypeId(null); // Reset ID for add mode
+    };
 
-    function handlePrintType() {
-        debugger
-        let payload = {
-            "print_type": printType,
+    const handleForm = () => {
+        setShow(true);
+    };
 
-        }
-        debugger
+    const handlePrintType = () => {
+        const payload = { 
+            print_type: printType, 
+            ...(printTypeId && { id: printTypeId }) // Include ID if editing
+        };
+
+        const apiCall = printTypeId
+            ? printTypeService.updatePrintType({ data: [payload] }) // Update if editing
+            : printTypeService.savePrintType({ data: [payload] }); // Save if new entry
+
         trackPromise(
-            new Promise((resolve, reject) => {
-                const result = printtypeService.savePrintType({ "data": [payload] });
-                if (result) resolve(result);
-                else reject(new Error(""));
-            })
+            apiCall
                 .then(response => {
                     if (response.status === 200) {
+                        alert(printTypeId ? "Print Type updated successfully" : "Print Type added successfully");
+                        getPrintType();
                         handleClose();
                     } else {
                         alert(response.data.result);
@@ -41,94 +48,97 @@ export default function PrintType() {
                     alert(error.response?.data?.error || error.message);
                 })
         );
-
-    }
+    };
 
     const getPrintType = () => {
-        debugger
-		trackPromise(
-			printtypeService.getPrintType().then((response) => {
-                debugger
-                console.log("printtype,",response.data.print_type);
-                
-				setPrintTypeData(response.data.print_type)
-			})
-		);
-	}
-	useEffect(() => {
-		getPrintType()
-	}, [])
+        trackPromise(
+            printTypeService.getPrintType().then((response) => {
+                setPrintTypeData(response.data.print_type);
+            })
+        );
+    };
+
+    const editPrintType = (data) => {
+        setPrintType(data.print_type); // Make sure this matches the API key
+        setPrintTypeId(data.id);
+        setShow(true);
+    };
 
     const deletePrintType = (data) => {
-        debugger
-		if (window.confirm("Are you sure to delete the Print  Type ?")) {
-			let payload = {
-				"id": data.id
-			}
-			trackPromise(printtypeService.deletePrintType({ "data": [payload] }).then((response) => {
-				//check login response
-				if (response.status === 200) {
-					getPrintType()
-				}
-				else {
-					alert(response.data.message);
-				}
+        if (window.confirm("Are you sure to delete the Print Type?")) {
+            let payload = { id: data.id };
+            trackPromise(
+                printTypeService.deletePrintType({ data: [payload] })
+                    .then(response => {
+                        if (response.status === 200) {
+                            getPrintType();
+                        } else {
+                            alert(response.data.message);
+                        }
+                    })
+                    .catch(error => {
+                        alert(error.response?.data?.error || error.message);
+                    })
+            );
+        }
+    };
 
-			}).catch((error) => {
-				//console.log(error.response.data.error)
-				alert(error.response.data.error);
-			})
-			);
-		}
-	};
-  return (
-    <div>
-      <div className='row'>
-            <div className='col-8'>
-                <h1 className='h1'> Print Type </h1>
-            </div>
-            <div className='col-4 text-right'>
-                <Button className='primary-btn mt-10' onClick={handleForm}>
-                    <i className='fa fa-plus fa-white'> </i> Print Type
-                </Button>
-                <Modal show={show}
-                    onHide={() => setShow(false)}
-                    dialogClassName="modal-50w"
-                    backdrop="static"
-                    keyboard={false}>
+    useEffect(() => {
+        getPrintType();
+    }, []);
 
-                    <Modal.Header closeButton style={{ color: 'white' }}>
-                        <Modal.Title> Add New Product Type </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <form onSubmit={handlePrintType}>
-                            <div className='row'>
-                                <div className='col-6'>
-                                    <label>Print Type</label>
-                                    <div className="mb-3">
-                                    <MDBInput wrapperClass='mb-3' type='text' required label='Print Type' tabindex="3" onChange={(e) => { setPrintType(e.target.value) }} value={printType} name='printType' />
+    return (
+        <div>
+            <div className='row'>
+                <div className='col-8'>
+                    <h1 className='h1'>Print Type</h1>
+                </div>
+                <div className='col-4 text-right'>
+                    <Button className='primary-btn mt-10' onClick={handleForm}>
+                        <i className='fa fa-plus fa-white'></i> Print Type
+                    </Button>
+                    <Modal show={show} onHide={handleClose} dialogClassName="modal-50w" backdrop="static" keyboard={false}>
+                        <Modal.Header closeButton style={{ color: 'white' }}>
+                            <Modal.Title>{printTypeId ? "Edit Print Type" : "Add New Print Type"}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <form onSubmit={handlePrintType}>
+                                <div className='row'>
+                                    <div className='col-6'>
+                                        <div className="mb-3">
+                                            <MDBInput
+                                                wrapperClass='mb-3'
+                                                type='text'
+                                                required
+                                                label='Print Type'
+                                                tabIndex="3"
+                                                onChange={(e) => setPrintType(e.target.value)}
+                                                value={printType} // Pre-populates with `printType`
+                                                name='printType'
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-                    </Modal.Body>
-
-                    <Modal.Footer>
-						<Button variant="secondary" onClick={handleClose} style={{ width: '15%' }}>
-							Cancel
-						</Button>
-						<Button variant="primary" onClick={handlePrintType} style={{ width: '15%' }}>
-							Save
-						</Button>
-					</Modal.Footer>
-
-                </Modal>
-            </div>
-            <div className='col-12'>
-            <PrintTypeTable data={printTypeData}  deletePrintType = {deletePrintType} />
-
+                            </form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose} style={{ width: '15%' }}>
+                                Cancel
+                            </Button>
+                            <Button variant="primary" onClick={handlePrintType} style={{ width: '15%' }}>
+                                {printTypeId ? "Update" : "Save"}
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>
+                <div className='col-12'>
+                    <PrintTypeTable
+                        data={printTypeData}
+                        deletePrintType={deletePrintType}
+                        openEditForm={editPrintType} // Pass the edit function as prop
+                    />
+                </div>
             </div>
         </div>
-    </div>
-  )
+    );
 }

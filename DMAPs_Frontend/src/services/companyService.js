@@ -6,7 +6,7 @@ import api from "./interceptor";
 
 class companyService {
     saveCompanyUsers(payload) {
-      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
       return api.post(`${apiUrl}/api/saveCompanyUsers`, payload)
       .then((response) => {
         return response;

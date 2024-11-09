@@ -29,3 +29,17 @@ exports.getSeason = (req, res) => {
            
     });
 };
+
+
+exports.editSeason = (req, res) => {
+    data = req.body;
+    season.updateSeason((err, data) => {
+        if (err)
+            res.send({
+                message:
+                    err.message || "Some error occured"
+            });
+        else
+            res.send({ "result": "Company Buyers are saved successfully", "data": data });
+    });
+};

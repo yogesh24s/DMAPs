@@ -7,15 +7,15 @@ import api from "./interceptor";
 class embTypeService {
 
     saveEmbType(payload) {
-      debugger
+      
       // alert(payload)
-      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
       console.log(payload)
       return api.post(`${apiUrl}/api/saveEmbType`, payload);
     }
 
     getEmbType() {
-      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
       return api
         .get(`${apiUrl}/api/getEmbType`)
         .then((response) => {
@@ -26,18 +26,25 @@ class embTypeService {
         });
     }
 
+
+    updateEmbType(payload) {
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
+      console.log(payload)
+      return api.post(`${apiUrl}/api/updateEmbType`, payload);
+    }
+
     // editCompanyBuyers(payload) {
-    //   const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+    //   const apiUrl = 'http://localhost:4000'; // Read base URL from environment
     //   return api.post(`${apiUrl}/api/editBuyers`, payload);
     // }
 
     deleteEmbType(payload) {
-      const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
       return api.post(`${apiUrl}/api/deleteEmbType`, payload);
     }
 
     // getCompanyBuyers() {
-    //   const apiUrl = process.env.REACT_APP_API_URL; // Read base URL from environment
+    //   const apiUrl = 'http://localhost:4000'; // Read base URL from environment
     //   return api
     //     .get(`${apiUrl}/api/getBuyers`)
     //     .then((response) => {
