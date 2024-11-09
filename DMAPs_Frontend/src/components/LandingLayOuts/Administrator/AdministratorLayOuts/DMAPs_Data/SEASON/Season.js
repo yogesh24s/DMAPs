@@ -131,7 +131,7 @@ export default function Season() {
                     </Modal>
                 </div>
                 <div className='col-12'>
-                    <SeasonTable data={seasonData} openEditForm={openEditForm} />
+                    <SeasonTable data={seasonData} openEditForm={openEditForm} deleteSeasonType = {deleteSeasonType} />
                 </div>
             </div>
         </div>

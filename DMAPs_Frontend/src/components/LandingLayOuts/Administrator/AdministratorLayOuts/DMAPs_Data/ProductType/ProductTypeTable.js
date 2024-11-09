@@ -23,7 +23,7 @@ export default function ProductTypeTable(props) {
                         </i>
                         <i
                             className='fa fa-trash ml-15 pointer'
-                            onClick={() => props.deleteBuyerGroupRecord(row.original)}
+                            onClick={() => props.deleteProduct(row.original)}
                             title='Delete'
                         >
                         </i>

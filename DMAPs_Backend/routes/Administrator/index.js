@@ -63,17 +63,18 @@ Administrator.post('/api/deleteBuyers',verifyToken, companyBuyers.deleteCompanyB
 Administrator.post('/api/saveGender',verifyToken, gender.saveGender);
 Administrator.get('/api/getGender',verifyToken, gender.getGender);
 Administrator.post('/api/updateGender',verifyToken, gender.updateGender);
-
+Administrator.post('/api/deleteGender',verifyToken, gender.deleteGender);
 
 Administrator.post('/api/saveProductType',verifyToken, productType.saveProductType);
 Administrator.get('/api/getProductType',verifyToken, productType.getProductType);
 Administrator.post('/api/editProductType',verifyToken, productType.editProductType);
+Administrator.post('/api/deleteProductType',verifyToken, productType.deleteProductType);
 
 
 Administrator.post('/api/saveSeason',verifyToken, season.saveSeason);
 Administrator.get('/api/getSeason',verifyToken, season.getSeason);
 Administrator.post('/api/updateSeason',verifyToken, season.editSeason);
-
+Administrator.post('/api/deleteSeason',verifyToken, season.deleteSeason);
 
 Administrator.post('/api/saveSizeGrid',verifyToken, sizeGrid.saveSizeGrid);
 Administrator.get('/api/getSizeGrid',verifyToken, sizeGrid.getSizeGrid);

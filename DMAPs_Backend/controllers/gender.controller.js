@@ -45,3 +45,18 @@ exports.updateGender = (req, res) => {
             res.send({ "result": "gender saved  successfully", "data": data });
     });
 };
+
+exports.deleteGender = (req, res) => {
+    data = req.body;
+    console.log("data contorller",data);
+    
+    gender.deleteGender((err, data) => {
+        if (err)
+            res.send({
+                message:
+                    err.message || "Some error occured"
+            });
+        else
+            res.send({ "result": "Size  Grid are deleted successfully", "data": data });
+    });
+};

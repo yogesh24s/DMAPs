@@ -39,7 +39,7 @@ class seasonService {
 
     deleteSeasonType(payload) {
       const apiUrl = 'http://localhost:4000'; // Read base URL from environment
-      return api.post(`${apiUrl}/api/deleteSeasonType`, payload);
+      return api.post(`${apiUrl}/api/deleteSeason`, payload);
     }
 
     // getCompanyBuyers() {

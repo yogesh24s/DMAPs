@@ -25,7 +25,7 @@ export default function GenderTable(props) {
 					></i>
 					<i
 						className="fa fa-trash ml-15 pointer"
-						onClick={() => props.deleteBuyerGroupRecord(row.original)}
+						onClick={() => props.deleteGender(row.original)}
 						title="Delete"
 					></i>
 					</>

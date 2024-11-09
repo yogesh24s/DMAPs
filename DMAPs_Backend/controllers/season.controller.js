@@ -43,3 +43,18 @@ exports.editSeason = (req, res) => {
             res.send({ "result": "Company Buyers are saved successfully", "data": data });
     });
 };
+
+exports.deleteSeason = (req, res) => {
+    data = req.body;
+    console.log("data contorller",data);
+    
+    season.deleteSeason((err, data) => {
+        if (err)
+            res.send({
+                message:
+                    err.message || "Some error occured"
+            });
+        else
+            res.send({ "result": "Size  Grid are deleted successfully", "data": data });
+    });
+};

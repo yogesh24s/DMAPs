@@ -36,10 +36,10 @@ class buyerService {
     //   return api.post(`${apiUrl}/api/editBuyers`, payload);
     // }
 
-    // deleteCompanyBuyers(payload) {
-    //   const apiUrl = 'http://localhost:4000'; // Read base URL from environment
-    //   return api.post(`${apiUrl}/api/deleteBuyers`, payload);
-    // }
+    deleteGender(payload) {
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
+      return api.post(`${apiUrl}/api/deleteGender`, payload);
+    }
 
     // getCompanyBuyers() {
     //   const apiUrl = 'http://localhost:4000'; // Read base URL from environment

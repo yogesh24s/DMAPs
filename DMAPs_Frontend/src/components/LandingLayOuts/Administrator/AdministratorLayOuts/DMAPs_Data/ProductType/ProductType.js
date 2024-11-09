@@ -92,6 +92,25 @@ export default function ProductType() {
         setShow(true);
     };
 
+    const deleteProduct = (data) => {
+        if (window.confirm("Are you sure to delete the  Product Type?")) {
+            const payload = { "id": data.id };
+            trackPromise(
+                productTypeService.deleteProductType({ "data": [payload] })
+                    .then(response => {
+                        if (response.status === 200) {
+                            getProductType();
+                        } else {
+                            alert(response.data.message);
+                        }
+                    })
+                    .catch(error => {
+                        alert(error.response?.data?.error || error.message);
+                    })
+            );
+        }
+    }
+
     return (
         <div>
             <div className='row'>
@@ -135,7 +154,7 @@ export default function ProductType() {
                     </Modal>
                 </div>
                 <div className='col-12'>
-                    <ProductTypeTable data={productTypeData} openEditForm={openEditForm}  />
+                    <ProductTypeTable data={productTypeData} openEditForm={openEditForm}   deleteProduct= {deleteProduct}/>
                 </div>
             </div>
         </div>

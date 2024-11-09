@@ -35,10 +35,10 @@ class productTYpeService {
     //   return api.post(`${apiUrl}/api/editBuyers`, payload);
     // }
 
-    // deleteCompanyBuyers(payload) {
-    //   const apiUrl = 'http://localhost:4000'; // Read base URL from environment
-    //   return api.post(`${apiUrl}/api/deleteBuyers`, payload);
-    // }
+    deleteProductType(payload) {
+      const apiUrl = 'http://localhost:4000'; // Read base URL from environment
+      return api.post(`${apiUrl}/api/deleteProductType`, payload);
+    }
 
     // getCompanyBuyers() {
     //   const apiUrl = 'http://localhost:4000'; // Read base URL from environment

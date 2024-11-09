@@ -67,8 +67,23 @@ export default function Gender() {
         setShow(true);
     };
 
-    const deleteBuyerGroupRecord = (data) => {
-        console.log(data);
+    const deleteGender = (data) => {
+        if (window.confirm("Are you sure to delete the  Gender?")) {
+            const payload = { "id": data.id };
+            trackPromise(
+                genderService.deleteGender({ "data": [payload] })
+                    .then(response => {
+                        if (response.status === 200) {
+                            getGender();
+                        } else {
+                            alert(response.data.message);
+                        }
+                    })
+                    .catch(error => {
+                        alert(error.response?.data?.error || error.message);
+                    })
+            );
+        }
     }
 
     return (
@@ -121,7 +136,7 @@ export default function Gender() {
                 </Modal>
             </div>
             <div className='col-12'>
-                <GenderTable data={genderData} openEditForm={openEditForm} deleteBuyerGroupRecord={deleteBuyerGroupRecord}/>
+                <GenderTable data={genderData} openEditForm={openEditForm} deleteGender={deleteGender}/>
             </div>
         </div>
     );

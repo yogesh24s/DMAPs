@@ -64,5 +64,24 @@ gender.editGender = result => {
     })
 }
 
+gender.deleteGender = result => {
+    const sizeGrid = data[0]; // Get the first item from the data array
+    console.log("data",sizeGrid);
+    
+    knex.transaction(function(t) {
+        return knex('dmaps.map_gender')
+        .where({ id: sizeGrid.id})
+        .del()
+        .then(function(response) {
+            result(null, { "result": response });
+        })
+        .then(t.commit)
+        .catch(t.rollback)
+    })
+    .catch(function(error) {
+        console.log(error);
+    })
+}
+
 
 module.exports = gender;

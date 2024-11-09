@@ -64,5 +64,24 @@ productType.editProductType = result => {
     })
 }
 
+productType.deleteProductType = result => {
+    const productType = data[0]; // Get the first item from the data array
+    console.log("data",productType);
+    
+    knex.transaction(function(t) {
+        return knex('dmaps.map_product_type')
+        .where({ id: productType.id})
+        .del()
+        .then(function(response) {
+            result(null, { "result": response });
+        })
+        .then(t.commit)
+        .catch(t.rollback)
+    })
+    .catch(function(error) {
+        console.log(error);
+    })
+}
+
 
 module.exports = productType;
