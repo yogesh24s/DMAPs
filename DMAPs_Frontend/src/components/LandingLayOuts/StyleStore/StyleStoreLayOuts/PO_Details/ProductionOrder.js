@@ -637,7 +637,10 @@ export default function ProductionOrder() {
 					note={note}
 					setNote={setNote}
 					add="add"
+					setRows={setRows}
 				/>
+				
+
 
 			</div>
 			<div className='col-12'>
@@ -700,7 +703,10 @@ export default function ProductionOrder() {
 					handleEditStyleEntry={handleEditStyleEntry}
 					calculateTotal={calculateTotal}
 					sizeKeys={sizeKeys}
-				/>
+				/> 
+
+				
+				
 
 			</div>
 		</div>
