@@ -201,15 +201,15 @@ export default function StyleEntry() {
 		}
 
 
-		if (!marchantContact) {
-			setMarchantContactError('Mail id is required');
-			isValid = false;
-		} else if (!/^[6789]\d{9}$/.test(marchantContact)) {
-			setMarchantContactError('Please enter a valid 10-digit Indian mobile number');
-			isValid = false;
-		} else {
-			setMarchantContactError('');
-		}
+		// if (!marchantContact) {
+		// 	setMarchantContactError('Mail id is required');
+		// 	isValid = false;
+		// } else if (!/^[6789]\d{9}$/.test(marchantContact)) {
+		// 	setMarchantContactError('Please enter a valid 10-digit Indian mobile number');
+		// 	isValid = false;
+		// } else {
+		// 	setMarchantContactError('');
+		// }
 
 		if (!isValid) {
 			return;
@@ -434,15 +434,15 @@ export default function StyleEntry() {
 		}
 
 
-		if (!marchantContact) {
-			setMarchantContactError('Mail id is required');
-			isValid = false;
-		} else if (!/^[6789]\d{9}$/.test(marchantContact)) {
-			setMarchantContactError('Please enter a valid 10-digit Indian mobile number');
-			isValid = false;
-		} else {
-			setMarchantContactError('');
-		}
+		// if (!marchantContact) {
+		// 	setMarchantContactError('Mail id is required');
+		// 	isValid = false;
+		// } else if (!/^[6789]\d{9}$/.test(marchantContact)) {
+		// 	setMarchantContactError('Please enter a valid 10-digit Indian mobile number');
+		// 	isValid = false;
+		// } else {
+		// 	setMarchantContactError('');
+		// }
 
 
 		if (!isValid) {
@@ -513,100 +513,100 @@ export default function StyleEntry() {
 							</Button>
 
 							<StyleModal
-    show={show}
-    handleClose={handleClose}
-    handleStyleEntry={handleStyleEntry}
-    setBuyer={setBuyer}
-    buyer={buyer}
-    buyerList={buyerList}
-    setProductType={setProductType}
-    productType={productType}
-    productTypeList={productTypeList}
-    productTypeError={productTypeError}
-    setGender={setGender}
-    gender={gender}
-    genderList={genderList}
-    genderError={genderError}
-    setMarchantName={setMarchantName}
-    marchantName={marchantName}
-    marchantNameError={marchantNameError}
-    setBuyerOrderRefNo={setBuyerOrderRefNo}
-    buyerOrderRefNo={buyerOrderRefNo}
-    buyerOrderRefNoError={buyerOrderRefNoError}
-    setStyleDescription={setStyleDescription}
-    styleDescription={styleDescription}
-    styleDescriptionError={styleDescriptionError}
-    setSizeGrid={setSizeGrid}
-    sizeGrid={sizeGrid}
-    sizeGridList={sizeGridList}
-    sizeGridError={sizeGridError}
-    setSeason={setSeason}
-    season={season}
-    seasonList={seasonList}
-    seasonError={seasonError}
-    setMarchantContact={setMarchantContact}
-    marchantContact={marchantContact}
-    marchantContactError={marchantContactError}
-    setNote={setNote}
-    note={note}
-    handleImageUpload={handleImageUpload}
-    imageUploadError={imageUploadError}
-    base64Images={base64Images}
-    handleDeleteImage={handleDeleteImage}
-    setCurrentIndex={setCurrentIndex}
-    currentIndex={currentIndex}
-	add = "add"
-/>
+								show={show}
+								handleClose={handleClose}
+								handleStyleEntry={handleStyleEntry}
+								setBuyer={setBuyer}
+								buyer={buyer}
+								buyerList={buyerList}
+								setProductType={setProductType}
+								productType={productType}
+								productTypeList={productTypeList}
+								productTypeError={productTypeError}
+								setGender={setGender}
+								gender={gender}
+								genderList={genderList}
+								genderError={genderError}
+								setMarchantName={setMarchantName}
+								marchantName={marchantName}
+								marchantNameError={marchantNameError}
+								setBuyerOrderRefNo={setBuyerOrderRefNo}
+								buyerOrderRefNo={buyerOrderRefNo}
+								buyerOrderRefNoError={buyerOrderRefNoError}
+								setStyleDescription={setStyleDescription}
+								styleDescription={styleDescription}
+								styleDescriptionError={styleDescriptionError}
+								setSizeGrid={setSizeGrid}
+								sizeGrid={sizeGrid}
+								sizeGridList={sizeGridList}
+								sizeGridError={sizeGridError}
+								setSeason={setSeason}
+								season={season}
+								seasonList={seasonList}
+								seasonError={seasonError}
+								setMarchantContact={setMarchantContact}
+								marchantContact={marchantContact}
+								marchantContactError={marchantContactError}
+								setNote={setNote}
+								note={note}
+								handleImageUpload={handleImageUpload}
+								imageUploadError={imageUploadError}
+								base64Images={base64Images}
+								handleDeleteImage={handleDeleteImage}
+								setCurrentIndex={setCurrentIndex}
+								currentIndex={currentIndex}
+								add = "add"
+							/>
 						</div>
 						<div className='col-12'>
 
 							<StyleEntryTable defaultPageSize={10} data={data} openEditForm={openEditForm} deleteStyleEntry={deleteStyleEntry} />
 
 							<StyleModal
-    show={isEditFormOpen}
-    onHide={closeEditForm}
-    handleEditStyleEntry={handleEditStyleEntry}
-    setBuyer={setBuyer}
-    buyer={buyer}
-    buyerList={buyerList}
-    setProductType={setProductType}
-    productType={productType}
-    productTypeList={productTypeList}
-    productTypeError={productTypeError}
-    setGender={setGender}
-    gender={gender}
-    genderList={genderList}
-    genderError={genderError}
-    setMarchantName={setMarchantName}
-    marchantName={marchantName}
-    marchantNameError={marchantNameError}
-    setBuyerOrderRefNo={setBuyerOrderRefNo}
-    buyerOrderRefNo={buyerOrderRefNo}
-    buyerOrderRefNoError={buyerOrderRefNoError}
-    setStyleDescription={setStyleDescription}
-    styleDescription={styleDescription}
-    styleDescriptionError={styleDescriptionError}
-    setSizeGrid={setSizeGrid}
-    sizeGrid={sizeGrid}
-    sizeGridList={sizeGridList}
-    sizeGridError={sizeGridError}
-    setSeason={setSeason}
-    season={season}
-    seasonList={seasonList}
-    seasonError={seasonError}
-    setMarchantContact={setMarchantContact}
-    marchantContact={marchantContact}
-    marchantContactError={marchantContactError}
-    setNote={setNote}
-    note={note}
-    handleImageUpload={handleImageUpload}
-    imageUploadError={imageUploadError}
-    base64Images={base64Images}
-    handleDeleteImage={handleDeleteImage}
-    setCurrentIndex={setCurrentIndex}
-    currentIndex={currentIndex}
-	add = "edit"
-/>
+								show={isEditFormOpen}
+								onHide={closeEditForm}
+								handleEditStyleEntry={handleEditStyleEntry}
+								setBuyer={setBuyer}
+								buyer={buyer}
+								buyerList={buyerList}
+								setProductType={setProductType}
+								productType={productType}
+								productTypeList={productTypeList}
+								productTypeError={productTypeError}
+								setGender={setGender}
+								gender={gender}
+								genderList={genderList}
+								genderError={genderError}
+								setMarchantName={setMarchantName}
+								marchantName={marchantName}
+								marchantNameError={marchantNameError}
+								setBuyerOrderRefNo={setBuyerOrderRefNo}
+								buyerOrderRefNo={buyerOrderRefNo}
+								buyerOrderRefNoError={buyerOrderRefNoError}
+								setStyleDescription={setStyleDescription}
+								styleDescription={styleDescription}
+								styleDescriptionError={styleDescriptionError}
+								setSizeGrid={setSizeGrid}
+								sizeGrid={sizeGrid}
+								sizeGridList={sizeGridList}
+								sizeGridError={sizeGridError}
+								setSeason={setSeason}
+								season={season}
+								seasonList={seasonList}
+								seasonError={seasonError}
+								setMarchantContact={setMarchantContact}
+								marchantContact={marchantContact}
+								marchantContactError={marchantContactError}
+								setNote={setNote}
+								note={note}
+								handleImageUpload={handleImageUpload}
+								imageUploadError={imageUploadError}
+								base64Images={base64Images}
+								handleDeleteImage={handleDeleteImage}
+								setCurrentIndex={setCurrentIndex}
+								currentIndex={currentIndex}
+								add = "edit"
+							/>
 						</div>
 					</div>
 				</MDBTabsPane>
