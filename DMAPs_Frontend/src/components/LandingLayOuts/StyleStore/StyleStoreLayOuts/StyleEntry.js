@@ -516,6 +516,7 @@ export default function StyleEntry() {
 								show={show}
 								handleClose={handleClose}
 								handleStyleEntry={handleStyleEntry}
+								styleNo={setStyleNo}
 								setBuyer={setBuyer}
 								buyer={buyer}
 								buyerList={buyerList}
@@ -567,6 +568,7 @@ export default function StyleEntry() {
 								onHide={closeEditForm}
 								handleEditStyleEntry={handleEditStyleEntry}
 								setBuyer={setBuyer}
+								styleNo={setStyleNo}
 								buyer={buyer}
 								buyerList={buyerList}
 								setProductType={setProductType}

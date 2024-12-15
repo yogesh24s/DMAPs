@@ -352,9 +352,7 @@ const OrderModal = ({
 						</form>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button variant="secondary" onClick={handleClose} style={{ width: '15%' }} >
-							Cancel
-						</Button>
+						
 						<Button variant="primary" type='submit' onClick={handlePODetails} style={{ width: '15%' }}>
 							Save
 						</Button>

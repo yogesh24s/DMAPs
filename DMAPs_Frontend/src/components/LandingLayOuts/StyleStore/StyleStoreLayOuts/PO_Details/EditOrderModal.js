@@ -392,9 +392,6 @@ const EditOrderModal = ({
 						</form>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button variant="secondary" onClick={closeEditForm} style={{ width: '15%' }}>
-							Cancel
-						</Button>
 						<Button variant="primary" onClick={(e) => handleEditStyleEntry(e, 'save', '99999')} style={{ width: '15%' }}>
 							Save
 						</Button>

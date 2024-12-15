@@ -8,6 +8,7 @@ function StyleModal({
     handleStyleEntry,
     handleEditStyleEntry,
     onHide,
+    styleNo,
     setBuyer,
     buyer,
     buyerList,
@@ -58,6 +59,21 @@ function StyleModal({
                 <form onSubmit={add == 'add' ? handleStyleEntry : handleEditStyleEntry}>
                     <div className="row">
                         <div className="col-4">
+                            {/* DMAPs Style NO
+                            <InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+                            <div style={{ width: '40%',paddingRight: '5px' }}>  DMPS Style No.</div>
+                                <div style={{ width: '60%' }}>
+                                <MDBInput
+                                        tabIndex="1"
+                                        type="text"
+                                        label=""
+                                        value={styleNo}
+                                        name="Style_No"
+                                        style={{ width: '60%' }}
+                                    />
+                                </div>
+                                
+                            </InputGroup> */}
                             {/* Buyer Field */}
                             <InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
                                 <div style={{ width: '40%', paddingRight: '5px' }}>
@@ -385,9 +401,6 @@ function StyleModal({
                 </form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose} style={{ width: '15%' }}>
-                    Cancel
-                </Button>
                 <Button variant="primary" type="submit" onClick={add == 'add' ? handleStyleEntry : handleEditStyleEntry} style={{ width: '15%' }}>
                     {add == 'add' ? 'save' : 'Update'}
                 </Button>
