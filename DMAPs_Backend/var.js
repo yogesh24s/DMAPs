@@ -9,7 +9,7 @@ var DMAPFunc = function() {
     mysqlHost = '127.0.0.1';
 
     mysqlPwd = 'affine123';
-    // mysqlPwd = '@ff19E$P';
+     mysqlPwd = 'test123';
  
     // knex environemt
     knex = require('knex')({

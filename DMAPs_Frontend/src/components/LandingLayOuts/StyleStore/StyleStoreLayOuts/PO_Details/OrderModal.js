@@ -1,363 +1,442 @@
 import React from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import { MDBInput } from 'mdb-react-ui-kit';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
 const OrderModal = ({
-  show,
-  setShow,
-  handleClose,
-  styleNoList,
-  styleNo,
-  setStyleNo,
-  handleSizeGrid,
-  styleNoError,
-  BuyerName,
-  StyleDescription,
-  SizeGridName,
-  GenderView,
-  ProductType,
-  MerchantName,
-  MerchantContact,
-  fPONo,
-  setFPONo,
-  fPONoError,
-  PONo,
-  setPONo,
-  PONoError,
-  OCNo,
-  setOCNo,
-  embType,
-  setEmbType,
-  embTypeList,
-  embTypeError,
-  printType,
-  setPrintType,
-  printTypeList,
-  printTypeError,
-  washingType,
-  setWashingType,
-  washingTypeList,
-  washingTypeError,
-  deliveryDate,
-  setDeliveryDate,
-  deliveryDateError,
-  pcd,
-  setPCD,
-  pcdError,
-  shipmentMode,
-  setShipmentMode,
-  shipmentModeError,
-  others,
-  setOthers,
-  note,
-  setNote,
-  sizesArray,
-  rows,
-  setRows,
-  addNewRow,
-  handleDeleteRow,
-  calculateTotal,
-  handlePODetails
+	show,
+	setShow,
+	handleClose,
+	styleNoList,
+	styleNo,
+	setStyleNo,
+	handleSizeGrid,
+	styleNoError,
+	BuyerName,
+	StyleDescription,
+	SizeGridName,
+	GenderView,
+	ProductType,
+	MerchantName,
+	MerchantContact,
+	fPONo,
+	setFPONo,
+	fPONoError,
+	PONo,
+	setPONo,
+	PONoError,
+	OCNo,
+	setOCNo,
+	embType,
+	setEmbType,
+	embTypeList,
+	embTypeError,
+	printType,
+	setPrintType,
+	printTypeList,
+	printTypeError,
+	washingType,
+	setWashingType,
+	washingTypeList,
+	washingTypeError,
+	deliveryDate,
+	setDeliveryDate,
+	deliveryDateError,
+	pcd,
+	setPCD,
+	pcdError,
+	shipmentMode,
+	setShipmentMode,
+	shipmentModeError,
+	others,
+	setOthers,
+	note,
+	setNote,
+	sizesArray,
+	rows,
+	setRows,
+	addNewRow,
+	handleDeleteRow,
+	calculateTotal,
+	handlePODetails
 }) => (
-  <Modal
-					show={show}
-					onHide={handleClose}
-					dialogClassName="modal-90w"
-					backdrop="static"
-					keyboard={false}>
-					<Modal.Header closeButton>
-						<Modal.Title> Add New Order  </Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						<form onSubmit={handlePODetails}>
-							<div className='row'>
-								<div className='col-3'>
-									<Form.Select className='mb-3' tabindex="1" label='DMAPS No.' onChange={(e) => {
-										setStyleNo(e.target.value);
-										handleSizeGrid(e.target.value)
-									}} value={styleNo} name='styleNo'>
-										<option> Select DMAPS No. </option>
-										{styleNoList.map((item) => (
-											<option key={item.Style_No} value={item.Style_No}>
-												{item.Style_No}
-											</option>
+	<Modal
+		show={show}
+		onHide={handleClose}
+		dialogClassName="modal-90w"
+		backdrop="static"
+		keyboard={false}>
+		<Modal.Header closeButton>
+			<Modal.Title> Add New Order  </Modal.Title>
+		</Modal.Header>
+		<Modal.Body>
+			<form onSubmit={handlePODetails}>
+				<div className='row'>
+					
+					<div className="col-4">
+						{/* Label and Input */}
+						<InputGroup className="mb-3">
+							<div style={{ marginBottom: '5px' }} className='me-5 mt-2'>Dmaps No</div>
+							<Form.Select
+								tabIndex="1"
+								onChange={(e) => {
+									setStyleNo(e.target.value);
+									handleSizeGrid(e.target.value);
+								}}
+								value={styleNo}
+								name="styleNo"
+								className="form-select"
+							>
+								<option>Select DMAPS No.</option>
+								{styleNoList.map((item) => (
+									<option key={item.Style_No} value={item.Style_No}>
+										{item.Style_No}
+									</option>
+								))}
+							</Form.Select>
+						</InputGroup>
+
+						{/* Error Message */}
+						{styleNoError && (
+							<div className="text-danger text-center" style={{ marginLeft:'150px'}}>{styleNoError}</div>
+						)}
+					</div>
+
+				</div>
+				{styleNo ? (
+					<>
+						<div className='row'>
+							<div className='col-4'>
+								<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+									<div style={{ width: '40%', paddingRight: '5px', marginTop: '-5px' }}>
+										Buyer
+									</div>
+									<span className='span-read'> {BuyerName} </span>
+								</InputGroup>
+
+							</div>
+							<div className='col-4'>
+
+								<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+									<div style={{ width: '70%', marginRight: '20px', marginTop: '-5px' }}>
+										Buyer Style No.
+									</div>
+									<span className='span-read'> {StyleDescription} </span>
+								</InputGroup>
+							</div>
+							<div className='col-4'>
+								<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+									<div style={{ width: '90%', marginRight: '20px', marginTop: '-5px' }}>
+										Size Grid Name
+									</div>
+
+									<span className='span-read'> {SizeGridName} </span>
+								</InputGroup>
+							</div>
+							<div className='col-4'>
+								<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+									<div style={{ width: '40%', marginTop: '-5px' }}>
+										Gender
+									</div>
+									<span className='span-read'> {GenderView} </span>
+								</InputGroup>
+							</div>
+							<div className='col-4'>
+								<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+									<div style={{ width: '80%', marginTop: '-5px' }}>
+										Product Type
+									</div>
+
+									<span className='span-read'> {ProductType} </span>
+								</InputGroup>
+							</div>
+							<div className='col-4'>
+								<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+									<div style={{ width: '100%', marginTop: '-5px' }}>
+										Merchant Name
+									</div>
+
+									<span className='span-read'> {MerchantName} </span>
+								</InputGroup>
+							</div>
+							<div className='col-4'>
+								<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+									<div style={{ width: '100%', marginTop: '-5px' }}>
+										Merchant Contact No.
+									</div>
+									<span className='span-read'> {MerchantContact} </span>
+								</InputGroup>
+							</div>
+						</div>
+					</>
+				) : null}
+				<h6 className='h6'> Order Details </h6>
+				<div className="row g-3">
+					{/* F PO No. */}
+					<div className="col-md-4">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
+								F PO No.
+							</label>
+							<MDBInput
+								type="text"
+								placeholder="Enter F PO No."
+								value={fPONo}
+								onChange={(e) => setFPONo(e.target.value)}
+								name="fPONo"
+								className="form-control"
+							/>
+						</div>
+						{fPONoError && <div className="text-danger text-center">{fPONoError}</div>}
+					</div>
+
+					{/* Order No. */}
+					<div className="col-md-4">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
+								Order No.
+							</label>
+							<MDBInput
+								type="text"
+								placeholder="Enter Order No."
+								value={PONo}
+								onChange={(e) => setPONo(e.target.value)}
+								name="PONo"
+								className="form-control"
+							/>
+						</div>
+						{PONoError && <div className="text-danger text-center">{PONoError}</div>}
+					</div>
+
+					{/* Emb. Type */}
+					<div className="col-md-4">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
+								Emb. Type
+							</label>
+							<Form.Select
+								value={embType}
+								onChange={(e) => setEmbType(e.target.value)}
+								name="embType"
+								className="form-select"
+							>
+								<option>Select Emb Type</option>
+								{embTypeList.map((item) => (
+									<option key={item.id} value={item.Emb_Type}>
+										{item.Emb_Type}
+									</option>
+								))}
+							</Form.Select>
+						</div>
+						{embTypeError && <div className="text-danger text-center">{embTypeError}</div>}
+					</div>
+
+					{/* Print Type */}
+					<div className="col-md-4">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
+								Print Type
+							</label>
+							<Form.Select
+								value={printType}
+								onChange={(e) => setPrintType(e.target.value)}
+								name="printType"
+								className="form-select"
+							>
+								<option>Select Print Type</option>
+								{printTypeList.map((item) => (
+									<option key={item.id} value={item.Print_Type}>
+										{item.Print_Type}
+									</option>
+								))}
+							</Form.Select>
+						</div>
+						{printTypeError && <div className="text-danger text-center">{printTypeError}</div>}
+					</div>
+
+					{/* Washing Type */}
+					<div className="col-md-4">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
+								Washing Type
+							</label>
+							<Form.Select
+								value={washingType}
+								onChange={(e) => setWashingType(e.target.value)}
+								name="washingType"
+								className="form-select"
+							>
+								<option>Select Washing Type</option>
+								{washingTypeList.map((item) => (
+									<option key={item.id} value={item.Washing_Type}>
+										{item.Washing_Type}
+									</option>
+								))}
+							</Form.Select>
+						</div>
+						{washingTypeError && <div className="text-danger text-center ms-5 ps-5">{washingTypeError}</div>}
+					</div>
+
+					{/* Delivery Date */}
+					<div className="col-md-4">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
+								Delivery Date
+							</label>
+							<DatePicker
+								selected={deliveryDate}
+								onChange={(date) => setDeliveryDate(date)}
+								className="form-control"
+								dateFormat="dd/MM/yyyy"
+								placeholderText="dd/mm/yyyy"
+							/>
+						</div>
+						{deliveryDateError && <div className="text-danger text-center ms-5 ps-5">{deliveryDateError}</div>}
+					</div>
+
+					{/* PCD */}
+					<div className="col-md-4">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
+								PCD
+							</label>
+							<DatePicker
+								selected={pcd}
+								onChange={(date) => setPCD(date)}
+								className="form-control"
+								dateFormat="dd/MM/yyyy"
+								placeholderText="dd/mm/yyyy"
+							/>
+						</div>
+						{pcdError && <div className="text-danger text-center">{pcdError}</div>}
+					</div>
+
+					{/* Shipment Mode */}
+					<div className="col-md-4">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
+								Shipment Mode
+							</label>
+							<MDBInput
+								type="text"
+								placeholder="Enter Shipment Mode"
+								value={shipmentMode}
+								onChange={(e) => setShipmentMode(e.target.value)}
+								name="shipmentMode"
+								className="form-control"
+							/>
+						</div>
+						{shipmentModeError && <div className="text-danger text-center  ms-5 ps-5">{shipmentModeError}</div>}
+					</div>
+					{/* Others */}
+					<div className="col-md-6">
+						<label className="form-label">Others</label>
+						<MDBInput
+							type="text"
+							placeholder="Enter Others"
+							value={others}
+							onChange={(e) => setOthers(e.target.value)}
+							name="others"
+						/>
+					</div>
+
+					{/* Notes */}
+					<div className="col-md-6">
+						<label className="form-label">Notes</label>
+						<MDBInput
+							type="textarea"
+							placeholder="Enter Notes"
+							value={note}
+							onChange={(e) => setNote(e.target.value)}
+							name="note"
+							rows="3"
+						/>
+					</div>
+
+				</div>
+
+				<div className="col-12 mt-20 parentDivStyle mt-5">
+					{styleNo && sizesArray && sizesArray.length > 0 ? (
+						<>
+							<table border="1" className='table tableStyle'>
+								<thead>
+									<tr>
+										<th style={{ width: '100px' }}>Garment Color</th>
+										<th style={{ width: '100px' }}>Destination Country</th>
+										{sizesArray.map((sizeKey) => (
+											<th className='thTdStyle' key={sizeKey}>{sizeKey}</th>
 										))}
-									</Form.Select>
-									{styleNoError && <p style={{ color: 'red' }}>{styleNoError}</p>}
-
-								</div>
-							</div>
-							{styleNo ? (
-								<>
-									<div className='row'>
-										<div className='col-3'>
-											<div className="data-row">
-												<label className='label-read' htmlFor="name">Buyer</label>
-												<span className='span-read'> {BuyerName} </span>
-											</div>
-										</div>
-										<div className='col-3'>
-											<div className="data-row">
-												<label className='label-read' htmlFor="name">Buyer Style No.</label>
-												<span className='span-read'> {StyleDescription} </span>
-											</div>
-										</div>
-										<div className='col-3'>
-											<div className="data-row">
-												<label className='label-read' htmlFor="name">Size Grid Name</label>
-												<span className='span-read'> {SizeGridName} </span>
-											</div>
-										</div>
-										<div className='col-3'>
-											<div className="data-row">
-												<label className='label-read' htmlFor="name">Gender</label>
-												<span className='span-read'> {GenderView} </span>
-											</div>
-										</div>
-										<div className='col-3'>
-											<div className="data-row">
-												<label className='label-read' htmlFor="name">Product Type</label>
-												<span className='span-read'> {ProductType} </span>
-											</div>
-										</div>
-										<div className='col-3'>
-											<div className="data-row">
-												<label className='label-read' htmlFor="name">Merchant Name</label>
-												<span className='span-read'> {MerchantName} </span>
-											</div>
-										</div>
-										<div className='col-3'>
-											<div className="data-row">
-												<label className='label-read' htmlFor="name">Merchant Contact No.</label>
-												<span className='span-read'> {MerchantContact} </span>
-											</div>
-										</div>
-									</div>
-								</>
-							) : null}
-							<h6 className='h6'> Order Details </h6>
-							<div className='row'>
-								<div className='col-3'>
-									<MDBInput label='F PO No.' type='text' tabindex="2" wrapperClass='mb-3' onChange={(e) => { setFPONo(e.target.value) }} value={fPONo} name='fPONo' />
-									{fPONoError && <p style={{ color: 'red' }}>{fPONoError}</p>}
-
-									<MDBInput label='Order No.' type='text' tabindex="3" wrapperClass='mb-3' onChange={(e) => { setPONo(e.target.value) }} value={PONo} name='PONo' />
-									{PONoError && <p style={{ color: 'red' }}>{PONoError}</p>}
-
-									<MDBInput label='OC No.' type='text' tabindex="4" wrapperClass='mb-3' onChange={(e) => { setOCNo(e.target.value) }} value={OCNo} name='OCNo' />
-								</div>
-
-								<div className='col-3'>
-									<div className="mb-3" style={{ position: 'relative' }}>
-										{embType ? <label
-											htmlFor="embType"
-											style={{
-												position: 'absolute',
-												top: '-10px',
-												left: '10px',
-												backgroundColor: 'white',
-												padding: '0 5px',
-												fontSize: '12px',
-											}}
-										>
-											Emb. Type
-										</label> : ''}
-										<Form.Select className='mb-3' tabindex="5" label='Emb Type' onChange={(e) => { setEmbType(e.target.value) }} value={embType} name='embType'>
-											<option> Select Emb Type </option>
-											{embTypeList.map((item) => (
-												<option key={item.id} value={item.Emb_Type}>
-													{item.Emb_Type}
-												</option>
+										<th style={{ width: '50px' }}>Total</th>
+										<th style={{ width: '60px' }}>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									{rows.map((row, rowIndex) => (
+										<tr key={rowIndex}>
+											<td className='thTdStyle'>
+												<input
+													type="color"
+													value={row.garmentColor || '#000000'}
+													onChange={(e) => {
+														const updatedRows = [...rows];
+														updatedRows[rowIndex].garmentColor = e.target.value;
+														setRows(updatedRows);
+													}}
+												/>
+											</td>
+											<td className='thTdStyle'>
+												<input
+													type="text"
+													value={row.destinationCountry}
+													onChange={(e) => {
+														const updatedRows = [...rows];
+														updatedRows[rowIndex].destinationCountry = e.target.value;
+														setRows(updatedRows);
+													}}
+												/>
+											</td>
+											{/* Dynamically generate size inputs */}
+											{sizesArray.map((sizeKey) => (
+												<td className='thTdStyle' key={sizeKey}>
+													<input
+														type="number"
+														value={row.sizes[sizeKey] || ''}
+														onChange={(e) => {
+															const updatedRows = [...rows];
+															updatedRows[rowIndex].sizes[sizeKey] = e.target.value;
+															updatedRows[rowIndex].total = calculateTotal(updatedRows[rowIndex].sizes); // Recalculate total
+															setRows(updatedRows);
+														}}
+													/>
+												</td>
 											))}
-										</Form.Select>
-										{embTypeError && <p style={{ color: 'red' }}>{embTypeError}</p>}
-									</div>
-									<div className="mb-3" style={{ position: 'relative' }}>
-										{printType ? <label
-											htmlFor="printType"
-											style={{
-												position: 'absolute',
-												top: '-10px',
-												left: '10px',
-												backgroundColor: 'white',
-												padding: '0 5px',
-												fontSize: '12px',
-											}}
-										>
-											Print Type
-										</label> : ''}
-										<Form.Select className='mb-3' tabindex="6" label='Print Type' onChange={(e) => { setPrintType(e.target.value) }} value={printType} name='printType'>
-											<option> Select Print Type </option>
-											{printTypeList.map((item) => (
-												<option key={item.id} value={item.Print_Type}>
-													{item.Print_Type}
-												</option>
-											))}
-										</Form.Select>
-										{printTypeError && <p style={{ color: 'red' }}>{printTypeError}</p>}
-									</div>
+											<td className='thTdStyle'>{row.total}</td>
+											<td className='thTdStyle'>
+												<i className='fa fa-trash ml-15 pointer' onClick={() => handleDeleteRow(rowIndex)} title='Delete'> </i>
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+							<Button variant="success" onClick={addNewRow} style={{ float: 'right', width: '5%', marginTop: "-20PX" }}> <i className='fa fa-plus fa-1x white'> </i>   </Button>
+						</>
+					) : null}
 
-									<div className="mb-3" style={{ position: 'relative' }}>
-										{washingType ? <label
-											htmlFor="washingType"
-											style={{
-												position: 'absolute',
-												top: '-10px',
-												left: '10px',
-												backgroundColor: 'white',
-												padding: '0 5px',
-												fontSize: '12px',
-											}}
-										>
-											Washing Type
-										</label> : ''}
-										<Form.Select className='mb-3' tabindex="7" label='Washing Type' onChange={(e) => { setWashingType(e.target.value) }} value={washingType} name='washingType'>
-											<option> Select Washing Type </option>
-											{washingTypeList.map((item) => (
-												<option key={item.id} value={item.Washing_Type}>
-													{item.Washing_Type}
-												</option>
-											))}
-										</Form.Select>
-										{washingTypeError && <p style={{ color: 'red' }}>{washingTypeError}</p>}
-									</div>
-								</div>
-								<div className='col-3'>
-									{/* <MDBInput wrapperClass='mb-3' type='date' placeholder="dd/mm/yyyy" tabindex="10" label='Delivery Date' onChange={(e) => { setDeliveryDate(e.target.value) }} value={deliveryDate} name='deliveryDate' /> */}
+				</div>
 
-									<DatePicker
-										selected={deliveryDate}
-										className="form-control-date"
-										onChange={(date) => setDeliveryDate(date)} // Correct way to handle date change
-										dateFormat="dd/MM/yyyy"  // Format the display of the date
-										placeholderText="dd/mm/yyyy"
 
-										customInput={
-											<MDBInput
-												type="text"
-												wrapperClass='mb-3'
-												label='Delivery Date'
-												id="deliveryDate"  // Linking the label with the input
-												tabIndex="10"  // Correct case for tabindex
-												name="deliveryDate"
-												value={deliveryDate ? moment(deliveryDate).format("DD/MM/YYYY") : ''}
-											/>
-										}
-									/>
 
-									{deliveryDateError && <p style={{ color: 'red' }}>{deliveryDateError}</p>}
 
-									{/* <MDBInput wrapperClass='mb-3' type='date' tabindex="11" label='PCD' onChange={(e) => { setPCD(e.target.value) }} value={pcd} name='pcd' /> */}
+			</form>
+		</Modal.Body>
+		<Modal.Footer>
 
-									<DatePicker
-										selected={pcd}
-										className="mb-3 form-control-date"
-										onChange={(date) => setPCD(date)} // Correct way to handle date change
-										dateFormat="dd/MM/yyyy"  // Format the display of the date
-										placeholderText="dd/mm/yyyy"
-										name="pcd"
-										customInput={
-											<MDBInput
-												type="text"
-												label='PCD'
-												id="pcd"  // Linking the label with the input
-												tabIndex="11"  // Correct case for tabindex
-												name="pcd"
-												value={pcd ? moment(pcd).format("DD/MM/YYYY") : ''}
-											/>
-										}
-									/>
-									{pcdError && <p style={{ color: 'red' }}>{pcdError}</p>}
-
-									<MDBInput wrapperClass='mb-3' type='text' tabindex="9" label='Shipment Mode' onChange={(e) => { setShipmentMode(e.target.value) }} value={shipmentMode} name='shipmentMode' />
-									{shipmentModeError && <p style={{ color: 'red' }}>{shipmentModeError}</p>}
-								</div>
-
-								<div className='col-3'>
-									<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
-
-									<MDBInput style={{ height: "86px" }} wrapperClass='mb-3 ' label='Notes' type='textarea' tabindex="12" onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
-								</div>
-								<div className="col-12 mt-20 parentDivStyle">
-									{styleNo && sizesArray && sizesArray.length > 0 ? (
-										<>
-											<table border="1" className='table tableStyle'>
-												<thead>
-													<tr>
-														<th style={{ width: '100px' }}>Garment Color</th>
-														<th style={{ width: '100px' }}>Destination Country</th>
-														{sizesArray.map((sizeKey) => (
-															<th className='thTdStyle' key={sizeKey}>{sizeKey}</th>
-														))}
-														<th style={{ width: '50px' }}>Total</th>
-														<th style={{ width: '60px' }}>Actions</th>
-													</tr>
-												</thead>
-												<tbody>
-													{rows.map((row, rowIndex) => (
-														<tr key={rowIndex}>
-															<td className='thTdStyle'>
-																<input
-																	type="color"
-																	value={row.garmentColor || '#000000'}
-																	onChange={(e) => {
-																		const updatedRows = [...rows];
-																		updatedRows[rowIndex].garmentColor = e.target.value;
-																		setRows(updatedRows);
-																	}}
-																/>
-															</td>
-															<td className='thTdStyle'>
-																<input
-																	type="text"
-																	value={row.destinationCountry}
-																	onChange={(e) => {
-																		const updatedRows = [...rows];
-																		updatedRows[rowIndex].destinationCountry = e.target.value;
-																		setRows(updatedRows);
-																	}}
-																/>
-															</td>
-															{/* Dynamically generate size inputs */}
-															{sizesArray.map((sizeKey) => (
-																<td className='thTdStyle' key={sizeKey}>
-																	<input
-																		type="number"
-																		value={row.sizes[sizeKey] || ''}
-																		onChange={(e) => {
-																			const updatedRows = [...rows];
-																			updatedRows[rowIndex].sizes[sizeKey] = e.target.value;
-																			updatedRows[rowIndex].total = calculateTotal(updatedRows[rowIndex].sizes); // Recalculate total
-																			setRows(updatedRows);
-																		}}
-																	/>
-																</td>
-															))}
-															<td className='thTdStyle'>{row.total}</td>
-															<td className='thTdStyle'>
-																<i className='fa fa-trash ml-15 pointer' onClick={() => handleDeleteRow(rowIndex)} title='Delete'> </i>
-															</td>
-														</tr>
-													))}
-												</tbody>
-											</table>
-											<Button variant="success" onClick={addNewRow} style={{ float: 'right', width: '5%', marginTop: "-20PX" }}> <i className='fa fa-plus fa-1x white'> </i>   </Button>
-										</>
-									) : null}
-
-								</div>
-							</div>
-						</form>
-					</Modal.Body>
-					<Modal.Footer>
-						
-						<Button variant="primary" type='submit' onClick={handlePODetails} style={{ width: '15%' }}>
-							Save
-						</Button>
-					</Modal.Footer>
-				</Modal>
+			<Button variant="primary" type='submit' onClick={handlePODetails} style={{ width: '15%' }}>
+				Save
+			</Button>
+		</Modal.Footer>
+	</Modal>
 );
 
 export default OrderModal;
