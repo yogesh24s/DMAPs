@@ -3,7 +3,7 @@ import helper from "./tokenStore";
 
 // Create axios instance with baseURL from environment variables
 const api = axios.create({
-  baseURL: 'http://3.92.91.120:4000', // Base URL from .env file
+  baseURL: 'http://localhost:4000', // Base URL from .env file
   headers: { "Content-Type": "application/json" },
 });
 
