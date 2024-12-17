@@ -20,6 +20,8 @@ const OrderModal = ({
 	ProductType,
 	MerchantName,
 	MerchantContact,
+	Season,
+	base64Images,
 	fPONo,
 	setFPONo,
 	fPONoError,
@@ -73,11 +75,11 @@ const OrderModal = ({
 		<Modal.Body>
 			<form onSubmit={handlePODetails}>
 				<div className='row'>
-					
 					<div className="col-4">
-						{/* Label and Input */}
-						<InputGroup className="mb-3">
-							<div style={{ marginBottom: '5px' }} className='me-5 mt-2'>Dmaps No</div>
+						<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+							<div style={{ width: '40%', paddingRight: '5px' }}>
+								DMAPS No.
+							</div>
 							<Form.Select
 								tabIndex="1"
 								onChange={(e) => {
@@ -88,7 +90,7 @@ const OrderModal = ({
 								name="styleNo"
 								className="form-select"
 							>
-								<option>Select DMAPS No.</option>
+								<option>DMAPS No.</option>
 								{styleNoList.map((item) => (
 									<option key={item.Style_No} value={item.Style_No}>
 										{item.Style_No}
@@ -96,92 +98,123 @@ const OrderModal = ({
 								))}
 							</Form.Select>
 						</InputGroup>
-
+						
 						{/* Error Message */}
 						{styleNoError && (
 							<div className="text-danger text-center" style={{ marginLeft:'150px'}}>{styleNoError}</div>
 						)}
 					</div>
-
 				</div>
 				{styleNo ? (
 					<>
 						<div className='row'>
-							<div className='col-4'>
-								<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
-									<div style={{ width: '40%', paddingRight: '5px', marginTop: '-5px' }}>
-										Buyer
+							<div className='col-8'>
+								<div className='row'>
+									<div className='col-6'>
+										<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+											<div style={{ width: '70%', marginTop: '-5px' }}>
+												Buyer
+											</div>
+											<span className='span-read'> {BuyerName} </span>
+										</InputGroup>
 									</div>
-									<span className='span-read'> {BuyerName} </span>
-								</InputGroup>
+									
+									<div className='col-6'>
+										<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+											<div style={{ width: '70%', marginTop: '-5px' }}>
+												Size Grid Name
+											</div>
 
-							</div>
-							<div className='col-4'>
-
-								<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
-									<div style={{ width: '70%', marginRight: '20px', marginTop: '-5px' }}>
-										Buyer Style No.
+											<span className='span-read'> {SizeGridName} </span>
+										</InputGroup>
 									</div>
-									<span className='span-read'> {StyleDescription} </span>
-								</InputGroup>
-							</div>
-							<div className='col-4'>
-								<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
-									<div style={{ width: '90%', marginRight: '20px', marginTop: '-5px' }}>
-										Size Grid Name
+									<div className='col-6'>
+										<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+											<div style={{ width: '70%', marginTop: '-5px' }}>
+												Buyer Style No.
+											</div>
+											<span className='span-read'> {StyleDescription} </span>
+										</InputGroup>
 									</div>
-
-									<span className='span-read'> {SizeGridName} </span>
-								</InputGroup>
-							</div>
-							<div className='col-4'>
-								<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
-									<div style={{ width: '40%', marginTop: '-5px' }}>
-										Gender
-									</div>
-									<span className='span-read'> {GenderView} </span>
-								</InputGroup>
-							</div>
-							<div className='col-4'>
-								<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
-									<div style={{ width: '80%', marginTop: '-5px' }}>
-										Product Type
+									
+									<div className='col-6'>
+										<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+											<div style={{ width: '70%', marginTop: '-5px' }}>
+												Style Description
+											</div>
+											<span className='span-read'> {ProductType} </span>
+										</InputGroup>
 									</div>
 
-									<span className='span-read'> {ProductType} </span>
-								</InputGroup>
-							</div>
-							<div className='col-4'>
-								<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
-									<div style={{ width: '100%', marginTop: '-5px' }}>
-										Merchant Name
-									</div>
+									<div className='col-6'>
+										<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+											<div style={{ width: '70%', marginTop: '-5px' }}>
+												Merchant Name
+											</div>
 
-									<span className='span-read'> {MerchantName} </span>
-								</InputGroup>
+											<span className='span-read'> {MerchantName} </span>
+										</InputGroup>
+									</div>
+									<div className='col-6'>
+										<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+											<div style={{ width: '70%', marginTop: '-5px' }}>
+												Gender
+											</div>
+											<span className='span-read'> {GenderView} </span>
+										</InputGroup>
+									</div>
+									<div className='col-6'>
+										<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+											<div style={{ width: '70%', marginTop: '-5px' }}>
+												Merchant Contact
+											</div>
+											<span className='span-read'> {MerchantContact} </span>
+										</InputGroup>
+									</div>
+									<div className='col-6'>
+										<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+											<div style={{ width: '70%', marginTop: '-5px' }}>
+												Season
+											</div>
+											<span className='span-read'> {Season} </span>
+										</InputGroup>
+									</div>
+								</div>
 							</div>
 							<div className='col-4'>
-								<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
-									<div style={{ width: '100%', marginTop: '-5px' }}>
-										Merchant Contact No.
-									</div>
-									<span className='span-read'> {MerchantContact} </span>
-								</InputGroup>
+							<div className='row'>
+								{["Front", "Back", "Optional"].map((label, index) => (
+
+                                        <div key={index} className='col-4'>
+											 <label htmlFor={`imageUpload-${index}`} className="upload-button" style={{ cursor: 'pointer', textAlign : 'center', width:'100%' }}>
+                                                    {label}
+                                                </label>
+                                             <div style={{textAlign: 'center' }}>
+												<img
+													src={base64Images[index]}
+													alt={`${label} Thumbnail`}
+													style={{ width : "80%", height : "60%", textAlign: 'center', borderRadius: '5px', cursor: 'pointer' }}												/>
+											</div>
+                                        </div>
+                                    ))}
+								</div>
 							</div>
+							
+							
 						</div>
 					</>
 				) : null}
 				<h6 className='h6'> Order Details </h6>
 				<div className="row g-3">
 					{/* F PO No. */}
-					<div className="col-md-4">
+					<div className="col-4">
 						<div className="d-flex align-items-center mb-1">
-							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
-								F PO No.
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
+								Buyer PO No.
 							</label>
 							<MDBInput
 								type="text"
-								placeholder="Enter F PO No."
+								placeholder="Enter Buyer PO No."
 								value={fPONo}
 								onChange={(e) => setFPONo(e.target.value)}
 								name="fPONo"
@@ -194,12 +227,12 @@ const OrderModal = ({
 					{/* Order No. */}
 					<div className="col-md-4">
 						<div className="d-flex align-items-center mb-1">
-							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
-								Order No.
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
+								OC No.
 							</label>
 							<MDBInput
 								type="text"
-								placeholder="Enter Order No."
+								placeholder="Enter OC No."
 								value={PONo}
 								onChange={(e) => setPONo(e.target.value)}
 								name="PONo"
@@ -212,8 +245,8 @@ const OrderModal = ({
 					{/* Emb. Type */}
 					<div className="col-md-4">
 						<div className="d-flex align-items-center mb-1">
-							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
-								Emb. Type
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
+								Embrodiery
 							</label>
 							<Form.Select
 								value={embType}
@@ -221,7 +254,7 @@ const OrderModal = ({
 								name="embType"
 								className="form-select"
 							>
-								<option>Select Emb Type</option>
+								<option>Select Embrodiery</option>
 								{embTypeList.map((item) => (
 									<option key={item.id} value={item.Emb_Type}>
 										{item.Emb_Type}
@@ -235,8 +268,8 @@ const OrderModal = ({
 					{/* Print Type */}
 					<div className="col-md-4">
 						<div className="d-flex align-items-center mb-1">
-							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
-								Print Type
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
+								Print
 							</label>
 							<Form.Select
 								value={printType}
@@ -244,7 +277,7 @@ const OrderModal = ({
 								name="printType"
 								className="form-select"
 							>
-								<option>Select Print Type</option>
+								<option>Select Print</option>
 								{printTypeList.map((item) => (
 									<option key={item.id} value={item.Print_Type}>
 										{item.Print_Type}
@@ -258,8 +291,8 @@ const OrderModal = ({
 					{/* Washing Type */}
 					<div className="col-md-4">
 						<div className="d-flex align-items-center mb-1">
-							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
-								Washing Type
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'63%' }}>
+								Washing
 							</label>
 							<Form.Select
 								value={washingType}
@@ -267,7 +300,7 @@ const OrderModal = ({
 								name="washingType"
 								className="form-select"
 							>
-								<option>Select Washing Type</option>
+								<option>Select Washing</option>
 								{washingTypeList.map((item) => (
 									<option key={item.id} value={item.Washing_Type}>
 										{item.Washing_Type}
@@ -281,7 +314,7 @@ const OrderModal = ({
 					{/* Delivery Date */}
 					<div className="col-md-4">
 						<div className="d-flex align-items-center mb-1">
-							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'58%' }}>
 								Delivery Date
 							</label>
 							<DatePicker
@@ -298,8 +331,8 @@ const OrderModal = ({
 					{/* PCD */}
 					<div className="col-md-4">
 						<div className="d-flex align-items-center mb-1">
-							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
-								PCD
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'58%' }}>
+								PCD Date
 							</label>
 							<DatePicker
 								selected={pcd}
@@ -315,7 +348,7 @@ const OrderModal = ({
 					{/* Shipment Mode */}
 					<div className="col-md-4">
 						<div className="d-flex align-items-center mb-1">
-							<label className="form-label me-2" style={{ whiteSpace: "nowrap" }}>
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
 								Shipment Mode
 							</label>
 							<MDBInput
@@ -330,7 +363,7 @@ const OrderModal = ({
 						{shipmentModeError && <div className="text-danger text-center  ms-5 ps-5">{shipmentModeError}</div>}
 					</div>
 					{/* Others */}
-					<div className="col-md-6">
+					{/* <div className="col-md-6">
 						<label className="form-label">Others</label>
 						<MDBInput
 							type="text"
@@ -339,10 +372,10 @@ const OrderModal = ({
 							onChange={(e) => setOthers(e.target.value)}
 							name="others"
 						/>
-					</div>
+					</div> */}
 
 					{/* Notes */}
-					<div className="col-md-6">
+					<div className="col-md-12">
 						<label className="form-label">Notes</label>
 						<MDBInput
 							type="textarea"
@@ -351,11 +384,12 @@ const OrderModal = ({
 							onChange={(e) => setNote(e.target.value)}
 							name="note"
 							rows="3"
+						
 						/>
 					</div>
 
 				</div>
-
+				
 				<div className="col-12 mt-20 parentDivStyle mt-5">
 					{styleNo && sizesArray && sizesArray.length > 0 ? (
 						<>

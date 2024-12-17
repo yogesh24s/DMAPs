@@ -6,7 +6,7 @@ import api from "./interceptor";
 
 class documentService {
   uploadFiles(file, remarks) {
-    const apiUrl = 'http://localhost:4000'; // Read base URL from environment
+    const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
     const payload = new FormData();
     
     payload.append("remarks", remarks);
@@ -28,7 +28,7 @@ class documentService {
   }
 
   getAllDocuments() {
-    const apiUrl = 'http://localhost:4000'; // Read base URL from environment
+    const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
 
     return api
       .get(`${apiUrl}/documentService/uploaded_files_list/`)

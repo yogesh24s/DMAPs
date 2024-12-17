@@ -4,7 +4,7 @@
  */
 import api from "./interceptor";
 
-const apiUrl = 'http://localhost:4000'; // Base URL from environment variable
+const apiUrl = 'http://3.92.91.120:4000'; // Base URL from environment variable
 
 class styleStoreService {
   

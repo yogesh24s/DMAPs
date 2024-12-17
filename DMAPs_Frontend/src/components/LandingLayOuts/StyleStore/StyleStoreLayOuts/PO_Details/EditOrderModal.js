@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Form, Button } from 'react-bootstrap';
+import { Modal, Form, Button, InputGroup } from 'react-bootstrap';
 import { MDBInput } from 'mdbreact';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -20,6 +20,8 @@ const EditOrderModal = ({
   ProductType,
   MerchantName,
   MerchantContact,
+  Season,
+  base64Images,
   fPONo,
   setFPONo,
   fPONoError,
@@ -87,200 +89,271 @@ const EditOrderModal = ({
 								<div className='col-12'>
 									{styleNo || styleNo != '' ? (
 										<div className='row'>
-											<div className='col-3'>
-												<div className="data-row">
-													<label className='label-read' htmlFor="name">Buyer</label>
-													<span className='span-read'> {BuyerName} </span>
+										<div className='col-8'>
+											<div className='row'>
+												<div className='col-6'>
+													<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+														<div style={{ width: '70%', marginTop: '-5px' }}>
+															Buyer
+														</div>
+														<span className='span-read'> {BuyerName} </span>
+													</InputGroup>
 												</div>
-											</div>
-											<div className='col-3'>
-												<div className="data-row">
-													<label className='label-read' htmlFor="name">Buyer Style No.</label>
-													<span className='span-read'> {StyleDescription} </span>
+												
+												<div className='col-6'>
+													<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+														<div style={{ width: '70%', marginTop: '-5px' }}>
+															Size Grid Name
+														</div>
+			
+														<span className='span-read'> {SizeGridName} </span>
+													</InputGroup>
 												</div>
-											</div>
-											<div className='col-3'>
-												<div className="data-row">
-													<label className='label-read' htmlFor="name">Size Grid Name</label>
-													<span className='span-read'> {SizeGridName} </span>
+												<div className='col-6'>
+													<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+														<div style={{ width: '70%', marginTop: '-5px' }}>
+															Buyer Style No.
+														</div>
+														<span className='span-read'> {StyleDescription} </span>
+													</InputGroup>
 												</div>
-											</div>
-											<div className='col-12'>
-												<div className='row'>
-													<div className='col-3'>
-														<div className="data-row">
-															<label className='label-read' htmlFor="name">Gender</label>
-															<span className='span-read'> {GenderView} </span>
+												
+												<div className='col-6'>
+													<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+														<div style={{ width: '70%', marginTop: '-5px' }}>
+															Style Description
 														</div>
-													</div>
-													<div className='col-3'>
-														<div className="data-row">
-															<label className='label-read' htmlFor="name">Product Type</label>
-															<span className='span-read'> {ProductType} </span>
+														<span className='span-read'> {ProductType} </span>
+													</InputGroup>
+												</div>
+			
+												<div className='col-6'>
+													<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+														<div style={{ width: '70%', marginTop: '-5px' }}>
+															Merchant Name
 														</div>
-													</div>
-													<div className='col-3'>
-														<div className="data-row">
-															<label className='label-read' htmlFor="name">Merchant Name</label>
-															<span className='span-read'> {MerchantName} </span>
+			
+														<span className='span-read'> {MerchantName} </span>
+													</InputGroup>
+												</div>
+												<div className='col-6'>
+													<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+														<div style={{ width: '70%', marginTop: '-5px' }}>
+															Gender
 														</div>
-													</div>
-													<div className='col-3'>
-														<div className="data-row">
-															<label className='label-read' htmlFor="name">Merchant Contact No.</label>
-															<span className='span-read'> {MerchantContact} </span>
+														<span className='span-read'> {GenderView} </span>
+													</InputGroup>
+												</div>
+												<div className='col-6'>
+													<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+														<div style={{ width: '70%', marginTop: '-5px' }}>
+															Merchant Contact
 														</div>
-													</div>
+														<span className='span-read'> {MerchantContact} </span>
+													</InputGroup>
+												</div>
+												<div className='col-6'>
+													<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+														<div style={{ width: '70%', marginTop: '-5px' }}>
+															Season
+														</div>
+														<span className='span-read'> {Season} </span>
+													</InputGroup>
 												</div>
 											</div>
 										</div>
+										<div className='col-4'>
+										<div className='row'>
+											{["Front", "Back", "Optional"].map((label, index) => (
+			
+													<div key={index} className='col-4'>
+														 <label htmlFor={`imageUpload-${index}`} className="upload-button" style={{ cursor: 'pointer', textAlign : 'center', width:'100%' }}>
+																{label}
+															</label>
+														 <div style={{textAlign: 'center' }}>
+															<img
+																src={base64Images[index]}
+																alt={`${label} Thumbnail`}
+																style={{ width : "80%", height : "60%", textAlign: 'center', borderRadius: '5px', cursor: 'pointer' }}												/>
+														</div>
+													</div>
+												))}
+											</div>
+										</div>
+										
+										
+									</div>
 									) : null}
 
 									<h6 className='h6'> Order Details </h6>
 								</div>
+								<div className="col-4">
+									<div className="d-flex align-items-center mb-1">
+										<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'36%' }}> Buyer PO No. </label>
 
-								<div className='col-3'>
-									<MDBInput label='F PO No.' type='text' tabindex="2" wrapperClass='mb-3' onChange={(e) => { setFPONo(e.target.value) }} value={fPONo} name='fPONo' />
-									{fPONoError && <p style={{ color: 'red' }}>{fPONoError}</p>}
-
-									<MDBInput label='Order No.' type='text' tabindex="3" wrapperClass='mb-3' onChange={(e) => { setPONo(e.target.value) }} value={PONo} name='PONo' />
-									{PONoError && <p style={{ color: 'red' }}>{PONoError}</p>}
-
-									<MDBInput label='OC No.' type='text' tabindex="4" wrapperClass='mb-3' onChange={(e) => { setOCNo(e.target.value) }} value={OCNo} name='OCNo' />
-
+										<MDBInput
+											type="text"
+											placeholder="Enter Buyer PO No."
+											value={fPONo}
+											onChange={(e) => setFPONo(e.target.value)}
+											name="fPONo"
+											className="form-control"
+										/>
+									</div>
+									{fPONoError && <div className="text-danger text-center">{fPONoError}</div>}
 								</div>
 
-								<div className='col-3'>
-									<div className="mb-3" style={{ position: 'relative' }}>
-										{embType ? <label
-											htmlFor="embType"
-											style={{
-												position: 'absolute',
-												top: '-10px',
-												left: '10px',
-												backgroundColor: 'white',
-												padding: '0 5px',
-												fontSize: '12px',
-											}}
+								{/* Order No. */}
+								<div className="col-4">
+									<div className="d-flex align-items-center mb-1">
+										<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'36%' }}>
+											OC No.
+										</label>
+										<MDBInput
+											type="text"
+											placeholder="Enter OC No."
+											value={PONo}
+											onChange={(e) => setPONo(e.target.value)}
+											name="PONo"
+											className="form-control"
+										/>
+									</div>
+									{PONoError && <div className="text-danger text-center">{PONoError}</div>}
+								</div>
+
+								{/* Emb. Type */}
+								<div className="col-4">
+									<div className="d-flex align-items-center mb-1">
+										<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
+											Embrodiery
+										</label>
+										<Form.Select
+											value={embType}
+											onChange={(e) => setEmbType(e.target.value)}
+											name="embType"
+											className="form-select"
 										>
-											Emb. Type
-										</label> : ''}
-										<Form.Select className='mb-3' tabindex="5" label='Emb Type' onChange={(e) => { setEmbType(e.target.value) }} value={embType} name='embType'>
-											<option> Select Emb Type </option>
+											<option>Select Embrodiery</option>
 											{embTypeList.map((item) => (
 												<option key={item.id} value={item.Emb_Type}>
 													{item.Emb_Type}
 												</option>
 											))}
 										</Form.Select>
-										{embTypeError && <p style={{ color: 'red' }}>{embTypeError}</p>}
 									</div>
+									{embTypeError && <div className="text-danger text-center">{embTypeError}</div>}
+								</div>
 
-									<div className="mb-3" style={{ position: 'relative' }}>
-										{printType ? <label
-											htmlFor="printType"
-											style={{
-												position: 'absolute',
-												top: '-10px',
-												left: '10px',
-												backgroundColor: 'white',
-												padding: '0 5px',
-												fontSize: '12px',
-											}}
+								{/* Print Type */}
+								<div className="col-4">
+									<div className="d-flex align-items-center mb-20">
+										<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'61%' }}>
+											Print
+										</label>
+										<Form.Select
+											value={printType}
+											onChange={(e) => setPrintType(e.target.value)}
+											name="printType"
+											className="form-select"
 										>
-											Print Type
-										</label> : ''}
-										<Form.Select className='mb-3' tabindex="6" label='Print Type' onChange={(e) => { setPrintType(e.target.value) }} value={printType} name='printType'>
-											<option> Select Print Type </option>
+											<option>Select Print</option>
 											{printTypeList.map((item) => (
 												<option key={item.id} value={item.Print_Type}>
 													{item.Print_Type}
 												</option>
 											))}
 										</Form.Select>
-										{printTypeError && <p style={{ color: 'red' }}>{printTypeError}</p>}
 									</div>
+									{printTypeError && <div className="text-danger text-center">{printTypeError}</div>}
+								</div>
 
-									<div className="mb-3" style={{ position: 'relative' }}>
-										{washingType ? <label
-											htmlFor="washingType"
-											style={{
-												position: 'absolute',
-												top: '-10px',
-												left: '10px',
-												backgroundColor: 'white',
-												padding: '0 5px',
-												fontSize: '12px',
-											}}
+								{/* Washing Type */}
+								<div className="col-4">
+									<div className="d-flex align-items-center mb-1">
+										<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'63%' }}>
+											Washing
+										</label>
+										<Form.Select
+											value={washingType}
+											onChange={(e) => setWashingType(e.target.value)}
+											name="washingType"
+											className="form-select"
 										>
-											Washing Type
-										</label> : ''}
-										<Form.Select className='mb-3' tabindex="7" label='Washing Type' onChange={(e) => { setWashingType(e.target.value) }} value={washingType} name='washingType'>
-											<option> Select Washing Type </option>
+											<option>Select Washing</option>
 											{washingTypeList.map((item) => (
 												<option key={item.id} value={item.Washing_Type}>
 													{item.Washing_Type}
 												</option>
 											))}
 										</Form.Select>
-										{washingTypeError && <p style={{ color: 'red' }}>{washingTypeError}</p>}
 									</div>
-								</div>
-								<div className='col-3'>
-									{/* <MDBInput wrapperClass='mb-3' type='date' tabindex="10" label='Delivery Date' onChange={(e) => { setDeliveryDate(e.target.value) }} value={deliveryDate} name='deliveryDate' /> */}
-
-									<DatePicker
-										selected={deliveryDate}
-										className="form-control-date"
-										onChange={(date) => setDeliveryDate(date)} // Correct way to handle date change
-										dateFormat="dd/MM/yyyy"  // Format the display of the date
-										placeholderText="dd/mm/yyyy"
-										customInput={
-											<MDBInput
-												type="text"
-												wrapperClass='mb-3'
-												label='Delivery Date'
-												id="deliveryDate"  // Linking the label with the input
-												tabIndex="10"  // Correct case for tabindex
-												name="deliveryDate"
-												value={deliveryDate ? moment(deliveryDate).format("DD/MM/YYYY") : ''}
-											/>
-										}
-									/>
-									{deliveryDateError && <p style={{ color: 'red' }}>{deliveryDateError}</p>}
-
-									{/* <MDBInput wrapperClass='mb-3' type='date' tabindex="11" label='PCD' onChange={(e) => { setPCD(e.target.value) }} value={pcd} name='pcd' /> */}
-
-									<DatePicker
-										selected={pcd}
-										className="mb-3 form-control-date"
-										onChange={(date) => setPCD(date)} // Correct way to handle date change
-										dateFormat="dd/MM/yyyy"  // Format the display of the date
-										placeholderText="dd/mm/yyyy"
-										name="pcd"
-										customInput={
-											<MDBInput
-												type="text"
-												label='PCD'
-												id="pcd"  // Linking the label with the input
-												tabIndex="11"  // Correct case for tabindex
-												name="pcd"
-												value={pcd ? moment(pcd).format("DD/MM/YYYY") : ''}
-											/>
-										}
-									/>
-
-									{pcdError && <p style={{ color: 'red' }}>{pcdError}</p>}
-
-									<MDBInput wrapperClass='mb-3' type='text' tabindex="9" label='Shipment Mode' onChange={(e) => { setShipmentMode(e.target.value) }} value={shipmentMode} name='shipmentMode' />
-									{shipmentModeError && <p style={{ color: 'red' }}>{shipmentModeError}</p>}
-
+									{washingTypeError && <div className="text-danger text-center ms-5 ps-5">{washingTypeError}</div>}
 								</div>
 
-								<div className='col-3'>
-									<MDBInput wrapperClass='mb-3' type='text' tabindex="8" label='Others' onChange={(e) => { setOthers(e.target.value) }} value={others} name='others' />
+								{/* Delivery Date */}
+								<div className="col-4">
+									<div className="d-flex align-items-center mb-1">
+										<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'58%' }}>
+											Delivery Date
+										</label>
+										<DatePicker
+											selected={deliveryDate}
+											onChange={(date) => setDeliveryDate(date)}
+											className="form-control"
+											dateFormat="dd/MM/yyyy"
+											placeholderText="dd/mm/yyyy"
+										/>
+									</div>
+									{deliveryDateError && <div className="text-danger text-center ms-5 ps-5">{deliveryDateError}</div>}
+								</div>
 
-									<MDBInput style={{ height: '86px' }} wrapperClass='mb-3 ' label='Notes' type='textarea' tabindex="12" onChange={(e) => { setNote(e.target.value) }} value={note} name='note' />
+								{/* PCD */}
+								<div className="col-4">
+									<div className="d-flex align-items-center mb-1">
+										<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'58%' }}>
+											PCD Date
+										</label>
+										<DatePicker
+											selected={pcd}
+											onChange={(date) => setPCD(date)}
+											className="form-control"
+											dateFormat="dd/MM/yyyy"
+											placeholderText="dd/mm/yyyy"
+										/>
+									</div>
+									{pcdError && <div className="text-danger text-center">{pcdError}</div>}
+								</div>
+
+								{/* Shipment Mode */}
+								<div className="col-4">
+									<div className="d-flex align-items-center mb-1">
+										<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'37%' }}>
+											Shipment Mode
+										</label>
+										<MDBInput
+											type="text"
+											placeholder="Enter Shipment Mode"
+											value={shipmentMode}
+											onChange={(e) => setShipmentMode(e.target.value)}
+											name="shipmentMode"
+											className="form-control"
+										/>
+									</div>
+									{shipmentModeError && <div className="text-danger text-center  ms-5 ps-5">{shipmentModeError}</div>}
+								</div>
+								
+								{/* Notes */}
+								<div className="col-12">
+									<label className="form-label">Notes</label>
+									<MDBInput
+										type="textarea"
+										placeholder="Enter Notes"
+										value={note}
+										onChange={(e) => setNote(e.target.value)}
+										name="note"
+										rows="3"
+									
+									/>
 								</div>
 
 								<div className="col-12 mt-20 parentDivStyle">

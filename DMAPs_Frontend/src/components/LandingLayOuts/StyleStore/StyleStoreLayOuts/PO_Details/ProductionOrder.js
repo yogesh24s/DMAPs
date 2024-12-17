@@ -63,6 +63,8 @@ export default function ProductionOrder() {
 	const [ProductType, setProductType] = useState('');
 	const [MerchantName, setMerchantName] = useState('');
 	const [MerchantContact, setMerchantContact] = useState('');
+	const [Season, setSeason] = useState('');
+	const [base64Images, setBase64Images] = useState([]);
 	const [GenderView, setGenderView] = useState('');
 	const [rowData, setRowData] = useState(null); // Initialize rowData
 	// Calculate total of all sizes
@@ -155,6 +157,8 @@ export default function ProductionOrder() {
 			setProductType(sizeGridId.Product_Type);
 			setMerchantName(sizeGridId.Marchent_Name);
 			setMerchantContact(sizeGridId.Marchent_Contact);
+			setSeason(sizeGridId.Season);
+			setBase64Images(JSON.parse(sizeGridId.Style_Images));
 			setGenderView(sizeGridId.Gender);
 			const sizeGridIdValue = SizeGridList.find(grid => grid.Size_Grid_Id == sizeGridId.Size_Grid);
 			let SizeGridValue = sizeGridIdValue ? sizeGridIdValue.Size_Grid_Value : null;
@@ -402,6 +406,8 @@ export default function ProductionOrder() {
 		setProductType(data.Product_Type);
 		setMerchantName(data.Marchent_Name);
 		setMerchantContact(data.Marchent_Contact);
+		setSeason(data.Season);
+		setBase64Images(JSON.parse(data.Style_Images));
 		setGenderView(data.Gender);
 
 		// Parse and set garment data
@@ -603,6 +609,8 @@ export default function ProductionOrder() {
 					ProductType={ProductType}
 					MerchantName={MerchantName}
 					MerchantContact={MerchantContact}
+					Season={Season}
+					base64Images={base64Images}
 					styleNo={styleNo}
 					setStyleNo={setStyleNo}
 					styleNoError={styleNoError}
@@ -662,6 +670,8 @@ export default function ProductionOrder() {
 					ProductType={ProductType}
 					MerchantName={MerchantName}
 					MerchantContact={MerchantContact}
+					Season={Season}
+					base64Images={base64Images}
 					fPONo={fPONo}
 					setFPONo={setFPONo}
 					fPONoError={fPONoError}
