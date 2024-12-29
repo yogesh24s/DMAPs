@@ -23,6 +23,8 @@ function StyleModal({
     setMarchantName,
     marchantName,
     marchantNameError,
+    addOnField,
+    setAddOnField,
     setBuyerOrderRefNo,
     buyerOrderRefNo,
     buyerOrderRefNoError,
@@ -53,27 +55,30 @@ function StyleModal({
     return (
         <Modal show={show} onHide={add == 'add' ? handleClose : onHide } dialogClassName="modal-90w" backdrop="static" keyboard={false}>
             <Modal.Header closeButton>
-                <Modal.Title> {add == 'add' ? 'Add New Style': "Edit Style"} </Modal.Title>
+                <Modal.Title> {add == 'add' ? 'Add New Style Details': "Edit Style Details"} </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <form onSubmit={add == 'add' ? handleStyleEntry : handleEditStyleEntry}>
                     <div className="row">
                         <div className="col-4">
-                            {/* DMAPs Style NO
+                             {/* DMAPs Style NO */}
+
                             <InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
-                            <div style={{ width: '40%',paddingRight: '5px' }}>  DMPS Style No.</div>
-                                <div style={{ width: '60%' }}>
-                                <MDBInput
-                                        tabIndex="1"
-                                        type="text"
-                                        label=""
-                                        value={styleNo}
-                                        name="Style_No"
-                                        style={{ width: '60%' }}
-                                    />
-                                </div>
-                                
-                            </InputGroup> */}
+                                <div style={{ width: '40%',paddingRight: '5px' }}>  DMPS Style No.</div>
+
+                                    <div style={{ width: '60%' }}>
+                                    <MDBInput
+                                            tabIndex="1"
+                                            type="text"
+                                            label=""
+                                            value={styleNo}
+                                            name="Style_No"
+                                            style={{ width: '100%' }}
+                                            readOnly
+                                        />
+                                    </div>
+                            </InputGroup>
+
                             {/* Buyer Field */}
                             <InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
                                 <div style={{ width: '40%', paddingRight: '5px' }}>
@@ -237,6 +242,24 @@ function StyleModal({
                             </InputGroup>
                             {marchantNameError && <p style={{ color: 'red' }}>{marchantNameError}</p>}
 
+                            {/* Add On Field Field */}
+                            <InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+                                <div style={{ width: '40%', paddingRight: '5px' }}>
+                                    Style Add-on field
+                                </div>
+                                <div style={{ width: '60%' }}>
+                                    <MDBInput
+                                        wrapperClass="flex-grow-1"
+                                        tabIndex="10"
+                                        type="text"
+                                        onChange={(e) => setAddOnField(e.target.value)}
+                                        value={addOnField}
+                                        name="addOnField"
+                                        style={{ width: '100%' }}
+                                    />
+                                </div>
+                            </InputGroup>
+
                             {/* Merchant Contact No. Field */}
                             {/* <InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
                                 <div style={{ width: '40%', paddingRight: '5px' }}>Merchant Contact No.</div>
@@ -362,7 +385,7 @@ function StyleModal({
                                                 </div>
                                             ) : (
                                                 <label htmlFor={`imageUpload-${index}`} className="upload-button" style={{ cursor: 'pointer' }}>
-                                                    {label} Image
+                                                    Click to add Images ({label})
                                                 </label>
                                             )}
                                             <input
@@ -402,7 +425,7 @@ function StyleModal({
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="primary" type="submit" onClick={add == 'add' ? handleStyleEntry : handleEditStyleEntry} style={{ width: '15%' }}>
-                    {add == 'add' ? 'save' : 'Update'}
+                   save
                 </Button>
             </Modal.Footer>
         </Modal>

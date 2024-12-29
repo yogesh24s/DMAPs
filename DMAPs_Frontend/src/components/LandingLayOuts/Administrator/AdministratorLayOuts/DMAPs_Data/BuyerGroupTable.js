@@ -9,20 +9,8 @@ export default function BuyerGroupTable(props) {
 	const columns = React.useMemo(
 		() => [
 		  {
-			Header: 'Buyer Group Name',
-			accessor: 'Buyer_Group_Name',
-		  },
-		  {
-			Header: 'Buyer',
+			Header: 'Buyer Name',
 			accessor: 'Buyer_Name',
-		  },
-		  {
-			Header: 'E-Mail',
-			accessor: 'Buyer_Email_Id',
-		  },
-		  {
-			Header: 'Contact No.',
-			accessor: 'Buyer_Contact_No',
 		  },
 		  {
 			Header: 'Actions',

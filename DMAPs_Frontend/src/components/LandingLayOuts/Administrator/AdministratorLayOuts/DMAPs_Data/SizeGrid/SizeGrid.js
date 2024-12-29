@@ -9,6 +9,7 @@ import SizeGridTable from './SizeGridTable';
 export default function SizeGrid() {
     const [show, setShow] = useState(false);
     const [sizeGrid, setSizeGrid] = useState("");
+    const [sizeGridValue, setSizeGridValue] = useState("");
     const [sizeGridData, setSizeGridData] = useState([]);
     const [sizeGridDataId, setSizeGridDataId] = useState(null);
 
@@ -17,14 +18,16 @@ export default function SizeGrid() {
     const handleClose = () => {
         setShow(false);
         setSizeGrid("");
+        setSizeGridValue("");
         setSizeGridDataId(null);
     };
 
     const handleSizeGrid = (e) => {
         e.preventDefault(); // Prevent form default submission
         const payload = {
-            "Size_Grid": sizeGrid,
-            ...(sizeGridDataId && { "id": sizeGridDataId })
+            "Size_Grid_Name": sizeGrid,
+            "Size_Grid_Value" :sizeGridValue,
+            ...(sizeGridDataId && { "Size_Grid_Id": sizeGridDataId })
         };
 
         const request = sizeGridDataId
@@ -61,7 +64,7 @@ export default function SizeGrid() {
 
     const deleteSizeGrid = (data) => {
         if (window.confirm("Are you sure to delete the Size Grid?")) {
-            const payload = { "id": data.id };
+            const payload = { "Size_Grid_Id": data.Size_Grid_Id };
             trackPromise(
                 sizeGridService.deleteSizeGrid({ "data": [payload] })
                     .then(response => {
@@ -79,8 +82,9 @@ export default function SizeGrid() {
     };
 
     const openEditForm = (sizegrid) => {
-        setSizeGrid(sizegrid.Size_Grid); // Set size grid name for editing
-        setSizeGridDataId(sizegrid.id);  // Set ID for edit mode
+        setSizeGrid(sizegrid.Size_Grid_Name); // Set size grid name for editing
+        setSizeGridValue(sizegrid.Size_Grid_Value)
+        setSizeGridDataId(sizegrid.Size_Grid_Id);  // Set ID for edit mode
         setShow(true);
     };
 
@@ -113,11 +117,25 @@ export default function SizeGrid() {
                                                 wrapperClass='mb-3'
                                                 type='text'
                                                 required
-                                                label='Size Grid'
+                                                label='Size Grid Name'
                                                 tabIndex="3"
                                                 onChange={(e) => setSizeGrid(e.target.value)}
                                                 value={sizeGrid}
                                                 name='sizegrid'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className='col-6'>
+                                        <div className="mb-3">
+                                            <MDBInput
+                                                wrapperClass='mb-3'
+                                                type='text'
+                                                required
+                                                label='Size Grid Value'
+                                                tabIndex="3"
+                                                onChange={(e) => setSizeGridValue(e.target.value)}
+                                                value={sizeGridValue}
+                                                name='sizeGridValue'
                                             />
                                         </div>
                                     </div>

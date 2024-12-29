@@ -9,7 +9,7 @@ const { response } = require('express');
 access.DMAPFunc();
 
 StyleStore.getStyleEntry = result => {
-    sql =`SELECT se.Buyer_Group_Id,bg.Buyer_Name, se.Buyer_Order_Ref_No, LPAD(se.Style_No, 6, '0') AS Style_No, se.Style_Description, se.Size_Grid,msg.Size_Grid_Name, se.Product_Type, se.Gender, se.Season, se.Marchent_Name, se.Marchent_Contact, se.Note, se.Style_Images
+    sql =`SELECT se.Buyer_Group_Id,bg.Buyer_Name, se.Buyer_Order_Ref_No, LPAD(se.Style_No, 6, '0') AS Style_No, se.Style_Description, se.Size_Grid,msg.Size_Grid_Name, se.Product_Type, se.Gender, se.Season, se.Marchent_Name, se.Marchent_Contact, se.Add_On_Field, se.Note, se.Style_Images
     FROM dmaps.style_entry se
     LEFT JOIN dmaps.map_buyer bg ON se.Buyer_Group_Id = bg.Buyer_Id
     LEFT JOIN dmaps.map_size_gridname msg ON se.Size_Grid = msg.Size_Grid_Id`;
@@ -53,6 +53,7 @@ StyleStore.editStyleEntry = result => {
 		Style_Description: POData.Style_Description,
 		Size_Grid: POData.Size_Grid,
 		Marchent_Contact: POData.Marchent_Contact,
+        Add_On_Field : POData.Add_On_Field,
 		Note:POData.Note,
 		Style_Images : POData.Style_Images
     };
@@ -111,6 +112,7 @@ StyleStore.getPODetails = result => {
     se.Season,
     se.Marchent_Name,
     se.Marchent_Contact,
+    se.Add_On_Field,
     se.Note,
     se.Style_Images,
     pod.*
@@ -137,8 +139,9 @@ ORDER BY
 };
 
 StyleStore.savePODetails = result => {
-    const POData = data[0]; // Get the first item from the data array
+    const POData = data[0]; // Get the first item from the data array,
     const insertData = {
+        DMAPs_PO_No : `${POData.Style_No}_${Date.now()}`,
         Style_No : POData.Style_No,
         F_PO_No :POData.F_PO_No,
         PO_No:POData.PO_No,
@@ -148,10 +151,13 @@ StyleStore.savePODetails = result => {
         Washing_Type: POData.Washing_Type,
         Others:POData.Others,
         Shipment_Mode : POData.Shipment_Mode,
+        Ex_Delivery_Date : POData.Ex_Delivery_Date,
         Delivery_Date : POData.Delivery_Date,
         PCD : POData.PCD,
         Note: POData.Note,
-        Garment_Data : POData.Garment_Data
+        Garment_Data : POData.Garment_Data,
+        PO_Add_On_Field_1 : POData.PO_Add_On_Field_1,
+        PO_Add_On_Field_2 : POData.PO_Add_On_Field_2
     };
 
     knex.transaction(function(t) {
@@ -185,8 +191,11 @@ StyleStore.editPODetails = result => {
         Others:POData.Others,
         Shipment_Mode : POData.Shipment_Mode,
         Delivery_Date : POData.Delivery_Date,
+        Ex_Delivery_Date : POData.Ex_Delivery_Date,
         PCD : POData.PCD,
         Note: POData.Note,
+        PO_Add_On_Field_1 : POData.PO_Add_On_Field_1,
+        PO_Add_On_Field_2 : POData.PO_Add_On_Field_2,
         Garment_Data : POData.Garment_Data
     };
 
@@ -244,6 +253,7 @@ StyleStore.getStyleLookupDetails = result => {
     se.Season,
     se.Marchent_Name,
     se.Marchent_Contact,
+    se.Add_On_Field,
     se.Note,
     se.Style_Images,
     pod.PO_Id,

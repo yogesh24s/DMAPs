@@ -28,12 +28,14 @@ export default function ProductionOrder() {
 	const [washingTypeError, setWashingTypeError] = useState('');
 	const [note, setNote] = useState('')
 	const [styleNo, setStyleNo] = useState('')
+	const [DMAPsPONo, setDMAPsPONo] = useState('')
 	const [styleNoError, setStyleNoError] = useState('')
 	const [POId, setPOId] = useState("");
 	const [fPONo, setFPONo] = useState('')
 	const [PONo, setPONo] = useState('')
 	const [PONoError, setPONoError] = useState('')
 	const [OCNo, setOCNo] = useState('')
+	const [OCNoError, setOCNoError] = useState('');
 	const [fPONoError, setFPONoError] = useState('');
 	const [printType, setPrintType] = useState('')
 	const [printTypeError, setPrintTypeError] = useState('');
@@ -42,6 +44,10 @@ export default function ProductionOrder() {
 	const [shipmentModeError, setShipmentModeError] = useState('')
 	const [deliveryDate, setDeliveryDate] = useState('')
 	const [deliveryDateError, setDeliveryDateError] = useState('')
+	const [exDeliveryDate, setExDeliveryDate] = useState('')
+	const [exDeliveryDateError, setExDeliveryDateError] = useState('')
+	const [POAddOnField1, setPOAddOnField1] = useState('')
+	const [POAddOnField2, setPOAddOnField2] = useState('')
 	const [pcd, setPCD] = useState('')
 	const [pcdError, setPCDError] = useState('')
 	const [data, setData] = useState([]);
@@ -50,10 +56,15 @@ export default function ProductionOrder() {
 	const [embTypeList, setEmbTypeList] = useState([]);
 	const [printTypeList, setPrintTypeList] = useState([]);
 	const [washingTypeList, setWashingTypeList] = useState([]);
+	const [shipmentModeList, setShipmentModeList] = useState([]);
+	const [garmentColorList, setGarmentColorList] = useState([]);
+	const [todList, setTODList] = useState([]);
 	const [rows, setRows] = useState([]);
 	const [sizeKeys, setSizeKeys] = useState([]);
 	const [garmentColor, setGarmentColor] = useState('');
 	const [destinationCountry, setDestinationCountry] = useState('');
+	const [TOD, setTOD] = useState('');
+	const [destinationCountryList, setDestinationCountryList] = useState('');
 	const [sizesArray, setSizesArray] = useState([]); // Default sizes
 	const [sizes, setSizes] = useState(sizesArray.reduce((acc, curr) => ({ ...acc, [curr]: 0 }), {})); // Dynamically initialize sizes state based on sizesArray
 	const [editingIndex, setEditingIndex] = useState(null);
@@ -63,6 +74,8 @@ export default function ProductionOrder() {
 	const [ProductType, setProductType] = useState('');
 	const [MerchantName, setMerchantName] = useState('');
 	const [MerchantContact, setMerchantContact] = useState('');
+	const [BuyerRefNo, setBuyerRefNo] = useState('');
+	const [AddOnField, setAddOnField] = useState('');
 	const [Season, setSeason] = useState('');
 	const [base64Images, setBase64Images] = useState([]);
 	const [GenderView, setGenderView] = useState('');
@@ -82,6 +95,7 @@ export default function ProductionOrder() {
 		setRows([...rows, {
 			garmentColor,
 			destinationCountry,
+			TOD,
 			sizes: newSizes, // Use the new sizes object
 			total: calculateTotal(newSizes),
 			isEditable: true,
@@ -114,8 +128,9 @@ export default function ProductionOrder() {
 
 		// Reset rows with new sizes
 		const newRow = {
-			garmentColor: '#000000',
+			garmentColor: '',
 			destinationCountry: '',
+			TOD : '',
 			sizes: initialSizes,
 			total: 0, // Initial total is 0
 			isEditable: false
@@ -133,8 +148,9 @@ export default function ProductionOrder() {
 			}, {});
 
 			const newRow = {
-				garmentColor: '#000000',
+				garmentColor: '',
 				destinationCountry: '',
+				TOD : '',
 				sizes: initialSizes,
 				total: 0,
 				isEditable: false
@@ -152,6 +168,7 @@ export default function ProductionOrder() {
 		if (sizeGridId) {
 			// Set other details
 			setBuyerName(sizeGridId.Buyer_Name);
+			setBuyerRefNo(sizeGridId.Buyer_Order_Ref_No);
 			setStyleDescription(sizeGridId.Style_Description);
 			setSizeGridName(sizeGridId.Size_Grid_Name);
 			setProductType(sizeGridId.Product_Type);
@@ -160,6 +177,8 @@ export default function ProductionOrder() {
 			setSeason(sizeGridId.Season);
 			setBase64Images(JSON.parse(sizeGridId.Style_Images));
 			setGenderView(sizeGridId.Gender);
+			setNote(sizeGridId.Note);
+			setAddOnField(sizeGridId.Add_On_Field);
 			const sizeGridIdValue = SizeGridList.find(grid => grid.Size_Grid_Id == sizeGridId.Size_Grid);
 			let SizeGridValue = sizeGridIdValue ? sizeGridIdValue.Size_Grid_Value : null;
 			// Ensure SizeGridValue is not null or undefined
@@ -216,11 +235,11 @@ export default function ProductionOrder() {
 			setFPONoError('');
 		}
 
-		if (!PONo) {
-			setPONoError('Order No. is required');
+		if (!OCNo) {
+			setOCNoError('Order No. is required');
 			isValid = false;
 		} else {
-			setPONoError('');
+			setOCNoError('');
 		}
 
 		if (!printType) {
@@ -283,6 +302,7 @@ export default function ProductionOrder() {
 
 		let payload = {
 			"Style_No": styleNo,
+			"DMAPs_PO_No" : DMAPsPONo,
 			"F_PO_No": fPONo,
 			"PO_No": PONo,
 			"OC_No": OCNo,
@@ -291,7 +311,10 @@ export default function ProductionOrder() {
 			"Washing_Type": washingType,
 			"Others": others,
 			"Shipment_Mode": shipmentMode,
+			"Ex_Delivery_Date" : exDeliveryDate,
 			"Delivery_Date": deliveryDate,
+			"PO_Add_On_Field_1" : POAddOnField1,
+			"PO_Add_On_Field_2" : POAddOnField2,
 			"PCD": pcd,
 			"Note": note,
 			"Garment_Data": JSON.stringify(updatedRows)
@@ -329,11 +352,16 @@ export default function ProductionOrder() {
 		trackPromise(
 			adminService.getBasicDetails().then((response) => {
 				setStyleNoList(response.data[0].data[0].data.styleNo);
-				setEmbTypeList(response.data[0].data[0].data.embType)
-				setPrintTypeList(response.data[0].data[0].data.printType)
-				setWashingTypeList(response.data[0].data[0].data.washingType)
+				setEmbTypeList(response.data[0].data[0].data.embType);
+				setPrintTypeList(response.data[0].data[0].data.printType);
+				setWashingTypeList(response.data[0].data[0].data.washingType);
+				setShipmentModeList(response.data[0].data[0].data.shipmentMode);
+				setGarmentColorList(response.data[0].data[0].data.garmentColor);
+				setTODList(response.data[0].data[0].data.TOD_Value);
+				setDestinationCountryList(response.data[0].data[0].data.destinationCountry);
 				sessionStorage.setItem('StyleNoList', JSON.stringify(response.data[0].data[0].data.styleNo));
 				sessionStorage.setItem('StyleGridList', JSON.stringify(response.data[0].data[0].data.sizeGrid));
+
 			})
 		);
 	}
@@ -365,10 +393,16 @@ export default function ProductionOrder() {
 		setShipmentModeError('')
 		setDeliveryDate('')
 		setDeliveryDateError('')
+		setExDeliveryDate('')
+		setExDeliveryDateError('')
 		setPCD('')
+		setNote('')
 		setPCDError('')
-		setGarmentColor('#000000');
+		setGarmentColor('');
 		setDestinationCountry('');
+		setTOD('');
+		setPOAddOnField1('');
+		setPOAddOnField2('');
 		setSizes({});
 	}
 
@@ -388,6 +422,7 @@ export default function ProductionOrder() {
 		setStyleNoError('');
 		// Set all the relevant fields
 		setPOId(data.PO_Id);
+		setDMAPsPONo(data.DMAPs_PO_No);
 		setEmbType(data.Emb_Type);
 		setWashingType(data.Washing_Type);
 		setNote(data.Note);
@@ -399,8 +434,11 @@ export default function ProductionOrder() {
 		setOthers(data.Others);
 		setShipmentMode(data.Shipment_Mode);
 		setDeliveryDate(data.Delivery_Date);
+		setExDeliveryDate(data.Ex_Delivery_Date);
 		setPCD(data.PCD);
 		setBuyerName(data.Buyer_Name);
+		setBuyerRefNo(data.Buyer_Order_Ref_No);
+		setAddOnField(data.Add_On_Field);
 		setStyleDescription(data.Style_Description);
 		setSizeGridName(data.Size_Grid_Name);
 		setProductType(data.Product_Type);
@@ -409,6 +447,8 @@ export default function ProductionOrder() {
 		setSeason(data.Season);
 		setBase64Images(JSON.parse(data.Style_Images));
 		setGenderView(data.Gender);
+		setPOAddOnField1(data.PO_Add_On_Field_1);
+		setPOAddOnField2(data.PO_Add_On_Field_2)
 
 		// Parse and set garment data
 		const garmentData = JSON.parse(data.Garment_Data);
@@ -481,11 +521,11 @@ export default function ProductionOrder() {
 			setFPONoError('');
 		}
 
-		if (!PONo) {
-			setPONoError('Order No. is required');
+		if (!OCNo) {
+			setOCNoError('Order No. is required');
 			isValid = false;
 		} else {
-			setPONoError('');
+			setOCNoError('');
 		}
 
 		if (!printType) {
@@ -547,6 +587,8 @@ export default function ProductionOrder() {
 			"Others": others,
 			"Shipment_Mode": shipmentMode,
 			"Delivery_Date": deliveryDate,
+			"PO_Add_On_Filed_2" : POAddOnField1,
+			"PO_Add_On_Filed_2" : POAddOnField2,
 			"PCD": pcd,
 			"Note": note,
 			"Garment_Data": JSON.stringify(updatedRows)
@@ -596,6 +638,10 @@ export default function ProductionOrder() {
 					embTypeList={embTypeList}
 					printTypeList={printTypeList}
 					washingTypeList={washingTypeList}
+					shipmentModeList= {shipmentModeList}
+					garmentColorList={garmentColorList}
+					todList = {todList}
+					destinationCountryList = {destinationCountryList}
 					rows={rows}
 					sizesArray={sizesArray}
 					handleDeleteRow={handleDeleteRow}
@@ -609,6 +655,11 @@ export default function ProductionOrder() {
 					ProductType={ProductType}
 					MerchantName={MerchantName}
 					MerchantContact={MerchantContact}
+					BuyerRefNo={BuyerRefNo}
+					AddOnField={AddOnField}
+					setAddOnField={setAddOnField}
+					Note = {note}
+					setBuyerRefNo={setBuyerRefNo}
 					Season={Season}
 					base64Images={base64Images}
 					styleNo={styleNo}
@@ -621,6 +672,7 @@ export default function ProductionOrder() {
 					setPONo={setPONo}
 					PONoError={PONoError}
 					OCNo={OCNo}
+					OCNoError={OCNoError}
 					setOCNo={setOCNo}
 					embType={embType}
 					setEmbType={setEmbType}
@@ -634,6 +686,13 @@ export default function ProductionOrder() {
 					deliveryDate={deliveryDate}
 					setDeliveryDate={setDeliveryDate}
 					deliveryDateError={deliveryDateError}
+					exDeliveryDate={exDeliveryDate}
+					setExDeliveryDate={setExDeliveryDate}
+					POAddOnField1= {POAddOnField1}
+					setPOAddOnField1={setPOAddOnField1}
+					POAddOnField2 = {POAddOnField2}
+					setPOAddOnField2 = {setPOAddOnField2}
+					exDeliveryDateError={exDeliveryDateError}
 					pcd={pcd}
 					setPCD={setPCD}
 					pcdError={pcdError}
@@ -658,11 +717,21 @@ export default function ProductionOrder() {
 				<EditOrderModal
 					isEditFormOpen={isEditFormOpen}
 					closeEditForm={closeEditForm}
-					styleNo={styleNo}
+					DMAPsPONo = {DMAPsPONo}
+					setDMAPsPONo={setDMAPsPONo}
 					styleNoList={styleNoList}
-					styleNoError={styleNoError}
+					embTypeList={embTypeList}
+					printTypeList={printTypeList}
+					washingTypeList={washingTypeList}
+					shipmentModeList= {shipmentModeList}
+					garmentColorList={garmentColorList}
+					todList = {todList}
+					destinationCountryList = {destinationCountryList}
+					rows={rows}
+					sizesArray={sizesArray}
+					handleDeleteRow={handleDeleteRow}
 					handleSizeGrid={handleSizeGrid}
-					setStyleNo={setStyleNo}
+					calculateTotal={calculateTotal}
 					BuyerName={BuyerName}
 					StyleDescription={StyleDescription}
 					SizeGridName={SizeGridName}
@@ -670,8 +739,16 @@ export default function ProductionOrder() {
 					ProductType={ProductType}
 					MerchantName={MerchantName}
 					MerchantContact={MerchantContact}
+					BuyerRefNo={BuyerRefNo}
+					AddOnField={AddOnField}
+					setAddOnField={setAddOnField}
+					Note = {note}
+					setBuyerRefNo={setBuyerRefNo}
 					Season={Season}
 					base64Images={base64Images}
+					styleNo={styleNo}
+					setStyleNo={setStyleNo}
+					styleNoError={styleNoError}
 					fPONo={fPONo}
 					setFPONo={setFPONo}
 					fPONoError={fPONoError}
@@ -679,22 +756,27 @@ export default function ProductionOrder() {
 					setPONo={setPONo}
 					PONoError={PONoError}
 					OCNo={OCNo}
+					OCNoError={OCNoError}
 					setOCNo={setOCNo}
 					embType={embType}
 					setEmbType={setEmbType}
-					embTypeList={embTypeList}
 					embTypeError={embTypeError}
 					printType={printType}
 					setPrintType={setPrintType}
-					printTypeList={printTypeList}
 					printTypeError={printTypeError}
 					washingType={washingType}
 					setWashingType={setWashingType}
-					washingTypeList={washingTypeList}
 					washingTypeError={washingTypeError}
 					deliveryDate={deliveryDate}
 					setDeliveryDate={setDeliveryDate}
 					deliveryDateError={deliveryDateError}
+					exDeliveryDate={exDeliveryDate}
+					setExDeliveryDate={setExDeliveryDate}
+					POAddOnField1= {POAddOnField1}
+					setPOAddOnField1={setPOAddOnField1}
+					POAddOnField2 = {POAddOnField2}
+					setPOAddOnField2 = {setPOAddOnField2}
+					exDeliveryDateError={exDeliveryDateError}
 					pcd={pcd}
 					setPCD={setPCD}
 					pcdError={pcdError}
@@ -705,13 +787,10 @@ export default function ProductionOrder() {
 					setOthers={setOthers}
 					note={note}
 					setNote={setNote}
-					rows={rows}
 					setRows={setRows}
 					addNewRow={addNewRow}
 					handleEditRow={handleEditRow}
-					handleDeleteRow={handleDeleteRow}
 					handleEditStyleEntry={handleEditStyleEntry}
-					calculateTotal={calculateTotal}
 					sizeKeys={sizeKeys}
 				/> 
 

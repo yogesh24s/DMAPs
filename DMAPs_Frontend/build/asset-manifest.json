@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a3694cd2.css",
+    "main.js": "/static/js/main.b5e49158.js",
+    "static/js/453.5fc8c6e3.chunk.js": "/static/js/453.5fc8c6e3.chunk.js",
+    "static/css/406.4f2ddda7.chunk.css": "/static/css/406.4f2ddda7.chunk.css",
+    "static/js/406.15b28136.chunk.js": "/static/js/406.15b28136.chunk.js",
+    "static/js/349.88053be2.chunk.js": "/static/js/349.88053be2.chunk.js",
+    "static/css/935.07dbbba1.chunk.css": "/static/css/935.07dbbba1.chunk.css",
+    "static/js/935.74986779.chunk.js": "/static/js/935.74986779.chunk.js",
+    "static/media/DMAPLogo.png": "/static/media/DMAPLogo.a3da111ae7e5dafb2263.png",
+    "static/media/bg.png": "/static/media/bg.8fe4671110efb96aaa9b.png",
+    "static/media/hide_password.png": "/static/media/hide_password.54b3107d160578572bcc.png",
+    "static/media/show_password.png": "/static/media/show_password.5dd8cb5c607214aa88df.png",
+    "index.html": "/index.html",
+    "static/media/username_icon.svg": "/static/media/username_icon.ccb90e0038735abacf315ba448ad779c.svg",
+    "static/media/info_icon.svg": "/static/media/info_icon.56975a53b52cc0ae802cfd6542b2cece.svg",
+    "static/media/password_icon.svg": "/static/media/password_icon.9ca0f8b327bc82e9a68203ca20c0fe05.svg",
+    "main.a3694cd2.css.map": "/static/css/main.a3694cd2.css.map",
+    "main.b5e49158.js.map": "/static/js/main.b5e49158.js.map",
+    "453.5fc8c6e3.chunk.js.map": "/static/js/453.5fc8c6e3.chunk.js.map",
+    "406.4f2ddda7.chunk.css.map": "/static/css/406.4f2ddda7.chunk.css.map",
+    "406.15b28136.chunk.js.map": "/static/js/406.15b28136.chunk.js.map",
+    "349.88053be2.chunk.js.map": "/static/js/349.88053be2.chunk.js.map",
+    "935.07dbbba1.chunk.css.map": "/static/css/935.07dbbba1.chunk.css.map",
+    "935.74986779.chunk.js.map": "/static/js/935.74986779.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a3694cd2.css",
+    "static/js/main.b5e49158.js"
+  ]
+}

@@ -7,7 +7,7 @@ access.DMAPFunc();
 sizeGrid.saveSizeGrid = result => {
     console.log("dat",data);
     knex.transaction(function(t) {
-        return knex('dmaps.map_size_grid')
+        return knex('dmaps.map_size_gridname')
             .insert(data)
             .then(function(response) {
                 result(null, { "result": response });
@@ -22,7 +22,7 @@ sizeGrid.saveSizeGrid = result => {
 }
 
 sizeGrid.getSizeGrid = result => {
-    sql =`SELECT * FROM dmaps.map_size_grid;`;
+    sql =`SELECT * FROM dmaps.map_size_gridname;`;
     pool.query(sql, function(err, res) {
         if (err) {
             result(null, err);
@@ -39,8 +39,8 @@ sizeGrid.deleteSizeGrid = result => {
     console.log("data",sizeGrid);
     
     knex.transaction(function(t) {
-        return knex('dmaps.map_size_grid')
-        .where({ id: sizeGrid.id})
+        return knex('dmaps.map_size_gridname')
+        .where({ Size_Grid_Id: sizeGrid.Size_Grid_Id})
         .del()
         .then(function(response) {
             result(null, { "result": response });
@@ -56,10 +56,10 @@ sizeGrid.deleteSizeGrid = result => {
 
 sizeGrid.updateSizeGrid = result => {
     const sizeGridData = data[0]; // Get the first item from the data array
-    console.log('$$$$$$$', sizeGridData)
     const updateData = {
-        id : sizeGridData.id,
-        Size_Grid: sizeGridData.Size_Grid
+        Size_Grid_Id : sizeGridData.Size_Grid_Id,
+        Size_Grid_Name: sizeGridData.Size_Grid_Name,
+        Size_Grid_Value: sizeGridData.Size_Grid_Value,
     };
 
     if (!sizeGridData) {
@@ -69,8 +69,8 @@ sizeGrid.updateSizeGrid = result => {
     }
 
     knex.transaction(function(t) {
-        return knex('dmaps.map_size_grid')
-        .where({ id: sizeGridData.id})
+        return knex('dmaps.map_size_gridname')
+        .where({ Size_Grid_Id: sizeGridData.Size_Grid_Id})
         .update(updateData)
         .then(function(response) {
             result(null, { "result": response });

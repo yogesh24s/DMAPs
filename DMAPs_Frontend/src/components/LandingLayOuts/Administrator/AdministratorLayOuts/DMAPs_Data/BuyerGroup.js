@@ -62,38 +62,11 @@ export default function BuyerGroup() {
 		e.preventDefault();
 		let isValid = true;
 
-		if (!selectedBuyerGroup) {
-			setSelectedBuyerGroupError('Buyer Group is required');
-			isValid = false;
-		} else {
-			setSelectedBuyerGroupError('');
-		}
-
-		if (!mailId) {
-			setMailIdError('Mail ID is required');
-			isValid = false;
-		} else if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(mailId)) { // Check email format
-			setMailIdError('Invalid email format');
-			isValid = false;
-		} else {
-			setMailIdError('');
-		}
-
 		if (!buyerName) {
 			setBuyerNameError('Buyer Name is required');
 			isValid = false;
 		} else {
 			setBuyerNameError('');
-		}
-
-		if (!contactNumber) {
-			setContactNumberError('Contact Number is required');
-			isValid = false;
-		} else if (!/^[0-9]{10}$/.test(contactNumber)) {
-			setContactNumberError('Contact Number must be a 10-digit number');
-			isValid = false;
-		} else {
-			setContactNumberError('');
 		}
 		
 		if (!isValid) {
@@ -129,38 +102,11 @@ export default function BuyerGroup() {
 		
 		let isValid = true;
 
-		if (!selectedBuyerGroup) {
-			setSelectedBuyerGroupError('Buyer Group is required');
-			isValid = false;
-		} else {
-			setSelectedBuyerGroupError('');
-		}
-
-		if (!mailId) {
-			setMailIdError('Mail ID is required');
-			isValid = false;
-		} else if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(mailId)) { // Check email format
-			setMailIdError('Invalid email format');
-			isValid = false;
-		} else {
-			setMailIdError('');
-		}
-
 		if (!buyerName) {
 			setBuyerNameError('Buyer Name is required');
 			isValid = false;
 		} else {
 			setBuyerNameError('');
-		}
-
-		if (!contactNumber) {
-			setContactNumberError('Contact Number is required');
-			isValid = false;
-		} else if (!/^[0-9]{10}$/.test(contactNumber)) {
-			setContactNumberError('Contact Number must be a 10-digit number');
-			isValid = false;
-		} else {
-			setContactNumberError('');
 		}
 
 		if (!isValid) {
@@ -287,7 +233,7 @@ export default function BuyerGroup() {
 					<Modal.Body>
 						<form onSubmit={handleBuyerGroupSetup}>
 							<div className='row' >
-								<div className='col-6'>
+								{/* <div className='col-6'>
 									<Form.Select className='mb-3' tabindex="1" required onChange={(e) => { setSelectedBuyerGroup(e.target.value) }} value={selectedBuyerGroup} name="selectedBuyerGroup" >
 										<option > Select Buyer Group</option>
 										{buyerGroupData.map((item) => (
@@ -303,18 +249,18 @@ export default function BuyerGroup() {
 
 									{mailIdError && <p style={{ color: 'red' }}>{mailIdError}</p>}
 
-								</div>
+								</div> */}
 
 								<div className='col-6'>
 
 									<MDBInput wrapperClass='mb-3' required type='text' label='Buyer' tabindex="2" onChange={(e) => { setBuyerName(e.target.value) }} value={buyerName} name='Buyer' />
 
-									{buyerNameError && <p style={{ color: 'red' }}>{buyerNameError}</p>}
+									{/* {buyerNameError && <p style={{ color: 'red' }}>{buyerNameError}</p>}
 
 
 									<MDBInput wrapperClass='mb-3' required type='number' tabindex="4" label='Contact No.' onChange={(e) => { setcontactNumber(e.target.value) }} value={contactNumber} name=' contactNumber' />
 
-									{contactNumberError && <p style={{ color: 'red' }}>{contactNumberError}</p>}
+									{contactNumberError && <p style={{ color: 'red' }}>{contactNumberError}</p>} */}
 
 
 								</div>
@@ -344,7 +290,7 @@ export default function BuyerGroup() {
 					<Modal.Body>
 						<form onSubmit={handleEditBuyer}>
 						<div className='row' >
-								<div className='col-6'>
+								{/* <div className='col-6'>
 									<Form.Select className='mb-3' tabindex="5" onChange={(e) => { setSelectedBuyerGroup(e.target.value) }} value={selectedBuyerGroup} name="selectedBuyerGroup" >
 										<option > Select Buyer Group</option>
 										{buyerGroupData.map((item) => (
@@ -360,19 +306,17 @@ export default function BuyerGroup() {
 
 									{mailIdError && <p style={{ color: 'red' }}>{mailIdError}</p>}
 
-								</div>
+								</div> */}
 
 								<div className='col-6'>
 
 									<MDBInput wrapperClass='mb-3' type='text' label='Buyer' tabindex="2" onChange={(e) => { setBuyerName(e.target.value) }} value={buyerName} name='Buyer' />
 									{buyerNameError && <p style={{ color: 'red' }}>{buyerNameError}</p>}
 
-
+{/* 
 									<MDBInput wrapperClass='mb-3' type='number' tabindex="10" label='Contact No.' onChange={(e) => { setcontactNumber(e.target.value) }} value={contactNumber} name=' contactNumber' />
 
-									{contactNumberError && <p style={{ color: 'red' }}>{contactNumberError}</p>}
-
-
+									{contactNumberError && <p style={{ color: 'red' }}>{contactNumberError}</p>} */}
 								</div>
 							</div>
 						</form>
@@ -383,7 +327,7 @@ export default function BuyerGroup() {
 							Cancel
 						</Button>
 						<Button variant="primary" onClick={handleEditBuyer} style={{ width: '15%' }}>
-						{buyerId ? "Update" : "Save"}
+							Save
 						</Button>
 					</Modal.Footer>
 				</Modal>

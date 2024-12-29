@@ -49,6 +49,7 @@ basicDetails.get('/api/basicDetails', verifyToken,function(req, res) {
         se.Marchent_Name,
         se.Marchent_Contact,
         se.Note,
+        se.Add_On_Field,
         se.Style_Images
     FROM
     dmaps.style_entry se
@@ -67,7 +68,11 @@ basicDetails.get('/api/basicDetails', verifyToken,function(req, res) {
       ELSE MAX(Style_No) + 1 
     END AS Next_Style_No 
   FROM 
-    dmaps.style_entry;`;
+    dmaps.style_entry;
+    SELECT * FROM dmaps.map_shipment_mode;
+    SELECT * FROM dmaps.map_garment_color;
+    SELECT * FROM dmaps.map_tod;
+    SELECT * FROM dmaps.map_country;`;
 
     pool.query(sql, function (err, results, fields) {
         if (!err) {
@@ -89,6 +94,10 @@ basicDetails.get('/api/basicDetails', verifyToken,function(req, res) {
                 dataObj['season'] = results[12];
                 dataObj['buyer'] = results[13];
                 dataObj['nextStyleNumber'] = results[14];
+                dataObj['shipmentMode'] = results[15];
+                dataObj['garmentColor'] = results[16];
+                dataObj['TOD_Value'] = results[17];
+                dataObj['destinationCountry'] = results[18];
 
                 response.push({ 'result': 'success', 'data': dataObj });
             } else {

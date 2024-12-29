@@ -8,7 +8,7 @@ var access = require('../var.js');
 access.DMAPFunc();
 
 CompanyBuyers.getCompanyBuyers = result => {
-    sql =`SELECT * FROM dmaps.buyers;`;
+    sql =`SELECT * FROM dmaps.map_buyer;`;
     pool.query(sql, function(err, res) {
         if (err) {
             result(null, err);
@@ -23,7 +23,7 @@ CompanyBuyers.getCompanyBuyers = result => {
 CompanyBuyers.saveCompanyBuyers = result => {
     console.log(data);
     knex.transaction(function(t) {
-        return knex('dmaps.buyers')
+        return knex('dmaps.map_buyer')
             .insert(data)
             .then(function(response) {
                 result(null, { "result": response });
@@ -40,11 +40,7 @@ CompanyBuyers.saveCompanyBuyers = result => {
 CompanyBuyers.editCompanyBuyers = result => {
     const buyerData = data[0]; // Get the first item from the data array
     const updateData = {
-        Buyer_Id : buyerData.BuyerId,
-        Buyer_Group_Name: buyerData.Buyer_Group_Name,
-        Buyer_Name: buyerData.Buyer_Name,
-        Buyer_Email_Id:buyerData.Buyer_Email_Id,
-        Buyer_Contact_No:buyerData.Buyer_Contact_No
+        Buyer_Name: buyerData.Buyer_Name
     };
 
     if (!buyerData) {
@@ -54,7 +50,7 @@ CompanyBuyers.editCompanyBuyers = result => {
     }
 
     knex.transaction(function(t) {
-        return knex('dmaps.buyers')
+        return knex('dmaps.map_buyer')
         .where({ Buyer_Id: buyerData.Buyer_Id})
         .update(updateData)
         .then(function(response) {
@@ -72,7 +68,7 @@ CompanyBuyers.deleteCompanyBuyers = result => {
     const buyerData = data[0]; // Get the first item from the data array
 
     knex.transaction(function(t) {
-        return knex('dmaps.buyers')
+        return knex('dmaps.map_buyer')
         .where({ Buyer_Id: buyerData.Buyer_Id})
         .del()
         .then(function(response) {

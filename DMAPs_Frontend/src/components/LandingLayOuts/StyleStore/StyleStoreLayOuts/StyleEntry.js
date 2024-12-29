@@ -49,6 +49,8 @@ export default function StyleEntry() {
 	const [genderError, setGenderError] = useState('');
 	const [marchantName, setMarchantName] = useState('')
 	const [marchantNameError, setMarchantNameError] = useState('');
+	const [addOnField, setAddOnField] = useState('')
+
 	const [styleNo, setStyleNo] = useState('')
 	const [StyleNoError, setStyleNoError] = useState('');
 	const [styleDescription, setStyleDescription] = useState('')
@@ -128,15 +130,18 @@ export default function StyleEntry() {
 
 	const handleDeleteImage = (indexToDelete, event) => {
 		event.preventDefault(); // Prevent default form submission
-
-		// Clear file input value
-		const fileInput = document.getElementById('imageUpload');
-		fileInput.value = '';
-
-		// Filter out the image at the specified index
+	
+		// Clear the file input value for the specific index
+		const fileInput = document.getElementById(`imageUpload-${indexToDelete}`);
+		if (fileInput) {
+			fileInput.value = ''; // Clear the file input value
+		}
+	
+		// Remove the image at the specified index
 		const updatedImages = base64Images.filter((_, index) => index !== indexToDelete);
 		setBase64Images(updatedImages);
 	};
+	
 
 
 	const handleStyleEntry = (e) => {
@@ -224,7 +229,7 @@ export default function StyleEntry() {
 			"Marchent_Name": marchantName,
 			"Style_Description": styleDescription,
 			"Size_Grid": sizeGrid,
-			"Marchent_Contact": marchantContact,
+			"Add_On_Field": addOnField,
 			"Note": note,
 			"Style_Images": JSON.stringify(base64Images)
 		}
@@ -335,6 +340,7 @@ export default function StyleEntry() {
 		setProductType(data.Product_Type)
 		setGender(data.Gender)
 		setMarchantName(data.Marchent_Name)
+		setAddOnField(data.Add_On_Field)
 		setStyleNo(data.Style_No)
 		setStyleDescription(data.Style_Description)
 		setBuyer(data.Buyer_Group_Id)
@@ -459,7 +465,7 @@ export default function StyleEntry() {
 			"Style_No": styleNo,
 			"Style_Description": styleDescription,
 			"Size_Grid": sizeGrid,
-			"Marchent_Contact": marchantContact,
+			"Add_On_Field": addOnField,
 			"Note": note,
 			"Style_Images": JSON.stringify(base64Images)
 		}
@@ -516,7 +522,8 @@ export default function StyleEntry() {
 								show={show}
 								handleClose={handleClose}
 								handleStyleEntry={handleStyleEntry}
-								styleNo={setStyleNo}
+								styleNo={styleNo}
+								setStyleNo={setStyleNo}
 								setBuyer={setBuyer}
 								buyer={buyer}
 								buyerList={buyerList}
@@ -531,6 +538,8 @@ export default function StyleEntry() {
 								setMarchantName={setMarchantName}
 								marchantName={marchantName}
 								marchantNameError={marchantNameError}
+								addOnField = {addOnField}
+								setAddOnField = {setAddOnField}
 								setBuyerOrderRefNo={setBuyerOrderRefNo}
 								buyerOrderRefNo={buyerOrderRefNo}
 								buyerOrderRefNoError={buyerOrderRefNoError}
@@ -568,7 +577,8 @@ export default function StyleEntry() {
 								onHide={closeEditForm}
 								handleEditStyleEntry={handleEditStyleEntry}
 								setBuyer={setBuyer}
-								styleNo={setStyleNo}
+								styleNo={styleNo}
+								setStyleNo={setStyleNo}
 								buyer={buyer}
 								buyerList={buyerList}
 								setProductType={setProductType}
@@ -582,6 +592,8 @@ export default function StyleEntry() {
 								setMarchantName={setMarchantName}
 								marchantName={marchantName}
 								marchantNameError={marchantNameError}
+								addOnField = {addOnField}
+								setAddOnField = {setAddOnField}
 								setBuyerOrderRefNo={setBuyerOrderRefNo}
 								buyerOrderRefNo={buyerOrderRefNo}
 								buyerOrderRefNoError={buyerOrderRefNoError}

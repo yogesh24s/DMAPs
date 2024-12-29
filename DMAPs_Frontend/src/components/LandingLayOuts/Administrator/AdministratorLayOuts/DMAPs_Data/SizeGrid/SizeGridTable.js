@@ -5,8 +5,12 @@ export default function SizeGridTable({ data, openEditForm, deleteSizeGrid }) {
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Size Grid',
-                accessor: 'Size_Grid',
+                Header: 'Size Grid Name',
+                accessor: 'Size_Grid_Name',
+            },
+            {
+                Header: 'Size Grid Value',
+                accessor: 'Size_Grid_Value',
             },
             {
                 Header: 'Actions',

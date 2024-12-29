@@ -14,15 +14,21 @@ const OrderModal = ({
 	handleSizeGrid,
 	styleNoError,
 	BuyerName,
+	BuyerRefNo,
+	setBuyerRefNo,
 	StyleDescription,
 	SizeGridName,
 	GenderView,
 	ProductType,
 	MerchantName,
 	MerchantContact,
+	AddOnField,
+	setAddOnField,
 	Season,
 	base64Images,
 	fPONo,
+	DMAPsPONo,
+	setDMAPsPONo,
 	setFPONo,
 	fPONoError,
 	PONo,
@@ -30,6 +36,7 @@ const OrderModal = ({
 	PONoError,
 	OCNo,
 	setOCNo,
+	OCNoError,
 	embType,
 	setEmbType,
 	embTypeList,
@@ -41,10 +48,21 @@ const OrderModal = ({
 	washingType,
 	setWashingType,
 	washingTypeList,
+	shipmentModeList,
+	garmentColorList,
+	todList,
+	destinationCountryList,
 	washingTypeError,
 	deliveryDate,
 	setDeliveryDate,
 	deliveryDateError,
+	exDeliveryDate,
+	setExDeliveryDate,
+	exDeliveryDateError,
+	POAddOnField1,
+	setPOAddOnField1,
+	POAddOnField2,
+	setPOAddOnField2,
 	pcd,
 	setPCD,
 	pcdError,
@@ -70,11 +88,12 @@ const OrderModal = ({
 		backdrop="static"
 		keyboard={false}>
 		<Modal.Header closeButton>
-			<Modal.Title> Add New Order  </Modal.Title>
+			<Modal.Title> Add New Order Details  </Modal.Title>
 		</Modal.Header>
 		<Modal.Body>
 			<form onSubmit={handlePODetails}>
 				<div className='row'>
+				<h6 className='h6'> Style Information </h6>
 					<div className="col-4">
 						<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
 							<div style={{ width: '40%', paddingRight: '5px' }}>
@@ -104,6 +123,21 @@ const OrderModal = ({
 							<div className="text-danger text-center" style={{ marginLeft:'150px'}}>{styleNoError}</div>
 						)}
 					</div>
+					{styleNo ? (
+					<> <div className='col-4'>
+							<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+								<div style={{ width: '70%', marginTop: '-5px' }}>
+									Season
+								</div>
+								<span className='span-read'> {Season} </span>
+							</InputGroup>
+						</div>
+
+						<div className='col-4'>
+							<h6 className='h6-small'> Style Images </h6>
+						</div>
+					</>
+					 ) : null }
 				</div>
 				{styleNo ? (
 					<>
@@ -118,22 +152,32 @@ const OrderModal = ({
 											<span className='span-read'> {BuyerName} </span>
 										</InputGroup>
 									</div>
-									
+
 									<div className='col-6'>
 										<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
 											<div style={{ width: '70%', marginTop: '-5px' }}>
-												Size Grid Name
+												Size Grid
 											</div>
 
 											<span className='span-read'> {SizeGridName} </span>
 										</InputGroup>
 									</div>
+
 									<div className='col-6'>
 										<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
 											<div style={{ width: '70%', marginTop: '-5px' }}>
 												Buyer Style No.
 											</div>
 											<span className='span-read'> {StyleDescription} </span>
+										</InputGroup>
+									</div>
+									
+									<div className='col-6'>
+										<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+											<div style={{ width: '70%', marginTop: '-5px' }}>
+												Buyer Ref No.
+											</div>
+											<span className='span-read'> {BuyerRefNo} </span>
 										</InputGroup>
 									</div>
 									
@@ -155,30 +199,34 @@ const OrderModal = ({
 											<span className='span-read'> {MerchantName} </span>
 										</InputGroup>
 									</div>
+
 									<div className='col-6'>
 										<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
 											<div style={{ width: '70%', marginTop: '-5px' }}>
-												Gender
+												Style Gender
 											</div>
 											<span className='span-read'> {GenderView} </span>
 										</InputGroup>
 									</div>
+									
 									<div className='col-6'>
 										<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
 											<div style={{ width: '70%', marginTop: '-5px' }}>
-												Merchant Contact
+												Style Add-on filed
 											</div>
-											<span className='span-read'> {MerchantContact} </span>
+											<span className='span-read'> {AddOnField} </span>
 										</InputGroup>
 									</div>
-									<div className='col-6'>
+
+									<div className='col-12'>
 										<InputGroup className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
-											<div style={{ width: '70%', marginTop: '-5px' }}>
-												Season
+											<div style={{ width: '24%', marginTop: '-5px' }}>
+												Note / Remarks
 											</div>
-											<span className='span-read'> {Season} </span>
+											<span className='span-read'> {note} </span>
 										</InputGroup>
 									</div>
+															
 								</div>
 							</div>
 							<div className='col-4'>
@@ -204,8 +252,68 @@ const OrderModal = ({
 						</div>
 					</>
 				) : null}
-				<h6 className='h6'> Order Details </h6>
+				<h6 className='h6'> Add Order Details </h6>
 				<div className="row g-3">
+					{/* DMAPs PO No. */}
+					<div className="col-4">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
+								DMAPs PO No.
+							</label>
+							<MDBInput
+								type="text"
+								placeholder="DMAPs PO No."
+								value={DMAPsPONo}
+								onChange={(e) => setDMAPsPONo(e.target.value)}
+								name="fPONo"
+								className="form-control"
+								readOnly
+							/>
+						</div>
+					</div>
+
+					{/* Print Type */}
+					<div className="col-4">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
+								Print
+							</label>
+							<Form.Select
+								value={printType}
+								onChange={(e) => setPrintType(e.target.value)}
+								name="printType"
+								className="form-select"
+							>
+								<option value=""> Select Print </option>
+								{printTypeList.map((item) => (
+									<option key={item.id} value={item.Print_Type}>
+										{item.Print_Type}
+									</option>
+								))}
+							</Form.Select>
+						</div>
+						{printTypeError && <div className="text-danger text-center">{printTypeError}</div>}
+					</div>
+
+					{/* PCD */}
+					<div className="col-4">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
+								PCD Date
+							</label>
+							<DatePicker
+								selected={pcd}
+								onChange={(date) => setPCD(date)}
+								className="form-control"
+								dateFormat="dd/MM/yyyy"
+								placeholderText="dd/mm/yyyy"
+							/>
+						</div>
+						{pcdError && <div className="text-danger text-center">{pcdError}</div>}
+					</div>
+
+					
+
 					{/* F PO No. */}
 					<div className="col-4">
 						<div className="d-flex align-items-center mb-1">
@@ -224,26 +332,8 @@ const OrderModal = ({
 						{fPONoError && <div className="text-danger text-center">{fPONoError}</div>}
 					</div>
 
-					{/* Order No. */}
-					<div className="col-md-4">
-						<div className="d-flex align-items-center mb-1">
-							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
-								OC No.
-							</label>
-							<MDBInput
-								type="text"
-								placeholder="Enter OC No."
-								value={PONo}
-								onChange={(e) => setPONo(e.target.value)}
-								name="PONo"
-								className="form-control"
-							/>
-						</div>
-						{PONoError && <div className="text-danger text-center">{PONoError}</div>}
-					</div>
-
 					{/* Emb. Type */}
-					<div className="col-md-4">
+					<div className="col-4">
 						<div className="d-flex align-items-center mb-1">
 							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
 								Embrodiery
@@ -254,7 +344,7 @@ const OrderModal = ({
 								name="embType"
 								className="form-select"
 							>
-								<option>Select Embrodiery</option>
+								<option value=""> Select Embrodiery </option>
 								{embTypeList.map((item) => (
 									<option key={item.id} value={item.Emb_Type}>
 										{item.Emb_Type}
@@ -265,31 +355,44 @@ const OrderModal = ({
 						{embTypeError && <div className="text-danger text-center">{embTypeError}</div>}
 					</div>
 
-					{/* Print Type */}
-					<div className="col-md-4">
+					{/* Delivery Date */}
+					<div className="col-4">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label me-2" style={{ whiteSpace: "pre-wrap", width:'60%' }}>
+								Ex Delivery
+								Date
+							</label>
+							<DatePicker
+								selected={exDeliveryDate}
+								onChange={(date) => setExDeliveryDate(date)}
+								className="form-control"
+								dateFormat="dd/MM/yyyy"
+								placeholderText="dd/mm/yyyy"
+							/>
+						</div>
+						{exDeliveryDateError && <div className="text-danger text-center ms-5 ps-5">{exDeliveryDateError}</div>}
+					</div>
+					
+					{/* Order No. */}
+					<div className="col-4">
 						<div className="d-flex align-items-center mb-1">
 							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
-								Print
+								OC No.
 							</label>
-							<Form.Select
-								value={printType}
-								onChange={(e) => setPrintType(e.target.value)}
-								name="printType"
-								className="form-select"
-							>
-								<option>Select Print</option>
-								{printTypeList.map((item) => (
-									<option key={item.id} value={item.Print_Type}>
-										{item.Print_Type}
-									</option>
-								))}
-							</Form.Select>
+							<MDBInput
+								type="text"
+								placeholder="Enter OC No."
+								value={OCNo}
+								onChange={(e) => setOCNo(e.target.value)}
+								name="OCNo"
+								className="form-control"
+							/>
 						</div>
-						{printTypeError && <div className="text-danger text-center">{printTypeError}</div>}
+						{OCNoError && <div className="text-danger text-center">{OCNoError}</div>}
 					</div>
 
 					{/* Washing Type */}
-					<div className="col-md-4">
+					<div className="col-4">
 						<div className="d-flex align-items-center mb-1">
 							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'63%' }}>
 								Washing
@@ -300,7 +403,7 @@ const OrderModal = ({
 								name="washingType"
 								className="form-select"
 							>
-								<option>Select Washing</option>
+								<option value=""> Select Washing </option>
 								{washingTypeList.map((item) => (
 									<option key={item.id} value={item.Washing_Type}>
 										{item.Washing_Type}
@@ -312,9 +415,9 @@ const OrderModal = ({
 					</div>
 
 					{/* Delivery Date */}
-					<div className="col-md-4">
+					<div className="col-4">
 						<div className="d-flex align-items-center mb-1">
-							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'58%' }}>
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
 								Delivery Date
 							</label>
 							<DatePicker
@@ -327,41 +430,63 @@ const OrderModal = ({
 						</div>
 						{deliveryDateError && <div className="text-danger text-center ms-5 ps-5">{deliveryDateError}</div>}
 					</div>
-
-					{/* PCD */}
-					<div className="col-md-4">
-						<div className="d-flex align-items-center mb-1">
-							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'58%' }}>
-								PCD Date
-							</label>
-							<DatePicker
-								selected={pcd}
-								onChange={(date) => setPCD(date)}
-								className="form-control"
-								dateFormat="dd/MM/yyyy"
-								placeholderText="dd/mm/yyyy"
-							/>
-						</div>
-						{pcdError && <div className="text-danger text-center">{pcdError}</div>}
-					</div>
-
 					{/* Shipment Mode */}
-					<div className="col-md-4">
+					<div className="col-4">
 						<div className="d-flex align-items-center mb-1">
 							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
 								Shipment Mode
 							</label>
-							<MDBInput
-								type="text"
-								placeholder="Enter Shipment Mode"
+							<Form.Select
 								value={shipmentMode}
 								onChange={(e) => setShipmentMode(e.target.value)}
 								name="shipmentMode"
-								className="form-control"
-							/>
+								className="form-select"
+							>
+								<option value=""> Select Shipment Mode </option>
+
+								{shipmentModeList.map((item) => (
+									<option key={item.id} value={item.Shipment_Mode}>
+										{item.Shipment_Name}
+									</option>
+								))}
+							</Form.Select>
 						</div>
 						{shipmentModeError && <div className="text-danger text-center  ms-5 ps-5">{shipmentModeError}</div>}
 					</div>
+
+					{/* PO Add On Filed 1. */}
+					<div className="col-4">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
+								PO Add-on field 1
+							</label>
+							<MDBInput
+								type="text"
+								value={POAddOnField1}
+								onChange={(e) => setPOAddOnField1(e.target.value)}
+								name="POAddOnField1"
+								className="form-control"
+							/>
+						</div>
+					</div>
+
+					{/* PO Add On Filed 2. */}
+					<div className="col-4">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label me-2" style={{ whiteSpace: "nowrap", width:'60%' }}>
+								PO Add-on field 2
+							</label>
+							<MDBInput
+								type="text"
+								value={POAddOnField2}
+								onChange={(e) => setPOAddOnField2(e.target.value)}
+								name="POAddOnField2"
+								className="form-control"
+							/>
+						</div>
+					</div>
+
+					
 					{/* Others */}
 					{/* <div className="col-md-6">
 						<label className="form-label">Others</label>
@@ -375,19 +500,20 @@ const OrderModal = ({
 					</div> */}
 
 					{/* Notes */}
-					<div className="col-md-12">
-						<label className="form-label">Notes</label>
-						<MDBInput
-							type="textarea"
-							placeholder="Enter Notes"
-							value={note}
-							onChange={(e) => setNote(e.target.value)}
-							name="note"
-							rows="3"
-						
-						/>
+					
+					<div className="col-12">
+						<div className="d-flex align-items-center mb-1">
+							<label className="form-label" style={{ whiteSpace: "nowrap", width:'14%' }}> Note / Remarks </label>
+							<MDBInput
+								type="textarea"
+								placeholder="Enter Notes"
+								value={note}
+								onChange={(e) => setNote(e.target.value)}
+								name="note"
+								rows="3"
+							/>
+						</div>
 					</div>
-
 				</div>
 				
 				<div className="col-12 mt-20 parentDivStyle mt-5">
@@ -397,7 +523,8 @@ const OrderModal = ({
 								<thead>
 									<tr>
 										<th style={{ width: '100px' }}>Garment Color</th>
-										<th style={{ width: '100px' }}>Destination Country</th>
+										<th style={{ width: '120px' }}>Destination Country</th>
+										<th style={{ width: '100px' }}> TOD </th>
 										{sizesArray.map((sizeKey) => (
 											<th className='thTdStyle' key={sizeKey}>{sizeKey}</th>
 										))}
@@ -409,26 +536,62 @@ const OrderModal = ({
 									{rows.map((row, rowIndex) => (
 										<tr key={rowIndex}>
 											<td className='thTdStyle'>
-												<input
-													type="color"
-													value={row.garmentColor || '#000000'}
+												<Form.Select
+													value={row.garmentColor}
 													onChange={(e) => {
 														const updatedRows = [...rows];
 														updatedRows[rowIndex].garmentColor = e.target.value;
 														setRows(updatedRows);
 													}}
-												/>
+													name="garmentColor"
+													className="form-select"
+												>
+												<option value=""> Select </option>
+													{garmentColorList.map((item) => (
+														<option key={item.id} value={item.Color_Code}>
+															{item.Color_Name}
+														</option>
+													))}
+												</Form.Select>
 											</td>
 											<td className='thTdStyle'>
-												<input
-													type="text"
-													value={row.destinationCountry}
+												<Form.Select
+														value={row.destinationCountry}
+														onChange={(e) => {
+															const updatedRows = [...rows];
+															updatedRows[rowIndex].destinationCountry = e.target.value;
+															setRows(updatedRows);
+														}}
+														name="destinationCountry"
+														className="form-select"
+													>
+														<option value=""> Select </option>
+														{destinationCountryList.map((item) => (
+															<option key={item.id} value={item.Country_Name}>
+																{item.Country_Name}
+															</option>
+														))}
+													</Form.Select>
+												
+											</td>
+											<td className='thTdStyle'>
+												<Form.Select
+													value={row.TOD}
 													onChange={(e) => {
 														const updatedRows = [...rows];
-														updatedRows[rowIndex].destinationCountry = e.target.value;
+														updatedRows[rowIndex].TOD = e.target.value;
 														setRows(updatedRows);
 													}}
-												/>
+													name="TOD"
+													className="form-select"
+												>
+													<option value=""> Select </option>
+													{todList.map((item) => (
+														<option key={item.id} value={item.TOD_Name}>
+															{item.TOD_Name}
+														</option>
+													))}
+												</Form.Select>
 											</td>
 											{/* Dynamically generate size inputs */}
 											{sizesArray.map((sizeKey) => (
@@ -458,10 +621,6 @@ const OrderModal = ({
 					) : null}
 
 				</div>
-
-
-
-
 			</form>
 		</Modal.Body>
 		<Modal.Footer>

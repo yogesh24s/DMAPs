@@ -12,7 +12,7 @@ exports.saveWashingType = (req, res) => {
                     err.message || "Some error occured"
             });
         else
-            res.send({ "result": "gender saved  successfully", "data": data });
+            res.send({ "result": "Washing saved  successfully", "data": data });
     });
 };
 

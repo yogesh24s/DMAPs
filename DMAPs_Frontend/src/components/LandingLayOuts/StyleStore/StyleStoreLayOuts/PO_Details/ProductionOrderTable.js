@@ -13,16 +13,12 @@ export default function PODetailsTable(props) {
                 accessor: 'Style_No',
             },
             {
-                Header: 'Order No.',
-                accessor: 'PO_No',
-                Cell: ({ row }) => (
-                    <div
-                        className='custom-link'
-                        onClick={() => openEditForm(row.original)}
-                    >
-                        {row.values.PO_No}
-                    </div>
-                ),
+                Header: 'DMAPs PO No.',
+                accessor: 'DMAPs_PO_No',
+            },
+            {
+                Header:  'Buyer PO Node.',
+                accessor: 'F_PO_No',
             },
             {
                 Header: (
@@ -34,23 +30,28 @@ export default function PODetailsTable(props) {
             },
             {
                 Header: (
-                    <span title="Embroidery Type">
+                    <span title="Embroidery">
                         Emb. Type
                     </span>
                 ),
                 accessor: 'Emb_Type',
             },
             {
-                Header: 'Print Type',
+                Header: 'Print',
                 accessor: 'Print_Type',
             },
             {
-                Header: 'Washing Type',
+                Header: 'Washing',
                 accessor: 'Washing_Type',
             },
             {
                 Header: 'Shipment Mode',
                 accessor: 'Shipment_Mode',
+            },
+            {
+                Header: ' Ex Delivery Date',
+                accessor: 'Ex_Delivery_Date',
+                Cell: ({ value }) => value ? moment(value).format('DD/MM/YYYY') : 'N/A',
             },
             {
                 Header: 'Delivery Date',

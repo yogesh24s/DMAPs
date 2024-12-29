@@ -34,7 +34,9 @@ import SizeGrid from './DMAPs_Data/SizeGrid/SizeGrid';
 import PrintType from './DMAPs_Data/PrintType/PrintType';
 import WashingType from './DMAPs_Data/WashingType/WashingType';
 import EmbType from './DMAPs_Data/EmbType/EmbType';
-
+import ShipmentMode from './DMAPs_Data/ShipmentMode/ShipmentMode'
+import Country from './DMAPs_Data/Country/County'
+import Color from './DMAPs_Data/Color/Color'
 
 export default function DataSetUp() {
     const [verticalActive, setVerticalActive] = useState('tabV3');
@@ -207,19 +209,19 @@ export default function DataSetUp() {
 
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV3')} active={verticalActive === 'tabV3'}>
-                            Buyer Group
+                            Buyer
                         </MDBTabsLink>
                     </MDBTabsItem>
                     
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV4')} active={verticalActive === 'tabV4'}>
-                            Product Type
+                            Style Description
                         </MDBTabsLink>
                     </MDBTabsItem>
                     
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV5')} active={verticalActive === 'tabV5'}>
-                            Gender
+                           Style Gender
                         </MDBTabsLink>
                     </MDBTabsItem>
                     
@@ -237,39 +239,39 @@ export default function DataSetUp() {
                     
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV8')} active={verticalActive === 'tabV8'}>
-                            Emb Type
+                            Embrodiery
                         </MDBTabsLink>
                     </MDBTabsItem>
                     
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV9')} active={verticalActive === 'tabV9'}>
-                            Print Type
+                            Print
                         </MDBTabsLink>
                     </MDBTabsItem>
                     
                     <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV10')} active={verticalActive === 'tabV10'}>
-                            Washing Type
+                            Washing
                         </MDBTabsLink>
                     </MDBTabsItem>
                     
-                    {/* <MDBTabsItem className="vertical-link">
+                    <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV11')} active={verticalActive === 'tabV11'}>
                             Shipment Mode
                         </MDBTabsLink>
-                    </MDBTabsItem> */}
+                    </MDBTabsItem> 
                     
-                    {/* <MDBTabsItem className="vertical-link">
+                    <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV12')} active={verticalActive === 'tabV12'}>
                             Country
                         </MDBTabsLink>
-                    </MDBTabsItem> */}
+                    </MDBTabsItem>
                     
-                    {/* <MDBTabsItem className="vertical-link">
+                    <MDBTabsItem className="vertical-link">
                         <MDBTabsLink onClick={() => handleVerticalClick('tabV13')} active={verticalActive === 'tabV13'}>
                             Garment Colour
                         </MDBTabsLink>
-                    </MDBTabsItem> */}
+                    </MDBTabsItem>
                 </MDBTabs>
             </MDBCol>
             <MDBCol size='11' style={{ width : "87%" }} className='no-pad-left'>
@@ -303,6 +305,15 @@ export default function DataSetUp() {
                     </MDBTabsPane>
                     <MDBTabsPane show={verticalActive === 'tabV8'}>
                         <EmbType></EmbType>
+                    </MDBTabsPane>
+                    <MDBTabsPane show={verticalActive === 'tabV11'}>
+                        <ShipmentMode></ShipmentMode>
+                    </MDBTabsPane>
+                    <MDBTabsPane show={verticalActive === 'tabV12'}>
+                        <Country> </Country>
+                    </MDBTabsPane>
+                    <MDBTabsPane show={verticalActive === 'tabV13'}>
+                        <Color> </Color>
                     </MDBTabsPane>
                 </MDBTabsContent>
             </MDBCol>

@@ -21,6 +21,9 @@ const sizeGrid = require("../../controllers/sizegrid.controller.js");
 const printType = require("../../controllers/printtype.controller.js");
 const embType = require("../../controllers/emb.controller.js");
 const washingType = require("../../controllers/washing.controller.js");
+const shipmentMode = require("../../controllers/shipmentMode.controller.js");
+const country = require("../../controllers/country.controller.js");
+const color = require("../../controllers/color.controller.js");
 
 Administrator.use(bodyParser.json()); // to support JSON-encoded bodies
 Administrator.use(bodyParser.urlencoded({ // to support URL-encoded bodies
@@ -93,7 +96,20 @@ Administrator.get('/api/getWashingType',verifyToken, washingType.getWashingType)
 Administrator.post('/api/deletewashingType',verifyToken, washingType.deletewashingType);
 Administrator.post('/api/updateWashingType',verifyToken, washingType.updateWashingType);
 
+Administrator.post('/api/saveShipmentMode',verifyToken, shipmentMode.saveShipmentMode);
+Administrator.get('/api/getShipmentMode',verifyToken, shipmentMode.getShipmentMode);
+Administrator.post('/api/deleteShipmentMode',verifyToken, shipmentMode.deleteShipmentMode);
+Administrator.post('/api/updateShipmentMode',verifyToken, shipmentMode.updateShipmentMode);
 
+Administrator.post('/api/saveCountry',verifyToken, country.saveCountry);
+Administrator.get('/api/getCountry',verifyToken, country.getCountry);
+Administrator.post('/api/deleteCountry',verifyToken, country.deleteCountry);
+Administrator.post('/api/updateCountry',verifyToken, country.updateCountry);
+
+Administrator.post('/api/saveColor',verifyToken, color.saveColor);
+Administrator.get('/api/getColor',verifyToken, color.getColor);
+Administrator.post('/api/deleteColor',verifyToken, color.deleteColor);
+Administrator.post('/api/updateColor',verifyToken, color.updateColor);
 
 Administrator.post('/api/saveEmbType',verifyToken, embType.saveEmbType);
 Administrator.get('/api/getEmbType',verifyToken, embType.getEmbType);

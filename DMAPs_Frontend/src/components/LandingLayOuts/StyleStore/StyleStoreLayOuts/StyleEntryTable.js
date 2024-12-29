@@ -28,20 +28,24 @@ export default function StyleEntryTable(props) {
                 accessor: 'Style_Description',
             },
             {
-                Header: 'Size Grid Name',
-                accessor: 'Size_Grid_Name',
+                Header: 'Style Description',
+                accessor: 'Product_Type',
             },
             {
-                Header: 'Product Type',
-                accessor: 'Product_Type',
+                Header: 'Style Gender',
+                accessor: 'Gender',
+            },
+            {
+                Header: 'Season',
+                accessor: 'Season',
+            },
+            {
+                Header: 'Size Grid',
+                accessor: 'Size_Grid_Name',
             },
             {
                 Header: 'Merchant Name',
                 accessor: 'Marchent_Name',
-            },
-            {
-                Header: 'Merchant Contact',
-                accessor: 'Marchent_Contact',
             },
             {
                 Header: 'Images',
