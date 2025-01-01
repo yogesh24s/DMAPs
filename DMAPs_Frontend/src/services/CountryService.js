@@ -9,13 +9,13 @@ class countryService {
     saveCountry(payload) {
       
       // alert(payload)
-      const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+      const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
       console.log(payload)
       return api.post(`${apiUrl}/api/saveCountry`, payload);
     }
 
     getCountry() {
-      const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+      const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
       return api
         .get(`${apiUrl}/api/getCountry`)
         .then((response) => {
@@ -27,17 +27,17 @@ class countryService {
     }
 
     updateCountry(payload) {
-      const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+      const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
       return api.post(`${apiUrl}/api/updateCountry`, payload);
     }
 
     deleteCountry(payload) {      
-      const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+      const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
       return api.post(`${apiUrl}/api/deleteCountry`, payload);
     }
 
     // getCompanyBuyers() {
-    //   const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+    //   const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
     //   return api
     //     .get(`${apiUrl}/api/getBuyers`)
     //     .then((response) => {

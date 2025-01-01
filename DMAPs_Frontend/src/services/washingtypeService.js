@@ -9,13 +9,13 @@ class washingTypeService {
     saveWashingType(payload) {
       
       // alert(payload)
-      const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+      const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
       console.log(payload)
       return api.post(`${apiUrl}/api/saveWashingType`, payload);
     }
 
     getWashingType() {
-      const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+      const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
       return api
         .get(`${apiUrl}/api/getWashingType`)
         .then((response) => {
@@ -27,7 +27,7 @@ class washingTypeService {
     }
 
     updateWashingType(payload) {
-      const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+      const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
       console.log(payload)
       return api.post(`${apiUrl}/api/updateWashingType`, payload);
     }
@@ -36,12 +36,12 @@ class washingTypeService {
       
       console.log(payload);
       
-      const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+      const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
       return api.post(`${apiUrl}/api/deletewashingType`, payload);
     }
 
     // getCompanyBuyers() {
-    //   const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+    //   const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
     //   return api
     //     .get(`${apiUrl}/api/getBuyers`)
     //     .then((response) => {

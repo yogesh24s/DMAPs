@@ -8,13 +8,13 @@ class buyerService {
 
     saveGender(payload) {
       
-      const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+      const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
       console.log(payload)
       return api.post(`${apiUrl}/api/saveGender`, payload);
     }
 
     getGender() {
-      const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+      const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
       return api
         .get(`${apiUrl}/api/getGender`)
         .then((response) => {
@@ -26,23 +26,23 @@ class buyerService {
     }
 
     updateGender(payload) {
-      const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+      const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
       return api.post(`${apiUrl}/api/updateGender`, payload);
     }
 
 
     // editCompanyBuyers(payload) {
-    //   const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+    //   const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
     //   return api.post(`${apiUrl}/api/editBuyers`, payload);
     // }
 
     deleteGender(payload) {
-      const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+      const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
       return api.post(`${apiUrl}/api/deleteGender`, payload);
     }
 
     // getCompanyBuyers() {
-    //   const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+    //   const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
     //   return api
     //     .get(`${apiUrl}/api/getBuyers`)
     //     .then((response) => {

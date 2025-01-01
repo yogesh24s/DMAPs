@@ -6,17 +6,17 @@ import api from "./interceptor";
 
 class loginService {
   login(payload) {
-    const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+    const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
     return api.post(`${apiUrl}/login/`, payload);
   }
 
   forgotPassword(payload) {
-    const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+    const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
     return api.post(`${apiUrl}/api/forgotPassword`, payload);
   }
 
   changePassword(payload) {
-    const apiUrl = 'http://3.92.91.120:4000'; // Read base URL from environment
+    const apiUrl = 'http://127.0.0.1:4000'; // Read base URL from environment
     return api.post(`${apiUrl}/changePassword`, payload);
   }
 
